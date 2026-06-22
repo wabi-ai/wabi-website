@@ -1,6 +1,6 @@
 # WABI
 
-> WABI bygger AI Driftssystem for norske bedrifter. Vi er en metodikk, ikke en app. Vi hjelper små og mellomstore bedrifter med å bygge AI lag for lag, tilpasset deres kontekst, verktøy og mål, slik at bedriften kan vokse istedenfor å bare vedlikeholdes.
+> WABI bygger AI Driftssystem for norske bedrifter. Vi er en metodikk, ikke en app. Vi hjelper små og mellomstore bedrifter med å bygge AI lag for lag, tilpasset deres kontekst, verktøy og mål, slik at bedriften kan vokse istedenfor å bare vedlikeholdes. AI i drift, bygget for måten bedriften faktisk arbeider på.
 
 WABI holder til i Trondheim og Singapore. Vi jobber primært med norske bedrifter i vekstfase, typisk 30 til 150 ansatte, som har forstått at AI er infrastruktur og ikke et eksperiment, men som trenger hjelp til å bygge det skikkelig.
 
@@ -19,6 +19,10 @@ AI Driftssystem er et fullt kontekstualisert arbeidsrom som kjenner bedriften, t
 Vi tror på å kunne jobbe mer uten å være foran laptopen. En leder skal kunne sette i gang oppgaver fra telefonen, gi en instruksjon og komme tilbake til en ferdig utført oppgave. Graden og enkelheten i automatisering er kjernen i det vi bygger.
 
 Målet vi måler mot er økt omsetning per ansatt. Det er indikatoren som beveger seg når et AI Driftssystem faktisk virker.
+
+## Sammenlignet med alternativene
+
+De fleste forsøk på AI havner i en av tre grøfter: gjør-det-selv med spredte verktøy og prompts som ikke henger sammen, standard SaaS med en generisk arbeidsflyt designet for alle andre, eller et konsulenthus som leverer en rapport og en plan og deretter er borte. WABI forstår bedriften og skriver koden selv, med samme team hele veien, blir med til løsningen er i produksjon, og bygger rundt din bedrift lag for lag. Du eier systemet, dataene og logikken.
 
 ## Hvem vi jobber med
 
