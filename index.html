@@ -513,8 +513,9 @@
       display: inline-flex; align-items: center; gap: 9px;
       font-size: 13px; color: var(--fg-mid);
     }
-    .hero-proof .stars { color: var(--accent); letter-spacing: 2px; font-size: 14px; }
-    html.dark .hero-proof .stars { color: var(--accent-bright); }
+    .hero-proof .proof-icon { display: inline-flex; color: var(--accent); }
+    .hero-proof .proof-icon svg { width: 17px; height: 17px; }
+    html.dark .hero-proof .proof-icon { color: var(--accent-bright); }
     .hero-proof__link {
       color: var(--fg-mid); text-decoration: none;
       border-bottom: 1px solid var(--border-mid); padding-bottom: 1px;
@@ -522,109 +523,63 @@
     }
     .hero-proof__link:hover { color: var(--fg); border-color: var(--fg-mid); }
 
-    /* Faux product panel peeking up from the bottom */
+    /* Dataflow illustration peeking up from the bottom of the hero */
     .hero-mock-wrap {
       position: relative; z-index: 1;
-      width: 100%; max-width: 1080px;
-      margin: auto auto 0; height: 392px; overflow: hidden;
-      -webkit-mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
-      mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
+      width: 100%; max-width: 1140px;
+      margin: 10px auto 0;
     }
-    .hero-mock {
-      width: 100%;
-      background: var(--bg-card);
-      border: 1px solid var(--border-mid);
-      border-radius: 16px 16px 0 0;
-      box-shadow: 0 30px 60px -34px rgba(0,0,0,0.45);
-      overflow: hidden; text-align: left;
-      display: grid; grid-template-columns: 184px 1fr;
-      color: var(--fg);
+    .hero-ill {
+      /* light theme = the illustration's native palette */
+      --ill-ink:   #1D1B16;
+      --ill-ink2:  #22301A;
+      --ill-text:  #3E4A36;
+      --ill-stage: #F5F1E8;
+      --ill-dot:   #E5DDC9;
+      --ill-node:  #1C2614;
+      display: block; width: 100%; height: auto; overflow: visible;
+      filter: drop-shadow(0 24px 50px rgba(28,38,20,0.13));
     }
-    /* Dashboard sidebar */
-    .db-side { border-right: 1px solid var(--border); background: var(--bg-elev); padding: 14px 12px; display: flex; flex-direction: column; gap: 14px; }
-    .db-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; padding: 2px 4px; }
-    .db-brand svg { width: 23px; height: auto; color: var(--accent); flex: none; }
-    html.dark .db-brand svg { color: var(--accent-bright); }
-    .db-nav { display: flex; flex-direction: column; gap: 2px; }
-    .db-nav a { display: flex; align-items: center; gap: 9px; padding: 7px 9px; border-radius: 7px; color: var(--fg-mid); font-weight: 500; font-size: 12px; text-decoration: none; }
-    .db-nav a svg { width: 14px; height: 14px; opacity: .62; flex: none; }
-    .db-nav a.on { background: color-mix(in srgb, var(--accent) 13%, transparent); color: var(--accent); font-weight: 600; }
-    html.dark .db-nav a.on { color: var(--accent-bright); }
-    .db-nav a.on svg { opacity: 1; }
-    .db-org { margin-top: auto; border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; }
-    .db-org b { font-size: 11px; font-weight: 700; display: block; }
-    .db-org small { font-size: 9px; color: var(--fg-dim); }
-    /* Dashboard main */
-    .db-main { display: flex; flex-direction: column; min-width: 0; }
-    .db-top { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-bottom: 1px solid var(--border); }
-    .db-search { flex: 1; display: flex; align-items: center; gap: 8px; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 8px; padding: 7px 11px; color: var(--fg-dim); font-size: 11px; min-width: 0; }
-    .db-search svg { width: 13px; height: 13px; flex: none; }
-    .db-ico { width: 26px; height: 26px; border-radius: 7px; display: flex; align-items: center; justify-content: center; color: var(--fg-mid); position: relative; flex: none; }
-    .db-ico svg { width: 15px; height: 15px; }
-    .db-badge { position: absolute; top: -3px; right: -3px; min-width: 13px; height: 13px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 8px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-    html.dark .db-badge { background: var(--accent-bright); color: #0b0b0b; }
-    .db-user { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 8px; padding: 4px 9px 4px 5px; flex: none; }
-    .db-ava { width: 23px; height: 23px; border-radius: 6px; background: var(--accent); color: #fff; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex: none; }
-    html.dark .db-ava { background: var(--accent-bright); color: #0b0b0b; }
-    .db-user b { font-size: 11px; }
-    .db-user small { font-size: 9px; color: var(--fg-dim); display: block; }
-    /* Dashboard body */
-    .db-body { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
-    .db-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-    .db-kpi { border: 1px solid var(--border); border-radius: 10px; padding: 10px 11px; background: var(--bg-card); }
-    .db-kpi__h { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; font-size: 9px; color: var(--fg-dim); font-weight: 600; }
-    .db-kpi__v { font-size: 16px; font-weight: 700; font-family: var(--font-mono); letter-spacing: -0.02em; margin: 6px 0 5px; }
-    .db-kpi__v small { font-size: 9px; font-weight: 600; color: var(--fg-mid); }
-    .db-kpi__d { font-size: 9px; font-weight: 600; color: var(--accent); }
-    html.dark .db-kpi__d { color: var(--accent-bright); }
-    .db-kpi__d.down { color: #c2553f; }
-    .db-spark { width: 30px; height: 14px; flex: none; }
-    .db-cols { display: grid; grid-template-columns: 1.85fr 1fr; gap: 12px; }
-    .db-card { border: 1px solid var(--border); border-radius: 10px; padding: 12px 13px; background: var(--bg-card); }
-    .db-card__h { display: flex; align-items: center; justify-content: space-between; margin-bottom: 11px; }
-    .db-card__h b { font-size: 12.5px; font-weight: 700; }
-    .db-pill { font-size: 9px; color: var(--fg-mid); border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; }
-    .db-chart { display: block; }
-    .db-bars { display: flex; align-items: flex-end; gap: 9px; height: 134px; }
-    .db-bars > div { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 5px; height: 100%; }
-    .db-bars i { width: 100%; border-radius: 3px 3px 0 0; background: color-mix(in srgb, var(--accent) 26%, transparent); display: block; }
-    .db-bars .hi i { background: var(--accent); }
-    html.dark .db-bars .hi i { background: var(--accent-bright); }
-    .db-bars span { font-size: 9px; color: var(--fg-dim); }
-    .db-sum { border-left: 1px solid var(--border); padding-left: 12px; display: flex; flex-direction: column; }
-    .db-sum__k { font-size: 9px; color: var(--fg-dim); font-weight: 600; }
-    .db-sum__v { font-size: 15px; font-weight: 700; font-family: var(--font-mono); letter-spacing: -0.02em; margin: 3px 0 2px; }
-    .db-sum__d { font-size: 9px; font-weight: 600; color: var(--accent); margin-bottom: 9px; }
-    html.dark .db-sum__d { color: var(--accent-bright); }
-    .db-sum__row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-top: 1px solid var(--border); font-size: 10px; }
-    .db-sum__row span { color: var(--fg-mid); }
-    .db-sum__row b { font-weight: 700; }
-    .db-sum__row b.pos { color: var(--accent); }
-    html.dark .db-sum__row b.pos { color: var(--accent-bright); }
-    .db-rt { display: flex; flex-direction: column; gap: 12px; }
-    .db-avatars { display: flex; align-items: center; margin-bottom: 11px; }
-    .db-avatars i { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--bg-card); margin-left: -7px; background: var(--bg-soft); display: flex; align-items: center; justify-content: center; font-size: 8.5px; font-weight: 700; color: var(--fg-mid); }
-    .db-avatars i:first-child { margin-left: 0; }
-    .db-actions { display: grid; grid-template-columns: 1fr; gap: 7px; }
-    .db-act { display: flex; align-items: center; gap: 7px; border: 1px solid var(--border); border-radius: 7px; padding: 8px 9px; font-size: 10px; font-weight: 600; color: var(--fg-mid); }
-    .db-act svg { width: 13px; height: 13px; opacity: .7; flex: none; }
-    .db-feed { display: flex; flex-direction: column; gap: 10px; }
-    .db-fi { display: flex; align-items: flex-start; gap: 9px; }
-    .db-fi__ico { width: 22px; height: 22px; border-radius: 6px; background: var(--bg-soft); display: flex; align-items: center; justify-content: center; flex: none; color: var(--fg-mid); }
-    .db-fi__ico svg { width: 12px; height: 12px; }
-    .db-fi__t { flex: 1; min-width: 0; }
-    .db-fi__t b { font-size: 10.5px; font-weight: 600; display: block; }
-    .db-fi__t small { font-size: 9px; color: var(--fg-dim); }
-    .db-fi__amt { font-size: 10px; font-weight: 700; color: var(--accent); white-space: nowrap; }
-    html.dark .db-fi__amt { color: var(--accent-bright); }
-    .db-fi__amt.neg { color: #c2553f; }
+    /* themable structural pieces */
+    .hero-ill .df-stage { fill: var(--ill-stage); }
+    .hero-ill .df-dot   { fill: var(--ill-dot); }
+    .hero-ill .eyebrow  { fill: var(--ill-text); }
+    .hero-ill .flow, .hero-ill .solid-flow { stroke: var(--ill-ink); }
+    .hero-ill #df-arrowHead path { stroke: var(--ill-ink2); }
+    .hero-ill .source, .hero-ill .core, .hero-ill .dashboard, .hero-ill .pill { filter: url(#df-tinyShadow); }
+    /* animations (scoped + namespaced so they never leak onto the page) */
+    .hero-ill .flow { stroke-dasharray: 8 8; animation: dfMarch 1.35s linear infinite; }
+    @keyframes dfMarch { to { stroke-dashoffset: -16; } }
+    .hero-ill .soft-pulse { animation: dfPulse 3.8s ease-out infinite; }
+    @keyframes dfPulse { 0%{r:74;opacity:.35} 70%{opacity:.04} 100%{r:158;opacity:0} }
+    .hero-ill .livedot { animation: dfBlink 1.9s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    @keyframes dfBlink { 0%,100%{opacity:1} 50%{opacity:.35} }
+    .hero-ill .pill text { paint-order: stroke; stroke: var(--ill-stage); stroke-width: .6px; }
 
+    /* dark theme adaptation: invert the ink, dim the canvas, keep the green crystals glowing */
+    html.dark .hero-ill {
+      --ill-ink:   rgba(243,245,236,0.88);
+      --ill-ink2:  rgba(243,245,236,0.80);
+      --ill-text:  #93b483;
+      --ill-stage: #10130d;
+      --ill-dot:   rgba(255,255,255,0.05);
+      --ill-node:  #cfe0bb;
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.55));
+    }
+    /* flip the dark cube/core linework (but NOT the dashboard "screen") */
+    html.dark .hero-ill .sources [stroke="#22301A"],
+    html.dark .hero-ill .core [stroke="#22301A"] { stroke: var(--ill-ink); }
+    html.dark .hero-ill .core circle[fill="#22301A"] { fill: var(--ill-node); }
+    /* lift the small sage marker-dots so the labels read on the dark canvas */
+    html.dark .hero-ill [fill="#4A5D45"] { fill: var(--ill-text); }
+    /* the branded capability pills keep their pastel colours in both themes (dark text stays legible) */
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-ill .flow, .hero-ill .solid-flow, .hero-ill .soft-pulse, .hero-ill .livedot { animation: none !important; }
+      .hero-ill .particles { display: none; }
+    }
     @media (max-width: 640px) {
-      .hero-mock-wrap { height: 210px; margin-top: 40px; }
-      .hero-mock { grid-template-columns: 1fr; }
-      .db-side { display: none; }
-      .db-kpis { grid-template-columns: repeat(2, 1fr); }
-      .db-cols { grid-template-columns: 1fr; }
+      .hero-mock-wrap { margin-top: 34px; }
     }
 
     .dataflow {
@@ -903,6 +858,8 @@
       color: var(--fg);
       font-weight: 600;
     }
+    .section-header h2 .h2-accent { color: var(--accent); }
+    html.dark .section-header h2 .h2-accent { color: var(--accent-bright); }
 
     /* ── PROBLEM ── */
     /* Problem "pain" palette: a deep, dim brand green, set a shade apart from
@@ -918,9 +875,9 @@
       --p-warn-line: rgba(111,147,119,0.30);
     }
     .problem .section-eyebrow { color: var(--p-warn); }
-    .problem .section-eyebrow::after {
-      background: color-mix(in srgb, var(--p-warn) 55%, transparent);
-    }
+    /* Clean Switchboard-style label: drop the auto-number and leading rule */
+    .problem .section-eyebrow::before,
+    .problem .section-eyebrow::after { content: none; }
 
     /* Reveal-on-scroll (state only; transitions live on the target element
        so they never conflict with hover transforms) */
@@ -969,10 +926,6 @@
       max-width: 46ch;
     }
     .prob__body .pc-strong { color: var(--fg); font-weight: 600; }
-    .pc-count {
-      font-variant-numeric: tabular-nums;
-      color: var(--p-warn);
-    }
     .pc-viz { width: 100%; align-self: center; }
 
     @media (max-width: 820px) {
@@ -986,35 +939,20 @@
       .pc-viz { grid-column: 2; grid-row: 2; margin-top: 20px; max-width: 380px; align-self: start; }
     }
 
-    /* viz 1: a lonely chat box */
-    .pc-chat {
-      display: flex; align-items: center; gap: 10px;
-      height: 40px;
-      padding: 0 8px 0 15px;
-      background: var(--bg-soft);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      font-size: 13px;
-      color: var(--fg-dim);
+    /* viz 1: the work depends on a single person */
+    .pc-people { display: flex; align-items: flex-end; gap: 14px; padding: 4px 2px; }
+    .pc-person { position: relative; width: 26px; height: 32px; opacity: .38; }
+    .pc-person::before {
+      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 12px; height: 12px; border-radius: 50%; background: var(--border-mid);
     }
-    .pc-chat__text { display: inline-flex; align-items: center; }
-    .pc-chat__caret {
-      display: inline-block;
-      width: 2px; height: 14px;
-      margin-left: 1px;
-      background: var(--p-warn);
-      animation: caret-blink 1s steps(2, jump-none) infinite;
+    .pc-person::after {
+      content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 24px; height: 16px; border-radius: 12px 12px 5px 5px; background: var(--border-mid);
     }
-    .pc-chat__send {
-      margin-left: auto;
-      width: 26px; height: 26px;
-      border-radius: 50%;
-      background: var(--fg-faint);
-      color: var(--fg-dim);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .pc-chat__send svg { width: 13px; height: 13px; }
+    .pc-person--key { opacity: 1; }
+    .pc-person--key::before, .pc-person--key::after { background: var(--p-warn); }
+    .pc-person--key::before { animation: pcfPulse 2.6s ease-in-out infinite; }
 
     /* viz 2: disconnected silos */
     .pc-silos { display: flex; align-items: center; }
@@ -1040,31 +978,63 @@
       font-weight: 700;
     }
 
-    /* viz 3: capacity squeeze bar */
-    .pc-capacity__bar {
-      display: flex;
-      height: 18px;
-      border-radius: 100px;
-      overflow: hidden;
-      background: var(--border);
+    /* viz 3: a "temporary" fix that never left */
+    .pc-sheet {
+      position: relative;
+      display: inline-grid;
+      grid-template-columns: repeat(4, 34px);
+      gap: 4px;
+      padding: 13px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 11px;
     }
-    .pc-capacity__drift {
-      width: 0%;
-      background: var(--p-warn);
-      border-radius: 100px;
-      transition: width 1.15s cubic-bezier(0.16,1,0.3,1) .25s;
-    }
-    .is-visible .pc-capacity__drift { width: 80%; }
-    .pc-capacity__legend {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      font-size: 11px;
-      font-weight: 600;
+    .pc-sheet__cell { height: 13px; border-radius: 3px; background: var(--border-mid); opacity: .5; }
+    .pc-sheet__cell--hot { background: var(--p-warn); opacity: .85; }
+    .pc-sheet__tag {
+      position: absolute;
+      top: -11px; right: -10px;
+      transform: rotate(4deg);
+      padding: 3px 8px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
       letter-spacing: 0.3px;
+      color: var(--p-warn);
+      background: var(--bg);
+      border: 1px solid var(--p-warn-line);
+      border-radius: 5px;
+      white-space: nowrap;
     }
-    .pc-capacity__legend .l-drift { color: var(--p-warn); }
-    .pc-capacity__legend .l-new { color: var(--fg-dim); }
+
+    /* viz 5: courses completed, never applied */
+    .pc-check { display: flex; flex-direction: column; gap: 11px; }
+    .pc-check__row {
+      display: flex; align-items: center; gap: 11px;
+      font-size: 12.5px; font-weight: 600; letter-spacing: 0.2px;
+      color: var(--fg-mid);
+    }
+    .pc-check__box {
+      position: relative;
+      width: 17px; height: 17px; border-radius: 5px;
+      border: 1.5px solid var(--border-mid);
+      flex: none;
+    }
+    .pc-check__row--done .pc-check__box { background: var(--p-warn); border-color: var(--p-warn); }
+    .pc-check__row--done .pc-check__box::after {
+      content: ''; position: absolute; left: 5px; top: 2px;
+      width: 4px; height: 8px;
+      border: solid #fff; border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .pc-check__row--miss { color: var(--fg-dim); }
+    .pc-check__row--miss .pc-check__box { border-style: dashed; border-color: var(--p-warn-line); }
+    .pc-check__row--miss .pc-check__box::after {
+      content: ''; position: absolute; left: 7px; top: 3px;
+      width: 1.5px; height: 11px; border-radius: 2px;
+      background: var(--p-warn); opacity: .55;
+      transform: rotate(45deg);
+    }
 
     /* viz 4: a settings panel of features, mostly switched off */
     .pc-features {
@@ -1094,6 +1064,7 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .pcf--on .pcf__sw { animation: none; }
+      .pc-person--key::before { animation: none; }
     }
 
     /* Synthesis bridge: switches to brand green, the problem is solvable */
@@ -1121,7 +1092,6 @@
 
     @media (prefers-reduced-motion: reduce) {
       .pc-reveal { opacity: 1 !important; transform: none !important; }
-      .pc-capacity__drift { transition: none; }
     }
 
     /* ── FRAMEWORK / WHAT WE BUILD (three tiers) ── */
@@ -1132,6 +1102,11 @@
       margin-right: auto;
     }
     .product .section-header .lede { margin-left: auto; margin-right: auto; }
+    /* Switchboard-style label: drop the auto-number and leading rule (green, like the section above) */
+    .product .section-eyebrow::before,
+    .product .section-eyebrow::after,
+    .comparison .section-eyebrow::before,
+    .comparison .section-eyebrow::after { content: none; }
 
     .tiers {
       display: grid;
@@ -2478,90 +2453,205 @@
   <section class="hero" id="top">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-copy">
-      <div class="eyebrow">AI driftssystem for norske bedrifter</div>
       <h1>AI i drift, <span class="hl hl--a"><span class="hl__word">bygget for</span></span><br><span class="hl hl--b"><span class="hl__word">måten du faktisk arbeider på</span></span></h1>
       <p class="sub">Vi kartlegger hvordan virksomheten din drives i dag, og bygger den deretter på nytt, med AI-agentene, arbeidsflytene og programvaren du alltid har ønsket deg.</p>
-      <p class="hero-claim">Ett system, bygget rundt din bedrift, ikke omvendt.</p>
       <div class="cta-row">
         <a href="#kontakt" class="btn-primary">Ta kontakt →</a>
         <a href="#produkt" class="btn-secondary">Se hvordan det fungerer ↓</a>
       </div>
       <div class="hero-proof">
-        <div class="hero-proof__count">80+ vellykkede prosjekt</div>
+        <div class="hero-proof__count">12 000+ timer spart for kundene våre</div>
         <div class="hero-proof__rating">
-          <span class="stars" aria-hidden="true">★★★★★</span>
-          <a class="hero-proof__link" href="#cases">Se hva andre sier ›</a>
+          <span class="proof-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 7-7"/><path d="M14 8h6v6"/></svg></span>
+          <a class="hero-proof__link" href="#cases">Se hvordan vi gjorde det ›</a>
         </div>
       </div>
     </div>
 
     <div class="hero-mock-wrap" aria-hidden="true">
-      <div class="hero-mock">
-        <aside class="db-side">
-          <div class="db-brand"><svg viewBox="0 0 996 591" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M213.507 140.777L168.118 3.43107C167.441 1.38312 165.527 0 163.37 0H82.492H5.20003C1.71313 0 -0.702996 3.47925 0.514983 6.74651L130.079 354.304C131.712 358.685 137.928 358.628 139.48 354.218L213.476 144.006C213.844 142.963 213.855 141.827 213.507 140.777Z" fill="currentColor"/><path d="M219.458 584.412L335.436 238.128C336.967 233.558 343.441 233.586 344.932 238.169L416.182 457.168L373.46 587.557C372.787 589.611 370.87 591 368.708 591H224.199C220.783 591 218.373 587.651 219.458 584.412Z" fill="currentColor"/><path d="M566.619 0H423.181C419.75 0 417.339 3.37558 418.451 6.62077L537.853 355.078C539.375 359.521 545.628 359.604 547.268 355.204L621.975 154.778C622.378 153.695 622.394 152.506 622.02 151.412L571.35 3.38076C570.658 1.35858 568.757 0 566.619 0Z" fill="currentColor"/><path d="M990.812 0H848.531C846.443 0 844.575 1.29718 843.846 3.25343L627.253 584.253C626.035 587.521 628.451 591 631.938 591H775.271C777.361 591 779.231 589.699 779.958 587.739L995.5 6.7391C996.712 3.47306 994.296 0 990.812 0Z" fill="currentColor"/></svg>Din Bedrift AS</div>
-          <nav class="db-nav">
-            <a class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>Oversikt</a>
-            <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M4 19c0-3 2.2-5 5-5"/><path d="M15 6.2a3 3 0 0 1 0 5.6M14.5 14.2c2.3.6 4 2.5 4 4.8"/></svg>Kunder</a>
-            <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H6V3z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 16.5h6"/></svg>Faktura</a>
-            <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/><path d="M3 4h2l2.2 11h10l1.8-7H6.2"/></svg>Salg</a>
-            <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Prosjekter</a>
-            <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16M8 20v-6M12 20v-10M16 20v-4"/></svg>Rapporter</a>
-            <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9" r="2.6"/><circle cx="16" cy="9" r="2.6"/><path d="M3.5 18c0-2.4 2-3.8 4.5-3.8s4.5 1.4 4.5 3.8M12.5 14.4c2.1.2 4 1.6 4 3.6"/></svg>Team</a>
-            <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 3.5v2.2M12 18.3v2.2M4.6 7.5l1.9 1.1M17.5 15.4l1.9 1.1M19.4 7.5l-1.9 1.1M6.5 15.4l-1.9 1.1"/></svg>Innstillinger</a>
-          </nav>
-          <div class="db-org"><b>Din Bedrift AS</b><small>Org.nr 912 345 678</small></div>
-        </aside>
-        <div class="db-main">
-          <div class="db-top">
-            <div class="db-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-3.5-3.5"/></svg>Søk etter kunder, fakturaer, prosjekter …</div>
-            <div class="db-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.6 21a2 2 0 0 1-3.2 0"/></svg><span class="db-badge">3</span></div>
-            <div class="db-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.5a2.4 2.4 0 1 1 3.4 2.2c-.8.4-1 .9-1 1.6"/><path d="M12 17h.01"/></svg></div>
-            <div class="db-user"><span class="db-ava">MA</span><span><b>Martin Andersen</b><small>Admin</small></span></div>
-          </div>
-          <div class="db-body">
-            <div class="db-kpis">
-              <div class="db-kpi"><div class="db-kpi__h"><span>Omsetning (MTD)</span><svg class="db-spark" viewBox="0 0 32 14" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 11 7 9l4 2 5-6 4 2 6-5"/></svg></div><div class="db-kpi__v">1 245 000 <small>kr</small></div><div class="db-kpi__d">↑ 18,6%</div></div>
-              <div class="db-kpi"><div class="db-kpi__h"><span>Kostnader (MTD)</span><svg class="db-spark" viewBox="0 0 32 14" fill="none" stroke="#c2553f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4 7 6l4-3 5 5 4-2 6 4"/></svg></div><div class="db-kpi__v">785 000 <small>kr</small></div><div class="db-kpi__d down">↓ 6,3%</div></div>
-              <div class="db-kpi"><div class="db-kpi__h"><span>Resultat (MTD)</span><svg class="db-spark" viewBox="0 0 32 14" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12 7 10l4 1 5-5 4 1 6-7"/></svg></div><div class="db-kpi__v">460 000 <small>kr</small></div><div class="db-kpi__d">↑ 32,1%</div></div>
-              <div class="db-kpi"><div class="db-kpi__h"><span>Nye kunder (MTD)</span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.5"><circle cx="9" cy="8" r="3"/><path d="M4 19c0-3 2.2-5 5-5"/><path d="M17 8v6M14 11h6"/></svg></div><div class="db-kpi__v">24</div><div class="db-kpi__d">↑ 41,2%</div></div>
-            </div>
-            <div class="db-cols">
-              <div class="db-card">
-                <div class="db-card__h"><b>Omsetning siste 7 dager</b><span class="db-pill">Siste 7 dager ▾</span></div>
-                <div class="db-chart">
-                  <div class="db-bars">
-                    <div><i style="height:34%"></i><span>Man</span></div>
-                    <div><i style="height:48%"></i><span>Tir</span></div>
-                    <div><i style="height:62%"></i><span>Ons</span></div>
-                    <div class="hi"><i style="height:88%"></i><span>Tor</span></div>
-                    <div><i style="height:54%"></i><span>Fre</span></div>
-                    <div><i style="height:44%"></i><span>Lør</span></div>
-                    <div><i style="height:66%"></i><span>Søn</span></div>
-                  </div>
-                </div>
-              </div>
-              <div class="db-rt">
-                <div class="db-card">
-                  <div class="db-card__h"><b>Team &amp; snarveier</b></div>
-                  <div class="db-avatars"><i>SA</i><i>KH</i><i>MN</i><i>TB</i><i>+3</i></div>
-                  <div class="db-actions">
-                    <div class="db-act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H6V3z"/><path d="M14 3v4h4"/></svg>Ny faktura</div>
-                    <div class="db-act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Nytt prosjekt</div>
-                    <div class="db-act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M4 19c0-3 2.2-5 5-5"/><path d="M17 8v6M14 11h6"/></svg>Ny kunde</div>
-                  </div>
-                </div>
-                <div class="db-card">
-                  <div class="db-card__h"><b>Siste aktivitet</b></div>
-                  <div class="db-feed">
-                    <div class="db-fi"><span class="db-fi__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H6V3z"/><path d="M14 3v4h4"/></svg></span><span class="db-fi__t"><b>Faktura #2025-1042 betalt</b><small>Kunde: Innovate AS</small></span><span class="db-fi__amt">+ 45 000 kr</span></div>
-                    <div class="db-fi"><span class="db-fi__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span><span class="db-fi__t"><b>Tilbud godkjent</b><small>Kunde: Nordlys Consulting</small></span><span class="db-fi__amt">+ 120 000 kr</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <svg class="hero-ill" viewBox="0 0 2048 681" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dataflyt – fra kilder til levende innsikt">
+        <title>Dataflyt – fra kilder til levende innsikt</title>
+        <defs>
+          <pattern id="df-dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle class="df-dot" cx="3" cy="3" r="1.45"/></pattern>
+          <filter id="df-tinyShadow" x="-10%" y="-10%" width="130%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="0.25" flood-color="#1C2614" flood-opacity="0.13"/></filter>
+          <marker id="df-arrowHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#22301A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
+        </defs>
+        <rect class="df-stage" x="38" y="32" width="1972" height="616" rx="30"/>
+        <rect x="38" y="32" width="1972" height="616" rx="30" fill="url(#df-dots)" opacity=".90"/>
+
+        <g transform="translate(1024,68)" text-anchor="middle"><circle cx="-126" cy="-4" r="4" fill="#4A5D45"/><text class="eyebrow" x="6" y="0" style="font-family:'Inter Tight',Inter,Arial,sans-serif;font-size:13px;font-weight:750;letter-spacing:2.3px">ÉN KILDE TIL SANNHET</text></g>
+
+        <g class="connection-layer" aria-label="Flow lines">
+          <path class="flow" d="M238,285 C400,286 560,266 690,294 C770,311 822,331 890,350" fill="none" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+          <path class="flow" d="M407,170 C520,216 646,286 760,318 C815,334 855,337 890,341" fill="none" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+          <path class="flow" d="M724,206 C768,230 816,270 890,329" fill="none" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+          <path class="flow" d="M496,372 C622,378 745,393 890,376" fill="none" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+          <path class="flow" d="M668,502 C750,462 823,424 890,397" fill="none" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+          <path class="flow" d="M1190,392 C1312,382 1440,406 1608,345" fill="none" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+          <path class="solid-flow" d="M1170,486 C1238,545 1294,548 1334,518" fill="none" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+          <path class="solid-flow" d="M1334,518 L1415,472 L1500,425 L1600,372" fill="none" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#df-arrowHead)"/>
+        </g>
+
+        <g class="sources">
+        <g class="source source-hubspot">
+        <polygon points="117.7,228.8 178.0,263.6 178.0,333.2 117.7,298.4" fill="#C8D6B0" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="238.3,228.8 178.0,263.6 178.0,333.2 238.3,298.4" fill="#99AF7D" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="178.0,194.0 238.3,228.8 178.0,263.6 117.7,228.8" fill="#E6EFD8" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <g transform="matrix(-0.5800,0.3341,0.0000,0.6670,238.320,228.800)" stroke-linecap="round" stroke-linejoin="round"><circle cx="48" cy="52" r="8" fill="none" stroke="#FF5C35" stroke-width="7"/><circle cx="26" cy="36" r="6" fill="#FF5C35"/><circle cx="71" cy="26" r="6" fill="#FF5C35"/><circle cx="77" cy="62" r="6" fill="#FF5C35"/><line x1="41" y1="46" x2="30" y2="39" stroke="#FF5C35" stroke-width="6" stroke-linecap="round"/><line x1="54" y1="46" x2="67" y2="31" stroke="#FF5C35" stroke-width="6" stroke-linecap="round"/><line x1="56" y1="56" x2="72" y2="61" stroke="#FF5C35" stroke-width="6" stroke-linecap="round"/></g>
+        </g>
+        <g class="source source-excel">
+        <polygon points="288.8,99.6 347.0,133.2 347.0,200.4 288.8,166.8" fill="#B8CC98" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="405.2,99.6 347.0,133.2 347.0,200.4 405.2,166.8" fill="#87A865" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="347.0,66.0 405.2,99.6 347.0,133.2 288.8,99.6" fill="#E2ECD2" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <g transform="matrix(-0.5600,0.3226,0.0000,0.6440,405.240,99.600)" stroke-linecap="round" stroke-linejoin="round"><rect x="23" y="21" width="54" height="60" rx="4" fill="#33C481" stroke="none"/><path d="M58 21 V36 H77" fill="none" stroke="#DFF3E7" stroke-width="4"/><rect x="20" y="27" width="28" height="48" rx="3" fill="#107C41"/><path d="M27 36 L40 65 M40 36 L27 65" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/><line x1="54" y1="42" x2="70" y2="42" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity=".9"/><line x1="54" y1="53" x2="70" y2="53" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity=".9"/><line x1="54" y1="64" x2="67" y2="64" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity=".9"/></g>
+        </g>
+        <g class="source source-clay">
+        <polygon points="602.7,126.8 663.0,161.6 663.0,231.2 602.7,196.4" fill="#D9DCCF" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="723.3,126.8 663.0,161.6 663.0,231.2 723.3,196.4" fill="#B9BDAA" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="663.0,92.0 723.3,126.8 663.0,161.6 602.7,126.8" fill="#EEF1E6" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <g transform="matrix(-0.5800,0.3341,0.0000,0.6670,723.320,126.800)" stroke-linecap="round" stroke-linejoin="round"><circle cx="33" cy="27" r="18" fill="#0A157A"/><rect x="34" y="14" width="24" height="8" fill="#111" transform="rotate(-45 34 14)"/><circle cx="68" cy="52" r="18" fill="#69B8D3"/><rect x="69" y="50" width="22" height="7" fill="#111"/><circle cx="34" cy="74" r="18" fill="#29C276"/><rect x="32" y="76" width="7" height="24" fill="#111"/></g>
+        </g>
+        <g class="source source-meta">
+        <polygon points="378.8,333.6 437.0,367.2 437.0,434.4 378.8,400.8" fill="#C1D0A7" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="495.2,333.6 437.0,367.2 437.0,434.4 495.2,400.8" fill="#93AA78" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="437.0,300.0 495.2,333.6 437.0,367.2 378.8,333.6" fill="#E3ECDA" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <g transform="matrix(-0.5600,0.3226,0.0000,0.6440,495.240,333.600)" stroke-linecap="round" stroke-linejoin="round"><path d="M14 58 C22 30 35 18 48 18 C62 18 74 31 88 58 C74 86 62 98 48 98 C35 98 22 86 14 58 Z" fill="none" stroke="#1C8AF0" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M88 58 C80 30 67 18 54 18 C40 18 28 31 14 58 C28 86 40 98 54 98 C67 98 80 86 88 58 Z" fill="none" stroke="#1B74E4" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></g>
+        </g>
+        <g class="source source-google">
+        <polygon points="551.2,453.9 610.0,487.8 610.0,555.6 551.2,521.7" fill="#C8D4B1" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="668.8,453.9 610.0,487.8 610.0,555.6 668.8,521.7" fill="#9AAE82" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="610.0,420.0 668.8,453.9 610.0,487.8 551.2,453.9" fill="#E7EEDB" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <g transform="matrix(-0.5650,0.3254,0.0000,0.6497,668.760,453.900)" stroke-linecap="round" stroke-linejoin="round"><path d="M76 52 A26 26 0 1 1 67 33" fill="none" stroke="#EA4335" stroke-width="9" stroke-linecap="round"/><path d="M67 33 A26 26 0 0 1 76 52" fill="none" stroke="#4285F4" stroke-width="9" stroke-linecap="round"/><path d="M50 77 A26 26 0 0 1 28 60" fill="none" stroke="#34A853" stroke-width="9" stroke-linecap="round"/><path d="M28 60 A26 26 0 0 1 29 42" fill="none" stroke="#FBBC05" stroke-width="9" stroke-linecap="round"/><line x1="50" y1="52" x2="77" y2="52" stroke="#4285F4" stroke-width="9" stroke-linecap="round"/></g>
+        </g>
+        </g>
+
+        <g class="core" aria-label="Systemkjerne">
+              <circle class="soft-pulse" cx="1040" cy="365" r="120" fill="none" stroke="#5E7A3A" stroke-width="1.6" opacity=".28"/>
+              <polygon points="890.0,398.0 1040.0,484.0 1040.0,512.0 890.0,426.0" fill="#95AD76" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1190.0,398.0 1040.0,484.0 1040.0,512.0 1190.0,426.0" fill="#6F9250" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1040.0,312.0 1190.0,398.0 1040.0,484.0 890.0,398.0" fill="#DDE9CE" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" /><polygon points="890.0,360.0 1040.0,446.0 1040.0,474.0 890.0,388.0" fill="#AECB8E" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1190.0,360.0 1040.0,446.0 1040.0,474.0 1190.0,388.0" fill="#7BA257" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1040.0,274.0 1190.0,360.0 1040.0,446.0 890.0,360.0" fill="#D2E5BF" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" /><polygon points="890.0,322.0 1040.0,408.0 1040.0,442.0 890.0,356.0" fill="#BBD29A" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1190.0,322.0 1040.0,408.0 1040.0,442.0 1190.0,356.0" fill="#88AE63" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1040.0,236.0 1190.0,322.0 1040.0,408.0 890.0,322.0" fill="#E6EFD8" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+              <circle cx="1040" cy="325" r="7" fill="#22301A"/>
+            </g>
+
+        <g class="dashboard" aria-label="Live insight dashboard">
+        <polygon points="1530.0,382.0 1812.0,548.0 1952.0,468.0 1670.0,302.0" fill="#F7F3EA" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1812.0,548.0 1952.0,468.0 1962.0,474.0 1822.0,554.0" fill="#172014" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1742.0,78.0 2006.0,142.0 2006.0,372.0 1742.0,308.0" fill="#10120E" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1714.0,64.0 1978.0,128.0 1978.0,358.0 1714.0,294.0" fill="#F2EEE5" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1732.0,88.0 1954.0,141.8 1954.0,157.8 1732.0,104.0" fill="#EFE8DA" stroke="#9DA890" stroke-width="1.0" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <circle cx="1754.0" cy="110.0" r="4.2" fill="#A9CB86" stroke="#22301A" stroke-width="0.9"/>
+        <circle cx="1772.0" cy="114.0" r="4.2" fill="#D8C7A0" stroke="#22301A" stroke-width="0.9"/>
+        <circle cx="1790.0" cy="118.0" r="4.2" fill="#E58E8B" stroke="#22301A" stroke-width="0.9"/>
+        <polygon points="1684.0,120.0 1948.0,184.0 1948.0,414.0 1684.0,350.0" fill="#10120E" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1660.0,106.0 1924.0,170.0 1924.0,400.0 1660.0,336.0" fill="#F6F2EA" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1678.0,130.0 1900.0,183.8 1900.0,199.8 1678.0,146.0" fill="#EFE8DA" stroke="#9DA890" stroke-width="1.0" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <circle cx="1700.0" cy="152.0" r="4.2" fill="#A9CB86" stroke="#22301A" stroke-width="0.9"/>
+        <circle cx="1718.0" cy="156.0" r="4.2" fill="#D8C7A0" stroke="#22301A" stroke-width="0.9"/>
+        <circle cx="1736.0" cy="160.0" r="4.2" fill="#E58E8B" stroke="#22301A" stroke-width="0.9"/>
+        <polygon points="1622.0,162.0 1886.0,226.0 1886.0,456.0 1622.0,392.0" fill="#10120E" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1606.0,148.0 1870.0,212.0 1870.0,442.0 1606.0,378.0" fill="#FCFBF6" stroke="#22301A" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1624.0,172.0 1846.0,225.8 1846.0,241.8 1624.0,188.0" fill="#EFE8DA" stroke="#9DA890" stroke-width="1.0" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <circle cx="1646.0" cy="194.0" r="4.2" fill="#A9CB86" stroke="#22301A" stroke-width="0.9"/>
+        <circle cx="1664.0" cy="198.0" r="4.2" fill="#D8C7A0" stroke="#22301A" stroke-width="0.9"/>
+        <circle cx="1682.0" cy="202.0" r="4.2" fill="#E58E8B" stroke="#22301A" stroke-width="0.9"/>
+        <path d="M1650 238 l42 24" fill="none" stroke="#7C8C68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <path d="M1650 255 l34 20" fill="none" stroke="#7C8C68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <path d="M1650 273 l27 16" fill="none" stroke="#7C8C68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1710.0,226.0 1832.0,256.0 1832.0,298.0 1710.0,268.0" fill="#FFFFFF" stroke="#9DA890" stroke-width="1.3" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <polygon points="1710.0,296.0 1832.0,326.0 1832.0,376.0 1710.0,346.0" fill="#F8F5EE" stroke="#9DA890" stroke-width="1.3" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <path d="M1728 347 C1750 318 1768 370 1790 342 S1824 319 1848 343" fill="none" stroke="#5E7A3A" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <circle class="livedot" cx="1790.0" cy="342.0" r="4.8" fill="#7BA257" stroke="#22301A" stroke-width="1.1"/>
+        <path d="M1854 344 A24 24 0 1 0 1856 390" fill="none" stroke="#7BA257" stroke-width="5.8" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        </g>
+
+        <g class="service-connectors" aria-label="Output modules">
+        <line class="solid-flow" x1="1350" y1="542" x2="1354" y2="512" stroke-width="2.0" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+        <line class="solid-flow" x1="1428" y1="495" x2="1434" y2="465" stroke-width="2.0" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+        <line class="solid-flow" x1="1508" y1="448" x2="1514" y2="418" stroke-width="2.0" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+        </g>
+
+        <g class="service-stack" aria-label="System outputs">
+        <g class="pill" transform="translate(1350,558) rotate(-22)">
+              <rect x="-90.0" y="-22.0" width="180" height="44" rx="22.0" fill="#C9D6F2" stroke="#A7B893" stroke-width="1.7" vector-effect="non-scaling-stroke"/>
+              <text x="0" y="6" text-anchor="middle" font-family="Inter Tight, Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#243246">AI-agenter</text>
+            </g>
+        <g class="pill" transform="translate(1430,514) rotate(-22)">
+              <rect x="-161.0" y="-23.0" width="322" height="46" rx="23.0" fill="#EAB7B8" stroke="#A7B893" stroke-width="1.7" vector-effect="non-scaling-stroke"/>
+              <text x="0" y="6" text-anchor="middle" font-family="Inter Tight, Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#2E241E">Automatiserte arbeidsflyter</text>
+            </g>
+        <g class="pill" transform="translate(1510,470) rotate(-22)">
+              <rect x="-157.0" y="-23.0" width="314" height="46" rx="23.0" fill="#C9DEB2" stroke="#A7B893" stroke-width="1.7" vector-effect="non-scaling-stroke"/>
+              <text x="0" y="6" text-anchor="middle" font-family="Inter Tight, Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#24311B">Skreddersydd programvare</text>
+            </g>
+        </g>
+
+        <g class="particles" aria-label="Animated data particles">
+        <g class="flow-dot">
+              <circle r="7.0" fill="#3E5A2A" opacity="0.13"/>
+              <circle r="4.0" fill="#3E5A2A"/>
+              <animateMotion dur="3.6s" begin="0.0s" repeatCount="indefinite" calcMode="linear" path="M238,285 C400,286 560,266 690,294 C770,311 822,331 890,350"/>
+              <animate attributeName="opacity" dur="3.6s" begin="0.0s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;0.13;0.86;1"/>
+            </g>
+        <g class="flow-dot">
+              <circle r="7.0" fill="#3E5A2A" opacity="0.13"/>
+              <circle r="4.0" fill="#3E5A2A"/>
+              <animateMotion dur="3.6s" begin="0.52s" repeatCount="indefinite" calcMode="linear" path="M407,170 C520,216 646,286 760,318 C815,334 855,337 890,341"/>
+              <animate attributeName="opacity" dur="3.6s" begin="0.52s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;0.13;0.86;1"/>
+            </g>
+        <g class="flow-dot">
+              <circle r="7.0" fill="#3E5A2A" opacity="0.13"/>
+              <circle r="4.0" fill="#3E5A2A"/>
+              <animateMotion dur="3.6s" begin="1.04s" repeatCount="indefinite" calcMode="linear" path="M724,206 C768,230 816,270 890,329"/>
+              <animate attributeName="opacity" dur="3.6s" begin="1.04s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;0.13;0.86;1"/>
+            </g>
+        <g class="flow-dot">
+              <circle r="7.0" fill="#3E5A2A" opacity="0.13"/>
+              <circle r="4.0" fill="#3E5A2A"/>
+              <animateMotion dur="3.6s" begin="1.56s" repeatCount="indefinite" calcMode="linear" path="M496,372 C622,378 745,393 890,376"/>
+              <animate attributeName="opacity" dur="3.6s" begin="1.56s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;0.13;0.86;1"/>
+            </g>
+        <g class="flow-dot">
+              <circle r="7.0" fill="#3E5A2A" opacity="0.13"/>
+              <circle r="4.0" fill="#3E5A2A"/>
+              <animateMotion dur="3.6s" begin="2.08s" repeatCount="indefinite" calcMode="linear" path="M668,502 C750,462 823,424 890,397"/>
+              <animate attributeName="opacity" dur="3.6s" begin="2.08s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;0.13;0.86;1"/>
+            </g>
+        <g class="flow-dot">
+              <circle r="7.0" fill="#3E5A2A" opacity="0.13"/>
+              <circle r="4.0" fill="#3E5A2A"/>
+              <animateMotion dur="3.0s" begin="0.35s" repeatCount="indefinite" calcMode="linear" path="M1190,392 C1312,382 1440,406 1608,345"/>
+              <animate attributeName="opacity" dur="3.0s" begin="0.35s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;0.13;0.86;1"/>
+            </g>
+        <g class="flow-dot">
+              <circle r="7.4" fill="#CF7479" opacity="0.13"/>
+              <circle r="4.4" fill="#CF7479"/>
+              <animateMotion dur="2.8s" begin="0.15s" repeatCount="indefinite" calcMode="linear" path="M1170,486 C1238,545 1294,548 1334,518"/>
+              <animate attributeName="opacity" dur="2.8s" begin="0.15s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;0.13;0.86;1"/>
+            </g>
+        <g class="flow-dot">
+              <circle r="7.2" fill="#3A69A7" opacity="0.13"/>
+              <circle r="4.2" fill="#3A69A7"/>
+              <animateMotion dur="2.8s" begin="1.05s" repeatCount="indefinite" calcMode="linear" path="M1334,518 L1415,472 L1500,425 L1600,372"/>
+              <animate attributeName="opacity" dur="2.8s" begin="1.05s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;0.13;0.86;1"/>
+            </g>
+        <g class="flow-dot">
+              <circle r="7.1" fill="#3E5A2A" opacity="0.13"/>
+              <circle r="4.1" fill="#3E5A2A"/>
+              <animateMotion dur="2.6s" begin="0.35s" repeatCount="indefinite" calcMode="linear" path="M1334,518 L1415,472 L1500,425 L1600,372"/>
+              <animate attributeName="opacity" dur="2.6s" begin="0.35s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;0.13;0.86;1"/>
+            </g>
+        </g>
+
+        <g text-anchor="middle">
+          <g transform="translate(325,622)"><circle cx="-42" cy="-4" r="3.5" fill="#4A5D45"/><text class="eyebrow" x="6" y="0" style="font-family:'Inter Tight',Inter,Arial,sans-serif;font-size:13px;font-weight:750;letter-spacing:2.3px">KILDER</text></g>
+          <g transform="translate(1040,622)"><circle cx="-48" cy="-4" r="3.5" fill="#4A5D45"/><text class="eyebrow" x="6" y="0" style="font-family:'Inter Tight',Inter,Arial,sans-serif;font-size:13px;font-weight:750;letter-spacing:2.3px">SYSTEMET</text></g>
+          <g transform="translate(1740,622)"><circle cx="-56" cy="-4" r="3.5" fill="#4A5D45"/><text class="eyebrow" x="6" y="0" style="font-family:'Inter Tight',Inter,Arial,sans-serif;font-size:13px;font-weight:750;letter-spacing:2.3px">LIVE INNSIKT</text></g>
+        </g>
+      </svg>
     </div>
   </section>
 
@@ -2577,7 +2667,7 @@
         <span class="logo-mark"><img src="assets/logos/novela-klinikken.png" alt="Novela Klinikken" loading="lazy"></span>
         <span class="logo-mark"><img src="assets/logos/norwegian-fish-oil.png" alt="Norwegian Fish Oil" loading="lazy"></span>
         <span class="logo-mark"><img src="assets/logos/maxpuls.png" alt="Maxpuls" loading="lazy"></span>
-        <span class="logo-mark"><img src="assets/logos/business-online.png" alt="Business Online" loading="lazy"></span>
+        <span class="logo-mark"><img src="assets/logos/trondheim-kino.png" alt="Trondheim Kino" loading="lazy"></span>
         <span class="logo-mark"><img src="assets/logos/tbu.png" alt="TBU" loading="lazy"></span>
         <span class="logo-mark"><img src="assets/logos/trondheim-catering.png" alt="Trondheim Catering" loading="lazy"></span>
         <span class="logo-mark"><img src="assets/logos/bunnpris.png" alt="Bunnpris" loading="lazy"></span>
@@ -2590,7 +2680,7 @@
         <span class="logo-mark" aria-hidden="true"><img src="assets/logos/novela-klinikken.png" alt="" loading="lazy"></span>
         <span class="logo-mark" aria-hidden="true"><img src="assets/logos/norwegian-fish-oil.png" alt="" loading="lazy"></span>
         <span class="logo-mark" aria-hidden="true"><img src="assets/logos/maxpuls.png" alt="" loading="lazy"></span>
-        <span class="logo-mark" aria-hidden="true"><img src="assets/logos/business-online.png" alt="" loading="lazy"></span>
+        <span class="logo-mark" aria-hidden="true"><img src="assets/logos/trondheim-kino.png" alt="" loading="lazy"></span>
         <span class="logo-mark" aria-hidden="true"><img src="assets/logos/tbu.png" alt="" loading="lazy"></span>
         <span class="logo-mark" aria-hidden="true"><img src="assets/logos/trondheim-catering.png" alt="" loading="lazy"></span>
         <span class="logo-mark" aria-hidden="true"><img src="assets/logos/bunnpris.png" alt="" loading="lazy"></span>
@@ -2604,23 +2694,25 @@
   <section class="section problem">
     <div class="section-inner">
       <div class="section-header">
-        <h2>Du er lei av hype om AI.</h2>
-        <p class="lede">Du har vært på kursene. Lest artiklene. Hørt at AI vil endre alt. Det vi hører fra norske ledere er ikke at de tvilet på teknologien. Det er at <strong>ingenting av det de har prøvd faktisk har satt seg.</strong></p>
+        <span class="section-eyebrow">Utfordringen</span>
+        <h2>Kjenner du igjen noe av dette?</h2>
+        <p class="lede">Slik ser DNA-et ut hos mange av bedriftene vi jobber med. <strong>AI er en sjanse til å skrive det om.</strong></p>
       </div>
       <div class="problem-list">
 
         <article class="prob pc-reveal" style="--pc-i: 0">
           <div class="prob__num">1</div>
           <div class="prob__body">
-            <h3>Prompting er ikke en strategi.</h3>
-            <p>Et ChatGPT-abonnement er ikke et system. Det er en chat-boks. <span class="pc-strong">Ingen i bedriften får mer gjort av det alene.</span></p>
+            <h3>Driften sitter i hodene på noen få.</h3>
+            <p>Måten arbeidet faktisk blir gjort på står ikke skrevet ned noe sted. Den bor hos en håndfull folk. <span class="pc-strong">Er de borte, stopper det opp. Slutter de, begynner dere på nytt.</span></p>
           </div>
           <div class="pc-viz">
-            <div class="pc-chat" aria-hidden="true">
-              <span class="pc-chat__text">Skriv en ny melding<span class="pc-chat__caret"></span></span>
-              <span class="pc-chat__send">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="6 11 12 5 18 11"/></svg>
-              </span>
+            <div class="pc-people" aria-hidden="true">
+              <span class="pc-person"></span>
+              <span class="pc-person"></span>
+              <span class="pc-person pc-person--key"></span>
+              <span class="pc-person"></span>
+              <span class="pc-person"></span>
             </div>
           </div>
         </article>
@@ -2628,42 +2720,8 @@
         <article class="prob pc-reveal" style="--pc-i: 1">
           <div class="prob__num">2</div>
           <div class="prob__body">
-            <h3>Verktøyene snakker ikke sammen.</h3>
-            <p>CRM, regnskap, e-post, prosjekt, annonser. Alle i hver sin silo. <span class="pc-strong">Ingen av dem kjenner bedriften din.</span></p>
-          </div>
-          <div class="pc-viz">
-            <div class="pc-silos" aria-hidden="true">
-              <span class="pc-silos__chip">CRM</span>
-              <span class="pc-silos__gap">×</span>
-              <span class="pc-silos__chip">Regnskap</span>
-              <span class="pc-silos__gap">×</span>
-              <span class="pc-silos__chip">E-post</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="prob pc-reveal" style="--pc-i: 2">
-          <div class="prob__num">3</div>
-          <div class="prob__body">
-            <h3><span class="pc-count" data-count="80" data-suffix="%">0%</span> av kapasiteten går til drift.</h3>
-            <p>Rapportering, koordinering, statusmøter, oppfølging. <span class="pc-strong">Det er ikke rom igjen til å bygge noe nytt.</span></p>
-          </div>
-          <div class="pc-viz">
-            <div class="pc-capacity" aria-hidden="true">
-              <div class="pc-capacity__bar"><div class="pc-capacity__drift"></div></div>
-              <div class="pc-capacity__legend">
-                <span class="l-drift">80% drift</span>
-                <span class="l-new">20% til nytt</span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="prob pc-reveal" style="--pc-i: 3">
-          <div class="prob__num">4</div>
-          <div class="prob__body">
-            <h3>Programvaren passer aldri helt.</h3>
-            <p>Bygd for alle andre, ikke for dere. Du betaler for funksjoner du aldri bruker. <span class="pc-strong">Dere former dere etter verktøyet, ikke omvendt.</span></p>
+            <h3>Programvaren løser aldri akkurat deres behov.</h3>
+            <p>Standard software er bygd for alle andre, ikke for dere. Dere betaler for funksjoner dere aldri bruker, og bøyer arbeidsmåten rundt det verktøyet tilfeldigvis støtter, <span class="pc-strong">i stedet for omvendt.</span></p>
           </div>
           <div class="pc-viz">
             <div class="pc-features" aria-hidden="true">
@@ -2676,9 +2734,62 @@
           </div>
         </article>
 
+        <article class="prob pc-reveal" style="--pc-i: 2">
+          <div class="prob__num">3</div>
+          <div class="prob__body">
+            <h3>Midlertidige løsninger ble permanente.</h3>
+            <p>Regnearket ingen tør å røre. Systemet en konsulent bygde og forlot. <span class="pc-strong">Nødløsningen fra 2016 som fortsatt lekker tid, uke etter uke.</span></p>
+          </div>
+          <div class="pc-viz">
+            <div class="pc-sheet" aria-hidden="true">
+              <span class="pc-sheet__tag">midlertidig · 2016</span>
+              <span class="pc-sheet__cell"></span>
+              <span class="pc-sheet__cell pc-sheet__cell--hot"></span>
+              <span class="pc-sheet__cell"></span>
+              <span class="pc-sheet__cell"></span>
+              <span class="pc-sheet__cell"></span>
+              <span class="pc-sheet__cell"></span>
+              <span class="pc-sheet__cell pc-sheet__cell--hot"></span>
+              <span class="pc-sheet__cell"></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="prob pc-reveal" style="--pc-i: 3">
+          <div class="prob__num">4</div>
+          <div class="prob__body">
+            <h3>Hvert system kjenner bare sin egen bit.</h3>
+            <p>Kundene i ett system, faktura i et annet, prosjektene i et tredje. Trenger noen hele bildet, settes det sammen for hånd, <span class="pc-strong">og svaret er utdatert før det er delt.</span></p>
+          </div>
+          <div class="pc-viz">
+            <div class="pc-silos" aria-hidden="true">
+              <span class="pc-silos__chip">Kunde</span>
+              <span class="pc-silos__gap">×</span>
+              <span class="pc-silos__chip">Faktura</span>
+              <span class="pc-silos__gap">×</span>
+              <span class="pc-silos__chip">Prosjekt</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="prob pc-reveal" style="--pc-i: 4">
+          <div class="prob__num">5</div>
+          <div class="prob__body">
+            <h3>Kursene satte seg aldri.</h3>
+            <p>Dere har vært på kursene og lest artiklene. Men ingen klarte å gjøre det relevant for måten akkurat dere jobber. <span class="pc-strong">Kunnskapen ble generell, og hverdagen ble den samme.</span></p>
+          </div>
+          <div class="pc-viz">
+            <div class="pc-check" aria-hidden="true">
+              <span class="pc-check__row pc-check__row--done"><span class="pc-check__box"></span>Kurs fullført</span>
+              <span class="pc-check__row pc-check__row--done"><span class="pc-check__box"></span>Artikler lest</span>
+              <span class="pc-check__row pc-check__row--miss"><span class="pc-check__box"></span>Tatt i bruk</span>
+            </div>
+          </div>
+        </article>
+
       </div>
 
-      <div class="problem-synthesis pc-reveal" style="--pc-i: 4">
+      <div class="problem-synthesis pc-reveal" style="--pc-i: 5">
         <p>Det er ikke teknologien som svikter. Det er at <strong>ingen har bygget den rundt måten dere faktisk jobber på.</strong></p>
       </div>
     </div>
@@ -2688,8 +2799,9 @@
   <section class="section product" id="produkt">
     <div class="section-inner">
       <div class="section-header">
+        <span class="section-eyebrow">Hva vi bygger</span>
         <h2>Tre nivåer. En tilnærming.</h2>
-        <p class="lede">Fra spisset enkeltagent til fullt integrert plattform. Vi møter dere der dere er, og bygger derifra. Målet vi måler mot: <strong style="color: var(--fg);">økt omsetning per ansatt.</strong></p>
+        <p class="lede">Fra spisset enkeltagent til et helt skreddersydd system. Vi møter dere der dere er, og bygger derifra. Målet vi måler mot: <strong style="color: var(--fg);">økt omsetning per ansatt.</strong></p>
       </div>
 
       <div class="tiers">
@@ -2697,7 +2809,7 @@
         <article class="tier-card pc-reveal" style="--pc-i: 0">
           <span class="tier-pill"><span class="tier-pill__dot"></span>AI-agenter</span>
           <h3 class="tier-title">Presisjonsverktøyet.</h3>
-          <p class="tier-line">En agent for en oppgave, gjort enestående bra: sortere innboks, skrive tilbud, oppdatere CRM. <strong>Smal, rask å bygge, lett å måle.</strong></p>
+          <p class="tier-line">Én oppgave, gjort raskere av AI.</p>
           <div class="tier-viz" aria-hidden="true">
             <svg viewBox="0 0 260 152" preserveAspectRatio="xMidYMid meet">
               <line class="ln" x1="26" y1="76" x2="234" y2="76"/>
@@ -2711,7 +2823,7 @@
         <article class="tier-card pc-reveal" style="--pc-i: 1">
           <span class="tier-pill"><span class="tier-pill__dot"></span>Automatiserte arbeidsflyt</span>
           <h3 class="tier-title">Prosesslaget.</h3>
-          <p class="tier-line">Enkeltagenter koblet til hele prosesser. AI og mennesker i samme system: <strong>fra første kundekontakt til signert tilbud i en flyt.</strong></p>
+          <p class="tier-line">AI og mennesker, side om side.</p>
           <div class="tier-viz" aria-hidden="true">
             <svg viewBox="0 0 260 152" preserveAspectRatio="xMidYMid meet">
               <line class="ln" x1="34" y1="76" x2="226" y2="76"/>
@@ -2724,9 +2836,9 @@
         </article>
 
         <article class="tier-card tier-card--final pc-reveal" style="--pc-i: 2">
-          <span class="tier-pill"><span class="tier-pill__dot"></span>Skreddersydd plattform</span>
-          <h3 class="tier-title">Hele plattformen.</h3>
-          <p class="tier-line">Ett samlet system bygget rundt bedriften: agenter, arbeidsflyt og data i ett. <strong>Eid av dere, vokser med dere.</strong></p>
+          <span class="tier-pill"><span class="tier-pill__dot"></span>Skreddersydd programvare</span>
+          <h3 class="tier-title">Ditt eget system.</h3>
+          <p class="tier-line">F.eks. et CRM som kjenner kundene dine — ikke alle andres.</p>
           <div class="tier-viz" aria-hidden="true">
             <svg viewBox="0 0 260 152" preserveAspectRatio="xMidYMid meet">
               <rect class="win" x="20" y="20" width="220" height="112" rx="9"/>
@@ -3001,8 +3113,9 @@
   <section class="section comparison" id="sammenligning">
     <div class="section-inner">
       <div class="section-header">
-        <h2>Tre måter å gjøre dette feil på. En riktig.</h2>
-        <p class="lede">De andre veiene er ikke dumme. De løser bare ikke det du faktisk sitter med.</p>
+        <span class="section-eyebrow">Slik sammenligner vi oss</span>
+        <h2>Mange måter å gjøre dette på. <span class="h2-accent">Én som varer.</span></h2>
+        <p class="lede">Strategi uten gjennomføring. Programvare uten tilpasning. Løsninger uten oppfølging. Vi tar de tunge delene, og blir værende for resten.</p>
       </div>
 
       <div class="comp-hint">
@@ -3024,45 +3137,45 @@
           <tbody>
             <tr>
               <td>Hva du får</td>
-              <td class="td-wabi">Et system bygget rundt din bedrift, lag for lag</td>
-              <td>Spredte verktøy og prompts som ikke henger sammen</td>
-              <td>En generisk arbeidsflyt designet for alle andre</td>
-              <td>En rapport, en plan, og deretter regningen</td>
+              <td class="td-wabi">Produksjonsklar programvare, bygget rundt deg.</td>
+              <td>En intern prototype.</td>
+              <td>Et ferdigpakket produkt.</td>
+              <td>En strategipresentasjon.</td>
             </tr>
             <tr>
               <td>Tilpasning</td>
-              <td class="td-wabi">Bygget på deres kontekst, verktøy og mål</td>
-              <td>Avhengig av hvem internt som gidder</td>
-              <td>Det produktet tillater, ikke mer</td>
-              <td>Ofte malverk gjenbrukt fra forrige kunde</td>
+              <td class="td-wabi">Kartlagt før vi bygger.</td>
+              <td>Bare så grundig som du har tid til.</td>
+              <td>Bygget for gjennomsnittet av markedet.</td>
+              <td>Utenfra og inn.</td>
             </tr>
             <tr>
               <td>Fart</td>
-              <td class="td-wabi">Konkret prototype på noen få uker</td>
-              <td>Når noen får tid, altså sjelden</td>
-              <td>Rask å kjøpe, treig å få verdi fra</td>
-              <td>Lange forprosjekter før noe skjer</td>
+              <td class="td-wabi">I drift på uker.</td>
+              <td>Rask å starte, treig å fullføre.</td>
+              <td>Rask å kjøpe, treig å tilpasse.</td>
+              <td>Måneder med kartlegging.</td>
             </tr>
             <tr>
               <td>AI</td>
-              <td class="td-wabi">Kjernen i systemet, ikke en ettermontert knapp</td>
-              <td>Et ChatGPT-abonnement og godt mot</td>
-              <td>En «AI-funksjon» limt på i etterkant</td>
-              <td>Avhenger helt av hvem du får på teamet</td>
+              <td class="td-wabi">I arbeidsflyten, med trygge rammer.</td>
+              <td>Din å feilsøke klokka to om natta.</td>
+              <td>En chat-boks.</td>
+              <td>I anbefalingene.</td>
             </tr>
             <tr>
               <td>Etter lansering</td>
-              <td class="td-wabi">Vi blir med, legger på lag og justerer</td>
-              <td>Du står igjen alene med det halvferdige</td>
-              <td>Du betaler videre uansett om det brukes</td>
-              <td>Teamet er borte når fakturaen er betalt</td>
+              <td class="td-wabi">Teamet ditt, lært opp til å drifte det.</td>
+              <td>Du er supportteamet.</td>
+              <td>En support-kø.</td>
+              <td>Oppdraget tar slutt.</td>
             </tr>
             <tr>
               <td>Eierskap</td>
-              <td class="td-wabi">Du eier systemet, dataene og logikken</td>
-              <td>Du eier rotet ditt</td>
-              <td>Leverandøren eier plattformen og dataene</td>
-              <td>Uklart, og ofte låst til deres folk</td>
+              <td class="td-wabi">Kode, data, kontroll. Alt ditt.</td>
+              <td>Eid, men ustyrt.</td>
+              <td>Avhengig av en leverandør.</td>
+              <td>Du eier en presentasjon.</td>
             </tr>
           </tbody>
         </table>
@@ -3111,10 +3224,10 @@
     <div class="cta-gradient cta-gradient--top" aria-hidden="true"></div>
     <div class="cta-gradient cta-gradient--bottom" aria-hidden="true"></div>
     <div class="cta-final-inner">
-      <div class="cta-eyebrow cta-reveal" style="--reveal-i: 0">Kontakt</div>
-      <h2 class="cta-reveal" style="--reveal-i: 1">Klar når du er.</h2>
+      <div class="cta-eyebrow cta-reveal" style="--reveal-i: 0">Kontakt oss</div>
+      <h2 class="cta-reveal" style="--reveal-i: 1">La oss finne ut av AI-en&nbsp;din.</h2>
       <p class="lede cta-reveal" style="--reveal-i: 2">
-        Vi tar en uforpliktende samtale om hvilke lag som gir mest effekt for din bedrift. 30 minutter. Ingen salgspresentasjon.
+        Ta med en arbeidsflyt, en avdeling, hele selskapet, eller bare en magefølelse. Vi forteller deg hvor AI passer, hvor det ikke passer, og hva som er verdt å gjøre først.
       </p>
       <div class="cta-row cta-reveal" style="--reveal-i: 3">
         <a href="mailto:admin@wabi.no?subject=Henvendelse fra wabi.no" class="stagger-btn stagger-btn--primary" data-stagger>
@@ -3403,34 +3516,6 @@
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
         });
       });
-    })();
-
-    /* ── COUNT-UP (problem stat) ── */
-    (function() {
-      var el = document.querySelector('.pc-count');
-      if (!el) return;
-      var target = parseInt(el.dataset.count, 10) || 0;
-      var suffix = el.dataset.suffix || '';
-      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      function run() {
-        if (reduce) { el.textContent = target + suffix; return; }
-        var dur = 1150, start = null;
-        function tick(ts) {
-          if (start === null) start = ts;
-          var p = Math.min((ts - start) / dur, 1);
-          var eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = Math.round(eased * target) + suffix;
-          if (p < 1) requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-      }
-      if (!('IntersectionObserver' in window)) { run(); return; }
-      var io = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) { run(); io.unobserve(entry.target); }
-        });
-      }, { threshold: 0.6 });
-      io.observe(el);
     })();
 
     /* ── ROI CALCULATOR ── */
