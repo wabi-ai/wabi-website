@@ -250,6 +250,7 @@ const I18N = {
   "Én som varer.": "One that lasts.",
   "Strategi uten gjennomføring. Programvare uten tilpasning. Løsninger uten oppfølging. Vi tar de tunge delene, og blir værende for resten.": "Strategy without execution. Software without customisation. Solutions without follow-up. We take on the heavy lifting, and stay for the rest.",
   "Hold over eller trykk på en kolonne for å sammenligne en tilnærming av gangen.": "Hover over or tap a column to compare one approach at a time.",
+  "Scroll bortover for å se alle tilnærmingene.": "Scroll sideways to see all the approaches.",
   "Gjør-det-selv": "Do-it-yourself",
   "Standard SaaS": "Standard SaaS",
   "Konsulenthus": "Consultancy",
