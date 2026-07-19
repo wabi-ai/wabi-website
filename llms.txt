@@ -1,37 +1,44 @@
-# WABI
+# Wabi
 
-> WABI bygger AI Driftssystem for norske bedrifter. Vi er en metodikk, ikke en app. Vi hjelper små og mellomstore bedrifter med å bygge AI lag for lag, tilpasset deres kontekst, verktøy og mål, slik at bedriften kan vokse istedenfor å bare vedlikeholdes. AI i drift, bygget for måten bedriften faktisk arbeider på.
+> Wabi bygger AI driftssystem for norske bedrifter. Vi kartlegger hvordan virksomheten drives i dag, og bygger AI-agenter, automatiserte arbeidsflyter og skreddersydd programvare rundt måten bedriften faktisk arbeider på. Ett system, bygget rundt bedriften, ikke omvendt.
 
-WABI holder til i Trondheim og Singapore. Vi jobber primært med norske bedrifter i vekstfase, typisk 30 til 150 ansatte, som har forstått at AI er infrastruktur og ikke et eksperiment, men som trenger hjelp til å bygge det skikkelig.
+Wabi holder til i Trondheim og Singapore. Vi jobber primært med norske små og mellomstore bedrifter i vekstfase, typisk 30 til 150 ansatte. Vi har spart kundene våre for over 12 000 timer, i prosjekter innen blant annet aquakultur, infrastruktur, serveringskjeder, rekruttering, hotell og kommunal sektor.
 
-## Hva vi gjør
+## Problemet vi løser
 
-AI Driftssystem er et fullt kontekstualisert arbeidsrom som kjenner bedriften, tallene og målene. Det er ikke ChatGPT med ny logo. Vi bygger det sammen med kunden gjennom fem lag:
+De fleste norske SMB-er bruker 40 til 60 prosent av kapasiteten på drift, rapportering og koordinering. AI-forsøkene deres har ikke satt seg: prompting uten system, verktøy i hver sin silo som ikke snakker sammen, og standard programvare som aldri passer helt. Det er ikke teknologien som svikter. Det er at ingen har bygget den rundt måten bedriften faktisk jobber på.
 
-1. Kontekst: AI lærer hvem bedriften er, hva den selger og hva strategien er.
-2. Data: Vi kobler bedriften til alle verktøyene og systemene den allerede bruker. Ikke bare for å lese data, men for å faktisk utføre oppgaver i dem, sende epost, oppdatere CRM, sette i gang annonser, hente tall fra regnskapet og klargjøre presentasjoner.
-3. Intelligens: Daglig brief. Alt som skjedde, hva som betyr noe, hva som krever handling.
-4. Automatisering: Oppgave for oppgave fjernes fra tallerkenen og kjøres automatisk. Enkelt nok til å sette i gang fra telefonen.
-5. Bygg: Med frigjort kapasitet jobber ledelsen på bedriften, ikke bare i den.
+## Tre nivåer, en tilnærming
 
-## Hva som skiller oss
+1. AI-agenter (presisjonsverktøyet): En agent for en oppgave, gjort enestående bra. Sortere innboks, skrive tilbud, oppdatere CRM. Smal, rask å bygge, lett å måle. Settes opp på dager til uker.
+2. Automatiserte arbeidsflyter (prosesslaget): Enkeltagenter koblet til hele prosesser, med AI og mennesker i samme system. Fra første kundekontakt til signert tilbud i en flyt.
+3. Skreddersydd plattform (hele plattformen): Ett samlet system bygget rundt bedriften, med agenter, arbeidsflyt og data i ett. Kunden eier systemet, dataene og logikken. Tar måneder å bygge, og vokser med bedriften.
 
-Vi tror på å kunne jobbe mer uten å være foran laptopen. En leder skal kunne sette i gang oppgaver fra telefonen, gi en instruksjon og komme tilbake til en ferdig utført oppgave. Graden og enkelheten i automatisering er kjernen i det vi bygger.
+Vi møter bedriften der den er og bygger derfra. Målet vi måler mot er økt omsetning per ansatt. Det er indikatoren som beveger seg når et AI driftssystem faktisk virker.
 
-Målet vi måler mot er økt omsetning per ansatt. Det er indikatoren som beveger seg når et AI Driftssystem faktisk virker.
+## Resultater fra prosjekter
+
+- Aquakultur, internasjonal drift: Ukentlig statusrapport erstattet med en automatisk daglig brief satt sammen fra alle kilder, på tvers av tidssoner.
+- Infrastruktur, nordisk drift: 58 prosent mindre tid på tilbud. Selgeren dikterer på telefonen, systemet skriver tilbudet, oppdaterer CRM, sender til kunde og booker oppfølging.
+- Serveringskjede, over 30 lokasjoner: Driftsdata konsolidert på tvers av kjeden, med et prioritert morgenbrief per restaurant.
+- Rekruttering: Tre ganger så mange kvalifiserte kandidater gjennom løpet per uke, uten større team.
+- Hotell: 40 prosent kortere opplæringstid for selgere med en AI-coach som alltid er tilgjengelig.
+- Kommune: 65 prosent færre rutinehenvendelser til sentralbordet, med søk på naturlig norsk på tvers av nettside, dokumenter og tjenester.
+
+Konkrete kundenavn deles på forespørsel.
 
 ## Sammenlignet med alternativene
 
-De fleste forsøk på AI havner i en av tre grøfter: gjør-det-selv med spredte verktøy og prompts som ikke henger sammen, standard SaaS med en generisk arbeidsflyt designet for alle andre, eller et konsulenthus som leverer en rapport og en plan og deretter er borte. WABI forstår bedriften og skriver koden selv, med samme team hele veien, blir med til løsningen er i produksjon, og bygger rundt din bedrift lag for lag. Du eier systemet, dataene og logikken.
+De fleste forsøk på AI havner i en av tre grøfter: gjør-det-selv med spredte verktøy og prompts som ikke henger sammen, standard SaaS med en generisk arbeidsflyt designet for alle andre, eller et konsulenthus som leverer en rapport og en plan og deretter er borte. Wabi forstår bedriften og skriver koden selv, med samme team hele veien. Konkret prototype på noen få uker, ikke lange forprosjekter. Etter lansering blir vi med, legger på lag og justerer. Du eier systemet, dataene og logikken.
 
-## Hvem vi jobber med
+## Systemer vi kobler på
 
-Norske SMB-er som kjenner at 80 prosent av kapasiteten går til drift, rapportering og koordinering, og at det ikke er rom for å bygge noe nytt. Daglige ledere og operasjonelle ledere som vil ha praktisk AI-implementering som faktisk gir verdi, ikke kurs og prompting-workshops.
+CRM (HubSpot, Pipedrive, Salesforce), regnskap (Tripletex, Fiken, PowerOffice), e-post, kalender, prosjektverktøy (Notion, Asana, Monday) og annonser (Meta, Google). Vi kobler oss på det bedriften allerede bruker. Ingen trenger å bytte verktøy.
 
 ## Kontakt
 
-admin@wabi.no. Vi tar uforpliktende samtaler om hvilke lag som gir mest effekt for den enkelte bedrift. Svar innen én arbeidsdag.
+admin@wabi.no. Uforpliktende samtale på 30 minutter om hvilke nivåer som gir mest effekt for den enkelte bedrift. Ingen salgspresentasjon. Svar innen en arbeidsdag.
 
 ## Sider
 
-- [Hovedside](https://wabi.no): AI Driftssystem for norske bedrifter
+- [Hovedside](https://wabi.no): AI driftssystem for norske bedrifter

@@ -391,7 +391,9 @@ Object.assign(I18N, {
   "Send oss en e-post": "Send us an email",
   "Åpne e-postappen →": "Open your email app →",
   "Kopier adresse": "Copy address",
-  "Vi svarer innen én arbeidsdag.": "We reply within one business day."
+  "Vi svarer innen én arbeidsdag.": "We reply within one business day.",
+  "Hva er et AI driftssystem?": "What is an AI operating system?",
+  "Et AI driftssystem er kunstig intelligens (KI) bygget inn i den daglige driften av bedriften: AI-agenter som utfører konkrete oppgaver, arbeidsflyter som kobler systemene dine sammen, og programvare tilpasset måten dere jobber på. Ikke en chatbot på siden av driften, men en del av selve driften.": "An AI operating system is artificial intelligence (AI) built into the daily operations of your business: AI agents that carry out concrete tasks, workflows that connect your systems, and software shaped around the way you work. Not a chatbot on the side, but part of the operation itself."
 });
 
 /* ── i18n ENGINE: walks text nodes and swaps NO⇄EN, remembers choice ── */
