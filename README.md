@@ -1,59 +1,133 @@
 # Wabi website
 
-Source for Wabi's public website at https://wabi.no. The page presents Wabi's AI agents, automated workflows, and custom software for Norwegian businesses, with project examples, a savings calculator, contact links, and the AI input newsletter.
+The new Wabi website, adapted from the supplied **Wabi Design System** web prototype. It uses Manrope, warm paper and forest surfaces, atmospheric photography, restrained product previews, and Norwegian bokmål copy. Original brand artwork remains on service pages and portraits.
 
-The site uses plain HTML, CSS, and JavaScript. There is no package installation or build step. Norwegian is the default language, with an English language toggle and light/dark themes.
+The source is React, compiled into static HTML pages and a local JavaScript bundle. Every page is rendered during the build, so the initial content is available before JavaScript loads. The generated files are committed alongside the source and can be served directly from the repository root, including on GitHub Pages.
 
-## Local preview
+## Preview
 
-From the repository root, run:
+The generated site is ready to preview without installing dependencies:
 
 ```sh
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Open http://localhost:8000 in your browser. Refresh after editing files; stop the server with `Ctrl+C`. Python 3 is only needed for this preview server.
+Open http://localhost:8000. Stop the server with `Ctrl+C`. Opening `index.html` directly from Finder is not supported because the site uses paths relative to the server root.
 
-## Project files
+## Edit and build
 
-| File | Purpose |
+Use Node.js 20 or newer and npm:
+
+```sh
+npm ci
+npm run build
+npm run check
+npm run preview
+```
+
+Refresh the browser after rebuilding. There is no automatic rebuild watcher. Edit `src/`, not the generated HTML or `assets/site/` files.
+
+| Location | Purpose |
 | --- | --- |
-| `index.html` | Main page, inline styles, interactive behavior, metadata, and structured data. |
-| `i18n.js` | Norwegian-to-English translations and language switching. |
-| `assets/` | Background images, Wabi branding, social preview image, and customer/integration logos. |
-| `404.html` | Custom not-found page. |
-| `CNAME` | Custom domain declaration: `wabi.no`. |
-| `robots.txt` | Crawler rules and sitemap location. |
-| `sitemap.xml` | Public page URL and last-modified date. |
-| `llms.txt` | Text summary of Wabi's services and project examples. |
+| `src/pages/Home.jsx` | Homepage, client logos, three service levels, project carousel, and people. |
+| `src/pages/Shell.jsx` | Header, mobile navigation, and page links. |
+| `src/pages/Footer.jsx` | Shared photographic footer and AI-input signup. |
+| `src/footer.css` | Original footer layout with current Wabi typography and colours. |
+| `src/pages/Contact.jsx` | Contact form that prepares an email draft. |
+| `src/pages/Assessment.jsx` | Five-step assessment and immediate recommendations. |
+| `src/pages/Parts.jsx` | Shared service/project sections and diagrams. |
+| `src/pages/` | Service pages and interactive project examples adapted from the prototype. |
+| `src/App.jsx` | Routes, page titles, browser history, and page selection. |
+| `src/site-data.js` | Shared service names, descriptions, and colours. |
+| `src/site.css` | Site styling and mobile layout adjustments. |
+| `src/navigation.css` | Floating header, visual dropdowns, and mobile navigation. |
+| `src/cases.css` | Centred case carousel, project illustrations, and motion. |
+| `src/home-sections.css` | Photo hero, client logos, three service levels, team, footer/newsletter, and reveal motion. |
+| `src/prototype.css` | Layout rules retained from the supplied prototype. |
+| `src/tokens/` | Design system colours, typography, and spacing. |
+| `src/components/` | Reusable components from the supplied design system. |
+| `assets/design/` | Supplied artwork, portraits, and logos used by the new site. |
+| `assets/site/` | Generated production JavaScript and CSS. |
+| `scripts/build.mjs` | Compiles the prototype's shared-scope page files, bundles React, and renders all routes. |
+| `scripts/check.mjs` | Checks rendered headings, local assets, internal destinations, and form configuration. |
+| `docs/design-system.md` | Original supplied brand and design guidance. |
 
-## Making changes
+Page files retain the prototype's shared function scope: the build assembles them in the order declared in `scripts/build.mjs`. Components under `src/components/` use ordinary module imports. To add a page, register it in the build list and in `src/App.jsx`.
 
-- Edit page content and layout in `index.html`. CSS lives in its `<style>` block; most interactive code is in the script near the end of the file.
-- When changing Norwegian copy, update its matching entry in `i18n.js`. Translation keys must match the Norwegian text exactly after trimming and collapsing whitespace. Placeholder text and accessibility labels have separate dictionaries. Text generated by scripts may also need changes in `index.html`.
-- Add or replace images in `assets/`, then update their references and relevant alternative text.
-- Keep page titles, descriptions, social previews, structured data, and `llms.txt` consistent with substantive content changes. Update `sitemap.xml`'s last-modified date when appropriate.
+## Pages
 
-Language and theme preferences are saved in the browser under `wabi-lang` and `wabi-theme` in local storage.
+- `/` — homepage
+- `/ai-agenter/`, `/automatisering/`, `/verktoy-og-programvare/`, `/kurs/` — services
+- `/prosjekter/rapportering/`, `/prosjekter/bruktbil/`, `/prosjekter/legekontor/`, `/prosjekter/nettside/` — illustrative project examples
+- `/kartlegging/` — five-step assessment
+- `/kontakt/` — contact
 
-## Integrations
+URLs can be opened directly, refreshed, shared, and navigated with the browser's Back and Forward buttons. This edition follows the supplied Norwegian, light-theme design. The previous English translation file is retained in the repository but is not loaded by the remake.
 
-- **Contact:** Calls to action open a contact popup with email links to `ulrik@wabi.no` and an option to copy the address.
-- **Newsletter:** The form posts to Kit (formerly ConvertKit). `KIT_FORM_ID` in `index.html` selects the destination form. The current code uses a `no-cors` request and displays the confirmation message even when the request fails, so that message alone does not verify a subscription. An empty form ID displays the message without submitting.
-- **Fonts:** Montserrat and Space Mono are loaded from Google Fonts.
+## Navigation
 
-The newsletter uses the configured Kit form during local previews too; submitting it sends a real subscription request.
+The shared header contracts into a neutral frosted-glass floating pill after scrolling, with the desktop menu centred between the logo and contact button. The pill and dropdowns use a subtle glass finish with 70–78% opaque neutral tint, desaturated background blur, dark text, and a fine highlight. Browsers without backdrop-filter support, or with reduced transparency enabled, receive solid surfaces. “Hva vi gjør” opens a service list with artwork that changes on hover or keyboard focus; “Prosjekter” opens two visual example cards. Desktop menus support hover, click, Arrow Down, Tab, and Escape. On screens up to 860px, the menu becomes a tap-operated accordion. Outside clicks, focus leaving the header, and route changes close it. Reduced-motion preferences disable transitions.
 
-## Checking changes
+## Case section
 
-There is no automated test suite configured. Preview changes in a browser and check the features affected:
+The homepage uses a centred, bounded horizontal rail of portrait cards, inspired by the spacing and hierarchy of Wonderful’s case section. The heading and controls are centred; soft edge fades blend the rail into the page. Fades do not intercept input and disappear while the rail contains keyboard focus. Muted backgrounds frame upright illustrative product interfaces for reporting, car sales, websites, and clinic administration. These are concept previews, not customer screenshots. The rail supports native touch/trackpad scrolling, snapping, previous/next controls, and Arrow Left/Right or Home/End when the rail is focused. Controls reflect scroll boundaries and a progress line follows the scroll position. Reduced-motion preferences remove transitions and smooth programmatic scrolling.
 
-- Desktop and mobile layouts, including navigation and overflow.
-- Norwegian and English copy, plus both color themes.
-- Calculator sliders, case dialogs, FAQs, and contact popup behavior.
-- Keyboard navigation, visible focus, and dialog dismissal.
-- Image loading, links, and browser console errors.
+## Homepage design
+
+The homepage follows a minimal sequence: photographic introduction, all 11 customer logos, four illustrative cases, the three service levels, and the team. The hero reuses the existing cloud photograph at `assets/footer-bg.jpg`, with a dark overlay, large regular-weight type, and a clear contact action. The header uses white text over the image and switches to neutral glass with dark text after scrolling. Service descriptions sit in open columns on a full-width forest background. The homepage footer keeps the original centered contact invitation and rounded oat card with AI-input signup and practical links. Its supplied wave artwork, `assets/footer-waves.png`, fades in gradually from the oat page colour at the top. The original gradient remains available at `assets/footer-atmosphere.png`. The footer uses the original flat layout. Service and project pages use an integrated paper footer with a small accent in the page colour; contact and assessment use a compact paper variant. Inner pages omit the repeated generic contact invitation.
+
+Offscreen section headings and content receive a short, subtle entrance transition. Content is visible in the static HTML and without JavaScript; reduced-motion preferences bypass the effect. Native page scrolling is preserved. Desktop and a 400px mobile viewport were visually reviewed during this redesign, including the carousel controls and mobile navigation.
+
+## Content retained from the previous site
+
+The homepage includes all 11 unique customer logos from the previous “I godt selskap” strip. They appear in a static, responsive grid with a monochrome CSS treatment; the original assets are preserved. The service section retains “Tre nivåer. Én tilnærming.”: AI-agenter, automatiserte arbeidsflyter, and skreddersydd programvare, presented as three open columns using Wabi typography and light text on forest. The detailed service pages retain their signature colours.
+
+The shared footer keeps the AI-input signup, navigation groups, locations, LinkedIn link, and Ulrik’s clickable portrait across three page-aware layouts. Only the homepage includes the photographic outro and centered contact invitation. The newsletter is now in the footer on every page. Generic link styles use low specificity so hovering a card preserves its own accessible text colour.
+
+## Contact and newsletter
+
+**Contact:** The form opens a populated email draft addressed to `ulrik@wabi.no`. Visitors send it using their email app. The page also provides a copy fallback. There is no contact backend, and the page never claims a message was received.
+
+**Assessment:** Recommendations are calculated locally after five steps. Answers are held in memory for the current visit, and are not submitted or emailed automatically.
+
+**Newsletter:** A native form posts to the existing Kit form, `9612918`, opening Kit in a new tab. The page does not show a local success message or assume delivery. A real submission can subscribe the entered address; use an address you control when checking the complete signup flow.
+
+**Fonts:** Manrope is loaded from Google Fonts. The embedded product examples also use Inter and Hanken Grotesk, as in the supplied prototype.
+
+## Content review
+
+The source prototype explicitly described client names, prices, and performance numbers as placeholders. Until those details are confirmed, the remake labels project stories as illustrative examples and the product screens use dummy data. The Nuet client attribution has been removed from the visible examples pending confirmation. Review project claims, service promises, and subscription delivery before publishing.
+
+SEO/AEO expansion is paused. Existing `robots.txt`, `sitemap.xml`, and `llms.txt` are retained; they have not been expanded into the previously discussed SEO programme.
 
 ## Publishing
 
-The repository contains static files ready to serve from its root. It includes a `CNAME` for GitHub Pages, but no deployment workflow is checked in. Verify the repository's hosting settings for the publishing branch and deployment method before releasing changes.
+Run `npm run build` and `npm run check`, review the result, then commit source and generated files together. Publishing still uses static files from the repository root. `CNAME` declares `wabi.no`; verify the repository hosting settings before deploying.
+
+The build and static checks do not replace a browser review. Check desktop/mobile layouts, keyboard navigation, the assessment, contact fallback, and interactive examples before release. The old design remains available in Git history.
+
+## Supplied design preview
+
+The supplied prototype can be previewed with the shared restored footer, independently of the earlier homepage redesign:
+
+```sh
+node scripts/build-design-preview.mjs "/Users/eljar/Downloads/Wabi Design System"
+python3 -m http.server 8012 --bind 127.0.0.1 --directory .build/design-preview
+```
+
+Open http://127.0.0.1:8012/ui_kits/web/. The script copies the supplied prototype into `.build/design-preview` and applies `src/pages/Footer.jsx` and `src/footer.css`; the original download stays intact. Re-run the script after editing the footer. This prototype retains its original CDN dependencies and placeholder content. Production pages still use `npm run build`.
+
+The supplied design preview shares the navigation component and glass styling with the production build. Its navbar contracts on scroll, with service previews, project cards, a mobile disclosure menu, and reduced-motion/transparency fallbacks. Body paragraphs use justified alignment with Norwegian hyphenation in `src/prose.css`.
+
+## Mintlify-inspired alternative
+
+This separate concept keeps Wabi's colours, typography, company logos, transparent-to-glass header, and wave footer. It brings project examples forward through a large switchable showcase and smaller story cards, with a product preview beneath the introduction.
+
+```sh
+npm run build:mint
+python3 -m http.server 8012 --bind 127.0.0.1 --directory .build/design-preview
+```
+
+Open http://127.0.0.1:8012/ui_kits/mint/. The previous design remains at http://127.0.0.1:8012/ui_kits/web/. Edit `src/preview/mint/` and rebuild to update the alternative. It bundles React locally and reuses the updated service, project, contact, and assessment components. Project visuals are illustrative, not attributed customer results. The build checks covered all 11 routes and their assets; this alternative still needs visual browser review.
+
+The alternative now includes an **Innsikt** section with wide article cards, a filterable guide library and three draft article pages at `/ui_kits/mint/innsikt/`. Run `npm run check:mint` after rebuilding. Content lives in `src/content/guides.json`, independently of the page layout. See [the content workflow](docs/guide-content.md) for the future update-agent design and publication setup. The local concept is marked noindex; these drafts are not part of the production build.

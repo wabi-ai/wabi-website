@@ -1,0 +1,77 @@
+[
+  {
+    "slug": "ai-kartlegging-for-bedrifter",
+    "title": "Hvor bør bedriften begynne med AI?",
+    "description": "En praktisk guide til å finne, velge og teste den første AI-oppgaven i bedriften.",
+    "category": "Guide",
+    "topic": "Kom i gang",
+    "tone": "forest",
+    "icon": "kompass",
+    "artTitle": "Én oppgave.\nEt godt sted å starte.",
+    "artSteps": ["Kartlegg", "Velg", "Test"],
+    "summary": "Start med en avgrenset oppgave som gjentas ofte, har et tydelig resultat og kan kontrolleres av den som gjør jobben. Mål dagens arbeidsmåte før dere tester en løsning.",
+    "createdAt": "2026-09-28",
+    "updatedAt": "2026-09-28",
+    "reviewStatus": "draft",
+    "reviewIntervalDays": 90,
+    "sections": [
+      {"id": "finn-oppgavene", "title": "1. Finn oppgavene som faktisk tar tid", "paragraphs": ["Begynn med arbeidsdagen, ikke med en liste over verktøy. Be medarbeiderne beskrive oppgaver de gjør flere ganger i uken: å samle tall, sortere henvendelser, finne dokumenter eller skrive førsteutkast.", "For hver oppgave skriver dere ned hvem som gjør den, hvor informasjonen kommer fra, hva som skal leveres og hvem som kontrollerer resultatet. Noter også unntakene. En rutine som virker enkel på papiret kan bestå av mange små vurderinger."], "items": ["Hvor ofte utføres oppgaven?", "Hvor lang tid tar den, inkludert kontroll og retting?", "Hvordan ser et godt resultat ut?", "Hva skjer hvis resultatet er feil?"]},
+      {"id": "velg-en-pilot", "title": "2. Velg én oppgave å prøve", "paragraphs": ["Et praktisk første forsøk er et utkast til en intern ukesrapport. Kildene er kjente, mottakerne er tilgjengelige, og en medarbeider kan kontrollere teksten før den brukes. Et annet eksempel er å sortere innkommende spørsmål i foreslåtte kategorier.", "Velg en oppgave der dere har tilgang til nødvendig informasjon og noen som kan vurdere kvaliteten. Dersom enkle regler løser oppgaven godt, kan vanlig automatisering være tilstrekkelig. AI trenger ikke være en del av alle forbedringer."]},
+      {"id": "test-og-mal", "title": "3. Sammenlign med dagens arbeidsmåte", "paragraphs": ["Prøv løsningen på et lite sett representative oppgaver. Ta med både vanlige tilfeller og noen unntak. Avtal på forhånd hva dere vil måle: tidsbruk, kvalitet, antall rettelser og behov for hjelp.", "Regn med tiden som går til å forberede informasjonen og kontrollere svaret. Et raskt førsteutkast er ikke nødvendigvis en raskere arbeidsprosess. Bruk resultatene til å velge om dere vil forbedre forsøket, ta det i bruk eller stoppe."]}
+    ],
+    "questions": [{"question": "Må vi bytte alle verktøyene våre?", "answer": "Nei. Start med oppgaven og undersøk hva dere kan gjøre med verktøyene dere allerede har. Nye systemer bør løse et konkret behov."}, {"question": "Hvordan vet vi om forsøket virker?", "answer": "Sammenlign hele oppgaven før og etter, inkludert kontroll. Avtal hva som er godt nok før testen, og be medarbeiderne som skal bruke løsningen vurdere resultatene."}],
+    "sources": [],
+    "relatedService": "kartlegging",
+    "cta": "Finn mulighetene i bedriften deres"
+  },
+  {
+    "slug": "ai-agent-eller-automatisering",
+    "title": "AI-agent eller automatisering: hva trenger dere?",
+    "description": "Forstå forskjellen mellom en fast arbeidsflyt og en AI-agent, med konkrete eksempler fra arbeidsdagen.",
+    "category": "Forklart",
+    "topic": "AI i praksis",
+    "tone": "fjord",
+    "icon": "agent",
+    "artTitle": "Fast flyt.\nEller neste steg?",
+    "artSteps": ["Oppgave", "Vurdering", "Handling"],
+    "summary": "En automatisert arbeidsflyt følger forhåndsdefinerte steg. En AI-agent kan velge neste handling ut fra oppgaven og informasjonen den får. Velg en fast flyt når stegene er kjente, og vurder en agent når veien til resultatet varierer.",
+    "createdAt": "2026-09-28",
+    "updatedAt": "2026-09-28",
+    "reviewStatus": "draft",
+    "reviewIntervalDays": 60,
+    "sections": [
+      {"id": "fast-arbeidsflyt", "title": "Hva er en automatisert arbeidsflyt?", "paragraphs": ["En arbeidsflyt beskriver hva som skjer, i hvilken rekkefølge og på hvilke vilkår. Når et skjema kommer inn, kan systemet opprette en sak, legge den i riktig kø og sende en bekreftelse.", "AI kan inngå i ett av stegene, for eksempel ved å foreslå en kategori for en henvendelse. Flyten er fortsatt forhåndsdefinert selv om ett steg bruker en språkmodell. Anthropic bruker dette skillet mellom arbeidsflyter og agenter i sin gjennomgang av agentbaserte systemer."]},
+      {"id": "agent", "title": "Hva gjør en AI-agent annerledes?", "paragraphs": ["En agent får et mål og tilgang til et avgrenset sett verktøy. Den kan velge hva den skal undersøke eller gjøre videre, og bruke resultatet fra ett steg til å planlegge det neste.", "Som et tenkt eksempel kan en intern assistent undersøke et spørsmål ved å søke i flere dokumenter. Hvilke dokumenter den trenger, avhenger av det første søket. Oppgaven har et mål, men ikke nødvendigvis en fast liste med steg."]},
+      {"id": "velg", "title": "Hvordan velger dere riktig løsning?", "paragraphs": ["Skriv først ned stegene i oppgaven. Hvis dere kan beskrive en stabil flyt med tydelige regler, begynn der. Hvis oppgaven krever valg som varierer mellom tilfeller, kan dere teste om en agent faktisk håndterer variasjonen bedre.", "Vurder også konsekvensene av feil. En assistent som foreslår et svar og en agent som sender svaret til kunden har ulike behov for kontroll. Avgrens tilganger, definer når et menneske skal godkjenne, og mål kvaliteten på representative oppgaver."], "items": ["Kjente steg og tydelige regler: vurder en fast arbeidsflyt.", "Varierende informasjonsbehov: prøv en avgrenset agent.", "En enkelt skrive- eller analyseoppgave: start med en vanlig AI-assistent."]}
+    ],
+    "questions": [{"question": "Er en chatbot det samme som en AI-agent?", "answer": "Ikke nødvendigvis. En chatbot er et samtalegrensesnitt. Den kan svare uten å utføre handlinger. En agent kan i tillegg velge og bruke verktøy for å løse en oppgave."}, {"question": "Kan vi kombinere en agent og en fast arbeidsflyt?", "answer": "Ja. En fast flyt kan inneholde et avgrenset steg der en agent undersøker noe eller lager et forslag. Resten av prosessen kan fortsatt følge faste regler."}],
+    "sources": [{"title": "Anthropic: Building effective agents", "url": "https://www.anthropic.com/engineering/building-effective-agents"}],
+    "relatedService": "tjeneste:agenter",
+    "cta": "Se hvordan vi bygger AI-agenter"
+  },
+  {
+    "slug": "skriv-en-god-ai-instruksjon",
+    "title": "Slik skriver du en AI-instruksjon kollegene kan bruke",
+    "description": "Gjør en løs forespørsel til en gjenbrukbar arbeidsinstruksjon med mål, kilder, format og kontroll.",
+    "category": "Guide",
+    "topic": "Bedre arbeidsvaner",
+    "tone": "ember",
+    "icon": "workshop",
+    "artTitle": "Fra ett godt svar\ntil en felles vane.",
+    "artSteps": ["Mål", "Kilder", "Kontroll"],
+    "summary": "En gjenbrukbar AI-instruksjon beskriver oppgaven, informasjonen modellen skal bruke, ønsket svarformat og hvordan usikkerhet skal håndteres. Test den på flere eksempler før dere deler den som en felles arbeidsmåte.",
+    "createdAt": "2026-09-28",
+    "updatedAt": "2026-09-28",
+    "reviewStatus": "draft",
+    "reviewIntervalDays": 90,
+    "sections": [
+      {"id": "beskriv-resultatet", "title": "Begynn med resultatet du trenger", "paragraphs": ["«Oppsummer dette» gir lite informasjon om hva svaret skal brukes til. Beskriv heller mottakeren, formålet og hvilke deler som er viktigst. En oppsummering for prosjektgruppen kan trenge andre detaljer enn et kort notat til en kunde.", "Et konkret utgangspunkt er: «Lag et internt møtereferat fra notatene nedenfor. Skill mellom beslutninger, åpne spørsmål og oppgaver. Ta bare med en ansvarlig eller en frist hvis det står i notatene.»"]},
+      {"id": "sett-rammene", "title": "Gjør kilder og usikkerhet tydelig", "paragraphs": ["Fortell hvilken informasjon som skal brukes, og hva modellen skal gjøre når noe mangler. For et referat kan regelen være å skrive «ikke oppgitt» i stedet for å foreslå en dato eller en ansvarlig.", "Dette er en instruksjon, ikke en garanti for at resultatet blir riktig. Den som bruker teksten må fortsatt kontrollere navn, datoer, beslutninger og andre viktige opplysninger mot kilden."], "items": ["Oppgave: Hva skal modellen gjøre?", "Grunnlag: Hvilke notater eller dokumenter skal brukes?", "Format: Hvordan skal svaret struktureres?", "Kontroll: Hva må et menneske kontrollere før bruk?"]},
+      {"id": "del-en-mal", "title": "Test og del en liten mal", "paragraphs": ["Prøv instruksjonen på flere typer notater, også ufullstendige eller rotete eksempler. Noter hvilke feil som oppstår, og juster én del av instruksjonen om gangen. Be en kollega prøve uten muntlig forklaring.", "Lagre malen et sted teamet allerede bruker. Ta med ett eksempel på et godt resultat, hvem som vedlikeholder malen og når den sist ble endret. Da blir det enklere å oppdage om en justering gjør arbeidet bedre eller bare endrer formuleringene."]}
+    ],
+    "questions": [{"question": "Bør instruksjonen være så lang som mulig?", "answer": "Nei. Ta med det som er nødvendig for oppgaven. Fjern gjentakelser og krav som ikke hjelper brukeren å vurdere resultatet."}, {"question": "Kan den samme malen brukes i flere AI-verktøy?", "answer": "Dere kan bruke samme oppgavebeskrivelse som utgangspunkt, men bør teste resultatet i hvert verktøy. Ikke anta at en mal gir samme kvalitet overalt."}],
+    "sources": [],
+    "relatedService": "tjeneste:kurs",
+    "cta": "Bygg gode AI-vaner i teamet"
+  }
+]

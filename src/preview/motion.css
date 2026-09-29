@@ -1,0 +1,19 @@
+:root { --wabi-motion-ease: cubic-bezier(.22, 1, .36, 1); --ease-standard: var(--wabi-motion-ease); }
+html { scroll-behavior: smooth; }
+#root :where(button, a, input, select, textarea, [role="button"]) {
+  transition: background-color 240ms var(--wabi-motion-ease), color 240ms var(--wabi-motion-ease), border-color 240ms var(--wabi-motion-ease), box-shadow 240ms var(--wabi-motion-ease), transform 240ms var(--wabi-motion-ease);
+}
+#root [style*="transition"] { transition-timing-function: var(--wabi-motion-ease) !important; }
+.wabi-page-content { animation: wabi-page-in 320ms var(--wabi-motion-ease) both; }
+.wabi-nav-dropdown { transform-origin: top center; animation: wabi-menu-in 240ms var(--wabi-motion-ease) both; }
+.noscroll, .wabi-tools-grid { scroll-behavior: smooth; }
+.wabi-outro a, .wabi-outro button { transition-timing-function: var(--wabi-motion-ease); }
+@keyframes wabi-page-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes wabi-menu-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  html, body, #root *, #root *::before, #root *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

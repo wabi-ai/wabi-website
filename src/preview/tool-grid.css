@@ -1,0 +1,16 @@
+.wabi-tools { width: 100%; max-width: 1200px; margin: 0 auto; padding: 8px 64px 48px; box-sizing: border-box; }
+.wabi-tools-inner { padding: 28px 0 20px; border-top: 1px solid var(--wabi-outline); border-bottom: 1px solid var(--wabi-outline); }
+.wabi-tools h2 { margin: 0 0 20px; text-align: center; font-size: 14px; line-height: 1.5; font-weight: 700; color: var(--wabi-muted); }
+.wabi-tools-grid { display: flex; flex-wrap: nowrap; align-items: center; justify-content: space-between; gap: 20px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: var(--wabi-outline) transparent; list-style: none; padding: 6px 4px 12px; margin: 0; }
+.wabi-tools-grid li { flex: 0 0 72px; display: flex; align-items: center; justify-content: center; min-height: 44px; border-radius: 6px; scroll-snap-align: start; }
+.wabi-tools-mark { display: block; width: 72px; max-width: 100%; height: 30px; object-fit: contain; filter: grayscale(1); opacity: .62; transition: filter 320ms var(--wabi-motion-ease, ease-out), opacity 320ms var(--wabi-motion-ease, ease-out); }
+.wabi-tools-grid li:hover .wabi-tools-mark, .wabi-tools-grid li:focus-visible .wabi-tools-mark, .wabi-tools-grid li:active .wabi-tools-mark { filter: grayscale(0); opacity: 1; }
+.wabi-tools-grid li:focus-visible { outline: 2px solid var(--wabi-moss); outline-offset: 3px; }
+@media (max-width: 600px) {
+  .wabi-tools { padding: 8px 24px 36px; }
+  .wabi-tools-grid { gap: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wabi-tools-mark { transition: none; }
+  .wabi-tools-grid { scroll-behavior: auto; }
+}

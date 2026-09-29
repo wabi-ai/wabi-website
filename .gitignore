@@ -1,3 +1,6 @@
 .DS_Store
 Hero section.png
 _originals/
+node_modules/
+.build/
+.npm-cache/

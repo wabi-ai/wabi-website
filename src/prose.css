@@ -1,0 +1,14 @@
+/* Justify body copy; Norwegian language metadata enables word hyphenation. */
+.wabi-page main p,
+.wabi-outro-cta > p,
+.wabi-footer-news-intro > p,
+.wabi-footer-brand > p {
+  text-align: justify !important;
+  text-align-last: start;
+  text-justify: inter-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  hyphenate-limit-chars: 7 3 3;
+  overflow-wrap: break-word;
+  text-wrap: wrap !important;
+}

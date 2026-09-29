@@ -1,0 +1,21 @@
+:root{
+/* Core ink family */
+--wabi-forest:#143D24;--wabi-moss:#1E5631;--wabi-evergreen:#065222;
+/* Paper */
+--wabi-oat:#F4F1E7;--wabi-card:#F6F5EC;--wabi-raised:#FDF9F1;--wabi-tint:#E9F0E9;
+/* Text */
+--wabi-ink:#040404;--wabi-muted:#5E6570;--wabi-sage:#CFE0D4;
+/* Lines */
+--wabi-outline:#E2DECF;--wabi-outline-tint:#C8DAC8;
+/* Blob contents — reference only, never used on text/buttons/icons */
+--wabi-blob-lime:#87C346;--wabi-blob-leaf:#57A447;--wabi-blob-teal:#216957;--wabi-blob-deep:#214F57;--wabi-blob-slate:#4E6868;
+/* Logo — locked */
+--wabi-logo-black:#000000;--wabi-logo-white:#FFFFFF;
+
+/* Semantic aliases */
+--color-primary:var(--wabi-forest);--color-secondary:var(--wabi-moss);--color-display:var(--wabi-evergreen);
+--surface-page:var(--wabi-oat);--surface-card:var(--wabi-card);--surface-raised:var(--wabi-raised);--surface-tint:var(--wabi-tint);--surface-feature:var(--wabi-moss);--surface-strong:var(--wabi-forest);
+--text-heading:var(--wabi-forest);--text-display:var(--wabi-evergreen);--text-body:var(--wabi-forest);--text-ink:var(--wabi-ink);--text-muted:var(--wabi-muted);--text-accent:var(--wabi-moss);--text-on-dark:var(--wabi-oat);--text-on-dark-muted:var(--wabi-sage);
+--border-default:var(--wabi-outline);--border-tint:var(--wabi-outline-tint);
+--icon-main:var(--wabi-forest);--wabi-icon-accent:#1E5631;
+}
