@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import Band from '../../components/Band.astro';
 import CtaPanel from '../../components/CtaPanel.astro';
+import ToolLogo from '../../components/ToolLogo.astro';
 import { breadcrumbLd } from '../../lib/seo.js';
 import { CASES } from '../../data/cases.js';
 import { Dashboard, AdsAndAudience } from '../../react/ReportUI.jsx';
@@ -26,7 +27,13 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
 
   {c.demo ? <>
     <section class="container facts-row" aria-label="Fakta om prosjektet">
-      <dl>{c.facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+      <dl>{c.facts.map(([k, v]) => <div><dt>{k}</dt><dd>
+        {k === 'Kilder' && c.sourceLogos ? <span class="source-logos">
+          {c.sourceLogos.map(([name, src]) => <span class="source-logo" title={name}>
+            {src ? <img src={src} alt={name} width="32" height="32" /> : <ToolLogo name={name} size={32} />}
+          </span>)}
+        </span> : v}
+      </dd></div>)}</dl>
       {c.flow && <ol class="flow">{c.flow.map(([t, s], i) => <li><span class="mono">{i + 1}</span><strong>{t}</strong><span>{s}</span></li>)}</ol>}
     </section>
     {c.shots && <section class="container shots" aria-labelledby="shots-title">
@@ -94,6 +101,9 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
   .facts-row dl { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin: 0; padding: 24px 0; border-top: 1px solid var(--wabi-outline); border-bottom: 1px solid var(--wabi-outline); }
   .facts-row dt { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--wabi-muted); }
   .facts-row dd { margin: 6px 0 0; font-size: 15px; font-weight: 700; }
+  .source-logos { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding-top: 4px; }
+  .source-logo { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; }
+  .source-logo img { width: 32px; height: 32px; object-fit: contain; }
   .facts-row .flow { border-top: 0; margin-top: 8px; }
   .shots { padding-bottom: clamp(56px, 7vw, 96px); }
   .shots .split-head { margin-bottom: 36px; }
