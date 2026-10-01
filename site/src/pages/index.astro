@@ -7,8 +7,7 @@ import ToolLogo from '../components/ToolLogo.astro';
 import Icon from '../components/Icon.astro';
 import HeroLive from '../components/hero/HeroLive.astro';
 import { SERVICES, SITE } from '../data/site.js';
-import { CASES } from '../data/cases.js';
-import CaseCard from '../components/CaseCard.astro';
+import CaseList from '../components/CaseList.astro';
 
 
 
@@ -19,8 +18,6 @@ const principles = [
   ['menneske', 'Mennesket bestemmer', 'AI gjør stegene. Folk tar beslutningene og eier resultatet.'],
 ];
 
-// Project cards come from the case data; the first is shown wide.
-const cases = CASES.map(c => ({ href: `/prosjekter/${c.slug}/`, kind: c.demo, client: c.client || c.category, service: c.service, ...c.home }));
 
 // Home shows three guides, newest first; ties keep this editorial order.
 const guideOrder = ['hvordan-bruke-chatgpt-i-bedriften', 'hvorfor-ai-opplaering-feiler', 'ai-verktoy-smabedrifter', 'ai-i-salg', 'ai-kurs-for-bedrifter'];
@@ -93,13 +90,11 @@ const jsonLd = [
     <div class="section-head section-head-row" data-reveal>
       <div><span class="eyebrow">Prosjekter</span><h2 id="results-title" class="display-lg">Bygget for ekte bedrifter.<br />I bruk i dag.</h2></div>
       <div class="results-side">
-        <p class="lead">Løsninger vi har bygget for kundene våre. Alle kan du prøve selv på prosjektsidene.</p>
+        <p class="lead">Løsninger vi har bygget for kundene våre. På hver prosjektside kan du prøve løsningen selv.</p>
         <a href="/prosjekter/" class="text-link">Alle prosjekter <span aria-hidden="true">→</span></a>
       </div>
     </div>
-    <div class="cases">
-      {cases.map((c, i) => <CaseCard {...c} wide={i === 0} delay={(i % 3) * 90} />)}
-    </div>
+    <CaseList />
   </section>
 
   <!-- INSIGHT -->
@@ -210,7 +205,6 @@ const jsonLd = [
 
   /* RESULTS */
   .results-side { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; max-width: 380px; }
-  .cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 
   /* INSIGHT */
   .insight { border-top: 1px solid var(--wabi-outline); }
@@ -290,7 +284,6 @@ const jsonLd = [
     .service-panels { grid-template-columns: 1fr; }
     .service-panels :global(.blob-panel) { min-height: 520px !important; }
     .service-panels p { min-height: auto; margin-bottom: 16px; }
-    .cases { grid-template-columns: minmax(0, 1fr); }
     .faq, .team { grid-template-columns: 1fr; gap: 40px; }
     .principles-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .section-head-row { flex-direction: column; align-items: flex-start; }

@@ -1,0 +1,60 @@
+---
+// Editorial project list: one case per row, no mock UI. On hover the row fills with the case's
+// colour and the grainy Wabi blob slides in from the right.
+import { CASES } from '../data/cases.js';
+const TONES: Record<string, [string, string]> = {
+  fjord: ['#24466F', 'wabi-blob-fjord.webp'], ember: ['#6E1D14', 'wabi-blob-ember.webp'],
+  sand: ['#4F5530', 'wabi-blob-sand.webp'], dusk: ['#3B2A5C', 'wabi-blob-dusk.webp'], forest: ['#143D24', 'wabi-blob.webp'],
+};
+const rows = CASES.map((c, i) => {
+  const [bg, blob] = TONES[c.tone] || TONES.forest;
+  return { n: i + 1, href: `/prosjekter/${c.slug}/`, name: c.client || c.category, service: c.service, bg, blob, ...c.home };
+});
+---
+<ol class="case-list">
+  {rows.map((r, i) => <li data-reveal style={`--d:${i * 70}ms;--bg:${r.bg}`}>
+    <a href={r.href}>
+      <img class="row-blob" src={'/assets/blob/' + r.blob} alt="" aria-hidden="true" loading="lazy" />
+      <span class="row-n">{r.n}</span>
+      <span class="row-name">{r.name}<small>{r.service}</small></span>
+      <span class="row-main"><strong>{r.title}</strong><span>{r.text}</span></span>
+      <span class="row-fact"><b>{r.metric}</b><span>{r.unit}</span></span>
+      <span class="row-arrow" aria-hidden="true">→</span>
+    </a>
+  </li>)}
+</ol>
+
+<style>
+  .case-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--wabi-outline); }
+  li { border-bottom: 1px solid var(--wabi-outline); }
+  a { position: relative; isolation: isolate; overflow: hidden; display: grid; grid-template-columns: 32px minmax(0, 1.2fr) minmax(0, 1.4fr) minmax(0, .8fr) 32px; gap: 32px; align-items: center; padding: 40px 28px; border-radius: 0; color: var(--wabi-forest); text-decoration: none; transition: color 350ms var(--ease-out), border-radius 350ms var(--ease-out); }
+  /* Colour fill and blob, revealed on hover. */
+  a::before { content: ''; position: absolute; z-index: -2; inset: 0; background: var(--bg); opacity: 0; transition: opacity 400ms var(--ease-out); }
+  .row-blob { position: absolute; z-index: -1; width: 70%; max-width: none; right: -18%; top: 50%; translate: 30% -50%; rotate: 10deg; opacity: 0; transition: translate 900ms var(--ease-out), opacity 500ms var(--ease-out); pointer-events: none; }
+  a:hover, a:focus-visible { color: var(--wabi-oat); border-radius: 18px; }
+  a:hover::before, a:focus-visible::before { opacity: 1; }
+  a:hover .row-blob, a:focus-visible .row-blob { opacity: .9; translate: 0 -50%; }
+
+  .row-n { align-self: start; padding-top: 10px; font-size: 13px; font-weight: 700; opacity: .5; }
+  .row-name { display: flex; flex-direction: column; gap: 8px; font-size: clamp(30px, 3.2vw, 46px); font-weight: 400; line-height: 1; letter-spacing: -.045em; overflow-wrap: anywhere; }
+  .row-name small { font-size: 13px; font-weight: 600; letter-spacing: 0; opacity: .6; }
+  .row-main { display: flex; flex-direction: column; gap: 8px; }
+  .row-main strong { font-size: clamp(19px, 1.7vw, 23px); font-weight: 500; letter-spacing: -.02em; line-height: 1.25; }
+  .row-main span { font-size: 15px; line-height: 1.55; opacity: .72; }
+  .row-fact { display: flex; flex-direction: column; gap: 6px; }
+  .row-fact b { font-size: clamp(36px, 3.4vw, 48px); font-weight: 300; line-height: 1; letter-spacing: -.05em; }
+  .row-fact span { font-size: 13px; line-height: 1.45; opacity: .65; }
+  .row-arrow { font-size: 22px; justify-self: end; transition: transform 350ms var(--ease-out); }
+  a:hover .row-arrow { transform: translateX(6px); }
+
+  @media (max-width: 1000px) {
+    a { grid-template-columns: 28px minmax(0, 1fr) 24px; gap: 14px 18px; padding: 32px 18px; }
+    .row-n { grid-row: 1; }
+    .row-name { grid-column: 2; }
+    .row-arrow { grid-column: 3; grid-row: 1; align-self: start; padding-top: 6px; }
+    .row-main, .row-fact { grid-column: 2 / -1; }
+    .row-fact { flex-direction: row; align-items: baseline; gap: 12px; }
+    .row-blob { width: 140%; right: -60%; }
+  }
+  @media (prefers-reduced-motion: reduce) { a, a::before, .row-blob, .row-arrow { transition: none; } }
+</style>
