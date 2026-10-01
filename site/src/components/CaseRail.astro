@@ -1,0 +1,119 @@
+---
+// Project cards in the design-system style: square blob cards with title and service at the top,
+// a diagonal arrow, the client mark at the bottom and a paper note that rises on hover.
+// `layout="rail"` scrolls sideways with arrows; `layout="grid"` wraps.
+interface Props { layout?: 'rail' | 'grid'; }
+const { layout = 'rail' } = Astro.props;
+
+const cards = [
+  { href: '/prosjekter/rapportering/', tone: '#1C3A27', blob: 'wabi-blob.webp', pos: 'right', title: 'AI-dashbord for et performance-byrå', sub: 'Verktøy og programvare', logo: '/assets/clients/nuet-logo-light.png', client: 'Nuet',
+    note: 'Meta, Google Ads, Analytics og Search Console samlet i ett dashbord per kunde, med en AI som forklarer på norsk hva som har endret seg.', tags: ['Meta', 'Google Ads', 'Analytics'] },
+  { href: '/prosjekter/bruktbil/', tone: '#4F5530', blob: 'wabi-blob-sand.webp', pos: 'bottom', title: 'Fagsystem for bruktbilforhandlere', sub: 'Skreddersydd programvare', client: 'M Biler',
+    note: 'Lager, kunder, prøvekjøringer, kontrakter og økonomi i ett system. Laget sammen med M Biler, og nå i bruk hos flere forhandlere.', tags: ['Lager', 'Kontrakter', 'Økonomi'] },
+  { href: '/prosjekter/nettside/', tone: '#3B2A5C', blob: 'wabi-blob-dusk.webp', pos: 'bottom', title: 'Nettsider bygget av agenter', sub: 'Bygget, hostet og drevet av agenter',
+    note: 'Agentene leser, planlegger, bygger og kontrollerer siden, og holder innholdet oppdatert etterpå. Et menneske hos oss godkjenner før noe går live.', tags: ['Kode', 'Hosting', 'Oppdatering'] },
+  { href: '/prosjekter/legekontor/', tone: '#24466F', blob: 'wabi-blob-fjord.webp', pos: 'left', title: 'Regnskapsagent for legekontor', sub: 'AI-agenter',
+    note: 'Agenten tar dagsoppgjøret, Helfo-refusjonene og egenandelene, og fører alt i Tripletex eller Fiken. Kontoret godkjenner bare avvikene.', tags: ['Helfo', 'Egenandel', 'Tripletex'] },
+];
+---
+<div class:list={['case-rail-wrap', 'is-' + layout]} data-case-rail>
+  {layout === 'rail' && <div class="rail-controls">
+    <button type="button" aria-label="Forrige prosjekt" data-rail-prev>
+      <svg width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 6H1M6 1 1 6l5 5"/></svg>
+    </button>
+    <button type="button" aria-label="Neste prosjekt" data-rail-next>
+      <svg width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h20M16 1l5 5-5 5"/></svg>
+    </button>
+  </div>}
+  <ul class="rail" data-rail tabindex={layout === 'rail' ? 0 : undefined} aria-label="Prosjekter">
+    {cards.map(c => <li>
+      <a href={c.href} class:list={['pcard', 'pos-' + c.pos]} style={`--tone:${c.tone}`}>
+        <img class="pcard-blob" src={'/assets/blob/' + c.blob} alt="" aria-hidden="true" loading="lazy" />
+        <span class="pcard-head">
+          <span class="pcard-title">{c.title}</span>
+          <svg class="pcard-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 19 19 5M7 5h12v12"/></svg>
+        </span>
+        <span class="pcard-sub">{c.sub}</span>
+        <span class="pcard-note">
+          <span>{c.note}</span>
+          <span class="pcard-tags">{c.tags.map(t => <span>{t}</span>)}</span>
+        </span>
+        <span class="pcard-client">{c.logo ? <img src={c.logo} alt={c.client} width="96" height="31" loading="lazy" /> : c.client && <b>{c.client}</b>}</span>
+      </a>
+    </li>)}
+  </ul>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-case-rail].is-rail').forEach(wrap => {
+    const rail = wrap.querySelector<HTMLElement>('[data-rail]')!;
+    const prev = wrap.querySelector<HTMLButtonElement>('[data-rail-prev]')!;
+    const next = wrap.querySelector<HTMLButtonElement>('[data-rail-next]')!;
+    const step = () => (rail.querySelector('li')?.getBoundingClientRect().width || 360) + 16;
+    const update = () => {
+      prev.disabled = rail.scrollLeft < 4;
+      next.disabled = rail.scrollLeft + rail.clientWidth > rail.scrollWidth - 4;
+    };
+    prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }));
+    rail.addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', update);
+    update();
+  });
+</script>
+
+<style>
+  .case-rail-wrap { position: relative; }
+  .rail-controls { position: absolute; top: -84px; right: 0; display: flex; gap: 10px; }
+  .rail-controls button { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--wabi-outline); background: var(--wabi-raised); color: var(--wabi-forest); cursor: pointer; transition: background 180ms ease, opacity 180ms ease; }
+  .rail-controls button:hover:not(:disabled) { background: var(--wabi-card); }
+  .rail-controls button:disabled { opacity: .35; cursor: default; }
+
+  .rail { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  .is-rail .rail { grid-auto-flow: column; grid-auto-columns: clamp(280px, 30vw, 400px); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: calc(var(--page-gutter) * -1); padding: 4px var(--page-gutter) 12px; scroll-padding-inline: var(--page-gutter); }
+  .is-rail .rail::-webkit-scrollbar { display: none; }
+  .is-rail li { scroll-snap-align: start; }
+  .is-grid .rail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rail:focus-visible { outline-offset: 4px; }
+
+  .pcard { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; aspect-ratio: 1; padding: 30px 30px 28px; border-radius: 14px; background: var(--tone); color: #F4F1E7; text-decoration: none; }
+  .is-grid .pcard { aspect-ratio: 4 / 3; }
+  .pcard-blob { position: absolute; z-index: -1; max-width: none; height: auto; pointer-events: none; transition: transform 900ms var(--ease-out); }
+  .pos-right .pcard-blob { width: 150%; left: 30%; top: 5%; rotate: 10deg; }
+  .pos-bottom .pcard-blob { width: 170%; left: -35%; top: 35%; rotate: -8deg; }
+  .pos-left .pcard-blob { width: 160%; left: -55%; top: 10%; rotate: 160deg; }
+  .pcard::after { content: ''; position: absolute; z-index: -1; inset: 0 0 auto; height: 45%; background: linear-gradient(to bottom, var(--tone) 35%, transparent); pointer-events: none; }
+  .pcard:hover .pcard-blob { transform: scale(1.06); }
+
+  .pcard-head { display: flex; justify-content: space-between; gap: 20px; }
+  .pcard-title { font-size: clamp(24px, 2.2vw, 31px); font-weight: 400; line-height: 1.12; letter-spacing: -.03em; text-wrap: balance; }
+  .pcard-arrow { flex: none; margin-top: 4px; transition: transform 300ms var(--ease-out); }
+  .pcard:hover .pcard-arrow { transform: translate(3px, -3px); }
+  .pcard-sub { margin-top: 12px; font-size: 14px; font-weight: 700; }
+
+  .pcard-note { position: absolute; left: 30px; right: 30px; bottom: 28px; display: flex; flex-direction: column; gap: 14px; padding: 18px; border-radius: 14px; background: #FBF8F1; color: #20302A; font-size: 14px; line-height: 1.55; opacity: 0; transform: translateY(14px); transition: opacity 350ms var(--ease-out), transform 450ms var(--ease-out); }
+  .pcard:hover .pcard-note, .pcard:focus-visible .pcard-note { opacity: 1; transform: none; }
+  .pcard-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pcard-tags span { padding: 4px 10px; border-radius: 100px; background: #E9EFE8; border: 1px solid #D3DED3; font-size: 12px; font-weight: 600; }
+
+  .pcard-client { margin-top: auto; transition: opacity 250ms ease; }
+  .pcard-client img { display: block; width: auto; height: 26px; }
+  .pcard-client b { font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
+  .pcard:hover .pcard-client, .pcard:focus-visible .pcard-client { opacity: 0; }
+
+  /* Touch screens have no hover: show the note under the card instead. */
+  @media (hover: none) {
+    .pcard { aspect-ratio: auto; min-height: 420px; }
+    .pcard-note { position: static; margin-top: auto; opacity: 1; transform: none; }
+    .pcard-client { order: -1; margin: 18px 0 0; }
+    .pcard:hover .pcard-client { opacity: 1; }
+  }
+  @media (max-width: 760px) {
+    .is-rail .rail { grid-auto-columns: 84vw; }
+    .is-grid .rail { grid-template-columns: minmax(0, 1fr); }
+    .rail-controls { display: none; }
+    .pcard { padding: 24px; }
+    .pcard-note { left: 24px; right: 24px; bottom: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .pcard-blob, .pcard-note, .pcard-arrow { transition: none; } }
+</style>
