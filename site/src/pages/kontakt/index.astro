@@ -6,6 +6,7 @@ import { SITE } from '../../data/site.js';
 
 const crumbs = [{ label: 'Kontakt', href: '/kontakt/' }];
 const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', name: 'Kontakt Wabi', url: SITE.url + '/kontakt/', about: { '@id': SITE.url + '/#org' } };
+const live = Boolean(SITE.contactFormKey);
 ---
 <Base title="Kontakt Wabi | AI-rådgivning" description="Ta kontakt med Wabi. Fortell hva dere bruker mye tid på, så ser vi sammen på om AI kan gjøre arbeidsdagen enklere." jsonLd={[breadcrumbLd(crumbs), contactLd]}>
   <PageHero crumbs={crumbs} eyebrow="Kontakt" title="En oppgave er nok å starte med."
@@ -21,25 +22,38 @@ const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', na
       </div>
     </aside>
 
-    <form class="composer" data-composer data-reveal>
+    <form class="composer" data-composer data-key={SITE.contactFormKey} data-reveal novalidate>
+      <div class="row">
+        <label><span>Navn</span><input name="name" autocomplete="name" required /></label>
+        <label><span>E-post</span><input name="email" type="email" autocomplete="email" required /></label>
+      </div>
+      <div class="row">
+        <label><span>Bedrift</span><input name="company" autocomplete="organization" /></label>
+        <label><span>Telefon <em>(valgfritt)</em></span><input name="phone" type="tel" autocomplete="tel" /></label>
+      </div>
       <label><span>Hva vil dere få til?</span><textarea name="goal" rows="4" placeholder="For eksempel: raskere tilbud, færre e-poster i innboksen, bedre rapporter"></textarea></label>
       <label><span>Hva tar mest tid i dag?</span><textarea name="time" rows="4" placeholder="Beskriv en oppgave slik den gjøres i dag"></textarea></label>
-      <div class="row">
-        <label><span>Navn</span><input name="name" autocomplete="name" /></label>
-        <label><span>Bedrift</span><input name="company" autocomplete="organization" /></label>
-      </div>
+      <!-- Spam trap: humans never see or fill this. -->
+      <input type="checkbox" name="botcheck" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <div class="send">
-        <button type="submit" class="button button-primary">Åpne e-postutkast</button>
-        <p>Utkastet åpnes i e-postappen din. Du leser gjennom og sender selv til {SITE.email}.</p>
+        <button type="submit" class="button button-primary" data-submit>{live ? 'Send henvendelsen' : 'Åpne e-postutkast'}</button>
+        <p>{live ? `Henvendelsen går rett til ${SITE.email}.` : `Utkastet åpnes i e-postappen din. Du leser gjennom og sender selv til ${SITE.email}.`}</p>
       </div>
-      <details class="fallback">
-        <summary>Åpnet ikke e-postappen seg?</summary>
+      <p class="status" data-status role="status" aria-live="polite"></p>
+      <details class="fallback" data-fallback hidden={live}>
+        <summary>Fikk du ikke sendt?</summary>
         <p>Kopier meldingen og send den til <a href={'mailto:' + SITE.email}>{SITE.email}</a>.</p>
         <pre data-preview></pre>
         <button type="button" class="button button-secondary" data-copy>Kopier meldingen</button>
         <span class="copied" data-copied role="status"></span>
       </details>
     </form>
+
+    <div class="thanks" data-thanks tabindex="-1" hidden>
+      <span class="eyebrow">Takk</span>
+      <h2 class="display-md">Henvendelsen er sendt.</h2>
+      <p>Ulrik tar kontakt med deg så snart han kan. Har det hast, kan du skrive direkte til <a href={'mailto:' + SITE.email}>{SITE.email}</a>.</p>
+    </div>
   </section>
 </Base>
 
@@ -47,23 +61,70 @@ const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', na
   const form = document.querySelector<HTMLFormElement>('[data-composer]');
   if (form) {
     const email = 'ulrik@wabi.no';
-    const compose = () => {
-      const f = new FormData(form);
-      const v = (k: string) => String(f.get(k) || '').trim();
-      return `Hei Ulrik,\n\nDette vil vi få til:\n${v('goal') || '(ikke fylt ut)'}\n\nDette tar mest tid i dag:\n${v('time') || '(ikke fylt ut)'}\n\nHilsen\n${[v('name'), v('company')].filter(Boolean).join(', ')}`;
-    };
+    const key = form.dataset.key || '';
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const fallback = form.querySelector<HTMLDetailsElement>('[data-fallback]')!;
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    const v = (k: string) => String(new FormData(form).get(k) || '').trim();
+    const compose = () => `Hei Ulrik,\n\nDette vil vi få til:\n${v('goal') || '(ikke fylt ut)'}\n\nDette tar mest tid i dag:\n${v('time') || '(ikke fylt ut)'}\n\nHilsen\n${[v('name'), v('company'), v('email'), v('phone')].filter(Boolean).join('\n')}`;
     const preview = form.querySelector<HTMLElement>('[data-preview]')!;
-    form.addEventListener('input', () => { preview.textContent = compose(); });
-    preview.textContent = compose();
-    form.addEventListener('submit', e => {
+    const refresh = () => { preview.textContent = compose(); };
+    form.addEventListener('input', refresh);
+    refresh();
+
+    const showError = (msg: string) => { status.textContent = msg; status.classList.add('is-error'); };
+
+    form.addEventListener('submit', async e => {
       e.preventDefault();
-      const company = String(new FormData(form).get('company') || '').trim();
-      location.href = `mailto:${email}?subject=${encodeURIComponent('Henvendelse fra wabi.no' + (company ? ', ' + company : ''))}&body=${encodeURIComponent(compose())}`;
+      status.textContent = ''; status.classList.remove('is-error');
+      // Name and a valid e-mail are needed so Ulrik can answer.
+      const emailField = form.querySelector<HTMLInputElement>('input[name="email"]')!;
+      if (!v('name') || !emailField.checkValidity() || !v('email')) {
+        showError('Skriv inn navn og en gyldig e-postadresse, så vi kan svare deg.');
+        (v('name') ? emailField : form.querySelector<HTMLInputElement>('input[name="name"]')!).focus();
+        return;
+      }
+      if (!v('goal') && !v('time')) { showError('Fortell kort hva dere vil få til, eller hva som tar tid i dag.'); return; }
+
+      if (!key) {
+        const subject = 'Henvendelse fra wabi.no' + (v('company') ? ', ' + v('company') : '');
+        location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(compose())}`;
+        return;
+      }
+
+      submit.disabled = true; submit.textContent = 'Sender ...';
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: key,
+            subject: 'Henvendelse fra wabi.no' + (v('company') ? `, ${v('company')}` : ''),
+            from_name: 'wabi.no',
+            replyto: v('email'),
+            name: v('name'), email: v('email'), company: v('company'), phone: v('phone'),
+            'Hva vil dere få til': v('goal'), 'Hva tar mest tid i dag': v('time'),
+            botcheck: (form.querySelector<HTMLInputElement>('input[name="botcheck"]')!).checked,
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || data.success === false) throw new Error(data.message || 'Feil');
+        form.hidden = true;
+        const thanks = document.querySelector<HTMLElement>('[data-thanks]')!;
+        thanks.hidden = false;
+        thanks.scrollIntoView({ block: 'center' });
+        thanks.focus();
+      } catch {
+        submit.disabled = false; submit.textContent = 'Send henvendelsen';
+        showError('Noe gikk galt, og henvendelsen ble ikke sendt. Prøv igjen, eller kopier meldingen under.');
+        fallback.hidden = false; fallback.open = true;
+      }
     });
+
     form.querySelector('[data-copy]')!.addEventListener('click', async () => {
-      const status = form.querySelector<HTMLElement>('[data-copied]')!;
-      try { await navigator.clipboard.writeText(compose()); status.textContent = 'Meldingen er kopiert.'; }
-      catch { status.textContent = 'Kopiering er ikke tilgjengelig. Marker og kopier teksten over.'; }
+      const copied = form.querySelector<HTMLElement>('[data-copied]')!;
+      try { await navigator.clipboard.writeText(compose()); copied.textContent = 'Meldingen er kopiert.'; }
+      catch { copied.textContent = 'Kopiering er ikke tilgjengelig. Marker og kopier teksten over.'; }
     });
   }
 </script>
@@ -76,17 +137,27 @@ const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', na
   .person strong { font-size: 20px; }
   .person span { color: var(--wabi-muted); font-size: 14px; }
   .person a { margin-top: 8px; font-weight: 700; color: var(--wabi-moss); }
-  .composer { display: flex; flex-direction: column; gap: 20px; padding: clamp(24px, 3vw, 40px); border-radius: 20px; background: var(--wabi-card); border: 1px solid var(--wabi-outline); }
+  .composer, .thanks { display: flex; flex-direction: column; gap: 20px; padding: clamp(24px, 3vw, 40px); border-radius: 20px; background: var(--wabi-card); border: 1px solid var(--wabi-outline); }
+  .composer[hidden], .thanks[hidden] { display: none; }
   label { display: flex; flex-direction: column; gap: 8px; }
   label span { font-weight: 700; font-size: 15px; }
+  label em { font-style: normal; font-weight: 400; color: var(--wabi-muted); }
   textarea, input { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--wabi-outline); background: var(--wabi-raised); color: var(--wabi-forest); font: 16px/1.5 var(--font-sans); resize: vertical; }
   textarea:focus, input:focus { outline: 2px solid var(--wabi-moss); outline-offset: 1px; }
+  .trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
   .row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .send { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
   .send p { flex: 1; min-width: 220px; font-size: 13px; color: var(--wabi-muted); }
+  .send button:disabled { opacity: .6; cursor: progress; }
+  .status:empty { display: none; }
+  .status { font-size: 14px; font-weight: 600; color: var(--wabi-moss); }
+  .status.is-error { color: #A3321F; }
+  .fallback[hidden] { display: none; }
   .fallback summary { cursor: pointer; font-size: 14px; font-weight: 700; color: var(--wabi-moss); }
   .fallback p { margin: 12px 0; font-size: 14px; }
   pre { margin: 0 0 12px; padding: 16px; border-radius: 12px; background: var(--wabi-raised); border: 1px solid var(--wabi-outline); white-space: pre-wrap; font: 13px/1.6 var(--font-mono); }
   .copied { margin-left: 12px; font-size: 13px; color: var(--wabi-moss); }
+  .thanks p { color: #3B4A40; }
+  .thanks a { color: var(--wabi-moss); font-weight: 700; }
   @media (max-width: 860px) { .contact { grid-template-columns: minmax(0, 1fr); } .person { position: static; flex-direction: row; align-items: center; } .person img { width: 120px; } .row { grid-template-columns: minmax(0, 1fr); } }
 </style>

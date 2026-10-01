@@ -34,7 +34,7 @@ const faq: [string, string][] = [
 <Base title="AI-kartlegging for bedrifter | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-kartlegging', description, path: '/kartlegging/' })]}>
   <PageHero crumbs={crumbs} eyebrow="AI-kartlegging" title="Finn oppgavene der AI faktisk lønner seg."
     lead="Vi går gjennom arbeidsdagen sammen med dere og peker ut de tre til fem oppgavene der AI gir mest. Så starter vi med en."
-    primary={{ label: 'Book en kartlegging', href: '/kontakt/' }} secondary={{ label: 'Ta selvtesten', href: '#selvtest' }} />
+    primary={{ label: 'Bestill en kartlegging', href: '/kontakt/' }} secondary={{ label: 'Ta selvtesten', href: '#selvtest' }} />
 
   <div id="selvtest"><Band tone="forest"><SelfCheck /></Band></div>
 
@@ -45,7 +45,7 @@ const faq: [string, string][] = [
 
   <Steps dark eyebrow="Slik foregår det" title="Fra samtale til plan." steps={steps} />
   <FaqList faq={faq} title="Om AI-kartlegging." />
-  <CtaPanel eyebrow="Neste steg" title="Book en kartlegging." text="Vi tar en prat om bedriften deres, og avtaler hvordan kartleggingen skal gjøres." secondary={null} />
+  <CtaPanel eyebrow="Neste steg" title="Bestill en kartlegging." text="Vi tar en prat om bedriften deres, og avtaler hvordan kartleggingen skal gjøres." secondary={null} />
 </Base>
 
 <style>

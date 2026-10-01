@@ -1,7 +1,7 @@
 ---
 import BlobPanel from './BlobPanel.astro';
 interface Props { eyebrow?: string; title?: string; text?: string; tone?: string; primary?: { label: string; href: string }; secondary?: { label: string; href: string } | null; }
-const { eyebrow = 'AI-kartlegging', title = 'Finn ut hvor AI gir verdi hos dere.', text = 'Dere får en prioritert liste over oppgavene der AI lønner seg, og en klar plan for hvor dere bør starte.', tone = 'forest', primary = { label: 'Book en prat', href: '/kontakt/' }, secondary = { label: 'Les om kartleggingen', href: '/kartlegging/' } } = Astro.props;
+const { eyebrow = 'AI-kartlegging', title = 'Finn ut hvor AI gir verdi hos dere.', text = 'Dere får en prioritert liste over oppgavene der AI lønner seg, og en klar plan for hvor dere bør starte.', tone = 'forest', primary = { label: 'Ta en prat', href: '/kontakt/' }, secondary = { label: 'Les om kartleggingen', href: '/kartlegging/' } } = Astro.props;
 ---
 <section class="container cta" data-reveal>
   <BlobPanel tone={tone} layout="left" preset="k2" protect="62%" contentWidth={620} minHeight={440}>

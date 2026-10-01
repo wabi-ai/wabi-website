@@ -17,11 +17,10 @@ const principles = [
   ['menneske', 'Mennesket bestemmer', 'AI gjør stegene. Folk tar beslutningene og eier resultatet.'],
 ];
 
-// Metrics are placeholders until real, approved client numbers are in place.
+// Only real, live projects on the home page. Figures are facts about the build, not estimated savings.
 const cases = [
-  { href: '/prosjekter/rapportering/', tone: 'fjord', preset: 'w1', tag: 'Nuet · Rapportverktøy med AI', metric: 'X t', unit: 'spart hver uke', title: 'Ett dashbord for alle kanaler.', text: 'Tall fra Meta, Google og Analytics samlet per kunde, med en AI som forklarer hva som har endret seg.' },
-  { href: '/prosjekter/bruktbil/', tone: 'ember', preset: 'w2', tag: 'Bruktbilhandel · Programvare', metric: 'X %', unit: 'raskere fra henvendelse til avtale', title: 'Hele bilsalget i ett system.', text: 'Lager, kunder og avtaler samlet, med AI som foreslår neste steg for hver bil.' },
-  { href: '/prosjekter/legekontor/', tone: 'sand', preset: 'w1', tag: 'Legekontor · Automatisering', metric: 'X', unit: 'bilag behandlet per måned', title: 'Mindre papirarbeid på legekontoret.', text: 'Bilag leses, sorteres og konteres automatisk. De ansatte godkjenner med ett klikk.' },
+  { href: '/prosjekter/rapportering/', tone: 'fjord', preset: 'w1', tag: 'Nuet · Rapportverktøy med AI', metric: '4', unit: 'datakilder i ett dashbord per kunde', title: 'Ett dashbord for alle kanaler.', text: 'Meta, Google Ads, Analytics og Search Console samlet, med en AI som forklarer på norsk hva som har endret seg.' },
+  { href: '/prosjekter/bruktbil/', tone: 'ember', preset: 'w2', tag: 'Bruktbilhandel · Programvare', metric: '1', unit: 'system for lager, kunder, kontrakter og økonomi', title: 'Hele bilsalget i ett system.', text: 'Laget sammen med en forhandler, og nå i bruk hos flere. Bilkortet fyller seg selv fra registreringsnummeret.' },
 ];
 
 // Home shows three guides, newest first; ties keep this editorial order.
@@ -71,7 +70,7 @@ const jsonLd = [
         <h3>Kurs i verktøyet dere bruker</h3>
         <p>Ett kurs, ett verktøy: Claude, ChatGPT, Gemini eller Copilot, alt etter hva dere bruker eller ønsker å bruke. Vi lærer først hvordan avdelingen jobber, og bygger kurset på oppgaver dere faktisk har. Ingen generiske kurs.</p>
         <div class="course-tools">{[['Claude', 'Claude'], ['ChatGPT', 'ChatGPT'], ['Gemini', 'Gemini'], ['Microsoft Copilot', 'Copilot']].map(([name, label]) => <span><ToolLogo name={name} size={22} />{label}</span>)}</div>
-        <div class="course-actions"><a href="/kurs/" class="button button-primary">Se hvordan</a><a href="/kontakt/" class="button button-secondary">Book en prat</a></div>
+        <div class="course-actions"><a href="/kurs/" class="button button-primary">Se hvordan</a><a href="/kontakt/" class="button button-secondary">Ta en prat</a></div>
       </BlobPanel>
     </div>
   </section>
@@ -93,15 +92,17 @@ const jsonLd = [
   <!-- RESULTS -->
   <section class="section container" id="resultater" aria-labelledby="results-title">
     <div class="section-head section-head-row" data-reveal>
-      <div><span class="eyebrow">Resultater</span><h2 id="results-title" class="display-lg">Målt i timer.<br />Ikke i demoer.</h2></div>
-      <p class="lead">Hver løsning starter med en konkret oppgave og ender med et tall vi kan måle.</p>
+      <div><span class="eyebrow">Prosjekter</span><h2 id="results-title" class="display-lg">Bygget for ekte bedrifter.<br />I bruk i dag.</h2></div>
+      <div class="results-side">
+        <p class="lead">To av løsningene vi har bygget. Begge kan du prøve selv på prosjektsiden.</p>
+        <a href="/prosjekter/" class="text-link">Alle prosjekter <span aria-hidden="true">→</span></a>
+      </div>
     </div>
     <div class="cases">
-      {cases.map((c, i) => <a href={c.href} class:list={['case', { 'case-wide': i === 0 }]} data-reveal style={`--d:${(i % 2) * 90}ms`}>
-        <BlobPanel tone={c.tone} layout="left" preset={c.preset} protect="70%" contentWidth={520} minHeight={i === 0 ? 460 : 520}>
-          <span class="mono case-tag">{c.tag}</span>
+      {cases.map((c, i) => <a href={c.href} class="case" data-reveal style={`--d:${i * 90}ms`}>
+        <BlobPanel tone={c.tone} layout="left" preset={c.preset} protect="72%" contentWidth={460} minHeight={540}>
+          <span class="case-top"><span class="mono case-tag">{c.tag}</span><span class="try-tag">Prøv selv</span></span>
           <span class="case-metric">{c.metric}</span><span class="case-unit">{c.unit}</span>
-          <span class="placeholder-tag">Tall fylles inn</span>
           <h3>{c.title}</h3>
           <p>{c.text}</p>
           <span class="case-link">Se prosjektet <span aria-hidden="true">→</span></span>
@@ -219,12 +220,13 @@ const jsonLd = [
   /* RESULTS */
   .cases { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .case { display: block; text-decoration: none; }
-  .case-wide { grid-column: 1 / -1; }
   .case :global(.blob-panel) { padding: 48px; }
   .case-tag { color: var(--blob-panel-sub); text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
   .case-metric { margin-top: 12px; font-size: clamp(64px, 8vw, 120px); font-weight: 300; line-height: .95; letter-spacing: -.06em; }
-  .case-unit { margin-top: -4px; font-size: 16px; font-weight: 500; color: var(--blob-panel-sub); }
-  .placeholder-tag { padding: 4px 10px; border: 1px dashed rgba(255, 255, 255, .5); border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blob-panel-sub); }
+  .case-unit { margin-top: -4px; max-width: 320px; font-size: 16px; font-weight: 500; color: var(--blob-panel-sub); }
+  .case-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; }
+  .try-tag { flex: none; padding: 5px 12px; border-radius: 100px; background: rgba(253, 249, 241, .16); border: 1px solid rgba(253, 249, 241, .28); font-size: 12px; font-weight: 700; color: var(--wabi-oat); }
+  .results-side { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; max-width: 380px; }
   .case h3 { margin-top: 28px; font-size: clamp(24px, 2.4vw, 32px); font-weight: 400; letter-spacing: -.03em; line-height: 1.15; }
   .case p { color: var(--blob-panel-sub); font-size: 15px; max-width: 420px; }
   .case-link { display: inline-flex; gap: 8px; margin-top: 8px; font-size: 14px; font-weight: 700; }
