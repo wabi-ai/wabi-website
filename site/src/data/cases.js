@@ -20,12 +20,18 @@ export const CASES = [
   },
   {
     slug: 'bruktbil', tone: 'ember', category: 'Bruktbilhandel', service: 'Skreddersydd programvare',
+    client: 'M Biler', seoTitle: 'M Biler: fagsystem for bruktbilforhandlere | Wabi',
+    image: '/assets/cases/mbiler-kjoretoy.jpg', imageAlt: 'Lageroversikten i fagsystemet til M Biler, med biler til salgs og solgte biler',
+    shots: [
+      ['/assets/cases/mbiler-kjoretoy.jpg', 'Lageret: alle biler med bilder, status, pris og ståtid.'],
+      ['/assets/cases/mbiler-dashbord.jpg', 'Dashbordet: hurtigvalg for dagens oppgaver, bruttofortjeneste og ståtid på lageret.'],
+    ],
     title: 'Hele bilsalget i ett system.',
-    lead: 'Lager, kunder, prøvekjøringer, kontrakter og økonomi på ett sted. Laget sammen med en forhandler, og nå i bruk hos flere.',
+    lead: 'M Biler hadde lager, kunder, prøvekjøringer, kontrakter og økonomi på hvert sitt sted. Vi bygde et fagsystem som samler alt, og som nå også er i bruk hos andre forhandlere.',
     challenge: 'Lager, henvendelser, prøvekjøringer, kontrakter og økonomi lå på hvert sitt sted. De samme opplysningene om hver bil måtte skrives inn flere ganger, og det var vanskelig å se hvilke biler som sto for lenge og hva de bandt av kapital.',
-    home: { metric: '1', unit: 'system for lager, kunder, kontrakter og økonomi', title: 'Hele bilsalget i ett system.', text: 'Laget sammen med en forhandler, og nå i bruk hos flere. Bilkortet fyller seg selv fra registreringsnummeret.' },
-    demo: 'dealer', demoNote: 'Trykk «Ta imot ny bil» og prøv et bilkort, eller bytt mellom lager og kontrakter. Forhandleren og bilene er fiktive.',
-    facts: [['Bransje', 'Bruktbilforhandlere'], ['Bygget', 'Komplett salgssystem'], ['Status', 'I bruk hos flere forhandlere'], ['Oppsett', 'Egne maler og logo per butikk']],
+    home: { metric: '1', unit: 'system for lager, kunder, kontrakter og økonomi', title: 'Hele bilsalget i ett system.', text: 'Laget sammen med M Biler, og nå i bruk hos flere forhandlere. Bilkortet fyller seg selv fra registreringsnummeret.' },
+    demo: 'dealer', demoNote: 'Prøv en forenklet versjon: trykk «Ta imot ny bil» og lag et bilkort, eller bytt mellom lager og kontrakter. Bilene her er fiktive.',
+    facts: [['Kunde', 'M Biler AS'], ['Bygget', 'Komplett salgssystem'], ['Status', 'I bruk hos flere forhandlere'], ['Oppsett', 'Egne maler og logo per butikk']],
     flow: [['Reg.nr inn', 'Data hentes, og bilkortet opprettes.'], ['Lager', 'Status, pris og bilder på ett sted.'], ['Kunder', 'Henvendelser og prøvekjøringer samlet per bil.'], ['Kontrakt', 'Riktig mal, ferdig utfylt, klar for signering.'], ['Økonomi', 'Bruttofortjeneste per bil og per måned.']],
     built: [
       ['Bilkortet fyller seg selv', 'Tekniske data, vekter, EU-frist og miljøtall hentes automatisk. Forhandleren legger bare til pris og bilder.'],

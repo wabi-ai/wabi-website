@@ -1,17 +1,22 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
-import CaseList from '../../components/CaseList.astro';
+import CaseCard from '../../components/CaseCard.astro';
 import CtaPanel from '../../components/CtaPanel.astro';
 import { breadcrumbLd } from '../../lib/seo.js';
+import { CASES } from '../../data/cases.js';
 const crumbs = [{ label: 'Prosjekter', href: '/prosjekter/' }];
 ---
 <Base title="Prosjekter: AI-agenter, automatisering og programvare | Wabi" description="Eksempler på AI-agenter, automatisering og programvare Wabi bygger for norske bedrifter: rapportering, bruktbilhandel, legekontor og nettsider." jsonLd={[breadcrumbLd(crumbs)]}>
   <PageHero crumbs={crumbs} eyebrow="Prosjekter" title="Konkrete oppgaver. Løst i systemene folk bruker." lead="Hvert prosjekt starter med en oppgave som tar tid, og ender med noe som er i bruk." />
-  <section class="container"><CaseList /></section>
+  <section class="container grid">
+    {CASES.map((c, i) => <CaseCard href={`/prosjekter/${c.slug}/`} kind={c.demo} client={c.client || c.category} service={c.service} image={c.image} imageAlt={c.imageAlt} {...c.home} wide={i === 0} delay={(i % 3) * 90} />)}
+  </section>
   <div class="spacer"></div>
   <CtaPanel />
 </Base>
 <style>
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .spacer { height: var(--section-space); }
+  @media (max-width: 1000px) { .grid { grid-template-columns: minmax(0, 1fr); } }
 </style>
