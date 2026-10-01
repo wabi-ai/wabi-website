@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
-import CaseCard from '../../components/CaseCard.astro';
+import BlobPanel from '../../components/BlobPanel.astro';
 import CtaPanel from '../../components/CtaPanel.astro';
 import { breadcrumbLd } from '../../lib/seo.js';
 import { CASES } from '../../data/cases.js';
@@ -10,13 +10,28 @@ const crumbs = [{ label: 'Prosjekter', href: '/prosjekter/' }];
 <Base title="Prosjekter: AI-agenter, automatisering og programvare | Wabi" description="Eksempler på AI-agenter, automatisering og programvare Wabi bygger for norske bedrifter: rapportering, bruktbilhandel, legekontor og nettsider." jsonLd={[breadcrumbLd(crumbs)]}>
   <PageHero crumbs={crumbs} eyebrow="Prosjekter" title="Konkrete oppgaver. Løst i systemene folk bruker." lead="Hvert prosjekt starter med en oppgave som tar tid, og ender med noe som er i bruk." />
   <section class="container grid">
-    {CASES.map((c, i) => <CaseCard href={`/prosjekter/${c.slug}/`} kind={c.demo} client={c.client || c.category} service={c.service} image={c.image} imageAlt={c.imageAlt} {...c.home} wide={i === 0} delay={(i % 3) * 90} />)}
+    {CASES.map((c, i) => <a href={`/prosjekter/${c.slug}/`} class="case" data-reveal style={`--d:${(i % 2) * 90}ms`}>
+      <BlobPanel tone={c.tone} layout="left" preset={i % 2 ? 'w2' : 'w1'} protect="75%" contentWidth={460} minHeight={440}>
+        <span class="mono tag">{c.category} · {c.service}</span>
+        <h2>{c.title}</h2>
+        <p>{c.lead}</p>
+        <span class="link">Se prosjektet <span aria-hidden="true">→</span></span>
+      </BlobPanel>
+    </a>)}
   </section>
   <div class="spacer"></div>
   <CtaPanel />
 </Base>
 <style>
-  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .case { display: block; text-decoration: none; }
+  .case :global(.blob-panel) { padding: clamp(28px, 4vw, 48px); }
+  .tag { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--blob-panel-sub); }
+  h2 { font-size: clamp(28px, 3vw, 40px); font-weight: 400; letter-spacing: -.035em; line-height: 1.08; }
+  p { color: var(--blob-panel-sub); font-size: 15px; }
+  .link { font-weight: 700; font-size: 14px; }
+  .link span { display: inline-block; transition: transform 200ms var(--ease-out); }
+  .case:hover .link span { transform: translateX(4px); }
   .spacer { height: var(--section-space); }
-  @media (max-width: 1000px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } }
 </style>
