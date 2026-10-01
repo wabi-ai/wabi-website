@@ -1,0 +1,179 @@
+---
+// Contact as a chat in the bottom-right corner. A guided conversation (not a live AI): it collects
+// the enquiry step by step and sends it through the same Web3Forms key as the contact page.
+import { SITE } from '../data/site.js';
+---
+<div class="chat" data-chat data-key={SITE.contactFormKey}>
+  <button class="chat-launcher" type="button" aria-expanded="false" aria-controls="chat-panel" data-chat-open>
+    <span class="chat-launcher-icon" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>
+    </span>
+    <span class="chat-launcher-text">Spør oss om AI</span>
+  </button>
+
+  <section class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat med Wabi" hidden data-chat-panel>
+    <header class="chat-head">
+      <span class="chat-avatar" aria-hidden="true">
+        <svg width="20" height="12" viewBox="0 0 700 416" fill="currentColor"><path d="M149.559 98.6118L118.099 3.43085C117.422 1.38301 115.508 0 113.351 0H5.20042C1.71341 0 -0.702728 3.47943 0.515453 6.74673L89.5568 245.566C91.1899 249.946 97.4055 249.889 98.958 245.479L149.527 101.841C149.895 100.798 149.906 99.6621 149.559 98.6118Z"/><path d="M154.56 409.412L234.131 171.866C235.662 167.297 242.136 167.325 243.627 171.908L292.4 321.797L262.658 412.557C261.985 414.611 260.068 416 257.906 416H159.301C155.885 416 153.475 412.651 154.56 409.412Z"/><path d="M397.25 0H299.399C295.969 0 293.557 3.3758 294.669 6.62103L376.715 246.023C378.237 250.465 384.49 250.548 386.13 246.148L437.093 109.443C437.497 108.36 437.513 107.171 437.139 106.077L401.981 3.38054C401.289 1.35848 399.388 0 397.25 0Z"/><path d="M694.812 0H597.801C595.714 0 593.846 1.2971 593.116 3.25322L441.739 409.253C440.521 412.521 442.937 416 446.424 416H544.169C546.26 416 548.13 414.699 548.857 412.739L699.499 6.73933C700.711 3.47326 698.295 0 694.812 0Z"/></svg>
+      </span>
+      <span class="chat-title"><strong>Wabi-assistenten</strong><small><i></i>Ulrik og Eljar svarer på e-post</small></span>
+      <button type="button" class="chat-close" aria-label="Lukk chatten" data-chat-close>×</button>
+    </header>
+    <div class="chat-log" data-chat-log aria-live="polite"></div>
+    <div class="chat-quick" data-chat-quick></div>
+    <form class="chat-input" data-chat-form>
+      <input type="text" data-chat-text placeholder="Skriv her ..." aria-label="Din melding" autocomplete="off" />
+      <button type="submit" aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </form>
+  </section>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-chat]');
+  if (root) {
+    const key = root.dataset.key || '';
+    const panel = root.querySelector<HTMLElement>('[data-chat-panel]')!;
+    const launcher = root.querySelector<HTMLButtonElement>('[data-chat-open]')!;
+    const log = root.querySelector<HTMLElement>('[data-chat-log]')!;
+    const quick = root.querySelector<HTMLElement>('[data-chat-quick]')!;
+    const form = root.querySelector<HTMLFormElement>('[data-chat-form]')!;
+    const input = root.querySelector<HTMLInputElement>('[data-chat-text]')!;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const answers: Record<string, string> = {};
+    let step = -1, started = false, busy = false;
+
+    // The conversation: each step asks one thing and stores the answer under `key`.
+    const steps = [
+      { key: 'goal', ask: 'Hei! Jeg hjelper deg å komme i kontakt med Ulrik og Eljar. Hva vil dere få til med AI?',
+        quick: ['Spare tid på rutineoppgaver', 'Bygge en AI-agent', 'AI-kurs for ansatte', 'Finne ut hvor vi bør starte'] },
+      { key: 'time', ask: 'Godt utgangspunkt. Hva tar mest tid hos dere i dag? En setning holder.', quick: ['Vet ikke ennå'] },
+      { key: 'name', ask: 'Takk. Hva heter du, og hvilken bedrift er du fra?' },
+      { key: 'email', ask: 'Hvilken e-postadresse kan vi svare deg på?', type: 'email' },
+    ];
+
+    const wait = (ms: number) => new Promise(r => setTimeout(r, reduced ? 0 : ms));
+    const bubble = (text: string, who: 'bot' | 'me') => {
+      const el = document.createElement('div');
+      el.className = 'msg msg-' + who;
+      el.textContent = text;
+      log.append(el);
+      log.scrollTop = log.scrollHeight;
+      return el;
+    };
+    const typing = () => { const el = document.createElement('div'); el.className = 'msg msg-bot msg-typing'; el.innerHTML = '<span></span><span></span><span></span>'; log.append(el); log.scrollTop = log.scrollHeight; return el; };
+    const say = async (text: string) => { const t = typing(); await wait(650); t.remove(); bubble(text, 'bot'); };
+    const setQuick = (items: string[] = []) => {
+      quick.innerHTML = '';
+      items.forEach(q => { const b = document.createElement('button'); b.type = 'button'; b.textContent = q; b.addEventListener('click', () => handle(q)); quick.append(b); });
+    };
+
+    const ask = async () => {
+      const s = steps[step];
+      input.type = s.type || 'text';
+      input.placeholder = s.type === 'email' ? 'navn@bedrift.no' : 'Skriv her ...';
+      await say(s.ask);
+      setQuick(s.quick);
+      input.focus({ preventScroll: true });
+    };
+
+    const send = async () => {
+      if (!key) { await say('Takk! Skjemaet er ikke koblet til ennå. Bruk gjerne kontaktsiden i mellomtiden.'); return; }
+      const t = typing();
+      try {
+        const data = new FormData();
+        const [name, ...rest] = answers.name.split(/,| fra /);
+        Object.entries({
+          access_key: key, subject: 'Chat fra wabi.no' + (rest.length ? ', ' + rest.join(',').trim() : ''), from_name: 'wabi.no chat',
+          replyto: answers.email, name: answers.name, email: answers.email,
+          Behov: answers.goal, 'Tidsbruk i dag': answers.time, Side: location.pathname,
+        }).forEach(([k, v]) => data.append(k, v));
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: data });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || json.success === false) throw new Error();
+        t.remove();
+        bubble(`Takk, ${name.trim()}! Henvendelsen er sendt. En av oss svarer deg på ${answers.email}.`, 'bot');
+        step = steps.length + 1;
+        form.hidden = true;
+      } catch {
+        t.remove();
+        bubble('Beklager, noe gikk galt, og meldingen ble ikke sendt. Prøv kontaktsiden i stedet.', 'bot');
+        const a = document.createElement('a'); a.href = '/kontakt/'; a.className = 'msg-link'; a.textContent = 'Gå til kontaktsiden →'; log.append(a);
+      }
+    };
+
+    async function handle(raw: string) {
+      const text = raw.trim();
+      if (!text || busy || step < 0 || step >= steps.length) return;
+      const s = steps[step];
+      if (s.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) {
+        bubble(text, 'me'); input.value = '';
+        busy = true; await say('Den adressen ser ikke helt riktig ut. Prøv igjen?'); busy = false; return;
+      }
+      busy = true;
+      bubble(text, 'me'); input.value = ''; setQuick();
+      answers[s.key] = text;
+      step++;
+      if (step < steps.length) await ask(); else await send();
+      busy = false;
+    }
+
+    form.addEventListener('submit', e => { e.preventDefault(); handle(input.value); });
+
+    const open = async (on: boolean) => {
+      panel.hidden = !on;
+      root.classList.toggle('is-open', on);
+      launcher.setAttribute('aria-expanded', String(on));
+      if (on && !started) { started = true; step = 0; busy = true; await ask(); busy = false; }
+      if (on) input.focus({ preventScroll: true }); else launcher.focus({ preventScroll: true });
+    };
+    launcher.addEventListener('click', () => open(panel.hidden));
+    root.querySelector('[data-chat-close]')!.addEventListener('click', () => open(false));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) open(false); });
+  }
+</script>
+
+<style>
+  .chat { position: fixed; z-index: 60; right: 20px; bottom: 20px; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; font-family: var(--font-sans); }
+  .chat-launcher { order: 2; display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px 8px 8px; border: 0; border-radius: 100px; background: var(--wabi-moss); color: #fff; font: 700 14px var(--font-sans); cursor: pointer; box-shadow: 0 14px 34px rgba(20, 61, 36, .32); transition: background 200ms ease, transform 200ms var(--ease-out); animation: chat-in 700ms 1500ms var(--ease-out) both; }
+  .chat-launcher:hover { background: var(--wabi-forest); transform: translateY(-2px); }
+  .chat-launcher-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, .16); }
+  .is-open .chat-launcher-text { display: none; }
+  .is-open .chat-launcher { padding: 8px; }
+  @keyframes chat-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+  .chat-panel { width: min(370px, calc(100vw - 32px)); height: min(540px, calc(100svh - 120px)); display: flex; flex-direction: column; overflow: hidden; border-radius: 20px; background: var(--wabi-raised); border: 1px solid var(--wabi-outline); box-shadow: 0 30px 80px rgba(20, 61, 36, .22); animation: chat-in 300ms var(--ease-out) both; }
+  .chat-panel[hidden] { display: none; }
+  .chat-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--wabi-forest); color: var(--wabi-oat); }
+  .chat-avatar { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--wabi-moss); color: #fff; }
+  .chat-title { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .chat-title strong { font-size: 15px; }
+  .chat-title small { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--wabi-sage); }
+  .chat-title small i { width: 7px; height: 7px; border-radius: 50%; background: #6FCF7F; }
+  .chat-close { width: 32px; height: 32px; border: 0; border-radius: 50%; background: transparent; color: var(--wabi-oat); font-size: 22px; line-height: 1; cursor: pointer; }
+  .chat-close:hover { background: rgba(255, 255, 255, .12); }
+
+  .chat-log { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 16px; }
+  .chat-log :global(.msg) { max-width: 85%; padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.45; animation: chat-in 250ms var(--ease-out) both; }
+  .chat-log :global(.msg-bot) { align-self: flex-start; background: var(--wabi-card); border: 1px solid var(--wabi-outline); border-bottom-left-radius: 4px; color: var(--wabi-forest); }
+  .chat-log :global(.msg-me) { align-self: flex-end; background: var(--wabi-moss); color: #fff; border-bottom-right-radius: 4px; }
+  .chat-log :global(.msg-typing) { display: flex; gap: 4px; padding: 14px; }
+  .chat-log :global(.msg-typing span) { width: 6px; height: 6px; border-radius: 50%; background: var(--wabi-muted); animation: dot 1s infinite; }
+  .chat-log :global(.msg-typing span:nth-child(2)) { animation-delay: .15s; }
+  .chat-log :global(.msg-typing span:nth-child(3)) { animation-delay: .3s; }
+  .chat-log :global(.msg-link) { align-self: flex-start; font-size: 14px; font-weight: 700; color: var(--wabi-moss); }
+  @keyframes dot { 0%, 60%, 100% { opacity: .3; } 30% { opacity: 1; } }
+
+  .chat-quick { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px; }
+  .chat-quick:not(:empty) { padding-bottom: 10px; }
+  .chat-quick :global(button) { padding: 7px 12px; border-radius: 100px; border: 1px solid var(--wabi-outline-tint); background: var(--wabi-tint); color: var(--wabi-forest); font: 600 13px var(--font-sans); cursor: pointer; }
+  .chat-quick :global(button:hover) { border-color: var(--wabi-moss); }
+  .chat-input { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--wabi-outline); background: #fff; }
+  .chat-input[hidden] { display: none; }
+  .chat-input input { flex: 1; min-width: 0; padding: 11px 14px; border-radius: 12px; border: 1px solid var(--wabi-outline); background: var(--wabi-raised); color: var(--wabi-forest); font: 15px var(--font-sans); }
+  .chat-input input:focus { outline: 2px solid var(--wabi-moss); outline-offset: 1px; }
+  .chat-input button { display: grid; place-items: center; width: 44px; border: 0; border-radius: 12px; background: var(--wabi-moss); color: #fff; cursor: pointer; }
+  @media (max-width: 600px) { .chat { right: 12px; bottom: 12px; } .chat-launcher-text { display: none; } .chat-launcher { padding: 8px; } }
+  @media (prefers-reduced-motion: reduce) { .chat-launcher, .chat-panel, .chat-log :global(.msg) { animation: none; } }
+</style>

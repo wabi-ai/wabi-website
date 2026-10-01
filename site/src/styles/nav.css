@@ -13,10 +13,10 @@
 .nav-link:hover, .nav-link[aria-current], .nav-link[aria-expanded="true"] { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
 .nav-link > svg { transition: transform 180ms ease; }
 .nav-link[aria-expanded="true"] > svg { transform: rotate(180deg); }
-.wabi-page .nav-contact { color: #FFF; background: #242424; min-height: 44px; padding: 12px 20px; white-space: nowrap; }
-.wabi-page .nav-contact:hover { background: #404040; }
-.wabi-page .is-compact .nav-contact { color: #FFF; background: #242424; }
-.wabi-page .is-compact .nav-contact:hover { background: #404040; }
+.wabi-page .nav-contact { color: #FFF; background: #1E5631; min-height: 44px; padding: 12px 20px; white-space: nowrap; }
+.wabi-page .nav-contact:hover { background: #143D24; }
+.wabi-page .is-compact .nav-contact { color: #FFF; background: #1E5631; }
+.wabi-page .is-compact .nav-contact:hover { background: #143D24; }
 .nav-disclosure { position: static; }
 .nav-panel { position: absolute; top: calc(100% + 8px); right: 0; width: min(760px, 100%); padding: 8px; background: var(--nav-surface); border: 1px solid rgba(255, 255, 255, .65); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 12px 32px rgba(0, 0, 0, .1); border-radius: 22px; color: var(--nav-text); animation: nav-panel-enter 280ms cubic-bezier(.22,1,.36,1); }
 /* A pointer bridge keeps the panel open across the gap below the bar. */
@@ -92,7 +92,7 @@
   .nav-project-copy strong { font-size: 23px; }
   .nav-project-copy small { font-size: 12px; }
   .nav-project-footer { padding-inline: 8px; flex-wrap: wrap; gap: 4px 16px; }
-  .wabi-page .site-nav .nav-contact { background: #242424; color: #FFF; margin-top: 10px; justify-content: space-between; }
+  .wabi-page .site-nav .nav-contact { background: #1E5631; color: #FFF; margin-top: 10px; justify-content: space-between; }
   .site-header :focus-visible { outline-color: var(--nav-muted) !important; outline-offset: 2px; }
   .site-header:not(.is-compact) > .header-inner > :focus-visible { outline-color: #444 !important; }
 }
@@ -148,8 +148,8 @@
 
 /* On the photographic opening the mark and links turn white; the scrolled bar remains neutral glass. */
 .site-header.is-over-hero .header-inner { --nav-ink: #FDF9F1; }
-.wabi-page .is-over-hero .nav-contact { background: #F4F1E7; color: #143D24; }
-.wabi-page .is-over-hero .nav-contact:hover { background: #E8E8DE; color: #143D24; }
+.wabi-page .is-over-hero .nav-contact { background: #1E5631; color: #FFF; }
+.wabi-page .is-over-hero .nav-contact:hover { background: #143D24; color: #FFF; }
 .site-header.is-over-hero > .header-inner > .brand-link:focus-visible { outline-color: #F4F1E7 !important; }
 @media (min-width: 861px) {
   .wabi-page .nav-link { font-weight: 400; }
@@ -157,7 +157,7 @@
 }
 @media (max-width: 860px) {
   .site-header.is-over-hero .site-nav { --nav-ink: var(--nav-text); }
-  .wabi-page .is-over-hero .site-nav .nav-contact { background: #242424; color: #FFF; }
+  .wabi-page .is-over-hero .site-nav .nav-contact { background: #1E5631; color: #FFF; }
 }
 
 /* Explicit component basics also apply in the supplied design preview. */
