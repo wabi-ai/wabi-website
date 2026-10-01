@@ -6,7 +6,7 @@ export const SITE = {
   linkedin: 'https://www.linkedin.com/company/wabino/',
   // Web3Forms access key for the contact form. Get it at web3forms.com by entering ulrik@wabi.no;
   // the key arrives by e-mail. While empty, the form falls back to opening an e-mail draft.
-  contactFormKey: '',
+  contactFormKey: '299414e8-17a7-4e12-afc9-bd94a50f3a59',
 };
 
 export const SERVICES = [
