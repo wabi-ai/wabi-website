@@ -94,19 +94,19 @@ const live = Boolean(SITE.contactFormKey);
 
       submit.disabled = true; submit.textContent = 'Sender ...';
       try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            access_key: key,
-            subject: 'Henvendelse fra wabi.no' + (v('company') ? `, ${v('company')}` : ''),
-            from_name: 'wabi.no',
-            replyto: v('email'),
-            name: v('name'), email: v('email'), company: v('company'), phone: v('phone'),
-            'Hva vil dere få til': v('goal'), 'Hva tar mest tid i dag': v('time'),
-            botcheck: (form.querySelector<HTMLInputElement>('input[name="botcheck"]')!).checked,
-          }),
-        });
+        // Plain form data is a "simple" cross-origin request, so the browser skips the CORS preflight.
+        const payload = new FormData();
+        const fields: Record<string, string> = {
+          access_key: key,
+          subject: 'Henvendelse fra wabi.no' + (v('company') ? `, ${v('company')}` : ''),
+          from_name: 'wabi.no',
+          replyto: v('email'),
+          name: v('name'), email: v('email'), company: v('company'), phone: v('phone'),
+          Behov: v('goal'), 'Tidsbruk i dag': v('time'),
+        };
+        Object.entries(fields).forEach(([k, val]) => payload.append(k, val));
+        if ((form.querySelector<HTMLInputElement>('input[name="botcheck"]')!).checked) payload.append('botcheck', 'true');
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: payload });
         const data = await res.json().catch(() => ({}));
         if (!res.ok || data.success === false) throw new Error(data.message || 'Feil');
         form.hidden = true;
