@@ -1,0 +1,75 @@
+---
+// Miniature, static rendition of the product built in each case. Decorative: the real, interactive
+// version lives on the case page. Example data only.
+interface Props { kind: string; }
+const { kind } = Astro.props;
+const bars = [38, 52, 44, 66, 58, 74, 62, 88, 70, 92];
+---
+<div class:list={['screen', 'screen-' + kind]} aria-hidden="true">
+  <div class="bar"><i></i><i></i><i></i><span>{({ report: 'Rapport · Bedrift X', dealer: 'nordvei bil as', clinic: 'Dagsoppgjør', website: 'bedrift-x.no' } as Record<string, string>)[kind]}</span></div>
+
+  {kind === 'report' && <div class="body report">
+    <div class="kpis">{[['Kjøp', '148', '↑ 12 %'], ['CAC', '1 180 kr', '↓ 4 %'], ['Forbruk', '174 k', '↓ 6 %'], ['ROAS', '0,53', '↑ 9 %']].map(([k, v, d]) => <div><small>{k}</small><b>{v}</b><em>{d}</em></div>)}</div>
+    <div class="chart"><svg viewBox="0 0 300 80" preserveAspectRatio="none"><path d="M0 62 C30 58 40 40 70 46 S120 30 150 34 S200 14 230 22 S280 8 300 10" fill="none" stroke="currentColor" stroke-width="2.2" vector-effect="non-scaling-stroke"/><path d="M0 62 C30 58 40 40 70 46 S120 30 150 34 S200 14 230 22 S280 8 300 10 V80 H0 Z" fill="currentColor" opacity=".08"/></svg></div>
+    <div class="ai"><span>AI</span>Kjøpene økte 12 % etter at budsjettet ble flyttet til Meta.</div>
+  </div>}
+
+  {kind === 'dealer' && <div class="body dealer">
+    <b class="hello">God dag.</b>
+    <div class="tiles">{['Ta imot ny bil', 'Book prøvekjøring', 'Lag kontrakt'].map(t => <span>{t}</span>)}</div>
+    <div class="rows">{[['Kompakt elbil', '12 d', 'ok'], ['Stasjonsvogn', '4 d', 'ok'], ['SUV, firehjul', '41 d', 'warn']].map(([m, d, s]) => <div><i class="car"></i><span>{m}</span><em class={s}>{d}</em></div>)}</div>
+  </div>}
+
+  {kind === 'clinic' && <div class="body clinic">
+    {[['P-1042', 'Ført', 'ok'], ['P-1043', 'Ført', 'ok'], ['P-1044', 'Frikort', 'ok'], ['P-1045', 'Til godkjenning', 'warn'], ['P-1046', 'Ført', 'ok']].map(([id, s, c]) => <div class="line"><span>{id}</span><span class="dots"></span><em class={c}>{s}</em></div>)}
+    <div class="approve"><span>1 avvik venter på deg</span><b>Godkjenn</b></div>
+  </div>}
+
+  {kind === 'website' && <div class="body website">
+    <div class="hero"><small>BEDRIFT X</small><b>Regnskap som er gjort i tide.</b></div>
+    <div class="cols"><i></i><i></i><i></i></div>
+    <div class="checks">{['Ytelse 98', 'Mobil', 'Lenker', 'Publisert'].map(c => <span>✓ {c}</span>)}</div>
+  </div>}
+</div>
+
+<style>
+  .screen { --c: #24466F; width: 100%; border-radius: 12px; overflow: hidden; background: #fff; border: 1px solid rgba(0, 0, 0, .06); box-shadow: 0 24px 50px -24px rgba(20, 30, 25, .35); font-family: 'Inter', system-ui, sans-serif; color: #1A2420; text-align: left; transition: transform 500ms var(--ease-out); }
+  .screen-report { --c: #24466F; } .screen-dealer { --c: #8A2A1C; } .screen-clinic { --c: #4F5530; } .screen-website { --c: #5B45A8; }
+  .bar { display: flex; align-items: center; gap: 5px; padding: 9px 12px; border-bottom: 1px solid #EEF0EC; background: #FAFAF8; font-size: 10px; color: #7A817C; }
+  .bar i { width: 7px; height: 7px; border-radius: 50%; background: #E2E4DF; }
+  .bar span { margin-left: 8px; font-weight: 600; }
+  .body { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  small { font-size: 9px; color: #7A817C; }
+  /* report */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .kpis div { display: flex; flex-direction: column; gap: 2px; padding: 7px; border-radius: 8px; background: #F6F7F9; }
+  .kpis b { font-size: 13px; }
+  .kpis em { font-style: normal; font-size: 9px; color: #16A34A; }
+  .chart { height: 64px; color: var(--c); }
+  .chart svg { width: 100%; height: 100%; display: block; }
+  .ai { display: flex; gap: 8px; align-items: center; padding: 8px 10px; border-radius: 8px; background: #EEF3FA; font-size: 10px; }
+  .ai span { flex: none; padding: 2px 6px; border-radius: 5px; background: var(--c); color: #fff; font-weight: 700; font-size: 9px; }
+  /* dealer */
+  .hello { font-size: 16px; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .tiles span { padding: 8px 6px; border-radius: 8px; background: #F4E7E4; font-size: 9px; font-weight: 700; }
+  .tiles span:nth-child(2) { background: #E4EAF0; } .tiles span:nth-child(3) { background: #EEE6EA; }
+  .rows { display: flex; flex-direction: column; gap: 5px; }
+  .rows div { display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 8px; border: 1px solid #EEF0EC; font-size: 10px; }
+  .car { width: 34px; height: 22px; border-radius: 5px; background: linear-gradient(180deg, #D6DCE2 55%, #AEB9A2 56%); }
+  .rows em, .line em { margin-left: auto; font-style: normal; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 5px; }
+  .ok { color: #1E7B4A; background: #E6F3EC; } .warn { color: #B7791F; background: #FBF1DF; }
+  /* clinic */
+  .line { display: flex; align-items: center; gap: 8px; padding: 5px 2px; border-bottom: 1px solid #F0F1EE; font-size: 10px; }
+  .dots { flex: 1; height: 5px; border-radius: 3px; background: #F0F1EE; }
+  .approve { display: flex; justify-content: space-between; align-items: center; margin-top: 2px; padding: 8px 10px; border-radius: 8px; background: #FFFBF2; border: 1px solid #F1E3C4; font-size: 10px; }
+  .approve b { padding: 3px 8px; border-radius: 6px; border: 1px solid #1E7B4A; color: #1E7B4A; font-size: 9px; }
+  /* website */
+  .hero { display: flex; flex-direction: column; gap: 3px; padding: 16px 12px; border-radius: 8px; background: linear-gradient(135deg, #2E2650, var(--c)); color: #fff; }
+  .hero small { color: rgba(255, 255, 255, .7); }
+  .hero b { font-size: 13px; }
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .cols i { height: 30px; border-radius: 6px; background: #F2F0F8; }
+  .checks { display: flex; flex-wrap: wrap; gap: 5px; }
+  .checks span { padding: 3px 7px; border-radius: 5px; background: #E6F3EC; color: #1E7B4A; font-size: 9px; font-weight: 700; }
+</style>
