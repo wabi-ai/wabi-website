@@ -89,8 +89,8 @@ const questions = [
       answers.areas.forEach(o => { const s = data.areas.find((a: any) => a.o === o).s; counts[s] = (counts[s] || 0) + 1; });
       const recs = Object.keys(counts).sort((a, b) => counts[b] - counts[a]).slice(0, 2).map(id => data.services[id]);
       root.querySelector('[data-recs]')!.innerHTML = recs.map((s: any) => `<a href="${s.href}"><strong>${s.title}</strong><span>${s.short}</span></a>`).join('');
-      const body = `Hei Ulrik,\n\nJeg tok selvtesten på wabi.no.\n\nHvor tiden går: ${answers.areas.join(', ')}\nDet vi kjenner igjen: ${answers.why.join(', ')}\nAI i dag: ${answers.ai[0]}\n\nKan vi ta en prat?\n`;
-      mail.href = 'mailto:ulrik@wabi.no?subject=' + encodeURIComponent('Selvtest fra wabi.no') + '&body=' + encodeURIComponent(body);
+      const summary = `Jeg tok selvtesten. Hvor tiden går: ${answers.areas.join(', ')}. Det vi kjenner igjen: ${answers.why.join(', ')}. AI i dag: ${answers.ai[0]}.`;
+      mail.href = '/kontakt/?tekst=' + encodeURIComponent(summary);
     };
     next.addEventListener('click', () => { step++; show(); });
     back.addEventListener('click', () => { step--; show(); });

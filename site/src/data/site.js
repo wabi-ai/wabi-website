@@ -2,10 +2,10 @@ export const SITE = {
   name: 'Wabi',
   url: 'https://wabi.no',
   description: 'Wabi er et AI-rådgivningsselskap for norske bedrifter. Vi finner hvor AI gir verdi, bygger AI-agenter, automatisering og programvare, og følger løsningene opp i drift.',
-  email: 'ulrik@wabi.no',
+  email: 'ulrik@wabi.no', // fallback only, if the form fails
   linkedin: 'https://www.linkedin.com/company/wabino/',
-  // Web3Forms access key for the contact form. Get it at web3forms.com by entering ulrik@wabi.no;
-  // the key arrives by e-mail. While empty, the form falls back to opening an e-mail draft.
+  // Web3Forms access key for the contact form. Submissions go to the address the key was created for (admin@wabi.no).
+  // While empty, the form falls back to opening an e-mail draft.
   contactFormKey: '299414e8-17a7-4e12-afc9-bd94a50f3a59',
 };
 

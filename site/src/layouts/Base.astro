@@ -12,7 +12,7 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const org = {
   '@context': 'https://schema.org', '@type': 'ProfessionalService', '@id': SITE.url + '/#org',
   name: SITE.name, url: SITE.url, logo: SITE.url + '/assets/logo/wabi-mark-black.svg', description: SITE.description,
-  email: SITE.email, areaServed: { '@type': 'Country', name: 'Norge' }, sameAs: [SITE.linkedin],
+  areaServed: { '@type': 'Country', name: 'Norge' }, sameAs: [SITE.linkedin],
   knowsAbout: ['AI-rådgivning', 'AI-strategi', 'AI-agenter', 'Automatisering', 'AI-kurs', 'ChatGPT', 'Claude', 'Gemini'],
 };
 const graph = [org, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE.url + '/#website', url: SITE.url, name: SITE.name, inLanguage: 'nb-NO', publisher: { '@id': SITE.url + '/#org' } }, ...jsonLd];

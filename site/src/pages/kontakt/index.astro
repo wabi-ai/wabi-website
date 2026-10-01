@@ -13,12 +13,14 @@ const live = Boolean(SITE.contactFormKey);
     lead="Fortell hva dere bruker mye tid på. Du trenger ikke en ferdig plan. En konkret utfordring fra hverdagen er et godt utgangspunkt." />
 
   <section class="container contact">
-    <aside class="person" data-reveal>
-      <img src="/assets/portraits/ulrik-rosmael-bue-blob-hoyre.webp" alt="Ulrik Rosmæl" width="240" height="240" />
+    <aside class="people" data-reveal>
+      <div class="faces">
+        <img src="/assets/portraits/ulrik-rosmael-bue-blob-hoyre.webp" alt="Ulrik Rosmæl" width="160" height="160" />
+        <img src="/assets/portraits/eljar-skjorholm-bue-blob-venstre.webp" alt="Eljar Skjørholm" width="160" height="160" />
+      </div>
       <div>
-        <strong>Ulrik Rosmæl</strong>
-        <span>Din første kontakt hos Wabi</span>
-        <a href={'mailto:' + SITE.email}>{SITE.email}</a>
+        <strong>Ulrik og Eljar</strong>
+        <span>Fyll ut skjemaet, så svarer en av oss deg.</span>
       </div>
     </aside>
 
@@ -37,7 +39,7 @@ const live = Boolean(SITE.contactFormKey);
       <input type="checkbox" name="botcheck" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <div class="send">
         <button type="submit" class="button button-primary" data-submit>{live ? 'Send henvendelsen' : 'Åpne e-postutkast'}</button>
-        <p>{live ? `Henvendelsen går rett til ${SITE.email}.` : `Utkastet åpnes i e-postappen din. Du leser gjennom og sender selv til ${SITE.email}.`}</p>
+        <p>{live ? 'En av oss leser henvendelsen og svarer deg.' : 'Utkastet åpnes i e-postappen din, og du sender det selv.'}</p>
       </div>
       <p class="status" data-status role="status" aria-live="polite"></p>
       <details class="fallback" data-fallback hidden={live}>
@@ -52,7 +54,7 @@ const live = Boolean(SITE.contactFormKey);
     <div class="thanks" data-thanks tabindex="-1" hidden>
       <span class="eyebrow">Takk</span>
       <h2 class="display-md">Henvendelsen er sendt.</h2>
-      <p>Ulrik tar kontakt med deg så snart han kan. Har det hast, kan du skrive direkte til <a href={'mailto:' + SITE.email}>{SITE.email}</a>.</p>
+      <p>En av oss tar kontakt med deg så snart vi kan.</p>
     </div>
   </section>
 </Base>
@@ -66,9 +68,12 @@ const live = Boolean(SITE.contactFormKey);
     const fallback = form.querySelector<HTMLDetailsElement>('[data-fallback]')!;
     const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
     const v = (k: string) => String(new FormData(form).get(k) || '').trim();
-    const compose = () => `Hei Ulrik,\n\nDette vil vi få til:\n${v('goal') || '(ikke fylt ut)'}\n\nDette tar mest tid i dag:\n${v('time') || '(ikke fylt ut)'}\n\nHilsen\n${[v('name'), v('company'), v('email'), v('phone')].filter(Boolean).join('\n')}`;
+    const compose = () => `Hei,\n\nDette vil vi få til:\n${v('goal') || '(ikke fylt ut)'}\n\nDette tar mest tid i dag:\n${v('time') || '(ikke fylt ut)'}\n\nHilsen\n${[v('name'), v('company'), v('email'), v('phone')].filter(Boolean).join('\n')}`;
     const preview = form.querySelector<HTMLElement>('[data-preview]')!;
     const refresh = () => { preview.textContent = compose(); };
+    // Prefill from the self check on /kartlegging/ (?tekst=...).
+    const prefill = new URLSearchParams(location.search).get('tekst');
+    if (prefill) (form.querySelector<HTMLTextAreaElement>('textarea[name="goal"]')!).value = prefill;
     form.addEventListener('input', refresh);
     refresh();
 
@@ -77,7 +82,7 @@ const live = Boolean(SITE.contactFormKey);
     form.addEventListener('submit', async e => {
       e.preventDefault();
       status.textContent = ''; status.classList.remove('is-error');
-      // Name and a valid e-mail are needed so Ulrik can answer.
+      // Name and a valid e-mail are needed so we can answer.
       const emailField = form.querySelector<HTMLInputElement>('input[name="email"]')!;
       if (!v('name') || !emailField.checkValidity() || !v('email')) {
         showError('Skriv inn navn og en gyldig e-postadresse, så vi kan svare deg.');
@@ -131,12 +136,13 @@ const live = Boolean(SITE.contactFormKey);
 
 <style>
   .contact { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: clamp(32px, 6vw, 96px); align-items: start; padding-bottom: var(--section-space); }
-  .person { position: sticky; top: 120px; display: flex; flex-direction: column; gap: 20px; }
-  .person img { width: min(240px, 100%); height: auto; }
-  .person div { display: flex; flex-direction: column; gap: 4px; }
-  .person strong { font-size: 20px; }
-  .person span { color: var(--wabi-muted); font-size: 14px; }
-  .person a { margin-top: 8px; font-weight: 700; color: var(--wabi-moss); }
+  .people { position: sticky; top: 120px; display: flex; flex-direction: column; gap: 20px; }
+  .faces { display: flex; gap: 12px; }
+  .faces img { width: min(150px, 46%); height: auto; }
+  .people > div:last-child { display: flex; flex-direction: column; gap: 4px; }
+  .people strong { font-size: 20px; }
+  .people span { color: var(--wabi-muted); font-size: 14px; }
+  .people a { margin-top: 8px; font-weight: 700; color: var(--wabi-moss); }
   .composer, .thanks { display: flex; flex-direction: column; gap: 20px; padding: clamp(24px, 3vw, 40px); border-radius: 20px; background: var(--wabi-card); border: 1px solid var(--wabi-outline); }
   .composer[hidden], .thanks[hidden] { display: none; }
   label { display: flex; flex-direction: column; gap: 8px; }
@@ -159,5 +165,5 @@ const live = Boolean(SITE.contactFormKey);
   .copied { margin-left: 12px; font-size: 13px; color: var(--wabi-moss); }
   .thanks p { color: #3B4A40; }
   .thanks a { color: var(--wabi-moss); font-weight: 700; }
-  @media (max-width: 860px) { .contact { grid-template-columns: minmax(0, 1fr); } .person { position: static; flex-direction: row; align-items: center; } .person img { width: 120px; } .row { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 860px) { .contact { grid-template-columns: minmax(0, 1fr); } .people { position: static; flex-direction: row; align-items: center; } .faces img { width: 84px; } .row { grid-template-columns: minmax(0, 1fr); } }
 </style>

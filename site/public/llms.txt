@@ -10,5 +10,4 @@
 - [Kurs](https://wabi.no/kurs/): Praktiske AI-kurs bygget på bedriftens egne oppgaver.
 
 ## Kontakt
-- E-post: ulrik@wabi.no
 - [Kontaktside](https://wabi.no/kontakt/)
