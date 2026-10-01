@@ -56,6 +56,7 @@ const projects = [
   const nav = header.querySelector<HTMLElement>('.site-nav')!;
   const toggle = header.querySelector<HTMLButtonElement>('.menu-toggle')!;
   const disclosures = [...header.querySelectorAll<HTMLElement>('.nav-disclosure')];
+  const mobile = matchMedia('(max-width: 860px)');
   const desktop = () => matchMedia('(min-width: 861px) and (hover: hover)').matches;
   let leaveTimer: number | undefined;
 
@@ -80,14 +81,39 @@ const projects = [
     item.addEventListener('pointerenter', show);
     item.addEventListener('focus', show);
   });
-  toggle.addEventListener('click', () => {
-    const open = toggle.getAttribute('aria-expanded') !== 'true';
+  const setMobileOpen = (open: boolean) => {
     toggle.setAttribute('aria-expanded', String(open));
     nav.classList.toggle('is-open', open);
+    header.classList.toggle('is-menu-open', open);
     toggle.querySelector('.menu-symbol')!.classList.toggle('is-open', open);
+    if (!open) {
+      clearTimeout(leaveTimer);
+      setOpen(null);
+      nav.scrollTop = 0;
+    }
+  };
+  toggle.addEventListener('click', () => setMobileOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (mobile.matches && nav.classList.contains('is-open')) {
+      setMobileOpen(false);
+      toggle.focus();
+    } else {
+      const expanded = header.querySelector<HTMLButtonElement>('.nav-link[aria-expanded="true"]');
+      setOpen(null);
+      expanded?.focus();
+    }
   });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(null); });
-  document.addEventListener('click', e => { if (!header.contains(e.target as Node)) setOpen(null); });
+  document.addEventListener('click', e => {
+    if (!header.contains(e.target as Node)) setMobileOpen(false);
+  });
+  nav.addEventListener('click', e => {
+    if ((e.target as Element).closest('a')) setMobileOpen(false);
+  });
+  header.addEventListener('focusout', e => {
+    if (e.relatedTarget && !header.contains(e.relatedTarget as Node)) setMobileOpen(false);
+  });
+  mobile.addEventListener('change', () => setMobileOpen(false));
 
   // Compact floating bar after scrolling; light text only while it sits over the dark hero.
   const hero = document.querySelector<HTMLElement>('[data-hero]');

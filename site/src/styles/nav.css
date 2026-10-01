@@ -1,5 +1,5 @@
 /* The header occupies its original space while its inner bar floats on scroll. */
-.site-header { --nav-text: #143D24; --nav-muted: #536255; --nav-surface: #F4F1E7; position: relative; z-index: 30; height: 96px; }
+.site-header { --nav-button-radius: 16px; --nav-text: #143D24; --nav-muted: #536255; --nav-surface: #F4F1E7; position: relative; z-index: 30; height: 96px; }
 .header-inner { --nav-ink: var(--nav-text); position: fixed; top: 12px; left: 50%; transform: translateX(-50%); width: min(1160px, calc(100% - 40px)); height: 72px; padding: 0 24px; display: flex; align-items: center; gap: 40px; border-radius: 36px; background: transparent; color: var(--nav-ink); transition: width 480ms cubic-bezier(.22,1,.36,1), height 480ms cubic-bezier(.22,1,.36,1), top 480ms cubic-bezier(.22,1,.36,1), padding 480ms cubic-bezier(.22,1,.36,1), border-radius 480ms cubic-bezier(.22,1,.36,1); }
 .site-header.is-compact .header-inner { --nav-ink: var(--nav-text); width: min(1000px, calc(100% - 40px)); top: 16px; height: 64px; padding-inline: 26px 10px; border-radius: 100px; background: transparent; }
 /* Keep the bar's blur on its own layer so dropdowns can blur the page independently. */
@@ -68,16 +68,18 @@
   .nav-panel { left: 50%; right: auto; margin-inline: 0; translate: -50% 0; }
 }
 @media (max-width: 860px) {
+  .site-header.is-menu-open { z-index: 70; }
   .header-inner { justify-content: space-between; }
   .site-header.is-compact .header-inner { width: calc(100% - 32px); top: 12px; height: 60px; padding-inline: 20px 8px; }
-  .menu-toggle { display: flex; gap: 14px; align-items: center; min-height: 44px; border: 1px solid rgba(0, 0, 0, .1); border-radius: 100px; background: #F4F4F4; color: var(--nav-text); padding: 12px 18px; font-size: 13px; font-weight: 700; cursor: pointer; }
+  .menu-toggle { display: flex; gap: 14px; align-items: center; min-height: 44px; border: 1px solid rgba(0, 0, 0, .1); border-radius: var(--nav-button-radius); background: #F4F4F4; color: var(--nav-text); padding: 12px 18px; font-size: 13px; font-weight: 700; cursor: pointer; }
   .menu-symbol { display: flex; flex-direction: column; gap: 5px; width: 16px; }
   .menu-symbol i { width: 16px; height: 1.5px; background: currentColor; transition: transform 180ms ease-out; }
   .menu-symbol.is-open i:first-child { transform: translateY(3.25px) rotate(45deg); }
   .menu-symbol.is-open i:last-child { transform: translateY(-3.25px) rotate(-45deg); }
   .site-nav { --nav-ink: var(--nav-text); display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0; padding: 16px; background: var(--nav-surface); border: 1px solid rgba(255, 255, 255, .65); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 12px 32px rgba(0, 0, 0, .1); border-radius: 16px; max-height: calc(100svh - 128px); overflow-y: auto; overscroll-behavior: contain; }
-  .nav-links { flex-direction: column; align-items: stretch; gap: 4px; }
-  .site-nav.is-open { display: flex; flex-direction: column; align-items: stretch; gap: 4px; animation: nav-panel-enter 180ms ease-out; }
+  .nav-links { flex: none; flex-direction: column; align-items: stretch; gap: 4px; }
+  .site-nav > .nav-contact { flex-shrink: 0; }
+  .site-nav.is-open { display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 4px; animation: nav-panel-enter 180ms ease-out; }
   .is-compact .site-nav { left: 0; right: 0; max-height: calc(100svh - 92px); }
   .wabi-page .site-nav .nav-link { width: 100%; justify-content: space-between; min-height: 48px; padding: 12px; font-size: 15px; }
   .nav-panel { position: static; width: 100%; padding: 0; margin-block: 4px 12px; border: 0; border-radius: 0; background: transparent; box-shadow: none; animation: none; }
@@ -163,7 +165,7 @@
 /* Explicit component basics also apply in the supplied design preview. */
 .site-header button { font-family: inherit; }
 .site-header .nav-panel[hidden] { display: none; }
-.wabi-page .nav-contact { display: inline-flex; align-items: center; justify-content: center; gap: 12px; border-radius: 100px; font-size: 14px; font-weight: 700; text-decoration: none; }
+.wabi-page .nav-contact { display: inline-flex; align-items: center; justify-content: center; gap: 12px; border-radius: var(--nav-button-radius); font-size: 14px; font-weight: 700; text-decoration: none; }
 .site-header a:focus-visible, .site-header button:focus-visible { outline: 2px solid var(--wabi-moss); outline-offset: 4px; }
 .nav-link, .nav-preview, .nav-project-card > img, .nav-service-item, .nav-item-arrow { transition-timing-function: cubic-bezier(.22,1,.36,1); }
 #om-oss, #prosjekter { scroll-margin-top: 112px; }
