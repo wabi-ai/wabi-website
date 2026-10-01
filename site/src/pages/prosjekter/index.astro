@@ -19,7 +19,7 @@ const crumbs = [{ label: 'Prosjekter', href: '/prosjekter/' }];
       </BlobPanel>
     </a>)}
   </section>
-  <p class="container note">Noen prosjekter er illustrative eksempler med anonymiserte kunder. Det står på hver prosjektside.</p>
+  <div class="spacer"></div>
   <CtaPanel />
 </Base>
 <style>
@@ -32,6 +32,6 @@ const crumbs = [{ label: 'Prosjekter', href: '/prosjekter/' }];
   .link { font-weight: 700; font-size: 14px; }
   .link span { display: inline-block; transition: transform 200ms var(--ease-out); }
   .case:hover .link span { transform: translateX(4px); }
-  .note { padding-block: 24px var(--section-space); font-size: 13px; color: var(--wabi-muted); }
+  .spacer { height: var(--section-space); }
   @media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } }
 </style>

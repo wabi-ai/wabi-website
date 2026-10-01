@@ -7,6 +7,7 @@ import ToolLogo from '../components/ToolLogo.astro';
 import Icon from '../components/Icon.astro';
 import HeroLive from '../components/hero/HeroLive.astro';
 import { SERVICES, SITE } from '../data/site.js';
+import { CASES } from '../data/cases.js';
 
 
 
@@ -17,11 +18,8 @@ const principles = [
   ['menneske', 'Mennesket bestemmer', 'AI gjør stegene. Folk tar beslutningene og eier resultatet.'],
 ];
 
-// Only real, live projects on the home page. Figures are facts about the build, not estimated savings.
-const cases = [
-  { href: '/prosjekter/rapportering/', tone: 'fjord', preset: 'w1', tag: 'Nuet · Rapportverktøy med AI', metric: '4', unit: 'datakilder i ett dashbord per kunde', title: 'Ett dashbord for alle kanaler.', text: 'Meta, Google Ads, Analytics og Search Console samlet, med en AI som forklarer på norsk hva som har endret seg.' },
-  { href: '/prosjekter/bruktbil/', tone: 'ember', preset: 'w2', tag: 'Bruktbilhandel · Programvare', metric: '1', unit: 'system for lager, kunder, kontrakter og økonomi', title: 'Hele bilsalget i ett system.', text: 'Laget sammen med en forhandler, og nå i bruk hos flere. Bilkortet fyller seg selv fra registreringsnummeret.' },
-];
+// Project cards come from the case data; the first is shown wide.
+const cases = CASES.map((c, i) => ({ href: `/prosjekter/${c.slug}/`, tone: c.tone, preset: i === 0 ? 'w1' : ['t2', 't3', 't1'][(i - 1) % 3], tag: c.client ? `${c.client} · ${c.service}` : `${c.category} · ${c.service}`, ...c.home }));
 
 // Home shows three guides, newest first; ties keep this editorial order.
 const guideOrder = ['hvordan-bruke-chatgpt-i-bedriften', 'hvorfor-ai-opplaering-feiler', 'ai-verktoy-smabedrifter', 'ai-i-salg', 'ai-kurs-for-bedrifter'];
@@ -94,13 +92,13 @@ const jsonLd = [
     <div class="section-head section-head-row" data-reveal>
       <div><span class="eyebrow">Prosjekter</span><h2 id="results-title" class="display-lg">Bygget for ekte bedrifter.<br />I bruk i dag.</h2></div>
       <div class="results-side">
-        <p class="lead">To av løsningene vi har bygget. Begge kan du prøve selv på prosjektsiden.</p>
+        <p class="lead">Løsninger vi har bygget for kundene våre. Alle kan du prøve selv på prosjektsidene.</p>
         <a href="/prosjekter/" class="text-link">Alle prosjekter <span aria-hidden="true">→</span></a>
       </div>
     </div>
     <div class="cases">
-      {cases.map((c, i) => <a href={c.href} class="case" data-reveal style={`--d:${i * 90}ms`}>
-        <BlobPanel tone={c.tone} layout="left" preset={c.preset} protect="72%" contentWidth={460} minHeight={540}>
+      {cases.map((c, i) => <a href={c.href} class:list={['case', { 'case-wide': i === 0 }]} data-reveal style={`--d:${(i % 3) * 90}ms`}>
+        <BlobPanel tone={c.tone} layout={i === 0 ? 'left' : 'center'} preset={c.preset} protect={i === 0 ? '72%' : '62%'} contentWidth={i === 0 ? 520 : 360} minHeight={i === 0 ? 460 : 560}>
           <span class="case-top"><span class="mono case-tag">{c.tag}</span><span class="try-tag">Prøv selv</span></span>
           <span class="case-metric">{c.metric}</span><span class="case-unit">{c.unit}</span>
           <h3>{c.title}</h3>
@@ -218,7 +216,14 @@ const jsonLd = [
   @media (prefers-reduced-motion: reduce) { .principles-list li::before { transform: none; transition: none; } }
 
   /* RESULTS */
-  .cases { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .case-wide { grid-column: 1 / -1; }
+  .case-wide :global(.blob-panel-content) { max-width: none !important; }
+  .case-wide .case-unit, .case-wide h3, .case-wide p { max-width: 520px; }
+  .case:not(.case-wide) .case-top { flex-direction: column; gap: 10px; }
+  .case:not(.case-wide) .case-metric { font-size: clamp(56px, 6vw, 88px); }
+  .case:not(.case-wide) h3 { margin-top: 16px; font-size: clamp(22px, 2vw, 26px); }
+  .case:not(.case-wide) :global(.blob-panel) { padding: 32px 28px; }
   .case { display: block; text-decoration: none; }
   .case :global(.blob-panel) { padding: 48px; }
   .case-tag { color: var(--blob-panel-sub); text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
@@ -311,7 +316,7 @@ const jsonLd = [
     .service-panels { grid-template-columns: 1fr; }
     .service-panels :global(.blob-panel) { min-height: 520px !important; }
     .service-panels p { min-height: auto; margin-bottom: 16px; }
-    .cases { grid-template-columns: 1fr; }
+    .cases { grid-template-columns: minmax(0, 1fr); }
     .faq, .team { grid-template-columns: 1fr; gap: 40px; }
     .principles-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .section-head-row { flex-direction: column; align-items: flex-start; }

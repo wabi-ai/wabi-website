@@ -7,6 +7,8 @@ import { breadcrumbLd } from '../../lib/seo.js';
 import { CASES } from '../../data/cases.js';
 import { Dashboard, AdsAndAudience } from '../../react/ReportUI.jsx';
 import { DealerApp } from '../../react/DealerUI.jsx';
+import { ClinicApp } from '../../react/ClinicUI.jsx';
+import { WebsiteApp } from '../../react/WebsiteUI.jsx';
 import '../../styles/demo.css';
 
 export function getStaticPaths() {
@@ -33,6 +35,8 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
           <p class="demo-note">{c.demoNote}</p>
           {c.demo === 'report' && <><Dashboard client:visible /><AdsAndAudience client:visible /></>}
           {c.demo === 'dealer' && <DealerApp client:visible />}
+          {c.demo === 'clinic' && <ClinicApp client:visible />}
+          {c.demo === 'website' && <WebsiteApp client:visible />}
         </div>
       </Band>
     </section>
@@ -43,7 +47,12 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
     </div>
   </Band>}
 
-  <section class="section container split" aria-labelledby="built-title">
+  {c.challenge && <section class="section container split" aria-labelledby="challenge-title">
+    <div class="split-head" data-reveal><span class="eyebrow">Utfordringen</span><h2 id="challenge-title" class="display-md">Det som tok tid.</h2></div>
+    <p class="answer" data-reveal>{c.challenge}</p>
+  </section>}
+
+  <section class="section container split rule-top" aria-labelledby="built-title">
     <div class="split-head sticky-head" data-reveal><span class="eyebrow">Hva vi bygde</span><h2 id="built-title" class="display-md">Løsningen, del for del.</h2></div>
     <ol class="built">{c.built.map(([t, s], i) => <li data-reveal style={`--d:${i * 60}ms`}><span class="mono">{i + 1}</span><div><h3>{t}</h3><p>{s}</p></div></li>)}</ol>
   </section>

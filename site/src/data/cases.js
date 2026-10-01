@@ -1,10 +1,12 @@
-// Project pages. `note` is shown on the page so illustrative examples are never presented as named clients.
+// Project pages. `home` holds the short card used on the front page; its figure is a fact about the build, not an estimate.
 export const CASES = [
   {
     slug: 'rapportering', tone: 'fjord', category: 'Nuet', service: 'Verktøy og programvare',
     client: 'Nuet', logo: '/assets/clients/nuet-logo-dark.png', seoTitle: 'Nuet: rapportverktøy med AI for et performance-byrå | Wabi',
     title: 'Ett dashbord for alle kanaler, bygget rundt byråets måte å jobbe på.',
     lead: 'Performance-byrået Nuet brukte timer hver uke på å samle tall fra Meta, Google og Analytics for hver kunde. Vi bygde et eget rapportverktøy med AI i bunnen, som kan settes opp ulikt for hver kunde.',
+    challenge: 'Hver uke hentet byrået tall manuelt fra fire plattformer for hver kunde, satte dem sammen i regneark og sendte rapporten som vedlegg. Det tok tid fra det kundene faktisk betaler for, nemlig å gjøre kampanjene bedre. Og rapporten var utdatert i det øyeblikket den ble sendt.',
+    home: { metric: '4', unit: 'datakilder i ett dashbord per kunde', title: 'Ett dashbord for alle kanaler.', text: 'Meta, Google Ads, Analytics og Search Console samlet, med en AI som forklarer på norsk hva som har endret seg.' },
     demo: 'report', demoNote: 'Klikk mellom kanalene og nøkkeltallene. Tallene er eksempeldata, siden kundenes egne tall er konfidensielle.',
     facts: [['Kunde', 'Nuet, performance-byrå'], ['Bygget', 'Dashbord med AI-oppsummering'], ['Kilder', 'Meta, Google Ads, Analytics, Search Console'], ['Deling', 'Eget per kunde, delbar lenke']],
     built: [
@@ -20,6 +22,8 @@ export const CASES = [
     slug: 'bruktbil', tone: 'ember', category: 'Bruktbilhandel', service: 'Skreddersydd programvare',
     title: 'Hele bilsalget i ett system.',
     lead: 'Lager, kunder, prøvekjøringer, kontrakter og økonomi på ett sted. Laget sammen med en forhandler, og nå i bruk hos flere.',
+    challenge: 'Lager, henvendelser, prøvekjøringer, kontrakter og økonomi lå på hvert sitt sted. De samme opplysningene om hver bil måtte skrives inn flere ganger, og det var vanskelig å se hvilke biler som sto for lenge og hva de bandt av kapital.',
+    home: { metric: '1', unit: 'system for lager, kunder, kontrakter og økonomi', title: 'Hele bilsalget i ett system.', text: 'Laget sammen med en forhandler, og nå i bruk hos flere. Bilkortet fyller seg selv fra registreringsnummeret.' },
     demo: 'dealer', demoNote: 'Trykk «Ta imot ny bil» og prøv et bilkort, eller bytt mellom lager og kontrakter. Forhandleren og bilene er fiktive.',
     facts: [['Bransje', 'Bruktbilforhandlere'], ['Bygget', 'Komplett salgssystem'], ['Status', 'I bruk hos flere forhandlere'], ['Oppsett', 'Egne maler og logo per butikk']],
     flow: [['Reg.nr inn', 'Data hentes, og bilkortet opprettes.'], ['Lager', 'Status, pris og bilder på ett sted.'], ['Kunder', 'Henvendelser og prøvekjøringer samlet per bil.'], ['Kontrakt', 'Riktig mal, ferdig utfylt, klar for signering.'], ['Økonomi', 'Bruttofortjeneste per bil og per måned.']],
@@ -35,7 +39,9 @@ export const CASES = [
     slug: 'legekontor', tone: 'sand', category: 'Legekontor', service: 'AI-agent',
     title: 'Mindre papirarbeid på legekontoret.',
     lead: 'Legene vil jobbe med pasienter, ikke med bilag. En agent tar dagsoppgjøret, Helfo-refusjonene og egenandelene, og fører alt i Tripletex eller Fiken.',
-    note: 'Illustrativt eksempel. Kundedetaljer er anonymisert.',
+    challenge: 'Hver dag måtte noen gå gjennom dagsoppgjøret, skille Helfo-refusjon fra egenandel, sjekke frikort og føre bilagene. Det skjedde gjerne etter arbeidstid, og feil i egenandelene ble oppdaget sent.',
+    home: { metric: '3', unit: 'oppgaver i en agent: Helfo, egenandel og bokføring', title: 'Mindre papirarbeid på legekontoret.', text: 'Agenten tar dagsoppgjøret og fører alt i Tripletex eller Fiken. Kontoret godkjenner bare avvikene.' },
+    demo: 'clinic', demoNote: 'Trykk «Kjør dagsoppgjøret» og se agenten jobbe. Godkjenn avvikene til slutt. Pasientene og beløpene er fiktive.',
     facts: [['Bransje', 'Legekontor'], ['Bygget', 'Spesialisert agent'], ['Systemer', 'Journalsystem, Tripletex, Fiken'], ['Område', 'Helfo, egenandel, bokføring']],
     built: [
       ['Helfo-refusjon', 'Samler takstene som skal refunderes og kontrollerer dem før kravet sendes.'],
@@ -51,7 +57,9 @@ export const CASES = [
     slug: 'nettside', tone: 'dusk', category: 'Nettsider', service: 'Agenter og programvare',
     title: 'En nettside som holder seg oppdatert.',
     lead: 'Et system av agenter lager nettsiden, drifter den og holder innholdet oppdatert fra systemene dere allerede bruker. Et menneske hos oss godkjenner før noe går live.',
-    note: 'Illustrativt eksempel.',
+    challenge: 'En god nettside krever løpende arbeid. Tjenester og priser endres, ledige timer skal vises, og innholdet må holdes oppdatert. Hos de fleste bedrifter blir nettsiden liggende etter, fordi ingen har tid til å vedlikeholde den.',
+    home: { metric: '5', unit: 'steg fra gammel nettside til ny, utført av agenter', title: 'En nettside som holder seg oppdatert.', text: 'Agentene bygger, kontrollerer og drifter siden. Et menneske hos oss godkjenner før noe går live.' },
+    demo: 'website', demoNote: 'Klikk deg gjennom stegene, eller la dem gå av seg selv. Bedriften i eksempelet er fiktiv.',
     facts: [['Bygget', 'Nettside med agenter i drift'], ['Kode', 'Ekte kode, ikke en mal'], ['Koblinger', 'CRM, booking, nettbutikk'], ['Kontroll', 'Menneske godkjenner før publisering']],
     flow: [['Leser', 'Nettsiden dere har i dag, konkurrentene og det dere sender oss.'], ['Planlegger', 'Sidekart og innhold per side, skrevet for mennesker og søkemotorer.'], ['Bygger', 'Hver side testes for hastighet, mobil og tilgjengelighet.'], ['Kontrollerer', 'Lenker, tekst, bilder og skjemaer. Feil sendes tilbake til byggesteget.'], ['Publiserer', 'Siden går live, og agentene holder innholdet oppdatert.']],
     built: [
