@@ -31,9 +31,9 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
     </section>
     {c.shots && <section class="container shots" aria-labelledby="shots-title">
       <div class="split-head" data-reveal><span class="eyebrow">Fra systemet</span><h2 id="shots-title" class="display-md">Slik ser det ut hos {c.client}.</h2></div>
-      <div class="shots-grid">
-        {c.shots.map(([src, cap], i) => <figure data-reveal style={`--d:${i * 100}ms`}>
-          <div class="shot-frame"><img src={src} alt={cap} width="1280" height="735" loading={i === 0 ? 'eager' : 'lazy'} /></div>
+      <div class:list={['shots-grid', { 'shots-featured': c.shots.length > 2 }]}>
+        {c.shots.map(([src, cap, width = 1280, height = 735], i) => <figure data-reveal style={`--d:${i * 100}ms`}>
+          <a class="shot-frame" href={src} target="_blank" rel="noopener" aria-label={`${cap} Åpne bildet i full størrelse (ny fane).`}><img src={src} alt={cap} width={width} height={height} loading={i === 0 ? 'eager' : 'lazy'} /></a>
           <figcaption>{cap}</figcaption>
         </figure>)}
       </div>
@@ -99,7 +99,8 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
   .shots .split-head { margin-bottom: 36px; }
   .shots-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
   .shots figure { margin: 0; }
-  .shot-frame { overflow: hidden; border-radius: 14px; border: 1px solid var(--wabi-outline); background: #fff; box-shadow: 0 30px 70px -36px rgba(20, 30, 25, .4); }
+  .shots-featured figure:first-child { grid-column: 1 / -1; }
+  .shot-frame { display: block; overflow: hidden; border-radius: 14px; border: 1px solid var(--wabi-outline); background: #fff; box-shadow: 0 30px 70px -36px rgba(20, 30, 25, .4); cursor: zoom-in; }
   .shot-frame img { display: block; width: 100%; height: auto; }
   .shots figcaption { margin-top: 12px; font-size: 14px; color: var(--wabi-muted); }
   @media (max-width: 860px) { .shots-grid { grid-template-columns: minmax(0, 1fr); } }

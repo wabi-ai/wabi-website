@@ -3,6 +3,11 @@ export const CASES = [
   {
     slug: 'rapportering', tone: 'fjord', category: 'Nuet', service: 'Verktøy og programvare',
     client: 'Nuet', logo: '/assets/clients/nuet-logo-dark.png', seoTitle: 'Nuet: rapportverktøy med AI for et performance-byrå | Wabi',
+    shots: [
+      ['/assets/cases/nuet-dashbord.jpg', 'Kundens dashbord: nøkkeltall på tvers av kanaler og detaljene fra hver plattform.', 1280, 737],
+      ['/assets/cases/nuet-annonser.jpg', 'Annonseoversikten: kjøp over tid og aktive annonser samlet per kampanje.', 1280, 918],
+      ['/assets/cases/nuet-malgrupper.jpg', 'Målgruppene: demografi og en publikumstrakt fra nytt publikum til eksisterende kunder.', 1280, 1048],
+    ],
     title: 'Ett dashbord for alle kanaler, bygget rundt byråets måte å jobbe på.',
     lead: 'Performance-byrået Nuet brukte timer hver uke på å samle tall fra Meta, Google og Analytics for hver kunde. Vi bygde et eget rapportverktøy med AI i bunnen, som kan settes opp ulikt for hver kunde.',
     challenge: 'Hver uke hentet byrået tall manuelt fra fire plattformer for hver kunde, satte dem sammen i regneark og sendte rapporten som vedlegg. Det tok tid fra det kundene faktisk betaler for, nemlig å gjøre kampanjene bedre. Og rapporten var utdatert i det øyeblikket den ble sendt.',

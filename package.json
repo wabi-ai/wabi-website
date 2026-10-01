@@ -4,6 +4,7 @@
   "version": "2.0.0",
   "type": "module",
   "scripts": {
+    "build:production": "npm --prefix site run build && node scripts/stage-production.mjs",
     "build": "node scripts/build.mjs",
     "build:mint": "node scripts/build-mint-preview.mjs",
     "check:mint": "node scripts/check-mint.mjs",

@@ -1,5 +1,26 @@
 # Wabi website
 
+## Current production site (Astro)
+
+The current website source is in `site/`. GitHub Pages serves the generated files
+from the root of the `main` branch at **https://wabi.no**.
+
+```sh
+npm --prefix site ci
+npm --prefix site run dev
+```
+
+For a release, run `npm run build:production` from the repository root. This builds
+Astro, copies `site/dist/` into the published root, and writes `.nojekyll` so
+GitHub Pages serves the `_astro/` bundles. Commit the source and generated output
+together, then push to `main`. The existing `CNAME` domain is preserved.
+
+Edit `site/src/` and `site/public/`; do not edit the generated root pages.
+The root `npm run build`, React source under `src/`, and the documentation below
+describe the previous implementation and are retained for reference.
+
+## Previous implementation
+
 The new Wabi website, adapted from the supplied **Wabi Design System** web prototype. It uses Manrope, warm paper and forest surfaces, atmospheric photography, restrained product previews, and Norwegian bokmål copy. Original brand artwork remains on service pages and portraits.
 
 The source is React, compiled into static HTML pages and a local JavaScript bundle. Every page is rendered during the build, so the initial content is available before JavaScript loads. The generated files are committed alongside the source and can be served directly from the repository root, including on GitHub Pages.

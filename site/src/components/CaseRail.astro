@@ -50,12 +50,20 @@ const cards = [
     const prev = wrap.querySelector<HTMLButtonElement>('[data-rail-prev]')!;
     const next = wrap.querySelector<HTMLButtonElement>('[data-rail-next]')!;
     const step = () => (rail.querySelector('li')?.getBoundingClientRect().width || 360) + 16;
+    const behavior = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' as const : 'smooth' as const;
     const update = () => {
       prev.disabled = rail.scrollLeft < 4;
       next.disabled = rail.scrollLeft + rail.clientWidth > rail.scrollWidth - 4;
     };
-    prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }));
-    next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }));
+    prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: behavior() }));
+    next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: behavior() }));
+    rail.addEventListener('keydown', event => {
+      if (event.target !== rail) return;
+      const positions: Record<string, number> = { ArrowLeft: rail.scrollLeft - step(), ArrowRight: rail.scrollLeft + step(), Home: 0, End: rail.scrollWidth };
+      if (!(event.key in positions)) return;
+      event.preventDefault();
+      rail.scrollTo({ left: positions[event.key], behavior: behavior() });
+    });
     rail.addEventListener('scroll', update, { passive: true });
     addEventListener('resize', update);
     update();
@@ -78,12 +86,12 @@ const cards = [
 
   .pcard { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; aspect-ratio: 1; padding: 30px 30px 28px; border-radius: 14px; background: var(--tone); color: #F4F1E7; text-decoration: none; }
   .is-grid .pcard { aspect-ratio: 4 / 3; }
-  .pcard-blob { position: absolute; z-index: -1; max-width: none; height: auto; pointer-events: none; transition: transform 900ms var(--ease-out); }
-  .pos-right .pcard-blob { width: 150%; left: 30%; top: 5%; rotate: 10deg; }
-  .pos-bottom .pcard-blob { width: 170%; left: -35%; top: 35%; rotate: -8deg; }
-  .pos-left .pcard-blob { width: 160%; left: -55%; top: 10%; rotate: 160deg; }
-  .pcard::after { content: ''; position: absolute; z-index: -1; inset: 0 0 auto; height: 45%; background: linear-gradient(to bottom, var(--tone) 35%, transparent); pointer-events: none; }
-  .pcard:hover .pcard-blob { transform: scale(1.06); }
+  .pcard-blob { position: absolute; z-index: -1; max-width: none; height: auto; pointer-events: none; transform: var(--blob-transform); transition: transform 900ms var(--ease-out); }
+  .pos-right .pcard-blob { width: 210%; left: -60%; top: -70%; --blob-transform: rotate(-68deg); }
+  .pos-bottom .pcard-blob { width: 170%; left: -10%; top: -45%; --blob-transform: scaleX(-1) rotate(24deg); }
+  .pos-left .pcard-blob { width: 190%; left: -55%; top: -18%; --blob-transform: rotate(170deg); }
+  .pcard::after { content: ''; position: absolute; z-index: -1; inset: 0 0 auto; height: 55%; background: linear-gradient(to bottom, var(--tone) 45%, transparent); pointer-events: none; }
+  .pcard:hover .pcard-blob { transform: var(--blob-transform) scale(1.06); }
 
   .pcard-head { display: flex; justify-content: space-between; gap: 20px; }
   .pcard-title { font-size: clamp(24px, 2.2vw, 31px); font-weight: 400; line-height: 1.12; letter-spacing: -.03em; text-wrap: balance; }
@@ -101,12 +109,13 @@ const cards = [
   .pcard-client b { font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
   .pcard:hover .pcard-client, .pcard:focus-visible .pcard-client { opacity: 0; }
 
-  /* Touch screens have no hover: show the note under the card instead. */
-  @media (hover: none) {
-    .pcard { aspect-ratio: auto; min-height: 420px; }
-    .pcard-note { position: static; margin-top: auto; opacity: 1; transform: none; }
-    .pcard-client { order: -1; margin: 18px 0 0; }
-    .pcard:hover .pcard-client { opacity: 1; }
+  /* Keep the description in the card's flow on touch and narrow screens. */
+  @media (hover: none), (max-width: 760px) {
+    .pcard, .is-grid .pcard { aspect-ratio: auto; min-height: 420px; height: 100%; }
+    .pcard-note { position: static; margin-top: 24px; opacity: 1; transform: none; }
+    .pcard-client { margin-top: auto; padding-top: 18px; }
+    .pcard-client:empty { display: none; }
+    .pcard:hover .pcard-client, .pcard:focus-visible .pcard-client { opacity: 1; }
   }
   @media (max-width: 760px) {
     .is-rail .rail { grid-auto-columns: 84vw; }
