@@ -1,0 +1,34 @@
+---
+// The idea behind the name: wabi-sabi as a way of working.
+const items = [
+  ['Fremdrift fremfor perfeksjon', 'Vi setter i gang tidlig, tester i praksis og forbedrer underveis. Løsninger blir bedre av å bli brukt, ikke av å bli planlagt lenger.'],
+  ['Enkelhet', 'Systemer, strategier og presentasjoner skal være så enkle som mulig. Det som ikke tilfører verdi, fjerner vi.'],
+  ['Menneskelig ledelse', 'Folk er mennesker, ikke ressurser. Det skal være rom for å prøve, feile og lære, uten at alt må sitte på første forsøk.'],
+  ['Forbedring underveis', 'Vi bygger løsninger som kan justeres etter hvert som vi lærer mer. Det uferdige er ikke en svakhet. Det gir rom for å bli bedre.'],
+];
+---
+  <!-- WABI-SABI -->
+  <section class="container wabisabi" aria-labelledby="wabisabi-title">
+    <div class="wabisabi-intro" data-reveal>
+      <span class="eyebrow">Hvorfor Wabi</span>
+      <h2 id="wabisabi-title" class="display-md">Navnet kommer fra wabi-sabi.</h2>
+      <p class="lead">Wabi-sabi er en japansk filosofi om å finne verdi i det uperfekte og uferdige. For oss betyr det å prioritere fremdrift og læring, i stedet for å vente på at alt skal bli perfekt.</p>
+    </div>
+    <ol class="wabisabi-list">
+      {items.map(([t, text], i) => <li data-reveal style={`--d:${i * 90}ms`}><span class="wabisabi-num">{i + 1}</span><h3>{t}</h3><p>{text}</p></li>)}
+    </ol>
+  </section>
+
+<style>
+  .wabisabi { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(40px, 6vw, 96px); align-items: start; padding-bottom: var(--section-space); }
+  .wabisabi-intro { position: sticky; top: 120px; display: flex; flex-direction: column; gap: 20px; }
+  .wabisabi-intro .lead { color: #3B4A40; }
+  .wabisabi-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; }
+  .wabisabi-list li { display: flex; flex-direction: column; gap: 10px; padding: 28px 0 32px; border-top: 1px solid var(--wabi-outline-tint); }
+  .wabisabi-num { font-size: 13px; font-weight: 700; color: var(--wabi-moss); }
+  .wabisabi-list h3 { font-size: 22px; font-weight: 400; letter-spacing: -.025em; line-height: 1.2; }
+  .wabisabi-list p { font-size: 15px; line-height: 1.6; color: #3B4A40; }
+  @media (max-width: 1000px) { .wabisabi { grid-template-columns: minmax(0, 1fr); gap: 32px; } .wabisabi-intro { position: static; } }
+  @media (max-width: 600px) { .wabisabi-list { grid-template-columns: minmax(0, 1fr); } }
+
+</style>

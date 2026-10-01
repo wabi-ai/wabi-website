@@ -1,0 +1,152 @@
+---
+// Outro + floating footer card from the previous site, set over the same blob field as the home hero.
+// The large invitation is only shown on the home page; inner pages end with their own CTA panel.
+import WabiMark from './WabiMark.astro';
+import { SITE } from '../data/site.js';
+
+const home = Astro.url.pathname === '/';
+const year = new Date().getFullYear();
+---
+<footer class:list={['outro', { 'outro-home': home }]} id="site-footer">
+  <div class="outro-art" aria-hidden="true">
+    <div class="outro-blob outro-blob-right" data-outro-blob="1"><img src="/assets/blob/wabi-blob.webp" alt="" loading="lazy" /></div>
+    <div class="outro-blob outro-blob-left" data-outro-blob="-1"><img src="/assets/blob/wabi-blob.webp" alt="" loading="lazy" /></div>
+  </div>
+
+  {home && <section class="outro-cta" aria-labelledby="footer-invitation-title">
+    <span class="eyebrow">Kontakt oss</span>
+    <h2 id="footer-invitation-title">Finn AI-mulighetene dine</h2>
+    <p>Ta med en arbeidsflyt, en avdeling, hele selskapet, eller bare en magefølelse. Vi forteller deg hvor AI passer, hvor det ikke passer, og hva som er verdt å gjøre først.</p>
+    <div class="outro-actions">
+      <a href="/kontakt/" class="button button-primary">Få en AI-vurdering <span aria-hidden="true">→</span></a>
+      <a href="#ai-input" class="button button-secondary">Meld meg på nyhetsbrevet <span aria-hidden="true">↓</span></a>
+    </div>
+  </section>}
+
+  <div class="card">
+    <section class="news" id="ai-input" aria-label="Nyhetsbrevet AI-input">
+      <div class="news-intro">
+        <a href="https://aiinput.no" target="_blank" rel="noopener noreferrer"><img src="/assets/Aiinput.svg" alt="AI-input" width="150" height="30" loading="lazy" /></a>
+        <p>For deg som vil holde oversikt over AI uten å drukne i støy. Nye verktøy og utviklinger innen AI, forklart enkelt på norsk, uten hype.</p>
+      </div>
+      <div class="news-signup">
+        <form action="https://app.kit.com/forms/9612918/subscriptions" method="post" target="_blank" rel="noopener noreferrer" aria-label="Meld deg på AI-input">
+          <input type="text" name="first_name" placeholder="Fornavn" autocomplete="given-name" aria-label="Fornavn" required />
+          <input type="email" name="email_address" placeholder="din@epost.no" autocomplete="email" aria-label="E-post" required />
+          <button type="submit">Meld på <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="note">Påmelding åpnes hos Kit. Du kan melde deg av når som helst.</p>
+      </div>
+    </section>
+
+    <div class="grid">
+      <div class="brand">
+        <a href="/" aria-label="Wabi, til forsiden"><WabiMark width={40} /></a>
+        <p>Praktisk AI for nordiske bedrifter. Bygget lag for lag rundt måten dere faktisk arbeider på.</p>
+      </div>
+      <nav aria-label="Tjenester"><h2>Tjenester</h2><a href="/ai-agenter/">AI-agenter</a><a href="/automatisering/">Automatisering</a><a href="/verktoy-og-programvare/">Verktøy og programvare</a><a href="/kurs/">Kurs</a></nav>
+      <nav aria-label="Utforsk"><h2>Utforsk</h2><a href="/prosjekter/">Prosjekter</a><a href="/kartlegging/">AI-kartlegging</a><a href="/innsikt/">Innsikt</a><a href="/om-oss/">Om oss</a></nav>
+      <div class="contact"><h2>Kontakt</h2>
+        <div class="person">
+          <a href="/kontakt/" class="portrait" aria-label="Book en prat med Ulrik"><img src="/assets/portraits/ulrik-rosmael-bue-blob-hoyre.webp" width="56" height="56" alt="" loading="lazy" /></a>
+          <div><strong>Ulrik Rosmæl</strong><a href={'mailto:' + SITE.email}>{SITE.email}</a></div>
+        </div>
+        <a href="mailto:admin@wabi.no">admin@wabi.no</a>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <span>© {year} Wabi</span><span>Trondheim · Singapore</span>
+      <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Wabi på LinkedIn"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3-.02-2.96-1.8-2.96-1.8 0-2.08 1.4-2.08 2.86V21h-4z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Same slow cursor-follow as the home hero.
+  const footer = document.querySelector<HTMLElement>('.outro');
+  // Two mirrored green blobs; each drifts toward the cursor, mirrored horizontally so they move as a pair.
+  const blobs = footer ? [...footer.querySelectorAll<HTMLElement>('[data-outro-blob]')] : [];
+  if (footer && blobs.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let tx = 0, ty = 0, x = 0, y = 0, running = false;
+    const loop = () => {
+      x += (tx - x) * .05; y += (ty - y) * .05;
+      blobs.forEach(b => { const dir = Number(b.dataset.outroBlob); b.style.translate = `${x * 12}% ${y * 8}%`; b.style.rotate = `${dir * x * 12}deg`; });
+      if (Math.abs(tx - x) + Math.abs(ty - y) > .001) requestAnimationFrame(loop); else running = false;
+    };
+    footer.addEventListener('pointermove', e => {
+      const r = footer.getBoundingClientRect();
+      tx = (e.clientX - r.left) / r.width - .5; ty = (e.clientY - r.top) / r.height - .5;
+      if (!running) { running = true; requestAnimationFrame(loop); }
+    });
+  }
+</script>
+
+<style>
+  .outro { position: relative; isolation: isolate; overflow: hidden; padding: 96px 20px 40px; color: var(--wabi-forest); }
+  .outro-home { padding-top: 140px; }
+  .outro-art { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .outro-blob { position: absolute; bottom: -16%; width: min(1150px, 64vw); will-change: translate, rotate; }
+  .outro-blob img { width: 100%; height: auto; max-width: none; }
+  .outro-blob-right { right: -20%; }
+  .outro-blob-right img { transform: rotate(10deg); }
+  .outro-blob-left { left: -20%; }
+  .outro-blob-left img { transform: scaleX(-1) rotate(10deg); }
+  /* Fade from the page's paper into the blob field so the footer never starts with a hard edge. */
+  .outro-art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, var(--wabi-oat) 0%, rgba(244, 241, 231, .94) 14%, rgba(244, 241, 231, .5) 34%, rgba(244, 241, 231, 0) 56%); }
+
+  .outro-cta { max-width: 720px; margin: 0 auto; padding: 0 24px 140px; text-align: center; }
+  .outro-cta .eyebrow { display: block; margin-bottom: 24px; }
+  .outro-cta h2 { margin-bottom: 24px; font-size: clamp(40px, 5vw, 72px); font-weight: 400; line-height: 1.02; letter-spacing: -.045em; text-wrap: balance; }
+  .outro-cta p { max-width: 540px; margin: 0 auto 36px; font-size: 17px; line-height: 1.6; }
+  .outro-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+  .card { max-width: 1180px; margin: 0 auto; padding: 44px 56px 28px; border-radius: 30px; background: rgba(244, 241, 231, .88); border: 1px solid rgba(255, 255, 255, .6); -webkit-backdrop-filter: blur(24px) saturate(140%); backdrop-filter: blur(24px) saturate(140%); box-shadow: 0 30px 80px rgba(20, 61, 36, .14); }
+  .card a { color: var(--wabi-forest); text-decoration: none; }
+  .card a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  .news { max-width: 660px; margin: 0 auto; text-align: center; scroll-margin-top: 112px; }
+  .news img { display: block; width: auto; height: 30px; margin: 0 auto 14px; }
+  .news-intro p { max-width: 480px; margin: 0 auto 20px; font-size: 14px; line-height: 1.6; }
+  form { display: flex; gap: 10px; max-width: 560px; margin: 0 auto; }
+  input { min-width: 0; width: 100%; height: 48px; padding: 0 16px; border: 1px solid var(--wabi-outline); border-radius: 12px; background: var(--wabi-raised); color: var(--wabi-forest); font: 16px var(--font-sans); }
+  input[name='first_name'] { flex: 0 1 160px; }
+  input[name='email_address'] { flex: 1 1 220px; }
+  button { flex: none; display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 22px; border: 0; border-radius: 12px; background: var(--wabi-moss); color: var(--wabi-oat); font: 700 14px var(--font-sans); cursor: pointer; }
+  button:hover { background: var(--wabi-forest); }
+  .note { margin: 12px auto 0; font-size: 11px; color: var(--wabi-muted); }
+
+  .grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.4fr; gap: clamp(20px, 3vw, 40px); margin-top: 32px; padding-top: 36px; border-top: 1px solid var(--wabi-outline); }
+  .grid > * { min-width: 0; }
+  .grid h2 { margin-bottom: 16px; font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--wabi-muted); }
+  nav a, .contact > a { display: block; width: fit-content; margin-bottom: 11px; font-size: 14px; line-height: 1.5; }
+  .brand p { max-width: 290px; margin-top: 18px; font-size: 14px; line-height: 1.6; }
+  .person { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .person img { display: block; width: 56px; height: 56px; object-fit: cover; border-radius: 28px 28px 0 0; }
+  .person strong { display: block; margin-bottom: 4px; font-size: 15px; }
+  .person div a { font-size: 14px; font-weight: 700; color: var(--wabi-moss); }
+
+  .bottom { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--wabi-outline); font-size: 12px; color: var(--wabi-muted); }
+  .bottom > a { justify-self: end; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 9px; background: var(--wabi-tint); }
+  .bottom > a:hover { background: var(--wabi-moss); color: var(--wabi-oat); }
+
+  @media (max-width: 900px) {
+    .card { padding: 36px 32px 24px; }
+    .grid { grid-template-columns: 1.4fr 1fr; gap: 32px; }
+  }
+  @media (max-width: 600px) {
+    .outro { padding: 72px 16px 24px; }
+    .outro-home { padding-top: 96px; }
+    .outro-cta { padding: 0 4px 88px; }
+    .outro-actions { flex-direction: column; align-items: stretch; }
+    .card { padding: 32px 22px 24px; border-radius: 24px; }
+    form { flex-direction: column; }
+    input[name] { flex: none; }
+    .grid { grid-template-columns: 1fr 1fr; gap: 30px 24px; }
+    .brand, .contact { grid-column: 1 / -1; }
+    .bottom { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 18px; }
+    .outro-blob { width: 130vw; bottom: -12%; }
+    .outro-blob-right { right: -70%; }
+    .outro-blob-left { left: -70%; }
+  }
+</style>

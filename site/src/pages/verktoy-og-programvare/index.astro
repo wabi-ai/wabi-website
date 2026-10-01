@@ -1,0 +1,99 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Band from '../../components/Band.astro';
+import Examples from '../../components/Examples.astro';
+import Steps from '../../components/Steps.astro';
+import FaqList from '../../components/FaqList.astro';
+import MoreServices from '../../components/MoreServices.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
+
+const crumbs = [{ label: 'Verktøy og programvare', href: '/verktoy-og-programvare/' }];
+const description = 'Wabi går gjennom AI-verktøyene og lisensene bedriften betaler for, og bygger skreddersydd programvare der hyllevare ikke passer.';
+
+// Illustrative audit rows (labelled as such on the page).
+const audit = [
+  ['Microsoft 365 Copilot', '40', '9', 'Behold for økonomi, si opp resten'],
+  ['ChatGPT Team', '25', '21', 'Behold'],
+  ['Transkripsjon av møter', '15', '3', 'Dekkes av verktøy dere har'],
+  ['Tilbudsskriving', '', '', 'Mangler, bør bygges'],
+];
+
+const buy = ['Mange bedrifter har samme behov som dere.', 'Verktøyet passer uten at dere endrer måten dere jobber på.', 'Kostnaden per bruker er lav, og bruken er høy.'];
+const build = ['Arbeidsflyten er spesiell for dere, og det er en styrke.', 'Dere betaler for mye mer enn dere bruker.', 'Oppgaven går på tvers av flere systemer.'];
+
+const examples = [
+  { title: 'Et komplett system for bruktbilhandel', text: 'Lager, kunder, prøvekjøringer, kontrakter og økonomi på ett sted. I bruk hos flere forhandlere.', tools: [] },
+  { title: 'Rapportdashbord med AI-oppsummering', text: 'Tall fra annonseplattformer og analyse samlet per kunde, med en kort forklaring på norsk av hva som har endret seg.', tools: ['Google Sheets'] },
+  { title: 'Tilbudsverktøy', text: 'Lager førsteutkast fra forespørselen og henter priser automatisk, i stedet for at hvert tilbud skrives fra bunnen.', tools: ['HubSpot', 'Outlook'] },
+  { title: 'Internt kunnskapssøk', text: 'Ansatte spør på vanlig norsk og får svar fra rutiner og dokumenter, med lenke til kilden.', tools: ['SharePoint', 'Microsoft Teams'] },
+];
+
+const steps: [string, string][] = [
+  ['Vi sitter med dem som gjør jobben', 'Vi ser hvordan arbeidet faktisk gjøres før vi foreslår et verktøy eller en løsning.'],
+  ['Dere prøver før vi bygger', 'En klikkbar prototype dere kan teste med egne eksempler.'],
+  ['Første versjon i bruk', 'Koblet til systemene dere har, og brukt av dem den er laget for.'],
+  ['Vi måler og justerer', 'Vi ser på hvordan løsningen brukes og forbedrer den underveis.'],
+];
+
+const faq: [string, string][] = [
+  ['Når lønner det seg å bygge egen programvare?', 'Når arbeidsflyten er spesiell for dere, når oppgaven går på tvers av flere systemer, eller når dere betaler for mye mer enn dere bruker. Passer et standardverktøy, anbefaler vi det.'],
+  ['Hva er en verktøygjennomgang?', 'Vi ser på hvilke verktøy og lisenser dere betaler for, hvor mye de faktisk brukes, og hva som mangler. Dere får en konkret anbefaling om hva dere bør beholde, si opp og bygge.'],
+  ['Hvem eier løsningen?', 'Dere. Løsningen bygges for dere og rundt måten dere jobber på.'],
+  ['Hvordan driftes løsningen etterpå?', 'Det avtaler vi fra start. Vi kan drifte og følge opp løsningen, eller sette den opp slik at dere kan gjøre det selv.'],
+];
+---
+<Base title="AI-verktøy og skreddersydd programvare | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'Verktøy og programvare', description, path: '/verktoy-og-programvare/' })]}>
+  <PageHero crumbs={crumbs} eyebrow="Verktøy og programvare" title="Bruk verktøyene dere betaler for. Bygg det som mangler."
+    lead="Vi går gjennom verktøyene og lisensene dere har, ser hva som faktisk brukes, og bygger egen programvare der ingen hyllevare passer."
+    primary={{ label: 'Book en prat', href: '/kontakt/' }} secondary={{ label: 'Kjøpe eller bygge?', href: '#kjop-eller-bygg' }} />
+
+  <Band tone="sand">
+    <div class="paper-card audit">
+      <h3>Verktøygjennomgang</h3>
+      <table>
+        <thead><tr><th scope="col">Verktøy</th><th scope="col">Lisenser</th><th scope="col">I bruk</th><th scope="col">Anbefaling</th></tr></thead>
+        <tbody>{audit.map(([tool, lic, used, rec]) => <tr><th scope="row">{tool}</th><td>{lic || '·'}</td><td>{used || '·'}</td><td>{rec}</td></tr>)}</tbody>
+      </table>
+      <p class="illustration-note">Eksempel fra en bedrift med 40 ansatte. Tallene er illustrasjoner.</p>
+    </div>
+  </Band>
+
+  <section class="section container" id="kjop-eller-bygg" aria-labelledby="kob-title">
+    <div class="split-head kob-head" data-reveal><span class="eyebrow">Kort forklart</span><h2 id="kob-title" class="display-md">Kjøpe eller bygge?</h2><p>De fleste bedrifter trenger begge deler. Dette er tegnene vi ser etter.</p></div>
+    <div class="kob">
+      <div data-reveal><h3>Kjøp når</h3><ul>{buy.map(b => <li>{b}</li>)}</ul></div>
+      <div data-reveal style="--d:100ms"><h3>Bygg når</h3><ul>{build.map(b => <li>{b}</li>)}</ul></div>
+    </div>
+  </section>
+
+  <Examples eyebrow="Eksempler" title="Programvare vi har bygget." items={examples} />
+  <Steps dark eyebrow="Slik jobber vi" title="Fra arbeidsdag til ferdig verktøy." steps={steps} />
+  <FaqList faq={faq} title="Om verktøy og programvare." />
+  <MoreServices current="programvare" />
+  <CtaPanel />
+</Base>
+
+<style>
+  .audit { width: min(860px, 100%) !important; }
+  table { width: 100%; margin-top: 18px; border-collapse: collapse; font-size: 15px; }
+  th, td { padding: 14px 12px 14px 0; text-align: left; border-bottom: 1px solid var(--wabi-outline); vertical-align: top; }
+  thead th { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--wabi-muted); }
+  tbody th { font-weight: 700; }
+  td:nth-child(2), td:nth-child(3) { font-family: var(--font-mono); font-size: 14px; }
+  tbody tr:last-child td:last-child { color: var(--wabi-moss); font-weight: 700; }
+  .kob-head { margin-bottom: 48px; }
+  .kob-head p { max-width: 480px; }
+  .kob { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .kob > div { padding: clamp(24px, 3vw, 40px); border-radius: 18px; border: 1px solid var(--wabi-outline); background: var(--wabi-card); }
+  .kob > div + div { background: var(--wabi-tint); border-color: var(--wabi-outline-tint); }
+  .kob h3 { font-size: 28px; font-weight: 400; letter-spacing: -.03em; }
+  .kob ul { list-style: none; margin: 20px 0 0; padding: 0; }
+  .kob li { padding: 14px 0; border-top: 1px solid var(--wabi-outline); color: #2E4636; }
+  @media (max-width: 700px) {
+    .kob { grid-template-columns: minmax(0, 1fr); }
+    table { font-size: 13px; }
+    thead th:nth-child(2), td:nth-child(2) { display: none; }
+  }
+</style>

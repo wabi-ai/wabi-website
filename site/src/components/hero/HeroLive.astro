@@ -1,0 +1,119 @@
+---
+// Home hero: light kinetic hero where the headline ending follows the task running in the console.
+import Console from './Console.astro';
+import { CLIENTS } from '../../data/site.js';
+const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`, name }));
+---
+<section class="hl" data-hero>
+  <div class="hl-art" aria-hidden="true">
+    <div class="hl-follow" data-follow><img src="/assets/blob/wabi-blob.webp" alt="" /></div>
+    <img class="hl-blob-2" src="/assets/blob/wabi-blob-fjord.webp" alt="" />
+  </div>
+  <div class="container hl-inner">
+    <div class="hl-copy">
+      <h1 class="hl-title">
+        <span class="hero-kicker">AI-rådgivning for norske bedrifter</span>
+        <span class="hl-display">
+          <span class="hl-line">AI som faktisk</span>
+          <span class="hl-rotator" aria-hidden="true" data-rotator><span class="is-active">blir tatt i bruk.</span></span>
+          <span class="sr-only">blir tatt i bruk.</span>
+        </span>
+      </h1>
+      <p>Vi finner hvor AI gir verdi i bedriften din, bygger løsningene og sørger for at de blir brukt. Velg en oppgave og se hvordan det ser ut.</p>
+      <div class="hl-actions">
+        <a href="/kontakt/" class="button button-primary">Book en prat</a>
+        <a href="#resultater" class="button button-secondary">Se hva vi bygger</a>
+      </div>
+    </div>
+    <Console theme="light" />
+  </div>
+  <div class="container"><div class="hl-clients">
+    <h2 class="hl-clients-label">Bedrifter vi har jobbet med</h2>
+    <div class="logo-track" data-logo-track>
+      <ul class="logo-row">{logos.map(l => <li><img src={l.src} alt={l.name} width="150" height="56" /></li>)}</ul>
+      <ul class="logo-row logo-clone" aria-hidden="true">{logos.map(l => <li><img src={l.src} alt="" width="150" height="56" /></li>)}</ul>
+    </div>
+  </div></div>
+</section>
+
+<script>
+  // Client logos sit on one line. If they don't fit, the row glides sideways (paused on hover).
+  const track = document.querySelector<HTMLElement>('[data-logo-track]');
+  const row = track?.querySelector<HTMLElement>('.logo-row');
+  if (track && row) {
+    const fit = () => track.classList.toggle('is-marquee', row.scrollWidth > track.clientWidth + 1);
+    fit();
+    addEventListener('resize', fit, { passive: true });
+  }
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hero = document.querySelector<HTMLElement>('.hl');
+  const rotator = hero?.querySelector<HTMLElement>('[data-rotator]');
+  if (hero && rotator) {
+    // Swap the headline ending whenever the console starts a new task.
+    hero.addEventListener('console:scenario', e => {
+      const ending = (e as CustomEvent).detail.ending as string;
+      const current = rotator.querySelector('.is-active');
+      if (current?.textContent === ending) return;
+      const next = document.createElement('span');
+      next.textContent = ending;
+      rotator.append(next);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        current?.classList.replace('is-active', 'is-leaving');
+        next.classList.add('is-active');
+      }));
+      setTimeout(() => current?.remove(), reduced ? 0 : 800);
+    });
+  }
+  const follow = hero?.querySelector<HTMLElement>('[data-follow]');
+  if (hero && follow && !reduced) {
+    let tx = 0, ty = 0, x = 0, y = 0;
+    hero.addEventListener('pointermove', e => { const r = hero.getBoundingClientRect(); tx = (e.clientX - r.left) / r.width - .5; ty = (e.clientY - r.top) / r.height - .5; });
+    const loop = () => { x += (tx - x) * .05; y += (ty - y) * .05; follow.style.transform = `translate(${x * 16}%, ${y * 12}%) rotate(${10 + x * 18}deg)`; requestAnimationFrame(loop); };
+    loop();
+  }
+</script>
+
+<style>
+  .hl { position: relative; isolation: isolate; overflow: hidden; margin-top: -96px; min-height: 100svh; display: flex; flex-direction: column; padding: 150px 0 40px; background: var(--wabi-oat); }
+  .hl-inner { margin-block: auto; }
+  .hl-clients { display: flex; flex-direction: column; align-items: center; gap: 18px; margin-top: 64px; animation: rise 1100ms 400ms var(--ease-out) both; }
+  .hl-clients-label { font-size: 13px; font-weight: 600; letter-spacing: .01em; color: var(--wabi-forest); text-align: center; }
+  .logo-track { position: relative; width: 100%; min-width: 0; display: flex; overflow: hidden; }
+  .logo-row { list-style: none; margin: 0; padding: 0; flex: none; display: flex; align-items: center; gap: clamp(24px, 3vw, 44px); }
+  .logo-row li { flex: none; }
+  .logo-row img { display: block; height: 26px; width: auto; max-width: none; filter: grayscale(1); opacity: .72; transition: filter 250ms ease, opacity 250ms ease; }
+  .logo-row img:hover { filter: none; opacity: 1; }
+  .logo-clone { display: none; }
+  .logo-track:not(.is-marquee) .logo-row { width: 100%; justify-content: space-between; }
+  .logo-track.is-marquee { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .logo-track.is-marquee .logo-clone { display: flex; }
+  .logo-track.is-marquee .logo-row { padding-right: clamp(24px, 3vw, 44px); animation: logos 40s linear infinite; }
+  .logo-track.is-marquee:hover .logo-row { animation-play-state: paused; }
+  @keyframes logos { to { transform: translateX(-100%); } }
+  .hl-art { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .hl-follow { position: absolute; width: min(1200px, 100vw); right: -16%; top: -14%; transform: rotate(10deg); will-change: transform; }
+  .hl-follow img { width: 100%; height: auto; max-width: none; animation: hl-in 1800ms var(--ease-out) both; }
+  @keyframes hl-in { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: none; } }
+  .hl-blob-2 { position: absolute; width: min(700px, 70vw); max-width: none; left: -24%; bottom: -44%; transform: scaleX(-1) rotate(-68deg); opacity: .5; }
+  .hl-inner { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+  .hl-inner > * { min-width: 0; }
+  .hl-copy { display: flex; flex-direction: column; gap: 28px; }
+  .hl-title { display: flex; flex-direction: column; gap: 24px; font-weight: 400; }
+  .hl-title .hero-kicker { color: var(--wabi-moss); }
+  .hl-display { display: flex; flex-direction: column; font-size: clamp(44px, 5.6vw, 88px); line-height: 1; letter-spacing: -.055em; color: var(--wabi-forest); }
+  .hl-line { animation: rise 1100ms var(--ease-out) both; }
+  .hl-rotator { position: relative; display: block; height: 1.22em; margin-bottom: -.12em; overflow: hidden; color: var(--wabi-moss); }
+  .hl-rotator :global(span) { position: absolute; left: 0; top: 0; white-space: nowrap; opacity: 0; transform: translateY(90%); transition: transform 700ms var(--ease-out), opacity 500ms var(--ease-out); }
+  .hl-rotator :global(span.is-active) { opacity: 1; transform: none; }
+  .hl-rotator :global(span.is-leaving) { opacity: 0; transform: translateY(-90%); }
+  .hl-copy > p { max-width: 440px; font-size: 18px; line-height: 1.6; color: #2E4636; animation: rise 1100ms 150ms var(--ease-out) both; }
+  .hl-actions { display: flex; flex-wrap: wrap; gap: 12px; animation: rise 1100ms 250ms var(--ease-out) both; }
+  @media (max-width: 1000px) {
+    .hl { margin-top: -88px; padding: 130px 0 32px; }
+    .hl-clients { gap: 14px; margin-top: 48px; }
+    .hl-inner { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+    .hl-display { font-size: clamp(40px, 10vw, 64px); }
+    .hl-follow { width: 150vw; right: -60%; top: -6%; }
+  }
+  @media (prefers-reduced-motion: reduce) { .logo-track.is-marquee { overflow-x: auto; } .logo-track.is-marquee .logo-row { animation: none; } .logo-track.is-marquee .logo-clone { display: none; } .hl-clients, .hl-line, .hl-copy > p, .hl-actions, .hl-follow img { animation: none; } .hl-rotator :global(span) { transition: none; } }
+</style>

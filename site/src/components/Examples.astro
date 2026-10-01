@@ -1,0 +1,29 @@
+---
+// A plain list of concrete tasks. No mock dashboards: a title, one sentence, and the tools involved.
+import ToolLogo from './ToolLogo.astro';
+interface Item { title: string; text: string; tools?: string[]; }
+interface Props { items: Item[]; eyebrow: string; title: string; intro?: string; }
+const { items, eyebrow, title, intro } = Astro.props;
+---
+<section class="section container split" aria-label={title}>
+  <div class="split-head sticky-head" data-reveal><span class="eyebrow">{eyebrow}</span><h2 class="display-md" set:html={title} />{intro && <p>{intro}</p>}</div>
+  <ol class="examples">
+    {items.map((it, i) => <li data-reveal style={`--d:${i * 50}ms`}>
+      <span class="mono num">{i + 1}</span>
+      <div><h3>{it.title}</h3><p>{it.text}</p></div>
+      {it.tools && <span class="tools">{it.tools.map(t => <span title={t}><ToolLogo name={t} size={18} /></span>)}</span>}
+    </li>)}
+  </ol>
+</section>
+<style>
+  .examples { list-style: none; margin: 0; padding: 0; }
+  li { display: grid; grid-template-columns: 48px 1fr auto; gap: 20px; align-items: start; padding: 28px 0; border-bottom: 1px solid var(--wabi-outline); }
+  li:first-child { border-top: 1px solid var(--wabi-outline); }
+  .num { padding-top: 6px; color: var(--wabi-moss); }
+  h3 { font-size: clamp(20px, 1.9vw, 24px); font-weight: 400; letter-spacing: -.025em; line-height: 1.25; }
+  p { margin-top: 8px; color: #3B4A40; max-width: 520px; }
+  .tools { display: flex; padding-top: 4px; }
+  .tools > span { display: grid; place-items: center; width: 32px; height: 32px; margin-left: -6px; border-radius: 50%; background: var(--wabi-raised); border: 1px solid var(--wabi-outline); }
+  .tools > span:first-child { margin-left: 0; }
+  @media (max-width: 600px) { li { grid-template-columns: 36px 1fr; } .tools { grid-column: 2; } }
+</style>

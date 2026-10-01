@@ -1,0 +1,7 @@
+---
+import brand from '../data/brand.json';
+interface Props { name: string; size?: number; }
+const { name, size = 22 } = Astro.props;
+const logo = (brand.tools as Record<string, { vb: string; inner: string }>)[name];
+---
+{logo && <svg role="img" aria-label={name} width={size} height={size} viewBox={logo.vb} preserveAspectRatio="xMidYMid meet" style="display:block;flex:none" set:html={logo.inner} />}

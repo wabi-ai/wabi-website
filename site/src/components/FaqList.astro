@@ -1,0 +1,22 @@
+---
+interface Props { faq: [string, string][]; title?: string; eyebrow?: string; id?: string; }
+const { faq, title = 'Vanlige spørsmål', eyebrow = 'Spørsmål og svar', id = 'faq' } = Astro.props;
+---
+<section class="section container split rule-top" id={id} aria-labelledby={id + '-title'}>
+  <div class="split-head" data-reveal><span class="eyebrow">{eyebrow}</span><h2 id={id + '-title'} class="display-md">{title}</h2></div>
+  <div class="faq-list">
+    {faq.map(([q, a]) => <details data-reveal><summary><h3>{q}</h3><span class="faq-icon" aria-hidden="true"></span></summary><p>{a}</p></details>)}
+  </div>
+</section>
+<style>
+  details { border-bottom: 1px solid var(--wabi-outline); }
+  details:first-child { border-top: 1px solid var(--wabi-outline); }
+  summary { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 26px 0; cursor: pointer; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  h3 { font-size: clamp(18px, 1.6vw, 21px); font-weight: 500; letter-spacing: -.015em; }
+  .faq-icon { position: relative; flex: none; width: 14px; height: 14px; }
+  .faq-icon::before, .faq-icon::after { content: ''; position: absolute; left: 0; top: 6px; width: 14px; height: 1.5px; background: currentColor; transition: transform 300ms var(--ease-out); }
+  .faq-icon::after { transform: rotate(90deg); }
+  details[open] .faq-icon::after { transform: rotate(0deg); }
+  p { padding: 0 48px 28px 0; color: #3B4A40; max-width: 640px; }
+</style>

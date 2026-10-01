@@ -1,0 +1,18 @@
+/* Product demos (React islands): collapse the app chrome on small screens. */
+.demo-mobile-nav { display: none; }
+@media (max-width: 760px) {
+  .demo-dash { grid-template-columns: minmax(0, 1fr) !important; min-height: 0 !important; }
+  .demo-dash-nav { display: none !important; }
+  .demo-mobile-nav { display: flex; gap: 6px; padding: 10px; overflow-x: auto; background: #FAFAFA; border-bottom: 1px solid #E6E6E6; }
+  .demo-mobile-nav button { flex: none; padding: 8px 14px; border-radius: 10px; border: 1px solid #E6E6E6; background: #fff; font: 600 14px/1 inherit; color: #1F1F1F; cursor: pointer; }
+  .demo-mobile-nav button[aria-pressed='true'] { background: #1F1F1F; color: #fff; border-color: #1F1F1F; }
+  .demo-kpi4 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .demo-kpi3 { grid-template-columns: minmax(0, 1fr) !important; }
+  .demo-kpi3 > div { border-left: 0 !important; border-top: 1px solid #E6E6E6; }
+  .demo-ads-tree { grid-template-columns: minmax(0, 1fr) !important; gap: 12px; }
+  .demo-ads-branch { display: none; }
+  .demo-stock-row { grid-template-columns: 64px minmax(0, 1fr) !important; gap: 4px 14px !important; }
+  .demo-stock-row > div:first-child { grid-row: span 2; height: 48px !important; }
+  .demo-stock-row > div:last-child { display: flex; gap: 10px; align-items: baseline; text-align: left !important; }
+  .demo-stock-row > div:last-child > div { font-size: 13px !important; }
+}

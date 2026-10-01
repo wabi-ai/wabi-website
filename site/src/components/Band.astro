@@ -1,0 +1,18 @@
+---
+// Full-width colour band in a service tone with the grainy blob behind, holding one concrete visual.
+interface Props { tone?: string; }
+const { tone = 'forest' } = Astro.props;
+const TONES: Record<string, [string, string]> = { forest: ['#143D24', 'wabi-blob.webp'], fjord: ['#24466F', 'wabi-blob-fjord.webp'], ember: ['#6E1D14', 'wabi-blob-ember.webp'], sand: ['#4F5530', 'wabi-blob-sand.webp'], dusk: ['#3B2A5C', 'wabi-blob-dusk.webp'], deep: ['#214F57', 'wabi-blob.webp'] };
+const [bg, blob] = TONES[tone] || TONES.forest;
+---
+<div class="container"><div class="band" style={`--bg:${bg}`} data-reveal>
+  <img src={'/assets/blob/' + blob} alt="" aria-hidden="true" loading="lazy" />
+  <div class="band-inner"><slot /></div>
+</div></div>
+<style>
+  .band { position: relative; isolation: isolate; overflow: hidden; border-radius: 20px; background: var(--bg); padding: clamp(24px, 6vw, 88px) clamp(16px, 6vw, 88px); }
+  .band > img { position: absolute; z-index: -1; width: max(1100px, 110%); max-width: none; left: 50%; top: -30%; translate: -50% 0; rotate: 10deg; pointer-events: none; }
+  .band::after { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(to top, var(--bg) 0%, transparent 70%); pointer-events: none; }
+  .band-inner { display: flex; justify-content: center; }
+  .band-inner > :global(*) { width: min(760px, 100%); }
+</style>

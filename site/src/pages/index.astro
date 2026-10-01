@@ -1,0 +1,323 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import BlobPanel from '../components/BlobPanel.astro';
+import WabiMark from '../components/WabiMark.astro';
+import ToolLogo from '../components/ToolLogo.astro';
+import Icon from '../components/Icon.astro';
+import HeroLive from '../components/hero/HeroLive.astro';
+import { SERVICES, SITE } from '../data/site.js';
+
+
+
+const principles = [
+  ['spire', 'Praktisk før perfekt', 'Vi starter med en oppgave som betyr noe, får den i bruk og forbedrer underveis.'],
+  ['lag', 'Hele bedriften, ikke bare den enkelte', 'Personlig effektivitet er en start. Verdien kommer når team, systemer og arbeidsflyt henger sammen.'],
+  ['chat', 'Rett fram', 'Vi snakker om oppgaver, timer og kroner. Ikke om transformasjon og synergier.'],
+  ['menneske', 'Mennesket bestemmer', 'AI gjør stegene. Folk tar beslutningene og eier resultatet.'],
+];
+
+// Metrics are placeholders until real, approved client numbers are in place.
+const cases = [
+  { href: '/prosjekter/rapportering/', tone: 'fjord', preset: 'w1', tag: 'Nuet · Rapportverktøy med AI', metric: 'X t', unit: 'spart hver uke', title: 'Ett dashbord for alle kanaler.', text: 'Tall fra Meta, Google og Analytics samlet per kunde, med en AI som forklarer hva som har endret seg.' },
+  { href: '/prosjekter/bruktbil/', tone: 'ember', preset: 'w2', tag: 'Bruktbilhandel · Programvare', metric: 'X %', unit: 'raskere fra henvendelse til avtale', title: 'Hele bilsalget i ett system.', text: 'Lager, kunder og avtaler samlet, med AI som foreslår neste steg for hver bil.' },
+  { href: '/prosjekter/legekontor/', tone: 'sand', preset: 'w1', tag: 'Legekontor · Automatisering', metric: 'X', unit: 'bilag behandlet per måned', title: 'Mindre papirarbeid på legekontoret.', text: 'Bilag leses, sorteres og konteres automatisk. De ansatte godkjenner med ett klikk.' },
+];
+
+// Home shows three guides, newest first; ties keep this editorial order.
+const guideOrder = ['hvordan-bruke-chatgpt-i-bedriften', 'hvorfor-ai-opplaering-feiler', 'ai-verktoy-smabedrifter', 'ai-i-salg', 'ai-kurs-for-bedrifter'];
+const guides = (await getCollection('innsikt'))
+  .sort((a, b) => (b.data.updated || b.data.date).valueOf() - (a.data.updated || a.data.date).valueOf() || guideOrder.indexOf(a.id) - guideOrder.indexOf(b.id))
+  .map(g => ({ id: g.id, href: `/innsikt/${g.id}/`, category: g.data.category, title: g.data.title, description: g.data.description, minutes: Math.max(1, Math.round((g.body || '').split(/\s+/).length / 200)) }));
+const [featured, ...rest] = guides;
+
+const faq = [
+  ['Hva gjør et AI-rådgivningsselskap?', 'Vi hjelper bedrifter å finne ut hvor AI faktisk gir verdi, og gjør det om til løsninger som brukes. Hos Wabi betyr det tre ting: en kartlegging av arbeidsoppgavene, bygging av AI-agenter, automatisering eller programvare, og oppfølging i drift.'],
+  ['Hvor bør en bedrift starte med AI?', 'Start med oppgavene, ikke verktøyene. Finn tre til fem oppgaver som tar mye tid, gjentar seg og følger et mønster. Velg en av dem, løs den godt og mål effekten. Det er dette en AI-kartlegging hjelper dere med.'],
+  ['Hva er en AI-agent?', 'En AI-agent er et program som tar en fast oppgave fra start til slutt. Den kan lese e-post, hente data fra systemene deres, skrive utkast og sende dem videre. Et menneske godkjenner der det trengs.'],
+  ['Hva er forskjellen på automatisering og en AI-agent?', 'Automatisering følger faste regler: når X skjer, gjør Y. En AI-agent kan i tillegg lese, vurdere og velge neste steg. Mange av de beste løsningene kombinerer begge.'],
+  ['Trenger vi egne utviklere for å ta i bruk AI?', 'Nei. Vi bygger løsningene i verktøyene dere allerede bruker, og lærer opp de ansatte som skal jobbe med dem. Dere eier resultatet.'],
+  ['Hvor lang tid tar det å komme i gang?', 'Det avhenger av oppgaven. En kartlegging gir dere en prioritert plan, og den første løsningen bygges gjerne på noen uker. Vi starter smått og utvider når effekten er dokumentert.'],
+];
+
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+  { '@context': 'https://schema.org', '@type': 'Person', name: 'Ulrik Rosmæl', jobTitle: 'Medgründer', worksFor: { '@id': SITE.url + '/#org' }, homeLocation: 'Trondheim' },
+  { '@context': 'https://schema.org', '@type': 'Person', name: 'Eljar Skjørholm', jobTitle: 'Medgründer', worksFor: { '@id': SITE.url + '/#org' }, homeLocation: 'Singapore' },
+];
+---
+<Base title="Wabi | AI-rådgivning og AI-strategi for norske bedrifter" jsonLd={jsonLd}>
+
+  <HeroLive />
+
+  <!-- SERVICES -->
+  <section class="section container" id="tjenester" aria-labelledby="services-title">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Hva vi gjør</span>
+      <h2 id="services-title" class="display-lg">Riktig verktøy.<br />Til riktig oppgave.</h2>
+      <p class="lead">Noen ganger trenger dere en agent. Andre ganger en enklere arbeidsflyt, et eget verktøy eller noen som viser vei.</p>
+    </div>
+    <div class="service-panels">
+      {SERVICES.map((s, i) => <div data-reveal style={`--d:${i * 90}ms`}><BlobPanel href={s.href} tone={s.tone} preset={s.preset} protect="46%" minHeight={620}>
+        <WabiMark width={26} />
+        <h3>{s.title}</h3>
+        <p>{s.short}</p>
+        <span class="panel-button">Se hvordan</span>
+      </BlobPanel></div>)}
+    </div>
+    <div class="course-panel" data-reveal>
+      <BlobPanel tone="forest" ground="paper" layout="left" preset="k1" protect="66%" contentWidth={650} minHeight={400}>
+        <div class="course-label"><Icon name="workshop" size={40} /><span class="eyebrow">Kurs</span></div>
+        <h3>Kurs i verktøyet dere bruker</h3>
+        <p>Ett kurs, ett verktøy: Claude, ChatGPT, Gemini eller Copilot, alt etter hva dere bruker eller ønsker å bruke. Vi lærer først hvordan avdelingen jobber, og bygger kurset på oppgaver dere faktisk har. Ingen generiske kurs.</p>
+        <div class="course-tools">{[['Claude', 'Claude'], ['ChatGPT', 'ChatGPT'], ['Gemini', 'Gemini'], ['Microsoft Copilot', 'Copilot']].map(([name, label]) => <span><ToolLogo name={name} size={22} />{label}</span>)}</div>
+        <div class="course-actions"><a href="/kurs/" class="button button-primary">Se hvordan</a><a href="/kontakt/" class="button button-secondary">Book en prat</a></div>
+      </BlobPanel>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="section container principles" aria-labelledby="principles-title">
+    <span class="eyebrow" data-reveal>Slik tenker vi</span>
+    <h2 id="principles-title" class="principles-statement" data-reveal>Vi er ikke her for å vise hvor imponerende AI er. Vi finner ut <strong>hvor den faktisk gir verdi</strong>, og bygger det slik at hele bedriften kan bruke det, ikke bare de mest ivrige.</h2>
+    <ul class="principles-list">
+      {principles.map(([icon, title, text], i) => <li data-reveal style={`--d:${i * 110}ms`}>
+        <Icon name={icon} size={44} />
+        <h3>{title}</h3>
+        <p>{text}</p>
+      </li>)}
+    </ul>
+    <a href="/kartlegging/" class="text-link principles-link" data-reveal>Se hvordan en AI-kartlegging foregår <span aria-hidden="true">→</span></a>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="section container" id="resultater" aria-labelledby="results-title">
+    <div class="section-head section-head-row" data-reveal>
+      <div><span class="eyebrow">Resultater</span><h2 id="results-title" class="display-lg">Målt i timer.<br />Ikke i demoer.</h2></div>
+      <p class="lead">Hver løsning starter med en konkret oppgave og ender med et tall vi kan måle.</p>
+    </div>
+    <div class="cases">
+      {cases.map((c, i) => <a href={c.href} class:list={['case', { 'case-wide': i === 0 }]} data-reveal style={`--d:${(i % 2) * 90}ms`}>
+        <BlobPanel tone={c.tone} layout="left" preset={c.preset} protect="70%" contentWidth={520} minHeight={i === 0 ? 460 : 520}>
+          <span class="mono case-tag">{c.tag}</span>
+          <span class="case-metric">{c.metric}</span><span class="case-unit">{c.unit}</span>
+          <span class="placeholder-tag">Tall fylles inn</span>
+          <h3>{c.title}</h3>
+          <p>{c.text}</p>
+          <span class="case-link">Se prosjektet <span aria-hidden="true">→</span></span>
+        </BlobPanel>
+      </a>)}
+    </div>
+  </section>
+
+  <!-- INSIGHT -->
+  <section class="section container insight" aria-labelledby="insight-title">
+    <div class="insight-head" data-reveal>
+      <div>
+        <span class="eyebrow">Innsikt</span>
+        <h2 id="insight-title" class="display-md">Det vi lærer, deler vi.</h2>
+      </div>
+      <a href="/innsikt/" class="text-link">Alle guider <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="guide-feature">
+      <a href={featured.href} class="guide-hero" data-reveal>
+        <div class="guide-art" aria-hidden="true">
+          <img class="guide-art-blob" src="/assets/blob/wabi-blob.webp" alt="" loading="lazy" />
+          {featured.id === 'hvordan-bruke-chatgpt-i-bedriften' && <div class="prompt-card">
+            <div class="prompt-top"><span class="prompt-dot"></span>Ny bestilling</div>
+            <ol class="prompt-parts">
+              {[['Rolle', 'Kundeservice i et regnskapsbyrå'], ['Oppgave', 'Svar på e-posten under'], ['Kontekst', 'Kunden venter på årsoppgjøret'], ['Format', 'Maks 120 ord, rolig tone'], ['Eksempel', 'Et svar vi er fornøyd med']].map(([k, v], i) => <li style={`--i:${i}`}><b>{k}</b><span>{v}</span></li>)}
+            </ol>
+            <div class="prompt-result"><span class="tick">✓</span>Svarutkast klart</div>
+          </div>}
+        </div>
+        <div class="guide-hero-body">
+          <span class="guide-cat">{featured.category}</span>
+          <h3>{featured.title}</h3>
+          <p>{featured.description}</p>
+          <span class="guide-foot"><span>{featured.minutes} min lesing</span><span class="guide-arrow" aria-hidden="true">→</span></span>
+        </div>
+      </a>
+      <ul class="guide-rows">
+        {rest.map((g, i) => <li data-reveal style={`--d:${i * 70}ms`}><a href={g.href}><span class="guide-cat">{g.category}</span><strong>{g.title}</strong><span class="guide-arrow" aria-hidden="true">→</span></a></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section container faq" id="faq" aria-labelledby="faq-title">
+    <div class="faq-head" data-reveal>
+      <span class="eyebrow">Vanlige spørsmål</span>
+      <h2 id="faq-title" class="display-md">Om AI i bedriften.</h2>
+    </div>
+    <div class="faq-list">
+      {faq.map(([q, a]) => <details data-reveal><summary><h3>{q}</h3><span class="faq-icon" aria-hidden="true"></span></summary><p>{a}</p></details>)}
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="section container team" id="om-oss" aria-labelledby="team-title">
+    <div class="team-portraits" data-reveal>
+      <figure><img src="/assets/portraits/ulrik-rosmael-bue-blob-hoyre.webp" alt="Ulrik Rosmæl" width="320" height="320" loading="lazy" /><figcaption>Ulrik Rosmæl</figcaption></figure>
+      <figure><img src="/assets/portraits/eljar-skjorholm-bue-blob-venstre.webp" alt="Eljar Skjørholm" width="320" height="320" loading="lazy" /><figcaption>Eljar Skjørholm</figcaption></figure>
+    </div>
+    <div class="team-copy" data-reveal>
+      <span class="eyebrow">Om oss</span>
+      <h2 id="team-title" class="display-md">Teknologien er ny.<br />Samarbeidet er personlig.</h2>
+      <p class="lead">Vi er Ulrik og Eljar. Vi setter oss ned i bedriften din, bygger sammen med dere, forklarer underveis og følger det videre.</p>
+      <a href="/om-oss/" class="text-link">Møt oss <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+
+</Base>
+
+
+<style>
+
+
+  /* SECTION HEADS */
+  .section { padding-block: var(--section-space); }
+  .section-head { display: flex; flex-direction: column; gap: 20px; margin-bottom: 56px; }
+  .section-head .lead { color: var(--wabi-muted); }
+  .section-head-row { flex-direction: row; justify-content: space-between; align-items: flex-end; gap: 40px; }
+  .section-head-row > div { display: flex; flex-direction: column; gap: 20px; }
+  .section-head-row .lead { max-width: 380px; }
+
+  /* SERVICES (kept from Mint) */
+  #tjenester { padding-top: clamp(64px, 8vw, 112px); }
+  .service-panels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .service-panels :global(.blob-panel) { padding: 40px 28px; }
+  .service-panels h3 { font-size: clamp(26px, 2.8vw, 34px); font-weight: 400; letter-spacing: -.035em; }
+  .service-panels p { font-size: 15px; line-height: 1.55; color: var(--blob-panel-sub); min-height: 6.2em; }
+  .panel-button { display: inline-flex; align-items: center; justify-content: center; padding: 13px 25px; margin-top: 8px; min-height: 46px; border-radius: 100px; background: #FDF9F1; border: 1px solid #E2DECF; color: #143D24; font-size: 14px; font-weight: 700; transition: background 240ms var(--ease-out); }
+  .service-panels a:hover .panel-button { background: #E8EBDD; }
+  .course-panel { margin-top: 16px; }
+  .course-panel :global(.blob-panel) { padding: 48px; }
+  .course-label { display: flex; align-items: center; gap: 12px; }
+  .course-panel h3 { font-size: clamp(32px, 3.6vw, 48px); font-weight: 400; letter-spacing: -.04em; line-height: 1.05; }
+  .course-panel p { font-size: 16px; line-height: 1.6; }
+  .course-tools, .course-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .course-tools > span { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px 8px 10px; border-radius: 100px; background: #FDF9F1; border: 1px solid #E2DECF; font-size: 14px; font-weight: 700; white-space: nowrap; }
+  .course-actions { gap: 12px; margin-top: 8px; }
+
+  /* PRINCIPLES */
+  .principles { border-top: 1px solid var(--wabi-outline); }
+  .principles-statement { max-width: 22em; margin-top: 28px; font-size: clamp(30px, 4.2vw, 60px); font-weight: 400; line-height: 1.12; letter-spacing: -.035em; color: rgba(20, 61, 36, .62); text-wrap: pretty; }
+  .principles-statement strong { font-weight: 700; color: var(--wabi-forest); }
+  .principles-list { list-style: none; margin: clamp(56px, 7vw, 96px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); }
+  .principles-list li { position: relative; display: flex; flex-direction: column; gap: 14px; padding-top: 32px; }
+  /* The rule above each principle draws in as it reveals. */
+  .principles-list li::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--wabi-outline-tint); transform-origin: left; transform: scaleX(0); transition: transform 1100ms var(--ease-out) var(--d, 0ms); }
+  .principles-list li.is-in::before, :global(html:not(.js)) .principles-list li::before { transform: none; }
+  .principles-list h3 { margin-top: 10px; font-size: 20px; font-weight: 700; line-height: 1.25; letter-spacing: -.015em; text-wrap: balance; }
+  .principles-list p { font-size: 15px; line-height: 1.6; color: #3B4A40; text-align: left; hyphens: manual; }
+  .principles-link { margin-top: 56px; }
+  @media (prefers-reduced-motion: reduce) { .principles-list li::before { transform: none; transition: none; } }
+
+  /* RESULTS */
+  .cases { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .case { display: block; text-decoration: none; }
+  .case-wide { grid-column: 1 / -1; }
+  .case :global(.blob-panel) { padding: 48px; }
+  .case-tag { color: var(--blob-panel-sub); text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
+  .case-metric { margin-top: 12px; font-size: clamp(64px, 8vw, 120px); font-weight: 300; line-height: .95; letter-spacing: -.06em; }
+  .case-unit { margin-top: -4px; font-size: 16px; font-weight: 500; color: var(--blob-panel-sub); }
+  .placeholder-tag { padding: 4px 10px; border: 1px dashed rgba(255, 255, 255, .5); border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blob-panel-sub); }
+  .case h3 { margin-top: 28px; font-size: clamp(24px, 2.4vw, 32px); font-weight: 400; letter-spacing: -.03em; line-height: 1.15; }
+  .case p { color: var(--blob-panel-sub); font-size: 15px; max-width: 420px; }
+  .case-link { display: inline-flex; gap: 8px; margin-top: 8px; font-size: 14px; font-weight: 700; }
+  .case-link span { transition: transform 200ms var(--ease-out); }
+  .case:hover .case-link span { transform: translateX(4px); }
+
+  /* INSIGHT */
+  .insight { border-top: 1px solid var(--wabi-outline); }
+  .insight-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 48px; }
+  .insight-head > div:first-child { display: flex; flex-direction: column; gap: 18px; }
+  .guide-cat { color: var(--wabi-moss); text-transform: uppercase; letter-spacing: .12em; font-size: 12px; font-weight: 700; }
+  .guide-arrow { font-size: 18px; color: var(--wabi-forest); transition: transform 250ms var(--ease-out); }
+  .guide-feature { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; align-items: stretch; }
+
+  /* Featured guide: dark card with a living illustration on top. */
+  .guide-hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; border-radius: 24px; background: var(--night); color: var(--wabi-oat); text-decoration: none; transition: transform 400ms var(--ease-out); }
+  .guide-hero:hover { transform: translateY(-4px); }
+  .guide-art { position: relative; height: 380px; display: grid; place-items: center; padding-top: 12px; overflow: hidden; }
+  .guide-art-blob { position: absolute; z-index: -1; width: 125%; max-width: none; left: -12%; top: -8%; rotate: -12deg; filter: saturate(1.35) brightness(1.45); mix-blend-mode: screen; transition: transform 900ms var(--ease-out); }
+  .guide-hero:hover .guide-art-blob { transform: scale(1.06) translateY(3%); }
+  .guide-art::after { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(to bottom, transparent 55%, var(--night)); }
+  .prompt-card { width: min(330px, 82%); padding: 12px 12px 10px; border-radius: 16px; background: rgba(253, 249, 241, .94); color: var(--wabi-forest); box-shadow: 0 30px 70px rgba(0, 0, 0, .35); transform: rotate(-2deg); transition: transform 500ms var(--ease-out); }
+  .guide-hero:hover .prompt-card { transform: rotate(0deg) translateY(-4px); }
+  .prompt-top { display: flex; align-items: center; gap: 8px; padding-bottom: 10px; margin-bottom: 8px; border-bottom: 1px solid var(--wabi-outline); font-size: 12px; font-weight: 700; }
+  .prompt-dot { width: 7px; height: 7px; border-radius: 50%; background: #3F9B55; }
+  .prompt-parts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+  .prompt-parts li { display: grid; grid-template-columns: 74px 1fr; gap: 10px; align-items: center; padding: 5px 8px; border-radius: 8px; font-size: 12px; animation: part 7.5s var(--ease-out) infinite; animation-delay: calc(var(--i) * 1s); }
+  .prompt-parts b { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--wabi-moss); }
+  .prompt-parts span { color: #3B4A40; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  @keyframes part { 0%, 100% { background: transparent; } 4%, 12% { background: var(--wabi-tint); } 20% { background: transparent; } }
+  .prompt-result { display: flex; align-items: center; gap: 8px; margin-top: 8px; padding: 8px 10px; border-radius: 10px; background: var(--wabi-moss); color: var(--wabi-oat); font-size: 12px; font-weight: 700; animation: result 7.5s var(--ease-out) infinite; }
+  .prompt-result .tick { display: grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; background: rgba(244, 241, 231, .2); font-size: 10px; }
+  @keyframes result { 0%, 64% { opacity: 0; transform: translateY(6px); } 70%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+  .guide-hero-body { display: flex; flex-direction: column; gap: 14px; flex: 1; padding: 8px 36px 32px; }
+  .guide-hero .guide-cat { color: var(--wabi-sage); }
+  .guide-hero h3 { font-size: clamp(26px, 2.8vw, 38px); font-weight: 400; line-height: 1.1; letter-spacing: -.035em; text-wrap: balance; }
+  .guide-hero p { color: rgba(244, 241, 231, .72); font-size: 16px; line-height: 1.55; }
+  .guide-hero .guide-foot { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 18px; border-top: 1px solid rgba(207, 224, 212, .18); font-size: 13px; color: rgba(244, 241, 231, .65); }
+  .guide-hero .guide-arrow { color: var(--wabi-oat); }
+  .guide-hero:hover .guide-arrow { transform: translateX(4px); }
+
+  .guide-rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: center; }
+  .guide-rows a { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; padding: 26px 0; border-bottom: 1px solid var(--wabi-outline); text-decoration: none; }
+  .guide-rows li:first-child a { border-top: 1px solid var(--wabi-outline); }
+  .guide-rows .guide-cat { grid-column: 1 / -1; }
+  .guide-rows strong { font-size: clamp(19px, 1.7vw, 23px); font-weight: 400; letter-spacing: -.025em; line-height: 1.25; transition: color 200ms ease; }
+  .guide-rows a:hover strong { color: var(--wabi-moss); }
+  .guide-rows a:hover .guide-arrow { transform: translateX(4px); }
+  @media (max-width: 1000px) { .guide-feature { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
+  @media (max-width: 600px) { .guide-art { height: 340px; } .guide-hero-body { padding: 4px 22px 24px; } }
+  @media (prefers-reduced-motion: reduce) {
+    .prompt-parts li, .prompt-result { animation: none; }
+    .guide-hero, .guide-hero:hover, .guide-hero:hover .prompt-card { transform: none; }
+  }
+
+  /* FAQ */
+  .faq { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; padding-top: 0; }
+  .faq-head { display: flex; flex-direction: column; gap: 20px; }
+  .faq-list details { border-bottom: 1px solid var(--wabi-outline); }
+  .faq-list details:first-child { border-top: 1px solid var(--wabi-outline); }
+  .faq-list summary { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 26px 0; cursor: pointer; list-style: none; }
+  .faq-list summary::-webkit-details-marker { display: none; }
+  .faq-list h3 { font-size: clamp(18px, 1.6vw, 21px); font-weight: 500; letter-spacing: -.015em; }
+  .faq-icon { position: relative; flex: none; width: 14px; height: 14px; }
+  .faq-icon::before, .faq-icon::after { content: ''; position: absolute; left: 0; top: 6px; width: 14px; height: 1.5px; background: currentColor; transition: transform 300ms var(--ease-out); }
+  .faq-icon::after { transform: rotate(90deg); }
+  details[open] .faq-icon::after { transform: rotate(0deg); }
+  .faq-list p { padding: 0 48px 28px 0; color: #3B4A40; max-width: 640px; }
+
+  /* TEAM */
+  .team { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; border-top: 1px solid var(--wabi-outline); }
+  .team-portraits { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .team-portraits figure { margin: 0; }
+  .team-portraits img { width: 100%; height: auto; }
+  .team-portraits figcaption { display: flex; flex-direction: column; margin-top: 14px; font-weight: 700; font-size: 15px; }
+  .team-portraits figcaption span { font-weight: 400; font-size: 13px; color: var(--wabi-muted); }
+  .team-copy { display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
+  .team-copy .lead { color: #3B4A40; }
+
+
+  @media (max-width: 1000px) {
+    .service-panels { grid-template-columns: 1fr; }
+    .service-panels :global(.blob-panel) { min-height: 520px !important; }
+    .service-panels p { min-height: auto; margin-bottom: 16px; }
+    .cases { grid-template-columns: 1fr; }
+    .faq, .team { grid-template-columns: 1fr; gap: 40px; }
+    .principles-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .section-head-row { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 760px) {
+    .principles-list { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+    .course-panel :global(.blob-panel), .case :global(.blob-panel) { padding: 28px; }
+    .insight-head { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+

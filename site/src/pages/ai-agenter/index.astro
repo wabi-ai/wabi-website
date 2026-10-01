@@ -1,0 +1,99 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Band from '../../components/Band.astro';
+import Console from '../../components/hero/Console.astro';
+import Examples from '../../components/Examples.astro';
+import Steps from '../../components/Steps.astro';
+import FaqList from '../../components/FaqList.astro';
+import MoreServices from '../../components/MoreServices.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
+
+const crumbs = [{ label: 'AI-agenter', href: '/ai-agenter/' }];
+const description = 'Wabi bygger AI-agenter som tar en fast oppgave fra start til slutt, i Slack, e-post eller systemene dere bruker. Med tydelige grenser, logg og menneskelig godkjenning.';
+
+const examples = [
+  { title: 'Ukesrapport for salg', text: 'Henter aktiviteter fra CRM og omsetning fra regnskap, skriver rapporten i fast mal og markerer avtaler uten kontakt på 14 dager.', tools: ['HubSpot', 'Excel', 'Slack'] },
+  { title: 'Førstelinje kundeservice', text: 'Svarer på vanlige spørsmål fra egne dokumenter og sender resten videre til riktig person, med hele historikken.', tools: ['Gmail', 'Notion', 'Microsoft Teams'] },
+  { title: 'Tilbud fra forespørsel', text: 'Leser forespørselen og kundehistorikken, henter priser og avtalte rabatter, og legger et utkast klart til gjennomlesning.', tools: ['Outlook', 'Salesforce'] },
+  { title: 'Research på nye leads', text: 'Finner informasjon om nye leads, legger dem inn i CRM og foreslår neste steg for selgeren.', tools: ['HubSpot', 'Google Sheets'] },
+  { title: 'Kontroll av fakturaer', text: 'Sjekker fakturaer mot bestillingen og stopper avvik til noen har godkjent dem.', tools: ['Gmail', 'Excel'] },
+];
+
+const steps: [string, string][] = [
+  ['Oppgaven', 'En jobb, beskrevet så presist at en ny medarbeider kunne gjort den. Hva er input, hva er ferdig, og hva er utenfor.'],
+  ['Tilgangen', 'Egen innlogging til systemene jobben krever, og ikke mer. Leser i CRM, skriver i regnskap, sender e-post.'],
+  ['Løkken', 'Agenten leser, planlegger, gjør et steg og sjekker resultatet. Den gjentar til oppgaven er løst.'],
+  ['Mennesket', 'Dere godkjenner det som er over grensene dere har satt. Alt agenten gjør, blir logget.'],
+];
+
+const faq: [string, string][] = [
+  ['Hva er forskjellen på en AI-agent og en chatbot?', 'En chatbot svarer på det du skriver. En agent får en oppgave og løser den: den henter data, gjør flere steg etter hverandre og leverer et ferdig resultat, for eksempel en rapport eller et svarutkast.'],
+  ['Hvilke systemer kan en agent jobbe i?', 'De fleste systemer med et API eller en integrasjon: e-post, Slack, Teams, CRM som HubSpot og Salesforce, regneark og dokumentlagring. Vi ser på systemene dere har før vi foreslår noe.'],
+  ['Hva skjer hvis agenten gjør en feil?', 'Agenten har faste grenser for hva den kan gjøre alene. Alt over grensene går til godkjenning, og hvert steg blir logget, så dere ser hva som skjedde og hvorfor.'],
+  ['Hvilken AI-modell bruker dere?', 'Vi velger modell etter oppgaven. Ofte er det Claude, GPT eller Gemini. Det viktigste er ikke modellen, men hvor presist oppgaven er beskrevet.'],
+  ['Hvordan starter en agent?', 'En person kan skrive til den, den kan gå på et fast tidspunkt, for eksempel hver mandag 07:00, eller den kan starte når noe skjer i et system: en ny e-post, et nytt lead eller en signert avtale.'],
+];
+---
+<Base title="AI-agenter for bedrifter | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-agenter', description, path: '/ai-agenter/' })]}>
+  <PageHero crumbs={crumbs} eyebrow="AI-agenter" title="En agent tar en oppgave fra start til slutt."
+    lead="Den henter det jobben trenger, gjør arbeidet og sjekker resultatet. Når noe er utenfor grensene dere har satt, stopper den og spør."
+    primary={{ label: 'Book en prat', href: '/kontakt/' }} secondary={{ label: 'Se eksempler', href: '#eksempler' }} />
+
+  <Band tone="fjord"><Console theme="light" only={['rapport', 'kundeservice', 'tilbud']} /></Band>
+
+  <section class="section container split" aria-labelledby="hva-title">
+    <div class="split-head" data-reveal><span class="eyebrow">Kort forklart</span><h2 id="hva-title" class="display-md">Hva er en AI-agent?</h2></div>
+    <div data-reveal>
+      <p class="answer">En AI-agent er et program som får en oppgave, bestemmer selv hvilke steg som trengs, og bruker verktøyene den har tilgang til for å løse den.</p>
+      <p class="answer muted">Forskjellen fra en chatbot er at agenten handler. Den henter tall, skriver utkast, oppdaterer CRM og sier fra når noe ikke stemmer.</p>
+    </div>
+  </section>
+
+  <section class="section container rule-top spec" aria-labelledby="spec-title">
+    <div class="split-head" data-reveal>
+      <span class="eyebrow">Det som avgjør kvaliteten</span>
+      <h2 id="spec-title" class="display-md">En agent er aldri bedre enn oppgavebeskrivelsen.</h2>
+    </div>
+    <div class="spec-grid">
+      <div class="spec-card vague" data-reveal>
+        <span class="mono">Vag oppgave</span>
+        <p class="spec-quote">«Lag en ukesrapport for salg.»</p>
+        <p class="muted">Agenten må gjette hvilke tall, hvilken periode, hvilket format og hva den skal gjøre med avvik.</p>
+      </div>
+      <div class="spec-card precise" data-reveal style="--d:120ms">
+        <span class="mono">Presis oppgave</span>
+        <dl>
+          <dt>Rolle</dt><dd>Du lager ukesrapporten for salgsteamet.</dd>
+          <dt>Input</dt><dd>Aktiviteter fra CRM og omsetning fra regnskap, forrige uke.</dd>
+          <dt>Steg</dt><dd>Grupper per selger. Tre punkter per selger. Marker avtaler uten kontakt på 14 dager.</dd>
+          <dt>Ferdig når</dt><dd>Rapporten ligger i delt mappe i fast mal.</dd>
+          <dt>Stopp og spør</dt><dd>Hvis tall i CRM og regnskap avviker med mer enn 5 000 kr.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <div id="eksempler"><Examples eyebrow="Eksempler" title="Oppgaver en agent kan ta for dere." intro="Felles for dem: oppgaven gjentar seg, følger et mønster og tar tid fra noe viktigere." items={examples} /></div>
+
+  <Steps dark eyebrow="Slik bygger vi en agent" title="Fire ting må være på plass." steps={steps} />
+
+  <FaqList faq={faq} title="Om AI-agenter." />
+  <MoreServices current="agenter" />
+  <CtaPanel />
+</Base>
+
+<style>
+  .spec .split-head { max-width: 760px; margin-bottom: 48px; }
+  .spec-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 16px; }
+  .spec-card { display: flex; flex-direction: column; gap: 18px; padding: clamp(24px, 3vw, 40px); border-radius: 18px; border: 1px solid var(--wabi-outline); background: var(--wabi-card); }
+  .spec-card .mono { text-transform: uppercase; letter-spacing: .12em; font-size: 11px; color: var(--wabi-muted); }
+  .spec-quote { font-size: clamp(24px, 2.4vw, 32px); letter-spacing: -.03em; line-height: 1.2; }
+  .precise { background: var(--wabi-tint); border-color: var(--wabi-outline-tint); }
+  .precise .mono { color: var(--wabi-moss); }
+  dl { display: grid; grid-template-columns: 130px 1fr; gap: 14px 20px; margin: 0; }
+  dt { font-weight: 700; font-size: 14px; }
+  dd { margin: 0; font-size: 15px; color: #2E4636; }
+  @media (max-width: 900px) { .spec-grid { grid-template-columns: minmax(0, 1fr); } dl { grid-template-columns: minmax(0, 1fr); gap: 4px; } dd { margin-bottom: 12px; } }
+</style>

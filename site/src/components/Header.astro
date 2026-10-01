@@ -1,0 +1,102 @@
+---
+import WabiMark from './WabiMark.astro';
+import Icon from './Icon.astro';
+import { SERVICES, COURSE } from '../data/site.js';
+
+interface Props { overHero?: boolean; }
+const { overHero = false } = Astro.props;
+const items = [...SERVICES, COURSE];
+const blob = (tone: string) => '/assets/blob/wabi-blob' + (tone === 'forest' ? '' : '-' + tone) + '.webp';
+const icons: Record<string, string> = { agenter: 'agent', automatisering: 'flyt', programvare: 'programvare', kurs: 'workshop' };
+const projects = [
+  { href: '/prosjekter/rapportering/', tone: 'fjord', label: '1 / Nuet', title: 'Ett dashbord for alle kanaler.', text: 'Rapportverktøyet vi bygde for et performance-byrå.' },
+  { href: '/prosjekter/bruktbil/', tone: 'ember', label: '2 / Programvare', title: 'En enklere salgsdag.', text: 'Utforsk et verktøy laget for bruktbilforhandleren.' },
+];
+---
+<header class:list={['site-header', { 'is-over-hero': overHero }]} data-over-hero={overHero ? '' : undefined}>
+  <div class="header-inner">
+    <a href="/" class="brand-link" aria-label="Wabi, til forsiden"><WabiMark width={40} /></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="site-navigation"><span>Meny</span><span class="menu-symbol" aria-hidden="true"><i></i><i></i></span></button>
+    <nav id="site-navigation" class="site-nav" aria-label="Hovedmeny">
+      <div class="nav-links">
+        <div class="nav-disclosure" data-menu="services">
+          <button class="nav-link" aria-expanded="false" aria-controls="services-navigation">Hva vi gjør<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12"><path d="m3 4 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <div class="nav-panel nav-services" id="services-navigation" hidden>
+            <div class="nav-service-list">
+              {items.map((s, i) => <a href={s.href} class:list={['nav-service-item', { 'is-previewed': i === 0 }]} data-preview={s.id}><span><strong>{s.navTitle || s.title}</strong><small>{s.short}</small></span><span class="nav-item-arrow" aria-hidden="true">↗</span></a>)}
+            </div>
+            <div class="nav-previews" aria-hidden="true">
+              {items.map((s, i) => <div class:list={['nav-preview', 'nav-art-' + s.tone, { 'is-active': i === 0 }]} data-preview-panel={s.id}>
+                <img src={blob(s.tone)} alt="" width="800" height="800" loading="lazy" />
+                <div class="nav-preview-copy"><Icon name={icons[s.id]} size={40} onDark /><span class="nav-preview-title">{s.nav[0]}</span><p>{s.nav[1]}</p></div>
+              </div>)}
+            </div>
+          </div>
+        </div>
+        <div class="nav-disclosure" data-menu="projects">
+          <button class="nav-link" aria-expanded="false" aria-controls="projects-navigation">Prosjekter<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12"><path d="m3 4 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <div class="nav-panel nav-projects" id="projects-navigation" hidden>
+            <div class="nav-project-grid">
+              {projects.map(p => <a href={p.href} class={'nav-project-card nav-art-' + p.tone}><img src={blob(p.tone)} alt="" width="800" height="800" loading="lazy" /><span class="nav-project-label">{p.label} <span aria-hidden="true">↗</span></span><span class="nav-project-copy"><strong>{p.title}</strong><small>{p.text}</small></span></a>)}
+            </div>
+            <div class="nav-project-footer" style="justify-content: flex-end"><a href="/prosjekter/">Se alle prosjekter <span aria-hidden="true">↗</span></a></div>
+          </div>
+        </div>
+        <a href="/kartlegging/" class="nav-link">Kartlegging</a>
+        <a href="/innsikt/" class="nav-link">Innsikt</a>
+        <a href="/om-oss/" class="nav-link">Om oss</a>
+      </div>
+      <a href="/kontakt/" class="button nav-contact">La oss ta en prat <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('.site-header')!;
+  const nav = header.querySelector<HTMLElement>('.site-nav')!;
+  const toggle = header.querySelector<HTMLButtonElement>('.menu-toggle')!;
+  const disclosures = [...header.querySelectorAll<HTMLElement>('.nav-disclosure')];
+  const desktop = () => matchMedia('(min-width: 861px) and (hover: hover)').matches;
+  let leaveTimer: number | undefined;
+
+  const setOpen = (target: HTMLElement | null) => {
+    disclosures.forEach(d => {
+      const open = d === target;
+      d.querySelector('button')!.setAttribute('aria-expanded', String(open));
+      d.querySelector<HTMLElement>('.nav-panel')!.hidden = !open;
+    });
+  };
+  disclosures.forEach(d => {
+    const button = d.querySelector('button')!;
+    button.addEventListener('click', () => setOpen(button.getAttribute('aria-expanded') === 'true' && !desktop() ? null : d));
+    d.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' && desktop()) { clearTimeout(leaveTimer); setOpen(d); } });
+    d.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && desktop()) leaveTimer = window.setTimeout(() => setOpen(null), 160); });
+  });
+  header.querySelectorAll<HTMLElement>('[data-preview]').forEach(item => {
+    const show = () => {
+      header.querySelectorAll('[data-preview]').forEach(el => el.classList.toggle('is-previewed', el === item));
+      header.querySelectorAll('[data-preview-panel]').forEach(el => el.classList.toggle('is-active', (el as HTMLElement).dataset.previewPanel === item.dataset.preview));
+    };
+    item.addEventListener('pointerenter', show);
+    item.addEventListener('focus', show);
+  });
+  toggle.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    toggle.setAttribute('aria-expanded', String(open));
+    nav.classList.toggle('is-open', open);
+    toggle.querySelector('.menu-symbol')!.classList.toggle('is-open', open);
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(null); });
+  document.addEventListener('click', e => { if (!header.contains(e.target as Node)) setOpen(null); });
+
+  // Compact floating bar after scrolling; light text only while it sits over the dark hero.
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  const overHero = header.hasAttribute('data-over-hero');
+  const update = () => {
+    const y = scrollY;
+    header.classList.toggle('is-compact', y > 24);
+    header.classList.toggle('is-over-hero', !!(overHero && hero && hero.hasAttribute('data-dark') && y < hero.offsetHeight - 80));
+  };
+  update();
+  addEventListener('scroll', update, { passive: true });
+</script>

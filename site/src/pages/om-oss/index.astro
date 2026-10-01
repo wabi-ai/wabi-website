@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import WabiSabi from '../../components/WabiSabi.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { breadcrumbLd } from '../../lib/seo.js';
+import { SITE } from '../../data/site.js';
+
+const crumbs = [{ label: 'Om oss', href: '/om-oss/' }];
+const people = [
+  { name: 'Ulrik Rosmæl', img: '/assets/portraits/ulrik-rosmael-bue-blob-hoyre.webp', email: 'ulrik@wabi.no' },
+  { name: 'Eljar Skjørholm', img: '/assets/portraits/eljar-skjorholm-bue-blob-venstre.webp' },
+];
+const aboutLd = { '@context': 'https://schema.org', '@type': 'AboutPage', name: 'Om Wabi', url: SITE.url + '/om-oss/', about: { '@id': SITE.url + '/#org' } };
+---
+<Base title="Om oss | Wabi" description="Wabi er Ulrik Rosmæl og Eljar Skjørholm. Vi setter oss ned i bedriften din, bygger AI-løsninger sammen med dere og følger dem videre." jsonLd={[breadcrumbLd(crumbs), aboutLd]}>
+  <PageHero crumbs={crumbs} eyebrow="Om oss" title="Teknologien er ny. Samarbeidet er personlig."
+    lead="Vi er Ulrik og Eljar. Vi setter oss ned i bedriften din, bygger sammen med dere, forklarer underveis og følger det videre."
+    primary={{ label: 'Ta en prat med oss', href: '/kontakt/' }} />
+
+  <section class="container people" aria-label="Ulrik og Eljar">
+    {people.map((p, i) => <figure data-reveal style={`--d:${i * 100}ms`}>
+      <img src={p.img} alt={p.name} width="420" height="420" />
+      <figcaption><strong>{p.name}</strong>{p.email && <a href={'mailto:' + p.email}>{p.email}</a>}</figcaption>
+    </figure>)}
+  </section>
+
+  <div class="rule"><WabiSabi /></div>
+  <CtaPanel eyebrow="Kontakt" title="Ta en prat med oss." text="Fortell hva dere bruker mye tid på, så ser vi sammen på om AI kan gjøre arbeidsdagen enklere." primary={{ label: 'Kontakt oss', href: '/kontakt/' }} secondary={null} />
+</Base>
+
+<style>
+  .people { display: grid; grid-template-columns: repeat(2, minmax(0, 340px)); gap: clamp(20px, 4vw, 48px); padding-bottom: var(--section-space); }
+  figure { margin: 0; }
+  img { width: 100%; height: auto; }
+  figcaption { display: flex; flex-direction: column; gap: 4px; margin-top: 16px; }
+  strong { font-size: 18px; }
+  figcaption a { font-size: 14px; font-weight: 700; color: var(--wabi-moss); }
+  .rule { border-top: 1px solid var(--wabi-outline); padding-top: var(--section-space); }
+  @media (max-width: 600px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>

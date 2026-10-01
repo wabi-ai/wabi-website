@@ -1,0 +1,7 @@
+---
+import brand from '../data/brand.json';
+interface Props { name: string; size?: number; onDark?: boolean; }
+const { name, size = 40, onDark = false } = Astro.props;
+const style = onDark ? 'color:var(--wabi-oat);--wabi-icon-accent:var(--wabi-sage)' : 'color:var(--wabi-forest);--wabi-icon-accent:var(--wabi-moss)';
+---
+<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style={'display:block;flex:none;' + style} set:html={(brand.icons as Record<string, string>)[name] || ''} />

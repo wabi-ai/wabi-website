@@ -1,0 +1,70 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Band from '../../components/Band.astro';
+import ToolLogo from '../../components/ToolLogo.astro';
+import Examples from '../../components/Examples.astro';
+import Steps from '../../components/Steps.astro';
+import FaqList from '../../components/FaqList.astro';
+import MoreServices from '../../components/MoreServices.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
+
+const crumbs = [{ label: 'Kurs', href: '/kurs/' }];
+const description = 'AI-kurs for bedrifter i Claude, ChatGPT, Gemini og Microsoft Copilot. Wabi bygger kurset på oppgavene avdelingen faktisk har, med egne dokumenter og ferdige prompts.';
+
+const tools = [
+  { name: 'Claude', text: 'Lange dokumenter, analyse og skriving. Med <strong>Claude Code</strong> kan team som bygger også la en agent skrive, teste og rette kode.' },
+  { name: 'ChatGPT', text: 'Daglig bruk for hele bedriften, prosjekter, plugins og dataanalyse. Med <strong>Codex</strong> kan utviklere la en agent skrive og teste kode.' },
+  { name: 'Gemini', text: 'AI der dere allerede jobber, for dere som bruker Google Workspace.' },
+  { name: 'Microsoft Copilot', label: 'Copilot', text: 'AI i Outlook, Teams, Word og Excel, for dere som bruker Microsoft 365.' },
+];
+
+const teams = [
+  { title: 'Salg', text: 'Møteforberedelse, oppfølging og tilbud, med prompts bygget på deres egne kunder og maler.', tools: ['HubSpot', 'ChatGPT'] },
+  { title: 'Marked', text: 'Innhold, annonsetekster og analyse av kampanjer.', tools: ['Claude', 'Gemini'] },
+  { title: 'Økonomi', text: 'Rapporter, avstemming og analyse i regneark.', tools: ['Excel', 'Microsoft Copilot'] },
+  { title: 'Design', text: 'Bildegenerering, variasjoner og arbeidsflyt inn i verktøyene designerne allerede bruker.', tools: ['ChatGPT'] },
+  { title: 'Deres team', text: 'Har dere et team med egne behov, lager vi et kurs for det.' },
+];
+
+const steps: [string, string][] = [
+  ['Bedriften og avdelingen', 'Hva dere leverer, hvem som gjør hva, og hvilke systemer dere bruker.'],
+  ['Samtaler med deltakerne', 'Vi snakker med noen av dem som skal på kurset. Hvilke oppgaver tar tid, og hva gjentar seg?'],
+  ['Kurs med egne oppgaver', 'Dere jobber med egne dokumenter og egne oppgaver, ikke med eksempler fra en lærebok.'],
+  ['Klart til bruk dagen etter', 'Deltakerne får promptene og oppsettene fra kurset, klare til bruk.'],
+];
+
+const faq: [string, string][] = [
+  ['Hvilket AI-verktøy bør vi velge?', 'Start med det som passer systemene dere allerede har. Bruker dere Microsoft 365, er Copilot ofte naturlig. Bruker dere Google Workspace, er det Gemini. Ellers er Claude og ChatGPT gode valg. Vi hjelper dere å velge før kurset.'],
+  ['Hvorfor ikke et standardkurs?', 'Eksempler som ikke ligner arbeidsdagen blir sjelden tatt i bruk. Når kurset bygger på oppgaver deltakerne har, kan de bruke det de lærte dagen etter.'],
+  ['Hva sitter deltakerne igjen med?', 'Promptene og oppsettene fra kurset, tilpasset oppgavene deres, og erfaring med å bruke dem på egne dokumenter.'],
+  ['Kan kurset kombineres med en kartlegging?', 'Ja. Kartleggingen viser hvilke oppgaver som gir mest, og kurset lærer folk å løse dem.'],
+];
+---
+<Base title="AI-kurs for bedrifter i Claude, ChatGPT og Gemini | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-kurs for bedrifter', description, path: '/kurs/' })]}>
+  <PageHero crumbs={crumbs} eyebrow="Kurs" title="AI-kurs bygget på oppgavene dere faktisk har."
+    lead="Vi lager ikke generiske AI-kurs. Først lærer vi hvordan bedriften og avdelingen jobber. Så bygger vi kurset rundt oppgavene der AI gir mest."
+    primary={{ label: 'Book en prat', href: '/kontakt/' }} secondary={{ label: 'Se kurs for team', href: '#team' }} />
+
+  <Band tone="deep">
+    <div class="tool-grid">
+      {tools.map(t => <div class="paper-card tool"><span class="tool-name"><ToolLogo name={t.name} size={26} />{t.label || t.name}</span><p set:html={t.text} /></div>)}
+    </div>
+  </Band>
+
+  <Steps eyebrow="Slik lager vi kurset" title="Kurset starter med arbeidsdagen deres." steps={steps} />
+  <div id="team" class="rule-top"><Examples eyebrow="Kurs for team" title="Ett kurs per team,<br />ikke ett for alle." items={teams} /></div>
+  <FaqList faq={faq} title="Om AI-kurs." />
+  <MoreServices current="kurs" />
+  <CtaPanel eyebrow="Kurs" title="Fortell oss hvilket team som skal lære AI." text="Vi tar en prat om hvem som skal på kurset, hvilke verktøy dere bruker og hvilke oppgaver som tar mest tid." secondary={null} />
+</Base>
+
+<style>
+  .tool-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; width: min(900px, 100%) !important; }
+  .tool { display: flex; flex-direction: column; gap: 10px; box-shadow: 0 20px 60px rgba(0, 0, 0, .2); }
+  .tool-name { display: flex; align-items: center; gap: 12px; font-size: 22px; letter-spacing: -.02em; }
+  .tool p { font-size: 14px; color: #3B4A40; }
+  .tool p :global(strong) { color: var(--wabi-forest); }
+  @media (max-width: 700px) { .tool-grid { grid-template-columns: minmax(0, 1fr); } }
+</style>

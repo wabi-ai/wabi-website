@@ -1,0 +1,48 @@
+---
+// Port of the design-system BlobPanel: a tone-filled panel with the grainy Wabi blob cropped inside it.
+interface Props { tone?: string; ground?: 'tone' | 'paper'; layout?: 'center' | 'left'; preset?: string; protect?: string; contentWidth?: number; minHeight?: number; href?: string; class?: string; }
+const { tone = 'forest', ground = 'tone', layout = 'center', preset = 'a', protect = '46%', contentWidth = 380, minHeight = 520, href, class: cls } = Astro.props;
+const PRESETS: Record<string, { width: string; left?: string; right?: string; top: string | number; t: string }> = {
+  a: { width: '190%', left: '-40%', top: '-60%', t: 'rotate(10deg)' },
+  t1: { width: '240%', left: '-137%', top: '-55%', t: 'rotate(10deg)' },
+  t2: { width: '240%', left: '-3%', top: '-50%', t: 'scaleX(-1) rotate(-14deg)' },
+  t3: { width: '240%', left: '-10%', top: '-12%', t: 'rotate(160deg)' },
+  w1: { width: 'max(72%, 820px)', left: '40%', top: '-78%', t: 'rotate(10deg)' },
+  w2: { width: 'max(70%, 820px)', left: '-14%', top: '-70%', t: 'scaleX(-1) rotate(-8deg)' },
+  k1: { width: 'min(46%, 560px)', right: '-4%', top: '-26%', t: 'rotate(10deg)' },
+  k2: { width: 'min(46%, 560px)', right: '-2%', top: '-34%', t: 'scaleX(-1) rotate(-8deg)' },
+};
+const TONES: Record<string, { bg: string; fg: string; sub: string; blob?: string; border?: string }> = {
+  forest: { bg: '#143D24', fg: '#F4F1E7', sub: '#CFE0D4' },
+  deep: { bg: '#214F57', fg: '#F4F1E7', sub: '#CFE0D4' },
+  fjord: { bg: '#24466F', fg: '#F4F1E7', sub: '#DCE6F3', blob: 'wabi-blob-fjord.webp' },
+  ember: { bg: '#6E1D14', fg: '#F4F1E7', sub: '#F6DCCF', blob: 'wabi-blob-ember.webp' },
+  sand: { bg: '#4F5530', fg: '#F4F1E7', sub: '#EFE6CC', blob: 'wabi-blob-sand.webp' },
+  dusk: { bg: '#3B2A5C', fg: '#F4F1E7', sub: '#E4DAF2', blob: 'wabi-blob-dusk.webp' },
+};
+const p = PRESETS[preset] || PRESETS.a;
+const t = TONES[tone] || TONES.forest;
+const c = ground === 'paper' ? { bg: '#F6F5EC', fg: '#143D24', sub: '#143D24', border: '1px solid #E2DECF', blob: t.blob } : t;
+const left = layout === 'left';
+const shield = left
+  ? `top:0;bottom:0;left:0;width:${protect};background:linear-gradient(to right, ${c.bg} 0%, ${c.bg} 60%, transparent 100%)`
+  : `bottom:0;left:0;right:0;height:${protect};background:linear-gradient(to top, ${c.bg} 0%, ${c.bg} 55%, transparent 100%)`;
+const imgStyle = `width:${p.width};${p.left ? 'left:' + p.left + ';' : ''}${p.right ? 'right:' + p.right + ';' : ''}top:${p.top};--t:${p.t}`;
+const Tag = href ? 'a' : 'div';
+---
+<Tag href={href} class:list={['blob-panel', cls]} data-layout={layout} style={`--bp-bg:${c.bg};--bp-fg:${c.fg};--blob-panel-sub:${c.sub};${c.border ? '--bp-border:' + c.border + ';' : ''}min-height:${minHeight}px`}>
+  <img src={'/assets/blob/' + (c.blob || 'wabi-blob.webp')} alt="" aria-hidden="true" draggable="false" loading="lazy" style={imgStyle} />
+  <div class="blob-shield" aria-hidden="true" style={shield}></div>
+  <div class="blob-panel-content" style={`max-width:${contentWidth}px`}><slot /></div>
+</Tag>
+
+<style>
+  .blob-panel { position: relative; overflow: hidden; isolation: isolate; border-radius: 16px; background: var(--bp-bg); border: var(--bp-border, none); color: var(--bp-fg); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; padding: 40px; box-sizing: border-box; text-decoration: none; }
+  .blob-panel[data-layout='left'] { justify-content: center; align-items: flex-start; text-align: left; }
+  .blob-panel > img { position: absolute; z-index: -1; height: auto; max-width: none; pointer-events: none; user-select: none; transform: var(--t); transform-origin: 50% 50%; transition: transform 700ms var(--ease-out); }
+  a.blob-panel:hover > img { transform: var(--t) scale(1.05); }
+  .blob-shield { position: absolute; z-index: -1; pointer-events: none; }
+  .blob-panel-content { position: relative; display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; }
+  .blob-panel[data-layout='left'] .blob-panel-content { align-items: flex-start; }
+  a.blob-panel:focus-visible { outline: 2px solid var(--wabi-forest); outline-offset: 4px; }
+</style>

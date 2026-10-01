@@ -1,0 +1,127 @@
+---
+// Three-question self check. Answers stay in the browser; the result suggests where we would start.
+import { SERVICES, COURSE } from '../data/site.js';
+const data = {
+  areas: [
+    { o: 'Rapporter og tall', s: 'agenter' }, { o: 'Tilbud, kontrakter og dokumenter', s: 'programvare' },
+    { o: 'E-post og kundehenvendelser', s: 'agenter' }, { o: 'Data som flyttes mellom systemer', s: 'automatisering' },
+    { o: 'Møter, notater og oppfølging', s: 'automatisering' }, { o: 'Intern kunnskap og rutiner', s: 'kurs' },
+  ],
+  why: [
+    { o: 'Vi leter etter informasjon noen andre har', r: 'Svaret finnes som regel. Det ligger bare hos en person, ikke i et system.' },
+    { o: 'Vi skriver det samme inn i flere systemer', r: 'Dobbeltføring er noe av det enkleste å automatisere. Ofte er det første vi tar tak i.' },
+    { o: 'Vi venter på at noen sender det videre', r: 'Da er det overleveringen som stopper, ikke jobben. Den kan ofte gå av seg selv.' },
+    { o: 'Alle gjør det litt forskjellig', r: 'Da må vi bli enige om en måte før vi bygger noe. Det er en god start.' },
+    { o: 'Tallene stemmer ikke før noen har rettet dem', r: 'Raskere rapporter hjelper lite før tallene er til å stole på. Vi starter med datagrunnlaget.' },
+  ],
+  ai: [{ o: 'Ikke i bruk ennå', l: 0 }, { o: 'Noen bruker det på egen hånd', l: 1 }, { o: 'Et team eller to prøver ut ting', l: 1 }, { o: 'Noen team bruker det hver uke', l: 2 }, { o: 'Det er en del av hvordan vi jobber', l: 3 }],
+  levels: [
+    ['Tidlig', 'AI er ikke tatt i bruk ennå. Det er en fordel: dere kan starte ryddig, med en oppgave som betyr noe.'],
+    ['I gang', 'Folk prøver på egen hånd. Neste steg er å gjøre det som fungerer til noe hele teamet bruker.'],
+    ['Etablert', 'Noen team bruker det jevnlig. Verdien ligger nå i å koble det til systemene og arbeidsflyten.'],
+    ['Langt fremme', 'AI er en del av driften. Da handler det om agenter og automatisering som tar hele oppgaver.'],
+  ],
+  services: Object.fromEntries([...SERVICES, COURSE].map(s => [s.id, { title: s.navTitle || s.title, href: s.href, short: s.short }])),
+};
+const questions = [
+  { key: 'areas', title: 'Hvor går tiden?', sub: 'Velg opptil tre områder.', multi: 3, opts: data.areas.map(a => a.o) },
+  { key: 'why', title: 'Hva kjenner dere igjen?', sub: 'Velg opptil to.', multi: 2, opts: data.why.map(a => a.o) },
+  { key: 'ai', title: 'Hvor langt har dere kommet med AI?', sub: 'Velg det som passer best.', multi: 1, opts: data.ai.map(a => a.o) },
+];
+---
+<div class="check paper-card" data-check data-json={JSON.stringify(data)}>
+  <div class="check-top"><h3>Selvtest</h3><span class="mono" data-progress>1 av 3</span></div>
+  {questions.map((q, i) => <fieldset class="q" data-q={q.key} data-max={q.multi} hidden={i > 0}>
+    <legend><span class="q-title">{q.title}</span><span class="q-sub">{q.sub}</span></legend>
+    <div class="opts">{q.opts.map(o => <button type="button" class="opt" aria-pressed="false" data-value={o}><i aria-hidden="true"></i>{o}</button>)}</div>
+  </fieldset>)}
+  <div class="result" data-result hidden>
+    <span class="mono">Her ville vi startet</span>
+    <p class="level" data-level></p>
+    <p data-note></p>
+    <div class="recs" data-recs></div>
+    <p class="illustration-note">Basert på svarene dine. I en ekte kartlegging går vi gjennom oppgavene sammen med dere. Svarene lagres ikke.</p>
+  </div>
+  <div class="nav">
+    <button type="button" class="button button-secondary" data-back hidden>Tilbake</button>
+    <button type="button" class="button button-primary" data-next disabled>Neste</button>
+    <a class="button button-primary" data-mail hidden href="/kontakt/">Send svarene til oss</a>
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-check]');
+  if (root) {
+    const data = JSON.parse(root.dataset.json!);
+    const qs = [...root.querySelectorAll<HTMLFieldSetElement>('[data-q]')];
+    const answers: Record<string, string[]> = { areas: [], why: [], ai: [] };
+    const next = root.querySelector<HTMLButtonElement>('[data-next]')!, back = root.querySelector<HTMLButtonElement>('[data-back]')!;
+    const mail = root.querySelector<HTMLAnchorElement>('[data-mail]')!, result = root.querySelector<HTMLElement>('[data-result]')!;
+    const progress = root.querySelector<HTMLElement>('[data-progress]')!;
+    let step = 0;
+
+    qs.forEach(q => q.querySelectorAll<HTMLButtonElement>('.opt').forEach(b => b.addEventListener('click', () => {
+      const key = q.dataset.q!, max = Number(q.dataset.max), v = b.dataset.value!;
+      let list = answers[key];
+      if (max === 1) list = [v];
+      else if (list.includes(v)) list = list.filter(x => x !== v);
+      else if (list.length < max) list = [...list, v];
+      answers[key] = list;
+      q.querySelectorAll<HTMLButtonElement>('.opt').forEach(o => o.setAttribute('aria-pressed', String(list.includes(o.dataset.value!))));
+      next.disabled = list.length === 0;
+    })));
+
+    const show = () => {
+      qs.forEach((q, i) => q.hidden = i !== step);
+      const done = step === qs.length;
+      result.hidden = !done; back.hidden = step === 0; next.hidden = done; mail.hidden = !done;
+      progress.textContent = done ? 'Resultat' : `${step + 1} av ${qs.length}`;
+      next.disabled = !done && answers[qs[step].dataset.q!].length === 0;
+      next.textContent = step === qs.length - 1 ? 'Se resultatet' : 'Neste';
+      if (done) render();
+    };
+    const render = () => {
+      const lvl = (data.ai.find((a: any) => a.o === answers.ai[0]) || { l: 0 }).l;
+      const [t, d] = data.levels[lvl];
+      root.querySelector('[data-level]')!.textContent = `${t}. ${d}`;
+      root.querySelector('[data-note]')!.textContent = (data.why.find((w: any) => w.o === answers.why[0]) || { r: '' }).r;
+      const counts: Record<string, number> = {};
+      answers.areas.forEach(o => { const s = data.areas.find((a: any) => a.o === o).s; counts[s] = (counts[s] || 0) + 1; });
+      const recs = Object.keys(counts).sort((a, b) => counts[b] - counts[a]).slice(0, 2).map(id => data.services[id]);
+      root.querySelector('[data-recs]')!.innerHTML = recs.map((s: any) => `<a href="${s.href}"><strong>${s.title}</strong><span>${s.short}</span></a>`).join('');
+      const body = `Hei Ulrik,\n\nJeg tok selvtesten på wabi.no.\n\nHvor tiden går: ${answers.areas.join(', ')}\nDet vi kjenner igjen: ${answers.why.join(', ')}\nAI i dag: ${answers.ai[0]}\n\nKan vi ta en prat?\n`;
+      mail.href = 'mailto:ulrik@wabi.no?subject=' + encodeURIComponent('Selvtest fra wabi.no') + '&body=' + encodeURIComponent(body);
+    };
+    next.addEventListener('click', () => { step++; show(); });
+    back.addEventListener('click', () => { step--; show(); });
+  }
+</script>
+
+<style>
+  .check { width: min(760px, 100%); display: flex; flex-direction: column; gap: 24px; }
+  .check-top { display: flex; justify-content: space-between; align-items: baseline; }
+  .check-top .mono { color: var(--wabi-muted); }
+  fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+  fieldset[hidden] { display: none; }
+  legend { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; padding: 0; }
+  .q-title { font-size: clamp(26px, 3vw, 36px); letter-spacing: -.035em; line-height: 1.1; }
+  .q-sub { color: var(--wabi-muted); font-size: 15px; }
+  .opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .opt { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--wabi-outline); background: var(--wabi-card); color: var(--wabi-forest); font: 500 15px/1.35 var(--font-sans); text-align: left; cursor: pointer; transition: background 160ms ease, border-color 160ms ease; }
+  .opt:hover { background: #fff; }
+  .opt i { flex: none; width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid var(--wabi-forest); display: grid; place-items: center; }
+  .opt[aria-pressed='true'] { background: var(--wabi-tint); border-color: var(--wabi-forest); }
+  .opt[aria-pressed='true'] i { background: var(--wabi-forest); }
+  .opt[aria-pressed='true'] i::after { content: ''; width: 8px; height: 4px; border: solid var(--wabi-oat); border-width: 0 0 1.5px 1.5px; transform: translateY(-1px) rotate(-45deg); }
+  .result { display: flex; flex-direction: column; gap: 14px; }
+  .result[hidden] { display: none; }
+  .result .mono { color: var(--wabi-moss); text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
+  .level { font-size: clamp(22px, 2.4vw, 28px); letter-spacing: -.025em; line-height: 1.3; }
+  .recs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 6px; }
+  .recs :global(a) { display: flex; flex-direction: column; gap: 4px; padding: 16px; border-radius: 12px; background: var(--wabi-tint); border: 1px solid var(--wabi-outline-tint); text-decoration: none; }
+  .recs :global(span) { font-size: 13px; color: var(--wabi-muted); }
+  .nav { display: flex; gap: 10px; justify-content: flex-end; }
+  .nav [hidden] { display: none; }
+  .nav button:disabled { opacity: .4; cursor: not-allowed; }
+  @media (max-width: 640px) { .opts, .recs { grid-template-columns: minmax(0, 1fr); } }
+</style>

@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { breadcrumbLd } from '../../lib/seo.js';
+import { SITE } from '../../data/site.js';
+
+const posts = (await getCollection('innsikt')).sort((a, b) => (b.data.updated || b.data.date).valueOf() - (a.data.updated || a.data.date).valueOf());
+const crumbs = [{ label: 'Innsikt', href: '/innsikt/' }];
+const fmt = (d: Date) => d.toLocaleDateString('nb-NO', { day: 'numeric', month: 'long', year: 'numeric' });
+const listLd = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Innsikt fra Wabi', url: SITE.url + '/innsikt/', hasPart: posts.map(p => ({ '@type': 'Article', headline: p.data.title, url: `${SITE.url}/innsikt/${p.id}/` })) };
+---
+<Base title="Innsikt: guider om AI i norske bedrifter | Wabi" description="Praktiske guider om AI i norske bedrifter: ChatGPT, AI-kurs, AI i salg og verktøy for småbedrifter. Skrevet fra prosjektene vi står i." jsonLd={[breadcrumbLd(crumbs), listLd]}>
+  <PageHero crumbs={crumbs} eyebrow="Innsikt" title="Det vi lærer, deler vi." lead="Praktiske guider om AI i norske bedrifter, skrevet fra prosjektene vi står i." />
+  <section class="container list-wrap">
+    <ul class="posts">
+      {posts.map((p, i) => <li data-reveal style={`--d:${i * 50}ms`}><a href={`/innsikt/${p.id}/`}>
+        <span class="mono meta">{p.data.category}<br /><time datetime={(p.data.updated || p.data.date).toISOString()}>{fmt(p.data.updated || p.data.date)}</time></span>
+        <span class="body"><strong>{p.data.title}</strong><span>{p.data.description}</span></span>
+        <span class="arrow" aria-hidden="true">↗</span>
+      </a></li>)}
+    </ul>
+    <aside class="newsletter" data-reveal>
+      <span class="eyebrow">Nyhetsbrevet AI-input</span>
+      <p>Nye verktøy og utviklinger innen AI, forklart enkelt på norsk. Hver uke.</p>
+      <a href="https://aiinput.no" class="text-link" rel="noopener">Meld deg på <span aria-hidden="true">→</span></a>
+    </aside>
+  </section>
+  <CtaPanel />
+</Base>
+<style>
+  .list-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: clamp(32px, 5vw, 80px); align-items: start; padding-bottom: var(--section-space); }
+  .posts { list-style: none; margin: 0; padding: 0; }
+  .posts a { display: grid; grid-template-columns: 150px 1fr auto; gap: 24px; padding: 32px 0; border-bottom: 1px solid var(--wabi-outline); text-decoration: none; }
+  .posts li:first-child a { border-top: 1px solid var(--wabi-outline); }
+  .meta { font-size: 11px; line-height: 1.8; text-transform: uppercase; letter-spacing: .1em; color: var(--wabi-moss); }
+  .meta time { color: var(--wabi-muted); text-transform: none; letter-spacing: 0; }
+  .body { display: flex; flex-direction: column; gap: 10px; }
+  .body strong { font-size: clamp(22px, 2.2vw, 30px); font-weight: 400; letter-spacing: -.03em; line-height: 1.2; transition: color 200ms ease; }
+  .body span { color: var(--wabi-muted); font-size: 15px; max-width: 560px; }
+  .arrow { font-size: 18px; transition: transform 250ms var(--ease-out); }
+  .posts a:hover strong { color: var(--wabi-moss); }
+  .posts a:hover .arrow { transform: translate(3px, -3px); }
+  .newsletter { position: sticky; top: 120px; display: flex; flex-direction: column; gap: 14px; padding: 28px; border-radius: 18px; background: var(--wabi-tint); border: 1px solid var(--wabi-outline-tint); }
+  .newsletter p { font-size: 15px; color: #2E4636; }
+  @media (max-width: 900px) { .list-wrap { grid-template-columns: minmax(0, 1fr); } .newsletter { position: static; } .posts a { grid-template-columns: 1fr auto; } .meta { grid-column: 1 / -1; } }
+</style>

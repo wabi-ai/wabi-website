@@ -1,0 +1,14 @@
+# Wabi
+
+> Wabi er et AI-rådgivningsselskap for norske bedrifter, med kontorer i Trondheim og Singapore. Vi finner hvor AI gir verdi, bygger AI-agenter, automatisering og programvare, holder kurs i Claude, ChatGPT og Gemini, og følger løsningene opp i drift.
+
+## Tjenester
+- [AI-kartlegging](https://wabi.no/kartlegging/): Prioritert oversikt over oppgavene der AI lønner seg, og hvor bedriften bør starte.
+- [AI-agenter](https://wabi.no/ai-agenter/): Agenter som tar en fast oppgave fra start til slutt, i Slack, e-post eller andre verktøy.
+- [Automatisering](https://wabi.no/automatisering/): Arbeidsflyter med AI-steg som leser, vurderer og handler.
+- [Verktøy og programvare](https://wabi.no/verktoy-og-programvare/): Gjennomgang av eksisterende verktøy og skreddersydd programvare.
+- [Kurs](https://wabi.no/kurs/): Praktiske AI-kurs bygget på bedriftens egne oppgaver.
+
+## Kontakt
+- E-post: ulrik@wabi.no
+- [Kontaktside](https://wabi.no/kontakt/)

@@ -1,0 +1,74 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { breadcrumbLd } from '../../lib/seo.js';
+import { SITE } from '../../data/site.js';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('innsikt');
+  return posts.map(post => ({ params: { slug: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const toc = headings.filter(h => h.depth === 2);
+const words = (post.body || '').split(/\s+/).length;
+const minutes = Math.max(1, Math.round(words / 200));
+const fmt = (d: Date) => d.toLocaleDateString('nb-NO', { day: 'numeric', month: 'long', year: 'numeric' });
+const url = `${SITE.url}/innsikt/${post.id}/`;
+const authorName = post.data.author === 'Eljar' ? 'Eljar Skjørholm' : post.data.author;
+const crumbs = [{ label: 'Innsikt', href: '/innsikt/' }, { label: post.data.title, href: `/innsikt/${post.id}/` }];
+const articleLd = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: post.data.title, description: post.data.description,
+  datePublished: post.data.date.toISOString(), dateModified: (post.data.updated || post.data.date).toISOString(),
+  author: { '@type': 'Person', name: authorName, worksFor: { '@id': SITE.url + '/#org' } },
+  publisher: { '@id': SITE.url + '/#org' }, mainEntityOfPage: url, inLanguage: 'nb-NO', keywords: post.data.keywords.join(', '),
+};
+---
+<Base title={`${post.data.title} | Wabi`} description={post.data.description} jsonLd={[breadcrumbLd(crumbs), articleLd]}>
+  <article>
+    <header class="container head">
+      <nav class="crumbs mono" aria-label="Brødsmuler"><a href="/">Forside</a><span aria-hidden="true">/</span><a href="/innsikt/">Innsikt</a></nav>
+      <span class="eyebrow">{post.data.category}</span>
+      <h1>{post.data.title}</h1>
+      <p class="lead">{post.data.description}</p>
+      <p class="byline mono">{authorName} · {post.data.updated ? <>Oppdatert <time datetime={post.data.updated.toISOString()}>{fmt(post.data.updated)}</time></> : <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>} · {minutes} min lesing</p>
+    </header>
+    <div class="container layout">
+      {toc.length > 0 && <aside class="toc">
+        <span class="mono">Innhold</span>
+        <ol>{toc.map(h => <li><a href={'#' + h.slug}>{h.text}</a></li>)}</ol>
+      </aside>}
+      <div class="prose"><Content /></div>
+    </div>
+  </article>
+  <CtaPanel />
+</Base>
+<style>
+  .head { display: flex; flex-direction: column; gap: 20px; max-width: 980px; padding-top: clamp(140px, 16vw, 190px); padding-bottom: 56px; }
+  .crumbs { display: flex; gap: 8px; margin-bottom: 12px; font-size: 12px; color: var(--wabi-muted); }
+  .crumbs a { color: var(--wabi-muted); text-decoration: none; }
+  h1 { font-size: clamp(36px, 5vw, 68px); font-weight: 400; line-height: 1.04; letter-spacing: -.045em; text-wrap: balance; }
+  .lead { color: #2E4636; }
+  .byline { font-size: 12px; color: var(--wabi-muted); }
+  .layout { display: grid; grid-template-columns: 240px minmax(0, 720px); gap: clamp(32px, 6vw, 96px); padding-top: 48px; padding-bottom: var(--section-space); border-top: 1px solid var(--wabi-outline); }
+  .toc { position: sticky; top: 120px; align-self: start; display: flex; flex-direction: column; gap: 14px; }
+  .toc .mono { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--wabi-muted); }
+  .toc ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .toc a { font-size: 13px; line-height: 1.45; color: var(--wabi-forest); text-decoration: none; opacity: .7; }
+  .toc a:hover { opacity: 1; }
+  .prose { font-size: 18px; line-height: 1.75; color: #22352A; }
+  .prose :global(h2) { margin: 56px 0 16px; font-size: clamp(26px, 2.6vw, 34px); font-weight: 400; line-height: 1.15; letter-spacing: -.03em; color: var(--wabi-forest); scroll-margin-top: 110px; }
+  .prose :global(h2:first-child) { margin-top: 0; }
+  .prose :global(h3) { margin: 36px 0 10px; font-size: 21px; font-weight: 700; letter-spacing: -.015em; color: var(--wabi-forest); }
+  .prose :global(p) { margin: 0 0 20px; }
+  .prose :global(ul), .prose :global(ol) { margin: 0 0 24px; padding-left: 22px; }
+  .prose :global(li) { margin-bottom: 8px; }
+  .prose :global(a) { color: var(--wabi-moss); text-underline-offset: 3px; }
+  .prose :global(strong) { color: var(--wabi-forest); }
+  .prose :global(blockquote) { margin: 28px 0; padding: 20px 24px; border-left: 3px solid var(--wabi-moss); background: var(--wabi-tint); border-radius: 0 12px 12px 0; }
+  .prose :global(pre), .prose :global(code) { font-family: var(--font-mono); font-size: 14px; }
+  .prose :global(pre) { margin: 0 0 24px; padding: 20px; border-radius: 12px; background: var(--wabi-card); border: 1px solid var(--wabi-outline); white-space: pre-wrap; }
+  .prose :global(hr) { margin: 48px 0; border: 0; border-top: 1px solid var(--wabi-outline); }
+  @media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } .toc { position: static; padding-bottom: 24px; border-bottom: 1px solid var(--wabi-outline); } }
+</style>

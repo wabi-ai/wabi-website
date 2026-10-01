@@ -4,3 +4,7 @@ _originals/
 node_modules/
 .build/
 .npm-cache/
+
+# Astro site
+site/dist/
+site/.astro/

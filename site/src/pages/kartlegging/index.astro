@@ -1,0 +1,58 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Band from '../../components/Band.astro';
+import SelfCheck from '../../components/SelfCheck.astro';
+import Steps from '../../components/Steps.astro';
+import FaqList from '../../components/FaqList.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
+
+const crumbs = [{ label: 'AI-kartlegging', href: '/kartlegging/' }];
+const description = 'En AI-kartlegging fra Wabi viser hvilke oppgaver i bedriften der AI lønner seg, og hvor dere bør starte. Vi går gjennom arbeidsdagen sammen med dem som gjør jobben.';
+
+const outcomes = [
+  ['En oversikt over hvor tiden går', 'Oppgavene som tar tid, gjentar seg eller stopper opp, beskrevet slik de faktisk gjøres.'],
+  ['Tre til fem muligheter, prioritert', 'Vurdert etter hvor mye de gir, og hvor enkelt det er å komme i gang.'],
+  ['Et konkret første prosjekt', 'Hva som skal bygges, hvilke systemer det berører, og hvordan vi måler effekten.'],
+];
+
+const steps: [string, string][] = [
+  ['Samtale med ledelsen', 'Hva dere vil oppnå, hvilke systemer dere bruker, og hvor det skaver i dag.'],
+  ['Med dem som gjør jobben', 'Vi ser på oppgavene sammen med de ansatte. Det er der de beste mulighetene finnes.'],
+  ['Prioritering', 'Hver mulighet vurderes etter verdi og innsats. Vi anbefaler hvor dere bør starte.'],
+  ['Plan', 'Dere får en plan for det første prosjektet, og bestemmer selv hvordan dere vil gå videre.'],
+];
+
+const faq: [string, string][] = [
+  ['Hva er en AI-kartlegging?', 'En gjennomgang av arbeidsoppgavene i bedriften for å finne ut hvor AI gir mest verdi. Resultatet er en prioritert liste med muligheter og en plan for hvor dere bør starte.'],
+  ['Hvem bør være med?', 'Noen fra ledelsen og noen av dem som gjør oppgavene hver dag. De vet best hvor tiden går.'],
+  ['Må vi forberede noe?', 'Nei. Det holder at dere vet hvilke systemer dere bruker. Resten finner vi ut sammen.'],
+  ['Hva skjer etter kartleggingen?', 'Dere bestemmer. Vi kan bygge det første prosjektet sammen med dere, eller dere kan ta planen videre på egen hånd.'],
+];
+---
+<Base title="AI-kartlegging for bedrifter | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-kartlegging', description, path: '/kartlegging/' })]}>
+  <PageHero crumbs={crumbs} eyebrow="AI-kartlegging" title="Finn oppgavene der AI faktisk lønner seg."
+    lead="Vi går gjennom arbeidsdagen sammen med dere og peker ut de tre til fem oppgavene der AI gir mest. Så starter vi med en."
+    primary={{ label: 'Book en kartlegging', href: '/kontakt/' }} secondary={{ label: 'Ta selvtesten', href: '#selvtest' }} />
+
+  <div id="selvtest"><Band tone="forest"><SelfCheck /></Band></div>
+
+  <section class="section container split" aria-labelledby="fa-title">
+    <div class="split-head sticky-head" data-reveal><span class="eyebrow">Det dere får</span><h2 id="fa-title" class="display-md">En plan dere kan handle på.</h2></div>
+    <ol class="outcomes">{outcomes.map(([t, s], i) => <li data-reveal style={`--d:${i * 80}ms`}><span class="mono">{i + 1}</span><div><h3>{t}</h3><p>{s}</p></div></li>)}</ol>
+  </section>
+
+  <Steps dark eyebrow="Slik foregår det" title="Fra samtale til plan." steps={steps} />
+  <FaqList faq={faq} title="Om AI-kartlegging." />
+  <CtaPanel eyebrow="Neste steg" title="Book en kartlegging." text="Vi tar en prat om bedriften deres, og avtaler hvordan kartleggingen skal gjøres." secondary={null} />
+</Base>
+
+<style>
+  .outcomes { list-style: none; margin: 0; padding: 0; }
+  .outcomes li { display: grid; grid-template-columns: 48px 1fr; gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--wabi-outline); }
+  .outcomes li:first-child { border-top: 1px solid var(--wabi-outline); }
+  .outcomes .mono { padding-top: 6px; color: var(--wabi-moss); }
+  .outcomes h3 { font-size: clamp(20px, 1.9vw, 24px); font-weight: 400; letter-spacing: -.025em; }
+  .outcomes p { margin-top: 8px; color: #3B4A40; }
+</style>

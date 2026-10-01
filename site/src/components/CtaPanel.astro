@@ -1,0 +1,20 @@
+---
+import BlobPanel from './BlobPanel.astro';
+interface Props { eyebrow?: string; title?: string; text?: string; tone?: string; primary?: { label: string; href: string }; secondary?: { label: string; href: string } | null; }
+const { eyebrow = 'AI-kartlegging', title = 'Finn ut hvor AI gir verdi hos dere.', text = 'Dere får en prioritert liste over oppgavene der AI lønner seg, og en klar plan for hvor dere bør starte.', tone = 'forest', primary = { label: 'Book en prat', href: '/kontakt/' }, secondary = { label: 'Les om kartleggingen', href: '/kartlegging/' } } = Astro.props;
+---
+<section class="container cta" data-reveal>
+  <BlobPanel tone={tone} layout="left" preset="k2" protect="62%" contentWidth={620} minHeight={440}>
+    <span class="eyebrow">{eyebrow}</span>
+    <h2 class="display-md">{title}</h2>
+    <p>{text}</p>
+    <div class="actions"><a href={primary.href} class="button button-light">{primary.label}</a>{secondary && <a href={secondary.href} class="button button-ghost">{secondary.label}</a>}</div>
+  </BlobPanel>
+</section>
+<style>
+  .cta { padding-bottom: var(--section-space); }
+  .cta :global(.blob-panel) { padding: clamp(32px, 6vw, 72px); }
+  .eyebrow { color: var(--blob-panel-sub); }
+  p { color: var(--blob-panel-sub); font-size: 17px; max-width: 460px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+</style>

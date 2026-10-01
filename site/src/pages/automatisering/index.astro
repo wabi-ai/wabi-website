@@ -1,0 +1,96 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Band from '../../components/Band.astro';
+import Examples from '../../components/Examples.astro';
+import Steps from '../../components/Steps.astro';
+import FaqList from '../../components/FaqList.astro';
+import MoreServices from '../../components/MoreServices.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
+
+const crumbs = [{ label: 'Automatisering', href: '/automatisering/' }];
+const description = 'Wabi automatiserer arbeidsflyter for norske bedrifter, med et AI-steg som leser fritekst, vurderer og handler der faste regler ikke strekker til.';
+
+const rule = [['Inneholder ordet «faktura»?', 'Fast regel, ja eller nei.'], ['Flytt til fakturamappen', 'Alt annet blir liggende.']];
+const ai = [['Forstå hva e-posten gjelder', 'Faktura, klage, bestilling eller spørsmål.'], ['Vurder hastegrad og eier', 'Hvem skal ha den, og hvor fort.'], ['Opprett sak med svarutkast', 'I riktig system, med kundens historikk.'], ['Saksbehandler godkjenner', 'Sender, endrer eller avviser.']];
+
+const abilities = [
+  ['Lese', 'Forstår hva en e-post, et skjema eller et dokument gjelder, selv når avsenderen ikke bruker ordene en regel ser etter.'],
+  ['Sammenligne', 'Setter tall og dokumenter opp mot hverandre og finner avvik. For eksempel en faktura mot bestillingen.'],
+  ['Handle', 'Oppretter saken, fyller ut skjemaet eller skriver svarutkastet, innenfor grensene dere setter.'],
+];
+
+const examples = [
+  { title: 'Innboksen sorterer seg selv', text: 'Alle e-poster blir sortert, fordelt og besvart i utkast. En person tar den siste beslutningen.', tools: ['Outlook', 'Microsoft Teams', 'n8n'] },
+  { title: 'Fra møtenotat til nyhetsbrev', text: 'Et nytt notat i mappen starter flyten. AI-steget skriver utkast, som publiseres i alle kanaler etter godkjenning.', tools: ['Google Drive', 'Make'] },
+  { title: 'Faktura mot bestilling', text: 'Fakturaen leses, sammenlignes med bestillingen, og bare avvikene havner hos økonomi.', tools: ['Gmail', 'Excel', 'Zapier'] },
+  { title: 'Nye leads rett inn i CRM', text: 'Henvendelser fra nettsiden blir vurdert, beriket og lagt inn med forslag til neste steg.', tools: ['HubSpot', 'Slack'] },
+];
+
+const steps: [string, string][] = [
+  ['Egne grensesnitt', 'Vi kobler oss på systemenes egne API-er der de finnes, i stedet for skjøre snarveier.'],
+  ['Minst mulig tilgang', 'Flyten får bare tilgang til det den trenger for å gjøre jobben.'],
+  ['Plan for nedetid', 'Hva skjer når et system er nede? Det bestemmer vi før flyten settes i drift.'],
+  ['Logg på hvert steg', 'Hvert steg blir logget, så dere ser hva som skjedde og hvorfor.'],
+];
+
+const faq: [string, string][] = [
+  ['Hva er forskjellen på automatisering og en AI-agent?', 'En automatisering følger en fast rute: når X skjer, gjør Y, med et AI-steg der det trengs. En agent velger selv hvilke steg som trengs for å løse en oppgave. Mange gode løsninger bruker begge.'],
+  ['Hvilke verktøy bruker dere?', 'Det avhenger av systemene dere har. Vi bruker blant annet n8n, Make og Zapier, eller skriver koden selv når det gir en mer robust løsning.'],
+  ['Må vi bytte systemer?', 'Nei. Poenget er å koble sammen det dere allerede bruker, så informasjonen flyter uten at noen må føre den over for hånd.'],
+  ['Hva skjer når et system er nede?', 'Det avtaler vi på forhånd. Vanligvis venter flyten og prøver igjen, og noen får beskjed hvis det tar for lang tid.'],
+];
+---
+<Base title="Automatisering med AI | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'Automatisering med AI', description, path: '/automatisering/' })]}>
+  <PageHero crumbs={crumbs} eyebrow="Automatisering" title="Når X skjer, gjør Y. Nå med et AI-steg i midten."
+    lead="Faste regler har automatisert arbeid i mange år. Det nye er et steg som kan lese fritekst, vurdere og velge riktig vei der en regel ville gitt opp."
+    primary={{ label: 'Book en prat', href: '/kontakt/' }} secondary={{ label: 'Se eksempler', href: '#eksempler' }} />
+
+  <Band tone="ember">
+    <div class="compare">
+      <div class="paper-card lane">
+        <h3>Fast regel</h3>
+        <ol>{rule.map(([t, s]) => <li><strong>{t}</strong><span>{s}</span></li>)}</ol>
+        <p class="outcome muted">Bare e-poster med riktig ord blir sortert. Resten må noen lese manuelt.</p>
+      </div>
+      <div class="paper-card lane lane-ai">
+        <h3>Med AI-steg</h3>
+        <ol>{ai.map(([t, s]) => <li><strong>{t}</strong><span>{s}</span></li>)}</ol>
+        <p class="outcome">Alle e-poster blir sortert, fordelt og besvart i utkast. En person tar den siste beslutningen.</p>
+      </div>
+    </div>
+  </Band>
+
+  <section class="section container split" aria-labelledby="ai-steg-title">
+    <div class="split-head" data-reveal><span class="eyebrow">Kort forklart</span><h2 id="ai-steg-title" class="display-md">Hva gjør AI-steget?</h2></div>
+    <ol class="abilities">{abilities.map(([t, s], i) => <li data-reveal style={`--d:${i * 80}ms`}><h3>{t}</h3><p>{s}</p></li>)}</ol>
+  </section>
+
+  <div id="eksempler"><Examples eyebrow="Eksempler" title="Flyter vi bygger." intro="Hver flyt starter med en konkret hendelse og ender med noe ferdig, eller noe som venter på en godkjenning." items={examples} /></div>
+
+  <Steps dark eyebrow="Driftssikkert fra start" title="En flyt skal tåle hverdagen." steps={steps} />
+
+  <FaqList faq={faq} title="Om automatisering." />
+  <MoreServices current="automatisering" />
+  <CtaPanel />
+</Base>
+
+<style>
+  .compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 16px; align-items: stretch; width: min(980px, 100%) !important; }
+  .lane { display: flex; flex-direction: column; gap: 18px; }
+  .lane ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; counter-reset: s; }
+  .lane li { position: relative; display: flex; flex-direction: column; gap: 2px; padding: 12px 14px 12px 44px; border-radius: 12px; background: var(--wabi-card); border: 1px solid var(--wabi-outline); counter-increment: s; }
+  .lane li::before { content: counter(s); position: absolute; left: 14px; top: 13px; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--wabi-outline); font-size: 11px; font-weight: 700; }
+  .lane-ai li { background: var(--wabi-tint); border-color: var(--wabi-outline-tint); }
+  .lane-ai li::before { background: var(--wabi-moss); color: var(--wabi-oat); }
+  .lane strong { font-size: 15px; }
+  .lane span { font-size: 13px; color: var(--wabi-muted); }
+  .outcome { margin-top: auto; font-size: 14px; }
+  .abilities { list-style: none; margin: 0; padding: 0; }
+  .abilities li { display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--wabi-outline); }
+  .abilities li:first-child { border-top: 1px solid var(--wabi-outline); }
+  .abilities h3 { font-size: 26px; font-weight: 400; letter-spacing: -.03em; }
+  .abilities p { color: #3B4A40; }
+  @media (max-width: 800px) { .compare { grid-template-columns: minmax(0, 1fr); } .abilities li { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
+</style>

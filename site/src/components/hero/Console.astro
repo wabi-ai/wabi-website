@@ -1,0 +1,122 @@
+---
+// Interactive agent console: pick a task and watch an agent work through it.
+// Emits a `console:scenario` event (detail: { id, ending }) so a headline can follow along.
+import ToolLogo from '../ToolLogo.astro';
+import { SCENARIOS } from '../../data/scenarios.js';
+interface Props { theme?: 'dark' | 'light'; only?: string[]; }
+const { theme = 'dark', only } = Astro.props;
+const scenarios = only ? SCENARIOS.filter(s => only.includes(s.id)) : SCENARIOS;
+---
+<div class:list={['console', 'console-' + theme]} data-console data-scenarios={JSON.stringify(scenarios)}>
+  <div class="console-chips" role="tablist" aria-label="Velg en oppgave">
+    {scenarios.map((s, i) => <button type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-scenario={s.id}>{s.label}</button>)}
+  </div>
+  <div class="console-body" aria-live="polite">
+    <div class="console-prompt"><span class="console-caret-label">Oppgave</span><span class="console-text"><span class="console-typed" data-typed></span><i class="caret" aria-hidden="true"></i></span></div>
+    <ol class="console-steps" data-steps></ol>
+    <div class="console-result" data-result hidden>
+      <span class="console-result-tools" data-result-tools></span>
+      <span><strong data-result-title></strong><small data-result-sub></small></span>
+      <span class="console-action" data-result-action></span>
+    </div>
+  </div>
+  <div class="console-foot mono"><span data-status>Agent klar</span><span>Eksempel på en agent vi bygger</span></div>
+  <template data-logos>{[...new Set(scenarios.flatMap(s => s.tools))].map(t => <span data-logo={t}><ToolLogo name={t} size={18} /></span>)}</template>
+</div>
+
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLElement>('[data-console]').forEach(root => {
+    const scenarios = JSON.parse(root.dataset.scenarios || '[]');
+    const $ = (sel: string) => root.querySelector(sel) as HTMLElement;
+    const typed = $('[data-typed]'), stepsEl = $('[data-steps]'), result = $('[data-result]'), status = $('[data-status]');
+    const chips = [...root.querySelectorAll<HTMLElement>('[data-scenario]')];
+    const logos: Record<string, string> = Object.fromEntries([...(root.querySelector('[data-logos]') as HTMLTemplateElement).content.querySelectorAll<HTMLElement>('[data-logo]')].map(el => [el.dataset.logo!, el.innerHTML]));
+    let run = 0, auto = true;
+    const wait = (ms: number) => new Promise(r => setTimeout(r, reduced ? 0 : ms));
+
+    async function play(i: number) {
+      const id = ++run, s = scenarios[i];
+      chips.forEach((c, n) => c.setAttribute('aria-selected', String(n === i)));
+      root.dispatchEvent(new CustomEvent('console:scenario', { bubbles: true, detail: { id: s.id, ending: s.ending } }));
+      stepsEl.innerHTML = ''; result.hidden = true; typed.textContent = ''; root.classList.remove('is-done');
+      status.textContent = 'Leser oppgaven';
+      for (const ch of s.prompt) { if (id !== run) return; typed.textContent += ch; await wait(28); }
+      await wait(350);
+      status.textContent = 'Jobber';
+      for (const [text, meta] of s.steps) {
+        if (id !== run) return;
+        const li = document.createElement('li');
+        li.className = 'is-working';
+        li.innerHTML = `<span class="tick"></span><span>${text}</span><span class="mono">${meta}</span>`;
+        stepsEl.append(li);
+        await wait(720);
+        if (id !== run) return;
+        li.className = 'is-done';
+        li.querySelector('.tick')!.textContent = '✓';
+      }
+      await wait(250);
+      if (id !== run) return;
+      $('[data-result-title]').textContent = s.result[0];
+      $('[data-result-sub]').textContent = s.result[1];
+      $('[data-result-action]').textContent = s.action;
+      $('[data-result-tools]').innerHTML = s.tools.map((t: string) => '<span>' + (logos[t] || '') + '</span>').join('');
+      result.hidden = false; root.classList.add('is-done');
+      status.textContent = 'Ferdig';
+      await wait(4200);
+      if (id === run && auto) play((i + 1) % scenarios.length);
+    }
+    chips.forEach((c, i) => c.addEventListener('click', () => { auto = false; play(i); }));
+    setTimeout(() => play(0), reduced ? 0 : 1100);
+  });
+</script>
+
+<style>
+  .console { position: relative; padding: 10px; border-radius: 26px; background: rgba(253, 249, 241, .1); border: 1px solid rgba(253, 249, 241, .18); -webkit-backdrop-filter: blur(24px) saturate(140%); backdrop-filter: blur(24px) saturate(140%); box-shadow: 0 50px 120px rgba(0, 0, 0, .4); animation: rise 1200ms 250ms var(--ease-out) both; }
+  .console-chips { display: flex; gap: 6px; padding: 4px 4px 10px; overflow-x: auto; scrollbar-width: none; }
+  .console-chips button { flex: none; padding: 9px 16px; border-radius: 100px; border: 1px solid rgba(253, 249, 241, .2); background: transparent; color: var(--wabi-oat); font: 700 13px var(--font-sans); cursor: pointer; transition: background 200ms ease, color 200ms ease; }
+  .console-chips button:hover { background: rgba(253, 249, 241, .1); }
+  .console-chips button[aria-selected='true'] { background: var(--wabi-oat); color: var(--wabi-forest); border-color: var(--wabi-oat); }
+  .console-body { min-height: 404px; padding: 22px; border-radius: 18px; background: #FDF9F1; color: var(--wabi-forest); }
+  .console-prompt { display: flex; align-items: baseline; gap: 12px; min-height: 58px; padding-bottom: 18px; border-bottom: 1px solid var(--wabi-outline); font-size: 19px; letter-spacing: -.015em; line-height: 1.4; }
+  .console-caret-label { flex: none; padding: 3px 9px; border-radius: 6px; background: var(--wabi-tint); color: var(--wabi-moss); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; transform: translateY(-2px); }
+  /* The caret sits inline right after the typed text, so it follows the last character on every line and viewport. */
+  .console-text { flex: 1; min-width: 0; overflow-wrap: break-word; }
+  .caret { display: inline-block; width: 2px; height: 1.05em; margin-left: 2px; margin-right: -4px; vertical-align: -.16em; background: var(--wabi-moss); animation: blink 1s steps(1) infinite; }
+  .is-done .caret { opacity: 0; animation: none; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .console-steps { list-style: none; margin: 0; padding: 10px 0; }
+  .console-steps :global(li) { display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 12px; padding: 10px 0; font-size: 15px; animation: step-in 400ms var(--ease-out) both; }
+  .console-steps :global(.mono) { color: var(--wabi-muted); }
+  .console-steps :global(.tick) { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--wabi-moss); color: var(--wabi-oat); font-size: 11px; }
+  .console-steps :global(li.is-working .tick) { background: none; border: 1.5px solid var(--wabi-outline-tint); border-top-color: var(--wabi-moss); animation: spin 800ms linear infinite; }
+  .console-steps :global(li.is-working span:nth-child(2)) { background: linear-gradient(90deg, var(--wabi-forest) 30%, #9AB5A1 50%, var(--wabi-forest) 70%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 1.4s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  @keyframes step-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .console-result { display: flex; align-items: center; gap: 14px; margin-top: 6px; padding: 14px 16px; border-radius: 14px; background: var(--wabi-tint); border: 1px solid var(--wabi-outline-tint); animation: step-in 500ms var(--ease-out) both; }
+  .console-result[hidden] { display: none; }
+  .console-result-tools { display: flex; }
+  .console-result-tools :global(span) { display: grid; place-items: center; width: 30px; height: 30px; margin-left: -6px; border-radius: 50%; background: #fff; border: 1px solid var(--wabi-outline); }
+  .console-result-tools :global(span:first-child) { margin-left: 0; }
+  .console-result strong { display: block; font-size: 15px; }
+  .console-result small { display: block; font-size: 13px; color: var(--wabi-muted); }
+  .console-action { margin-left: auto; flex: none; padding: 9px 16px; border-radius: 100px; background: var(--wabi-moss); color: var(--wabi-oat); font-size: 13px; font-weight: 700; }
+  .console-foot { display: flex; justify-content: space-between; gap: 16px; padding: 12px 10px 4px; font-size: 11px; color: rgba(207, 224, 212, .75); }
+
+  /* Light theme: frosted paper over a light page. */
+  .console-light { background: rgba(253, 249, 241, .5); border-color: rgba(20, 61, 36, .1); box-shadow: 0 40px 100px rgba(20, 61, 36, .16), inset 0 1px 0 rgba(255, 255, 255, .7); }
+  .console-light .console-chips button { color: var(--wabi-forest); border-color: rgba(20, 61, 36, .16); background: rgba(253, 249, 241, .5); }
+  .console-light .console-chips button:hover { background: rgba(253, 249, 241, .9); }
+  .console-light .console-chips button[aria-selected='true'] { background: var(--wabi-forest); color: var(--wabi-oat); border-color: var(--wabi-forest); }
+  .console-light .console-body { border: 1px solid rgba(20, 61, 36, .08); }
+  .console-light .console-foot { color: #4B5F52; }
+  @media (max-width: 1000px) { .console-body { min-height: 440px; } }
+  @media (max-width: 560px) {
+    .console-prompt { font-size: 16px; flex-direction: column; gap: 8px; }
+    .console-steps :global(li) { font-size: 13px; }
+    .console-result { flex-wrap: wrap; }
+    .console-foot > span:last-child { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .console { animation: none; } }
+</style>

@@ -1,0 +1,22 @@
+---
+import BlobPanel from './BlobPanel.astro';
+import { SERVICES, COURSE } from '../data/site.js';
+interface Props { current: string; }
+const { current } = Astro.props;
+const items = [...SERVICES, { ...COURSE, preset: 't1', tone: 'deep' }].filter(s => s.id !== current);
+---
+<section class="container more" aria-labelledby="more-title">
+  <h2 id="more-title" class="eyebrow">Mer vi gjør</h2>
+  <div class="grid">
+    {items.map(s => <BlobPanel href={s.href} tone={s.tone} preset={s.preset} minHeight={300} protect="60%"><h3>{s.navTitle || s.title}</h3><p>{s.short}</p></BlobPanel>)}
+  </div>
+</section>
+<style>
+  .more { padding-bottom: clamp(48px, 6vw, 80px); }
+  .eyebrow { display: block; margin-bottom: 24px; }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .grid :global(.blob-panel) { padding: 28px; }
+  h3 { font-size: 24px; font-weight: 400; letter-spacing: -.03em; }
+  p { font-size: 14px; color: var(--blob-panel-sub); }
+  @media (max-width: 900px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+</style>

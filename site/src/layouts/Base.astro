@@ -1,0 +1,55 @@
+---
+import '../styles/tokens.css';
+import '../styles/global.css';
+import '../styles/nav.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../data/site.js';
+
+interface Props { title: string; description?: string; jsonLd?: object[]; overHero?: boolean; }
+const { title, description = SITE.description, jsonLd = [], overHero = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const org = {
+  '@context': 'https://schema.org', '@type': 'ProfessionalService', '@id': SITE.url + '/#org',
+  name: SITE.name, url: SITE.url, logo: SITE.url + '/assets/logo/wabi-mark-black.svg', description: SITE.description,
+  email: SITE.email, areaServed: { '@type': 'Country', name: 'Norge' }, sameAs: [SITE.linkedin],
+  knowsAbout: ['AI-rådgivning', 'AI-strategi', 'AI-agenter', 'Automatisering', 'AI-kurs', 'ChatGPT', 'Claude', 'Gemini'],
+};
+const graph = [org, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE.url + '/#website', url: SITE.url, name: SITE.name, inLanguage: 'nb-NO', publisher: { '@id': SITE.url + '/#org' } }, ...jsonLd];
+---
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <script is:inline>document.documentElement.classList.add('js')</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta name="theme-color" content="#0E2618" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:site_name" content="Wabi" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={SITE.url + '/assets/og-image.jpg'} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/assets/logo/wabi-mark-black.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+  {graph.map(item => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
+</head>
+<body class="wabi-page">
+  <a href="#main" class="skip-link">Hopp til innhold</a>
+  <Header overHero={overHero} />
+  <main id="main" tabindex="-1"><slot /></main>
+  <Footer />
+  <script>
+    // Reveal content once as it enters the viewport.
+    const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
