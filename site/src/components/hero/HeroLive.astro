@@ -1,6 +1,7 @@
 ---
 // Home hero: light kinetic hero where the headline ending follows the task running in the console.
 import Console from './Console.astro';
+import MobileTransformation from './MobileTransformation.astro';
 import { CLIENTS } from '../../data/site.js';
 const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`, name }));
 const mobileLogos = logos.filter(l => ['Vespa', 'Trondheim Kommune', 'Bunnpris'].includes(l.name));
@@ -22,9 +23,11 @@ const mobileLogos = logos.filter(l => ['Vespa', 'Trondheim Kommune', 'Bunnpris']
         </span>
       </h1>
       <p>Spar tid på rapporter, kundeservice og rutinearbeid. Vi bygger løsningene og hjelper dere i gang.</p>
+      <MobileTransformation />
       <div class="hl-actions">
         <a href="/kontakt/" class="button button-primary">Ta en prat</a>
-        <a href="#resultater" class="button button-secondary">Se hva vi bygger</a>
+        <a href="#resultater" class="button button-secondary hl-desktop-link">Se hva vi bygger</a>
+        <a href="#tjenester" class="hl-scroll-link">Se hva vi gjør <span aria-hidden="true">↓</span></a>
       </div>
     </div>
     <Console theme="light" pace={0.55} startDelay={1800} desktopOnly />
@@ -116,6 +119,7 @@ const mobileLogos = logos.filter(l => ['Vespa', 'Trondheim Kommune', 'Bunnpris']
   .hl-rotator :global(span.is-leaving) { opacity: 0; transform: translateY(-90%); }
   .hl-copy > p { max-width: 440px; font-size: 18px; line-height: 1.6; color: #2E4636; animation: rise 650ms 100ms var(--ease-out) both; }
   .hl-actions { display: flex; flex-wrap: wrap; gap: 12px; animation: rise 650ms 150ms var(--ease-out) both; }
+  .hl-scroll-link { display: none; }
   @media (max-width: 1000px) {
     .hl { margin-top: -88px; padding: 130px 0 32px; }
     .hl-clients { gap: 14px; margin-top: 48px; }
@@ -125,22 +129,28 @@ const mobileLogos = logos.filter(l => ['Vespa', 'Trondheim Kommune', 'Bunnpris']
   }
   @media (max-width: 420px) { .hl-display { font-size: clamp(34px, 9.5vw, 40px); } }
   @media (max-width: 600px) {
-    .hl { min-height: 0; padding: 120px 0 32px; }
-    .hl-inner { gap: 0; margin-block: 0; }
-    .hl-copy { gap: 20px; }
+    .hl { min-height: 0; padding: 108px 0 28px; }
+    .hl-inner { gap: 18px; margin-block: 0; }
+    .hl-copy { display: contents; }
+    .hl-title { order: 0; }
     .hl-title .hero-kicker, .hl-rotator, .hl-blob-2, .logo-track { display: none; }
     .hl-display { font-size: clamp(34px, 9.5vw, 48px); line-height: 1.08; }
     .hl-mobile-ending { display: block; color: var(--wabi-moss); }
-    .hl-copy > p { font-size: 17px; line-height: 1.55; max-width: 34ch; }
-    .hl-actions { display: flex; flex-direction: column; align-items: stretch; gap: 4px; margin-top: 4px; }
-    .hl-actions .button-primary { min-height: 52px; font-size: 16px; }
-    .hl-actions .button-secondary { align-self: center; min-height: 44px; padding: 8px 12px; border: 0 !important; background: none; border-radius: 0; font-size: 15px; text-decoration: underline; text-underline-offset: 4px; }
-    .hl-follow { opacity: .16; top: 6%; right: -100%; }
-    .hl-clients { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--wabi-outline); gap: 18px; }
+    .hl-copy > p { order: 1; font-size: 16px; line-height: 1.5; max-width: 34ch; }
+    .hl-inner :global(.mobile-story) { order: 2; }
+    .hl-actions { order: 3; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; margin-top: 0; }
+    .hl-actions .button-primary { min-height: 50px; font-size: 15px; padding-inline: 24px; }
+    .hl-actions .hl-desktop-link { display: none; }
+    .hl-scroll-link { display: inline-flex; align-items: center; gap: 9px; min-height: 48px; color: var(--wabi-forest); font-size: 14px; font-weight: 600; text-decoration: none; }
+    .hl-scroll-link span { display: inline-block; font-size: 23px; animation: scroll-nudge 900ms 3.2s 2 ease-in-out; }
+    @keyframes scroll-nudge { 50% { transform: translateY(6px); } }
+    .hl-follow { display: none; }
+    .hl-clients { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--wabi-outline); gap: 16px; }
     .hl-clients-label { font-size: 12px; color: var(--wabi-muted); }
     .logo-mobile { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; justify-items: center; gap: 24px; width: 100%; list-style: none; margin: 0; padding: 0; }
     .logo-mobile img { width: auto; height: auto; max-height: 28px; filter: grayscale(1) brightness(.45); opacity: .85; }
     .hl-clients, .hl-line, .hl-copy > p, .hl-actions, .hl-follow img { animation: none; }
   }
-  @media (prefers-reduced-motion: reduce) { .logo-track.is-marquee { overflow-x: auto; } .logo-track.is-marquee .logo-row { animation: none; } .logo-track.is-marquee .logo-clone { display: none; } .hl-clients, .hl-line, .hl-copy > p, .hl-actions, .hl-follow img { animation: none; } .hl-rotator :global(span) { transition: none; } }
+  @media (max-width: 360px) { .hl-actions .button-primary { padding-inline: 18px; } .hl-scroll-link { font-size: 13px; gap: 6px; } }
+  @media (prefers-reduced-motion: reduce) { .logo-track.is-marquee { overflow-x: auto; } .logo-track.is-marquee .logo-row { animation: none; } .logo-track.is-marquee .logo-clone { display: none; } .hl-clients, .hl-line, .hl-copy > p, .hl-actions, .hl-follow img, .hl-scroll-link span { animation: none; } .hl-rotator :global(span) { transition: none; } }
 </style>
