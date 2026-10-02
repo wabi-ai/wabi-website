@@ -14,6 +14,10 @@ const cards = [
     note: 'Vi bruker AI til å lage og oppdatere nettsiden. Vi sjekker og godkjenner endringene før de publiseres.', tags: ['Nettside', 'Vedlikehold', 'Oppdatering'] },
   { href: '/prosjekter/legekontor/', tone: '#24466F', blob: 'wabi-blob-fjord.webp', pos: 'left', title: 'Hjelp med regnskapet på legekontoret', sub: 'AI-agenter',
     note: 'En digital hjelper samler dagens betalinger og fører dem i Tripletex eller Fiken. Kontoret sjekker det som ikke stemmer.', tags: ['Helfo', 'Egenandel', 'Tripletex'] },
+  { href: '/prosjekter/havbruk/', tone: '#214F57', blob: 'wabi-blob-fjord.webp', pos: 'right', title: 'Et havbruksselskap som jobber AI-native', sub: 'Helhetlig AI-leveranse', logo: '/assets/clients/phyconor-logo-light.png', client: 'PhycoNor',
+    note: 'Driftsdashboard, KPI-er og søknader om støtte, med AI i alle ledd. For et havbruksselskap i Singapore og Malaysia.', tags: ['Dashboard', 'KPI-er', 'Søknader'] },
+  { href: 'https://aiinput.no', external: true, tone: '#065222', blob: 'wabi-blob.webp', pos: 'bottom', title: 'Ukens viktigste AI\u2011nyheter, på fem minutter', sub: 'Nyhetsbrevet vårt', logo: '/assets/Aiinput.svg', logoClass: 'is-aiinput', client: 'AI-Input',
+    note: 'Nyheter, ett testet verktøy og en prompt du kan bruke med en gang. Gratis, hver torsdag.', tags: ['Nyheter', 'Verktøy', 'Prompts'] },
 ];
 ---
 <div class:list={['case-rail-wrap', 'is-' + layout]} data-case-rail>
@@ -27,7 +31,7 @@ const cards = [
   </div>}
   <ul class="rail" data-rail tabindex={layout === 'rail' ? 0 : undefined} aria-label="Prosjekter">
     {cards.map(c => <li>
-      <a href={c.href} class:list={['pcard', 'pos-' + c.pos]} style={`--tone:${c.tone}`}>
+      <a href={c.href} class:list={['pcard', 'pos-' + c.pos]} style={`--tone:${c.tone}`} target={c.external ? '_blank' : undefined} rel={c.external ? 'noopener' : undefined}>
         <img class="pcard-blob" src={'/assets/blob/' + c.blob} alt="" aria-hidden="true" loading="lazy" />
         <span class="pcard-head">
           <span class="pcard-title">{c.title}</span>
@@ -38,7 +42,7 @@ const cards = [
           <span>{c.note}</span>
           <span class="pcard-tags">{c.tags.map(t => <span>{t}</span>)}</span>
         </span>
-        <span class="pcard-client">{c.logo ? <img src={c.logo} alt={c.client} width="96" height="31" loading="lazy" /> : c.client && <b>{c.client}</b>}</span>
+        <span class="pcard-client">{c.logo ? <img class={c.logoClass} src={c.logo} alt={c.client} width="96" height="31" loading="lazy" /> : c.client && <b>{c.client}</b>}</span>
       </a>
     </li>)}
   </ul>
@@ -106,6 +110,7 @@ const cards = [
 
   .pcard-client { margin-top: auto; transition: opacity 250ms ease; }
   .pcard-client img { display: block; width: auto; height: 26px; }
+  .pcard-client .is-aiinput { height: 30px; filter: brightness(0) invert(1); }
   .pcard-client b { font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
   .pcard:hover .pcard-client, .pcard:focus-visible .pcard-client { opacity: 0; }
 

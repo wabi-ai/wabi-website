@@ -10,6 +10,7 @@ import { Dashboard, AdsAndAudience } from '../../react/ReportUI.jsx';
 import { DealerApp } from '../../react/DealerUI.jsx';
 import { ClinicApp } from '../../react/ClinicUI.jsx';
 import { WebsiteApp } from '../../react/WebsiteUI.jsx';
+import { AquaApp } from '../../react/AquaUI.jsx';
 import '../../styles/demo.css';
 
 export function getStaticPaths() {
@@ -54,6 +55,7 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
           {c.demo === 'dealer' && <DealerApp client:visible />}
           {c.demo === 'clinic' && <ClinicApp client:visible />}
           {c.demo === 'website' && <WebsiteApp client:visible />}
+          {c.demo === 'aqua' && <AquaApp client:visible />}
         </div>
       </Band>
     </section>

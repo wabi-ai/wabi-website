@@ -90,4 +90,22 @@ export const CASES = [
     ],
     cta: ['Trenger dere en ny nettside?', 'Send oss adressen til den dere har i dag, så tar vi en prat om hva som bør gjøres.'],
   },
+  {
+    slug: 'havbruk', tone: 'deep', category: 'Havbruk', service: 'Helhetlig AI-leveranse',
+    client: 'PhycoNor', logo: '/assets/clients/phyconor-logo-dark.png', seoTitle: 'PhycoNor: AI-native drift for et havbruksselskap i Singapore | Wabi',
+    title: 'Et havbruksselskap som jobber AI-native.',
+    lead: 'PhycoNor dyrker tang, krabber, sjøpølser og reker i Singapore og Malaysia. Vi har bygget AI inn i hele driften: daglig oversikt, KPI-er og søknader om støtte og finansiering.',
+    challenge: 'Målinger fra dammene, tallene fra høstingen og salget lå på hvert sitt sted. Oversikten måtte settes sammen for hånd, og hver søknad om støtte startet med å lete fram de samme tallene på nytt.',
+    home: { metric: '3', unit: 'deler av driften med AI: oversikt, KPI-er og søknader', title: 'Et havbruksselskap som jobber AI-native.', text: 'Driftsdashboard, KPI-måling og søknader om støtte, bygget på de samme dataene.' },
+    demo: 'aqua', demoNote: 'Bytt mellom drift, KPI-er og søknad, og trykk «Skriv utkast» for å se AI-en hente tallene. Alle tall er eksempeldata.',
+    facts: [['Kunde', 'PhycoNor, havbruk'], ['Sted', 'Singapore og Malaysia'], ['Bygget', 'AI i hele driften'], ['Områder', 'Drift, KPI-er, søknader']],
+    flow: [['Kartlegging', 'Hvordan teamet jobber, og hvor dataene ligger.'], ['Samlet data', 'Målinger, høsting og salg på ett sted.'], ['Dashboard', 'Driften samlet, med en daglig oppsummering fra AI.'], ['KPI-er', 'Målene følges automatisk, og AI forklarer avvikene.'], ['Søknader', 'AI skriver utkast fra tallene som allerede finnes.']],
+    built: [
+      ['Driftsdashboard med AI', 'Vannkvalitet, bestand og høsting for hvert anlegg på ett sted. AI oppsummerer dagen og peker på det som trenger oppfølging.'],
+      ['KPI-måling med AI', 'Målene for vekst, overlevelse og salg måles automatisk. AI forklarer hva som har endret seg og hvorfor.'],
+      ['Søknader om støtte og finansiering', 'AI skriver utkast til søknader med tallene fra driften. Teamet kontrollerer, justerer og sender.'],
+      ['AI i hverdagen', 'Strategi, retningslinjer og opplæring, så hele teamet bruker AI trygt i sitt eget arbeid.'],
+    ],
+    cta: ['Vil dere også jobbe AI-native?', 'Vi kartlegger hvordan dere jobber og bygger AI inn i hele driften, ikke bare i én oppgave.'],
+  },
 ];
