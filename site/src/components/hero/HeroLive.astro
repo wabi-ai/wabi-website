@@ -129,15 +129,15 @@ const mobileLogos = logos.filter(l => ['Vespa', 'Trondheim Kommune', 'Bunnpris']
   }
   @media (max-width: 420px) { .hl-display { font-size: clamp(34px, 9.5vw, 40px); } }
   @media (max-width: 600px) {
-    .hl { min-height: 0; padding: 108px 0 28px; }
-    .hl-inner { gap: 18px; margin-block: 0; }
+    .hl { min-height: 0; padding: 128px 0 36px; }
+    .hl-inner { gap: 26px; margin-block: 0; }
     .hl-copy { display: contents; }
     .hl-title { order: 0; }
     .hl-title .hero-kicker, .hl-rotator, .hl-blob-2, .logo-track { display: none; }
     .hl-display { font-size: clamp(34px, 9.5vw, 48px); line-height: 1.08; }
     .hl-mobile-ending { display: block; color: var(--wabi-moss); }
-    .hl-copy > p { order: 1; font-size: 16px; line-height: 1.5; max-width: 34ch; }
-    .hl-inner :global(.mobile-story) { order: 2; }
+    .hl-copy > p { order: 1; font-size: 16px; line-height: 1.6; max-width: 34ch; }
+    .hl-inner :global(.mobile-story) { order: 2; margin-block: 6px; }
     .hl-actions { order: 3; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; margin-top: 0; }
     .hl-actions .button-primary { min-height: 50px; font-size: 15px; padding-inline: 24px; }
     .hl-actions .hl-desktop-link { display: none; }
@@ -145,7 +145,7 @@ const mobileLogos = logos.filter(l => ['Vespa', 'Trondheim Kommune', 'Bunnpris']
     .hl-scroll-link span { display: inline-block; font-size: 23px; animation: scroll-nudge 900ms 3.2s 2 ease-in-out; }
     @keyframes scroll-nudge { 50% { transform: translateY(6px); } }
     .hl-follow { display: none; }
-    .hl-clients { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--wabi-outline); gap: 16px; }
+    .hl-clients { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--wabi-outline); gap: 20px; }
     .hl-clients-label { font-size: 12px; color: var(--wabi-muted); }
     .logo-mobile { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; justify-items: center; gap: 24px; width: 100%; list-style: none; margin: 0; padding: 0; }
     .logo-mobile img { width: auto; height: auto; max-height: 28px; filter: grayscale(1) brightness(.45); opacity: .85; }
