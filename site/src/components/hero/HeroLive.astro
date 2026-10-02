@@ -16,7 +16,7 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
         <span class="hero-kicker">AI-rådgivning for norske bedrifter</span>
         <span class="hl-display">
           <span class="hl-line">Vi gjør AI nyttig</span>
-          <span class="hl-rotator" aria-hidden="true" data-rotator><span class="is-active">for bedriften din.</span></span>
+          <span class="hl-rotator" aria-hidden="true" data-rotator><span>for bedriften din.</span></span>
           <span class="hl-mobile-ending" aria-hidden="true">for bedriften din.</span>
           <span class="sr-only">for bedriften din.</span>
         </span>
@@ -50,25 +50,29 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
     row.querySelectorAll('img').forEach(img => img.addEventListener('load', fit, { once: true }));
     addEventListener('resize', fit, { passive: true });
   }
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const reduced = reducedMotion.matches;
   const mobile = matchMedia('(max-width: 600px)');
   const hero = document.querySelector<HTMLElement>('.hl');
   const rotator = hero?.querySelector<HTMLElement>('[data-rotator]');
   if (hero && rotator) {
-    // Swap the headline ending whenever the console starts a new task.
+    // Reuse one text node so rapid changes or background tabs cannot stack headlines.
+    const headline = rotator.querySelector<HTMLElement>('span')!;
+    let headlineAnimation: Animation | undefined;
     hero.addEventListener('console:scenario', e => {
       const ending = (e as CustomEvent).detail.ending as string;
-      const current = rotator.querySelector('.is-active');
-      if (current?.textContent === ending) return;
-      const next = document.createElement('span');
-      next.textContent = ending;
-      rotator.append(next);
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        current?.classList.replace('is-active', 'is-leaving');
-        next.classList.add('is-active');
-      }));
-      setTimeout(() => current?.remove(), reduced ? 0 : 330);
+      if (headline.textContent === ending) return;
+      headlineAnimation?.cancel();
+      headline.textContent = ending;
+      if (!reducedMotion.matches && !mobile.matches && !document.hidden) {
+        headlineAnimation = headline.animate([
+          { opacity: 0, transform: 'translateY(60%)' },
+          { opacity: 1, transform: 'translateY(0)' },
+        ], { duration: 280, easing: 'cubic-bezier(.22,1,.36,1)' });
+      }
     });
+    document.addEventListener('visibilitychange', () => headlineAnimation?.cancel());
+    reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) headlineAnimation?.cancel(); });
   }
   const follow = hero?.querySelector<HTMLElement>('[data-follow]');
   if (hero && follow && !reduced) {
@@ -112,9 +116,7 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
   .hl-line { animation: rise 650ms var(--ease-out) both; }
   .hl-mobile-ending { display: none; }
   .hl-rotator { position: relative; display: block; height: 1.22em; margin-bottom: -.12em; overflow: hidden; color: var(--wabi-moss); }
-  .hl-rotator :global(span) { position: absolute; left: 0; top: 0; white-space: nowrap; opacity: 0; transform: translateY(90%); transition: transform 280ms var(--ease-out), opacity 220ms var(--ease-out); }
-  .hl-rotator :global(span.is-active) { opacity: 1; transform: none; }
-  .hl-rotator :global(span.is-leaving) { opacity: 0; transform: translateY(-90%); }
+  .hl-rotator :global(span) { position: absolute; left: 0; top: 0; white-space: nowrap; }
   .hl-copy > p { max-width: 440px; font-size: 18px; line-height: 1.6; color: #2E4636; animation: rise 650ms 100ms var(--ease-out) both; }
   .hl-actions { display: flex; flex-wrap: wrap; gap: 12px; animation: rise 650ms 150ms var(--ease-out) both; }
   .hl-scroll-link { display: none; }
