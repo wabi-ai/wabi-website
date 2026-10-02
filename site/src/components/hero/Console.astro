@@ -3,11 +3,14 @@
 // Emits a `console:scenario` event (detail: { id, ending }) so a headline can follow along.
 import ToolLogo from '../ToolLogo.astro';
 import { SCENARIOS } from '../../data/scenarios.js';
-interface Props { theme?: 'dark' | 'light'; only?: string[]; pace?: number; startDelay?: number; }
-const { theme = 'dark', only, pace = 1, startDelay = 1100 } = Astro.props;
+interface Props { theme?: 'dark' | 'light'; only?: string[]; pace?: number; startDelay?: number; compactOnMobile?: boolean; }
+const { theme = 'dark', only, pace = 1, startDelay = 1100, compactOnMobile = false } = Astro.props;
 const scenarios = only ? SCENARIOS.filter(s => only.includes(s.id)) : SCENARIOS;
 ---
-<div class:list={['console', 'console-' + theme]} data-console data-pace={pace} data-start-delay={startDelay} data-scenarios={JSON.stringify(scenarios)}>
+<div class:list={['console', 'console-' + theme, { 'console-responsive': compactOnMobile }]} data-console data-compact-mobile={compactOnMobile ? 'true' : undefined} data-pace={pace} data-start-delay={startDelay} data-scenarios={JSON.stringify(scenarios)}>
+  {compactOnMobile && <label class="console-mobile-picker">Se et eksempel
+    <select data-mobile-scenario>{scenarios.map((s, i) => <option value={i}>{s.label}</option>)}</select>
+  </label>}
   <div class="console-chips" role="tablist" aria-label="Velg en oppgave">
     {scenarios.map((s, i) => <button type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-scenario={s.id}>{s.label}</button>)}
   </div>
@@ -31,19 +34,40 @@ const scenarios = only ? SCENARIOS.filter(s => only.includes(s.id)) : SCENARIOS;
     const $ = (sel: string) => root.querySelector(sel) as HTMLElement;
     const typed = $('[data-typed]'), stepsEl = $('[data-steps]'), result = $('[data-result]'), status = $('[data-status]');
     const chips = [...root.querySelectorAll<HTMLElement>('[data-scenario]')];
+    const picker = root.querySelector<HTMLSelectElement>('[data-mobile-scenario]');
+    const mobile = matchMedia('(max-width: 600px)');
+    const compact = () => root.dataset.compactMobile === 'true' && mobile.matches;
     const logos: Record<string, string> = Object.fromEntries([...(root.querySelector('[data-logos]') as HTMLTemplateElement).content.querySelectorAll<HTMLElement>('[data-logo]')].map(el => [el.dataset.logo!, el.innerHTML]));
     const pace = Number(root.dataset.pace || 1);
-    let run = 0, auto = !reduced;
+    let run = 0, activeIndex = 0, auto = !reduced;
     const wait = (ms: number) => new Promise(r => setTimeout(r, reduced ? 0 : ms * pace));
+
+    function showResult(s: typeof scenarios[number]) {
+      $('[data-result-title]').textContent = s.result[0];
+      $('[data-result-sub]').textContent = s.result[1];
+      $('[data-result-action]').textContent = s.action;
+      $('[data-result-tools]').innerHTML = s.tools.map((t: string) => '<span>' + (logos[t] || '') + '</span>').join('');
+      result.hidden = false; root.classList.add('is-done');
+      status.textContent = 'Ferdig';
+    }
 
     async function play(i: number) {
       const id = ++run, s = scenarios[i];
+      activeIndex = i;
+      if (picker) picker.value = String(i);
       chips.forEach((c, n) => c.setAttribute('aria-selected', String(n === i)));
       root.dispatchEvent(new CustomEvent('console:scenario', { bubbles: true, detail: { id: s.id, ending: s.ending } }));
       stepsEl.innerHTML = ''; result.hidden = true; typed.textContent = ''; root.classList.remove('is-done');
+      // Phones show the task and finished result immediately, with manual example selection.
+      if (compact()) {
+        typed.textContent = s.prompt;
+        showResult(s);
+        return;
+      }
       status.textContent = 'Leser oppgaven';
       for (const ch of s.prompt) { if (id !== run) return; typed.textContent += ch; await wait(28); }
       await wait(350);
+      if (id !== run) return;
       status.textContent = 'Jobber';
       for (const [text, meta] of s.steps) {
         if (id !== run) return;
@@ -58,22 +82,20 @@ const scenarios = only ? SCENARIOS.filter(s => only.includes(s.id)) : SCENARIOS;
       }
       await wait(250);
       if (id !== run) return;
-      $('[data-result-title]').textContent = s.result[0];
-      $('[data-result-sub]').textContent = s.result[1];
-      $('[data-result-action]').textContent = s.action;
-      $('[data-result-tools]').innerHTML = s.tools.map((t: string) => '<span>' + (logos[t] || '') + '</span>').join('');
-      result.hidden = false; root.classList.add('is-done');
-      status.textContent = 'Ferdig';
+      showResult(s);
       await wait(4200);
       if (id === run && auto) play((i + 1) % scenarios.length);
     }
-    const initialTimer = window.setTimeout(() => play(0), reduced ? 0 : Number(root.dataset.startDelay || 1100));
+    const initialTimer = window.setTimeout(() => play(0), reduced || compact() ? 0 : Number(root.dataset.startDelay || 1100));
     chips.forEach((c, i) => c.addEventListener('click', () => { clearTimeout(initialTimer); auto = false; play(i); }));
+    picker?.addEventListener('change', () => { clearTimeout(initialTimer); auto = false; play(Number(picker.value)); });
+    if (root.dataset.compactMobile === 'true') mobile.addEventListener('change', () => { clearTimeout(initialTimer); play(activeIndex); });
   });
 </script>
 
 <style>
   .console { position: relative; padding: 10px; border-radius: 26px; background: rgba(253, 249, 241, .1); border: 1px solid rgba(253, 249, 241, .18); -webkit-backdrop-filter: blur(24px) saturate(140%); backdrop-filter: blur(24px) saturate(140%); box-shadow: 0 50px 120px rgba(0, 0, 0, .4); animation: rise 1200ms 250ms var(--ease-out) both; }
+  .console-mobile-picker { display: none; }
   .console-chips { display: flex; gap: 6px; padding: 4px 4px 10px; overflow-x: auto; scrollbar-width: none; }
   .console-chips button { flex: none; padding: 9px 16px; border-radius: 100px; border: 1px solid rgba(253, 249, 241, .2); background: transparent; color: var(--wabi-oat); font: 700 13px var(--font-sans); cursor: pointer; transition: background 200ms ease, color 200ms ease; }
   .console-chips button:hover { background: rgba(253, 249, 241, .1); }
@@ -118,6 +140,18 @@ const scenarios = only ? SCENARIOS.filter(s => only.includes(s.id)) : SCENARIOS;
     .console-steps :global(li) { font-size: 13px; }
     .console-result { flex-wrap: wrap; }
     .console-foot > span:last-child { display: none; }
+  }
+  @media (max-width: 600px) {
+    .console-responsive { padding: 8px; border-radius: 20px; animation: none; box-shadow: 0 16px 40px rgba(20, 61, 36, .08); }
+    .console-responsive .console-chips, .console-responsive .console-steps, .console-responsive .caret, .console-responsive .console-result-tools, .console-responsive .console-action, .console-responsive .console-foot { display: none; }
+    .console-responsive .console-mobile-picker { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 6px 8px; font-size: 12px; font-weight: 600; color: var(--wabi-muted); }
+    .console-mobile-picker select { min-width: 0; max-width: 60%; min-height: 44px; padding: 8px 10px; border: 1px solid var(--wabi-outline); border-radius: 12px; background: var(--wabi-raised); color: var(--wabi-forest); font: 600 16px var(--font-sans); }
+    .console-responsive .console-body { min-height: 0; padding: 16px; border-radius: 14px; }
+    .console-responsive .console-prompt { flex-direction: column; gap: 8px; min-height: 0; padding-bottom: 14px; font-size: 16px; line-height: 1.45; border: 0; }
+    .console-responsive .console-caret-label { padding: 0; background: none; transform: none; font-size: 10px; }
+    .console-responsive .console-result { margin: 0; padding: 12px; gap: 8px; animation: none; }
+    .console-responsive .console-result strong { font-size: 15px; line-height: 1.4; }
+    .console-responsive .console-result small { margin-top: 4px; font-size: 13px; line-height: 1.45; }
   }
   @media (prefers-reduced-motion: reduce) { .console { animation: none; } }
 </style>

@@ -25,7 +25,7 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
         <a href="#resultater" class="button button-secondary">Se hva vi bygger</a>
       </div>
     </div>
-    <Console theme="light" pace={0.55} startDelay={1800} />
+    <Console theme="light" pace={0.55} startDelay={1800} compactOnMobile />
   </div>
   <div class="container"><div class="hl-clients">
     <h2 class="hl-clients-label">Bedrifter vi har jobbet med</h2>
@@ -116,5 +116,19 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
     .hl-follow { width: 150vw; right: -60%; top: -6%; }
   }
   @media (max-width: 420px) { .hl-display { font-size: clamp(34px, 9.5vw, 40px); } }
+  @media (max-width: 600px) {
+    .hl { min-height: 0; padding: 112px 0 28px; }
+    .hl-inner { gap: 28px; margin-block: 0; }
+    .hl-copy { gap: 20px; }
+    .hl-title { gap: 16px; }
+    .hl-title .hero-kicker { font-size: 11px; letter-spacing: .08em; }
+    .hl-display { font-size: clamp(34px, 9.5vw, 48px); }
+    .hl-copy > p { font-size: 16px; line-height: 1.55; }
+    .hl-actions { display: grid; grid-template-columns: 1fr 1.2fr; gap: 8px; }
+    .hl-actions .button { padding: 12px 10px; font-size: 14px; }
+    .hl-follow { opacity: .38; top: 10%; right: -80%; }
+    .hl-clients { margin-top: 32px; gap: 12px; }
+    .logo-row img { height: 22px; }
+  }
   @media (prefers-reduced-motion: reduce) { .logo-track.is-marquee { overflow-x: auto; } .logo-track.is-marquee .logo-row { animation: none; } .logo-track.is-marquee .logo-clone { display: none; } .hl-clients, .hl-line, .hl-copy > p, .hl-actions, .hl-follow img { animation: none; } .hl-rotator :global(span) { transition: none; } }
 </style>
