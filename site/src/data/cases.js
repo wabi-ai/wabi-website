@@ -2,11 +2,12 @@
 export const CASES = [
   {
     slug: 'rapportering', tone: 'fjord', category: 'Nuet', service: 'Verktøy og programvare',
+    shotsNote: 'Kundedata er skjult i skjermbildene.',
     client: 'Nuet', logo: '/assets/clients/nuet-logo-dark.png', seoTitle: 'Nuet: rapportverktøy med AI for et performance-byrå | Wabi',
     shots: [
-      ['/assets/cases/nuet-dashbord.jpg', 'Kundens dashbord: nøkkeltall på tvers av kanaler og detaljene fra hver plattform.', 1280, 737],
-      ['/assets/cases/nuet-annonser.jpg', 'Annonseoversikten: kjøp over tid og aktive annonser samlet per kampanje.', 1280, 918],
-      ['/assets/cases/nuet-malgrupper.jpg', 'Målgruppene: demografi og en publikumstrakt fra nytt publikum til eksisterende kunder.', 1280, 1048],
+      ['/assets/cases/nuet-dashbord.jpg?v=20261002', 'Kundens dashbord: nøkkeltall på tvers av kanaler og detaljene fra hver plattform.', 1280, 737],
+      ['/assets/cases/nuet-annonser.jpg?v=20261002', 'Annonseoversikten: kjøp over tid og aktive annonser samlet per kampanje.', 1280, 918],
+      ['/assets/cases/nuet-malgrupper.jpg?v=20261002', 'Målgruppene: demografi og en publikumstrakt fra nytt publikum til eksisterende kunder.', 1280, 1048],
     ],
     title: 'Fra timer med rapportering til en lenke per kunde.',
     lead: 'Kundene får rapporten sin. Byrået får timene tilbake. Rapportene lager seg selv nå.',
@@ -32,11 +33,12 @@ export const CASES = [
   },
   {
     slug: 'bruktbil', tone: 'ember', category: 'Bruktbilhandel', service: 'Skreddersydd programvare',
+    shotsNote: 'Kundedata er skjult i skjermbildene.',
     client: 'M Biler', seoTitle: 'M Biler: fagsystem for bruktbilforhandlere | Wabi',
-    image: '/assets/cases/mbiler-kjoretoy.jpg', imageAlt: 'Lageroversikten i fagsystemet til M Biler, med biler til salgs og solgte biler',
+    image: '/assets/cases/mbiler-kjoretoy.jpg?v=20261002', imageAlt: 'Lageroversikten i fagsystemet til M Biler, med biler til salgs og solgte biler',
     shots: [
-      ['/assets/cases/mbiler-kjoretoy.jpg', 'Lageret: alle biler med bilder, status, pris og ståtid.'],
-      ['/assets/cases/mbiler-dashbord.jpg', 'Dashbordet: hurtigvalg for dagens oppgaver, bruttofortjeneste og ståtid på lageret.'],
+      ['/assets/cases/mbiler-kjoretoy.jpg?v=20261002', 'Lageret: alle biler med bilder, status, pris og ståtid.', 1280, 734],
+      ['/assets/cases/mbiler-dashbord.jpg?v=20261002', 'Dashbordet: hurtigvalg for dagens oppgaver, bruttofortjeneste og ståtid på lageret.', 1280, 737],
     ],
     title: 'Hele bilsalget i ett system.',
     lead: 'M Biler hadde lager, kunder, prøvekjøringer, kontrakter og økonomi på hvert sitt sted. Vi bygde et fagsystem som samler alt, og som nå også er i bruk hos andre forhandlere.',
