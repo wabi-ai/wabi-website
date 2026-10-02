@@ -1,6 +1,6 @@
 :root {
   --page-gutter: clamp(20px, 5vw, 64px);
-  --section-space: clamp(96px, 12vw, 180px);
+  --section-space: clamp(48px, 5vw, 72px);
   --ease-out: cubic-bezier(.22, 1, .36, 1);
   --ease-standard: cubic-bezier(.22, 1, .36, 1);
   --night: #0B2415;
