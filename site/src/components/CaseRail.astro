@@ -6,14 +6,14 @@ interface Props { layout?: 'rail' | 'grid'; }
 const { layout = 'rail' } = Astro.props;
 
 const cards = [
-  { href: '/prosjekter/rapportering/', tone: '#1C3A27', blob: 'wabi-blob.webp', pos: 'right', title: 'AI-dashbord for et performance-byrå', sub: 'Verktøy og programvare', logo: '/assets/clients/nuet-logo-light.png', client: 'Nuet',
-    note: 'Meta, Google Ads, Analytics og Search Console samlet i ett dashbord per kunde, med en AI som forklarer på norsk hva som har endret seg.', tags: ['Meta', 'Google Ads', 'Analytics'] },
-  { href: '/prosjekter/bruktbil/', tone: '#4F5530', blob: 'wabi-blob-sand.webp', pos: 'bottom', title: 'Fagsystem for bruktbilforhandlere', sub: 'Skreddersydd programvare', client: 'M Biler',
+  { href: '/prosjekter/rapportering/', tone: '#1C3A27', blob: 'wabi-blob.webp', pos: 'right', title: 'Rapporter for et markedsføringsbyrå', sub: 'Verktøy og programvare', logo: '/assets/clients/nuet-logo-light.png', client: 'Nuet',
+    note: 'Tall fra annonser og nettsider samlet i en rapport per kunde. AI forklarer hva som har endret seg.', tags: ['Meta', 'Google Ads', 'Analytics'] },
+  { href: '/prosjekter/bruktbil/', tone: '#4F5530', blob: 'wabi-blob-sand.webp', pos: 'bottom', title: 'Bilsalget samlet i ett system', sub: 'Skreddersydd programvare', client: 'M Biler',
     note: 'Lager, kunder, prøvekjøringer, kontrakter og økonomi i ett system. Laget sammen med M Biler, og nå i bruk hos flere forhandlere.', tags: ['Lager', 'Kontrakter', 'Økonomi'] },
-  { href: '/prosjekter/nettside/', tone: '#3B2A5C', blob: 'wabi-blob-dusk.webp', pos: 'bottom', title: 'Nettsider bygget av agenter', sub: 'Bygget, hostet og drevet av agenter',
-    note: 'Agentene leser, planlegger, bygger og kontrollerer siden, og holder innholdet oppdatert etterpå. Et menneske hos oss godkjenner før noe går live.', tags: ['Kode', 'Hosting', 'Oppdatering'] },
-  { href: '/prosjekter/legekontor/', tone: '#24466F', blob: 'wabi-blob-fjord.webp', pos: 'left', title: 'Regnskapsagent for legekontor', sub: 'AI-agenter',
-    note: 'Agenten tar dagsoppgjøret, Helfo-refusjonene og egenandelene, og fører alt i Tripletex eller Fiken. Kontoret godkjenner bare avvikene.', tags: ['Helfo', 'Egenandel', 'Tripletex'] },
+  { href: '/prosjekter/nettside/', tone: '#3B2A5C', blob: 'wabi-blob-dusk.webp', pos: 'bottom', title: 'Nettsider som holdes oppdatert', sub: 'Bygging og vedlikehold med AI',
+    note: 'Vi bruker AI til å lage og oppdatere nettsiden. Vi sjekker og godkjenner endringene før de publiseres.', tags: ['Nettside', 'Vedlikehold', 'Oppdatering'] },
+  { href: '/prosjekter/legekontor/', tone: '#24466F', blob: 'wabi-blob-fjord.webp', pos: 'left', title: 'Hjelp med regnskapet på legekontoret', sub: 'AI-agenter',
+    note: 'En digital hjelper samler dagens betalinger og fører dem i Tripletex eller Fiken. Kontoret sjekker det som ikke stemmer.', tags: ['Helfo', 'Egenandel', 'Tripletex'] },
 ];
 ---
 <div class:list={['case-rail-wrap', 'is-' + layout]} data-case-rail>

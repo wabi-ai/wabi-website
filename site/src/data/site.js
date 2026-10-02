@@ -1,7 +1,7 @@
 export const SITE = {
   name: 'Wabi',
   url: 'https://wabi.no',
-  description: 'Wabi er et AI-rådgivningsselskap for norske bedrifter. Vi finner hvor AI gir verdi, bygger AI-agenter, automatisering og programvare, og følger løsningene opp i drift.',
+  description: 'Wabi hjelper norske bedrifter å få nytte av AI. Vi finner oppgavene som tar tid, lager løsninger og lærer de ansatte å bruke dem.',
   email: 'ulrik@wabi.no', // fallback only, if the form fails
   linkedin: 'https://www.linkedin.com/company/wabino/',
   // Web3Forms access key for the contact form. Submissions go to the address the key was created for (admin@wabi.no).
@@ -10,8 +10,8 @@ export const SITE = {
 };
 
 export const SERVICES = [
-  { id: 'agenter', href: '/ai-agenter/', tone: 'fjord', preset: 't1', title: 'AI-agenter', short: 'En agent tar en fast oppgave fra start til slutt, i Slack, e-post eller der dere jobber.', nav: ['En ekstra hånd i arbeidsdagen.', 'En agent som følger opp oppgaven, fra start til slutt.'] },
-  { id: 'automatisering', href: '/automatisering/', tone: 'ember', preset: 't2', title: 'Automatisering', short: 'Når X skjer, gjør Y. Nå med et AI-steg som leser, vurderer og handler.', nav: ['La rutinen gå av seg selv.', 'Koble sammen verktøyene og få flyt i arbeidet.'] },
+  { id: 'agenter', href: '/ai-agenter/', tone: 'fjord', preset: 't1', title: 'AI-agenter', short: 'En digital hjelper som kan lage rapporter, skrive svar og følge opp oppgaver.', nav: ['En ekstra hånd i arbeidsdagen.', 'Få hjelp med rapporter, kundesvar og andre faste oppgaver.'] },
+  { id: 'automatisering', href: '/automatisering/', tone: 'ember', preset: 't2', title: 'Automatisering', short: 'La faste oppgaver gå av seg selv, så dere slipper å flytte informasjon for hånd.', nav: ['La rutinen gå av seg selv.', 'Vi kobler sammen systemene dere bruker, så dere slipper dobbeltarbeid.'] },
   { id: 'programvare', href: '/verktoy-og-programvare/', tone: 'sand', preset: 't3', title: 'Verktøy', navTitle: 'Verktøy og programvare', short: 'Vi går gjennom verktøyene dere betaler for, og bygger det som mangler.', nav: ['Verktøy som passer måten dere jobber på.', 'Vi bygger det dere mangler, og rydder i det dere har.'] },
 ];
 

@@ -10,10 +10,10 @@ import CtaPanel from '../../components/CtaPanel.astro';
 import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
 
 const crumbs = [{ label: 'Automatisering', href: '/automatisering/' }];
-const description = 'Wabi automatiserer arbeidsflyter for norske bedrifter, med et AI-steg som leser fritekst, vurderer og handler der faste regler ikke strekker til.';
+const description = 'Wabi kobler sammen systemene dere bruker, slik at faste oppgaver kan gå av seg selv. AI kan lese e-poster, sortere informasjon og lage utkast.';
 
 const rule = [['Inneholder ordet «faktura»?', 'Fast regel, ja eller nei.'], ['Flytt til fakturamappen', 'Alt annet blir liggende.']];
-const ai = [['Forstå hva e-posten gjelder', 'Faktura, klage, bestilling eller spørsmål.'], ['Vurder hastegrad og eier', 'Hvem skal ha den, og hvor fort.'], ['Opprett sak med svarutkast', 'I riktig system, med kundens historikk.'], ['Saksbehandler godkjenner', 'Sender, endrer eller avviser.']];
+const ai = [['Forstå hva e-posten gjelder', 'Faktura, klage, bestilling eller spørsmål.'], ['Finn riktig mottaker', 'Hvem skal ha den, og hvor fort.'], ['Opprett sak med svarutkast', 'Samlet med tidligere meldinger fra kunden.'], ['Saksbehandler godkjenner', 'Sender, endrer eller avviser.']];
 
 const abilities = [
   ['Lese', 'Forstår hva en e-post, et skjema eller et dokument gjelder, selv når avsenderen ikke bruker ordene en regel ser etter.'],
@@ -23,28 +23,28 @@ const abilities = [
 
 const examples = [
   { title: 'Innboksen sorterer seg selv', text: 'Alle e-poster blir sortert, fordelt og besvart i utkast. En person tar den siste beslutningen.', tools: ['Outlook', 'Microsoft Teams', 'n8n'] },
-  { title: 'Fra møtenotat til nyhetsbrev', text: 'Et nytt notat i mappen starter flyten. AI-steget skriver utkast, som publiseres i alle kanaler etter godkjenning.', tools: ['Google Drive', 'Make'] },
-  { title: 'Faktura mot bestilling', text: 'Fakturaen leses, sammenlignes med bestillingen, og bare avvikene havner hos økonomi.', tools: ['Gmail', 'Excel', 'Zapier'] },
-  { title: 'Nye leads rett inn i CRM', text: 'Henvendelser fra nettsiden blir vurdert, beriket og lagt inn med forslag til neste steg.', tools: ['HubSpot', 'Slack'] },
+  { title: 'Fra møtenotat til nyhetsbrev', text: 'Når et møtenotat legges i mappen, lager AI et utkast til nyhetsbrev. Dere leser og godkjenner før det publiseres.', tools: ['Google Drive', 'Make'] },
+  { title: 'Faktura mot bestilling', text: 'Systemet sjekker fakturaen mot bestillingen. Økonomiavdelingen får beskjed hvis noe ikke stemmer.', tools: ['Gmail', 'Excel', 'Zapier'] },
+  { title: 'Nye henvendelser inn i kundesystemet', text: 'Henvendelser fra nettsiden legges i kundesystemet. Den som skal følge opp, får beskjed og et forslag til neste steg.', tools: ['HubSpot', 'Slack'] },
 ];
 
 const steps: [string, string][] = [
-  ['Egne grensesnitt', 'Vi kobler oss på systemenes egne API-er der de finnes, i stedet for skjøre snarveier.'],
-  ['Minst mulig tilgang', 'Flyten får bare tilgang til det den trenger for å gjøre jobben.'],
-  ['Plan for nedetid', 'Hva skjer når et system er nede? Det bestemmer vi før flyten settes i drift.'],
-  ['Logg på hvert steg', 'Hvert steg blir logget, så dere ser hva som skjedde og hvorfor.'],
+  ['Systemene kobles sammen', 'Vi bruker tilkoblingene som systemene er laget for, der det er mulig.'],
+  ['Minst mulig tilgang', 'Løsningen får bare tilgang til informasjonen den trenger.'],
+  ['Plan for nedetid', 'Vi avtaler hva som skal skje hvis et system slutter å svare, og hvem som skal få beskjed.'],
+  ['Oversikt over arbeidet', 'Dere kan se hvilke steg som er gjort, og hvor noe eventuelt stoppet opp.'],
 ];
 
 const faq: [string, string][] = [
-  ['Hva er forskjellen på automatisering og en AI-agent?', 'En automatisering følger en fast rute: når X skjer, gjør Y, med et AI-steg der det trengs. En agent velger selv hvilke steg som trengs for å løse en oppgave. Mange gode løsninger bruker begge.'],
-  ['Hvilke verktøy bruker dere?', 'Det avhenger av systemene dere har. Vi bruker blant annet n8n, Make og Zapier, eller skriver koden selv når det gir en mer robust løsning.'],
+  ['Hva er forskjellen på automatisering og en AI-agent?', 'Automatisering følger faste steg. For eksempel blir en ny bestilling sendt videre til lageret. En AI-agent kan velge hvilke steg som trengs for å løse oppgaven. Vi kan kombinere begge.'],
+  ['Hvilke verktøy bruker dere?', 'Det avhenger av systemene dere har. Vi bruker blant annet n8n, Make og Zapier, eller skriver koden selv når det gir en løsning som passer bedre.'],
   ['Må vi bytte systemer?', 'Nei. Poenget er å koble sammen det dere allerede bruker, så informasjonen flyter uten at noen må føre den over for hånd.'],
-  ['Hva skjer når et system er nede?', 'Det avtaler vi på forhånd. Vanligvis venter flyten og prøver igjen, og noen får beskjed hvis det tar for lang tid.'],
+  ['Hva skjer når et system er nede?', 'Det avtaler vi på forhånd. Vanligvis venter løsningen og prøver igjen, og noen får beskjed hvis det tar for lang tid.'],
 ];
 ---
 <Base title="Automatisering med AI | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'Automatisering med AI', description, path: '/automatisering/' })]}>
-  <PageHero crumbs={crumbs} eyebrow="Automatisering" title="Når X skjer, gjør Y. Nå med et AI-steg i midten."
-    lead="Faste regler har automatisert arbeid i mange år. Det nye er et steg som kan lese fritekst, vurdere og velge riktig vei der en regel ville gitt opp."
+  <PageHero crumbs={crumbs} eyebrow="Automatisering" title="La de faste oppgavene gå av seg selv."
+    lead="Vi kobler sammen systemene dere allerede bruker. Da slipper dere å flytte informasjon for hånd. AI kan lese e-poster, sortere dem og lage svar som dere godkjenner."
     primary={{ label: 'Ta en prat', href: '/kontakt/' }} secondary={{ label: 'Se eksempler', href: '#eksempler' }} />
 
   <Band tone="ember">
@@ -55,7 +55,7 @@ const faq: [string, string][] = [
         <p class="outcome muted">Bare e-poster med riktig ord blir sortert. Resten må noen lese manuelt.</p>
       </div>
       <div class="paper-card lane lane-ai">
-        <h3>Med AI-steg</h3>
+        <h3>Med AI</h3>
         <ol>{ai.map(([t, s]) => <li><strong>{t}</strong><span>{s}</span></li>)}</ol>
         <p class="outcome">Alle e-poster blir sortert, fordelt og besvart i utkast. En person tar den siste beslutningen.</p>
       </div>
@@ -63,13 +63,13 @@ const faq: [string, string][] = [
   </Band>
 
   <section class="section container split" aria-labelledby="ai-steg-title">
-    <div class="split-head" data-reveal><span class="eyebrow">Kort forklart</span><h2 id="ai-steg-title" class="display-md">Hva gjør AI-steget?</h2></div>
+    <div class="split-head" data-reveal><span class="eyebrow">Kort forklart</span><h2 id="ai-steg-title" class="display-md">Hva kan AI hjelpe med?</h2></div>
     <ol class="abilities">{abilities.map(([t, s], i) => <li data-reveal style={`--d:${i * 80}ms`}><h3>{t}</h3><p>{s}</p></li>)}</ol>
   </section>
 
-  <div id="eksempler"><Examples eyebrow="Eksempler" title="Flyter vi bygger." intro="Hver flyt starter med en konkret hendelse og ender med noe ferdig, eller noe som venter på en godkjenning." items={examples} /></div>
+  <div id="eksempler"><Examples eyebrow="Eksempler" title="Oppgaver vi kan gjøre enklere." intro="Her er noen eksempler på arbeid som kan gå av seg selv. Dere bestemmer hva som må godkjennes først." items={examples} /></div>
 
-  <Steps dark eyebrow="Driftssikkert fra start" title="En flyt skal tåle hverdagen." steps={steps} />
+  <Steps dark eyebrow="Driftssikkert fra start" title="Det skal fungere i hverdagen." steps={steps} />
 
   <FaqList faq={faq} title="Om automatisering." />
   <MoreServices current="automatisering" />

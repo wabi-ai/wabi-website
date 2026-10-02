@@ -1,6 +1,6 @@
 ---
 title: "Slik bruker dere ChatGPT i bedriften: en praktisk guide"
-description: "Riktig konto, gode prompts, prosjekter og sju konkrete arbeidsoppgaver med ferdige prompts. En guide for norske bedrifter som vil bruke ChatGPT i hverdagen, ikke bare teste det."
+description: "Slik kommer dere i gang med ChatGPT på jobb. Velg riktig konto, beskriv oppgavene tydelig og prøv sju ferdige eksempler."
 keywords:
   - ChatGPT i bedriften
   - ChatGPT Business
@@ -9,7 +9,7 @@ keywords:
   - ChatGPT eksempler
 author: Eljar
 date: 2026-02-16
-updated: 2026-09-30
+updated: 2026-10-02
 category: Guide
 ---
 
@@ -31,7 +31,7 @@ En enkel regel som fungerer:
 - **Aldri** personnummer, helseopplysninger eller passord, uansett konto.
 - **Skriv det ned.** En halv side med retningslinjer er bedre enn ingen. Folk bruker AI uansett, spørsmålet er om de gjør det trygt.
 
-## Skriv prompten som en god bestilling
+## Skriv instruksjonen som en god bestilling
 
 OpenAI og Anthropic gir i praksis de samme rådene for hvordan man skriver til språkmodeller. Kjernen er enkel: tenk på modellen som en svært flink, men helt ny medarbeider. Den kan mye, men vet ingenting om bedriften, kundene eller hvordan dere pleier å gjøre ting.
 
@@ -41,7 +41,7 @@ En god bestilling har fem deler:
 
 1. **Rolle.** Hvem skal den skrive som? «Du er kundeservicemedarbeider i et regnskapsbyrå.»
 2. **Oppgave.** Hva skal gjøres, konkret? «Skriv et svar på e-posten under.»
-3. **Kontekst.** Hva må den vite? Hvem er mottakeren, hva er bakgrunnen, og hvorfor betyr det noe?
+3. **Bakgrunn.** Hva må den vite? Hvem er mottakeren, hva er bakgrunnen, og hvorfor betyr det noe?
 4. **Format.** Hvor langt, hvilken tone, punktliste eller løpende tekst?
 5. **Eksempel.** Har dere en e-post eller et avsnitt som treffer tonen, lim det inn. Eksempler styrer resultatet bedre enn beskrivelser.
 
@@ -61,9 +61,9 @@ Det gjør at dere slipper å forklare bakgrunnen på nytt hver gang. Eksempler p
 
 Har dere laget egne GPT-er tidligere, er det verdt å vite at OpenAI faser dem ut. Nye kan ikke lages etter 26. oktober 2026, og eksisterende slutter å virke 11. desember 2026. Erstatningen heter plugins, som samler instruksjoner, filer og tilkoblede apper. Bruk prosjekter for nytt arbeid, og planlegg flyttingen av GPT-ene dere er avhengige av.
 
-## Sju oppgaver med ferdige prompts
+## Sju oppgaver med ferdige instruksjoner til AI
 
-Prompts under kan kopieres og tilpasses. Klammene er det du bytter ut.
+Eksemplene under kan kopieres og tilpasses. Klammene er det du bytter ut.
 
 ### 1. Svar på en vanskelig e-post
 
@@ -123,6 +123,6 @@ En god tommelfingerregel: la AI gjøre forarbeidet, og la et menneske ta den sis
 2. Velg en oppgave som tar tid hver uke, og som dere gjør på omtrent samme måte hver gang.
 3. Lag et prosjekt for den oppgaven, med instruksjoner, maler og to gode eksempler.
 4. La to eller tre personer bruke det i to uker, og noter hva som fungerer.
-5. Del prompten som fungerte med resten av teamet.
+5. Del instruksjonen som fungerte med resten av teamet.
 
 Vil dere ha hjelp til å finne oppgavene der ChatGPT gir mest, er det nettopp det en [AI-kartlegging](/kartlegging/) handler om. For ukentlige tips på norsk kan du melde deg på [nyhetsbrevet AI-input](https://aiinput.no).

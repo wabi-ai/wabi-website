@@ -10,53 +10,53 @@ import CtaPanel from '../../components/CtaPanel.astro';
 import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
 
 const crumbs = [{ label: 'Verktøy og programvare', href: '/verktoy-og-programvare/' }];
-const description = 'Wabi går gjennom AI-verktøyene og lisensene bedriften betaler for, og bygger skreddersydd programvare der hyllevare ikke passer.';
+const description = 'Wabi hjelper dere å velge programmer som passer, rydde i abonnementene og bygge egne løsninger når det trengs.';
 
 // Illustrative audit rows (labelled as such on the page).
 const audit = [
   ['Microsoft 365 Copilot', '40', '9', 'Behold for økonomi, si opp resten'],
   ['ChatGPT Team', '25', '21', 'Behold'],
-  ['Transkripsjon av møter', '15', '3', 'Dekkes av verktøy dere har'],
+  ['Møtenotater fra lydopptak', '15', '3', 'Dekkes av verktøy dere har'],
   ['Tilbudsskriving', '', '', 'Mangler, bør bygges'],
 ];
 
 const buy = ['Mange bedrifter har samme behov som dere.', 'Verktøyet passer uten at dere endrer måten dere jobber på.', 'Kostnaden per bruker er lav, og bruken er høy.'];
-const build = ['Arbeidsflyten er spesiell for dere, og det er en styrke.', 'Dere betaler for mye mer enn dere bruker.', 'Oppgaven går på tvers av flere systemer.'];
+const build = ['Dere jobber på en måte som vanlige programmer ikke støtter.', 'Dere betaler for mye mer enn dere bruker.', 'Oppgaven går på tvers av flere systemer.'];
 
 const examples = [
   { title: 'Et komplett system for bruktbilhandel', text: 'Lager, kunder, prøvekjøringer, kontrakter og økonomi på ett sted. I bruk hos flere forhandlere.', tools: [] },
-  { title: 'Rapportdashbord med AI-oppsummering', text: 'Tall fra annonseplattformer og analyse samlet per kunde, med en kort forklaring på norsk av hva som har endret seg.', tools: ['Google Sheets'] },
+  { title: 'Alle rapportene på ett sted', text: 'Samler tall fra annonser og nettsider i en rapport for hver kunde. AI forklarer hva som har endret seg.', tools: ['Google Sheets'] },
   { title: 'Tilbudsverktøy', text: 'Lager førsteutkast fra forespørselen og henter priser automatisk, i stedet for at hvert tilbud skrives fra bunnen.', tools: ['HubSpot', 'Outlook'] },
-  { title: 'Internt kunnskapssøk', text: 'Ansatte spør på vanlig norsk og får svar fra rutiner og dokumenter, med lenke til kilden.', tools: ['SharePoint', 'Microsoft Teams'] },
+  { title: 'Finn svar i bedriftens dokumenter', text: 'Ansatte spør på vanlig norsk og får svar fra rutiner og dokumenter, med lenke til kilden.', tools: ['SharePoint', 'Microsoft Teams'] },
 ];
 
 const steps: [string, string][] = [
   ['Vi sitter med dem som gjør jobben', 'Vi ser hvordan arbeidet faktisk gjøres før vi foreslår et verktøy eller en løsning.'],
-  ['Dere prøver før vi bygger', 'En klikkbar prototype dere kan teste med egne eksempler.'],
+  ['Dere prøver før vi bygger', 'Dere får en enkel prøveversjon som dere kan teste med egne oppgaver.'],
   ['Første versjon i bruk', 'Koblet til systemene dere har, og brukt av dem den er laget for.'],
   ['Vi måler og justerer', 'Vi ser på hvordan løsningen brukes og forbedrer den underveis.'],
 ];
 
 const faq: [string, string][] = [
-  ['Når lønner det seg å bygge egen programvare?', 'Når arbeidsflyten er spesiell for dere, når oppgaven går på tvers av flere systemer, eller når dere betaler for mye mer enn dere bruker. Passer et standardverktøy, anbefaler vi det.'],
-  ['Hva er en verktøygjennomgang?', 'Vi ser på hvilke verktøy og lisenser dere betaler for, hvor mye de faktisk brukes, og hva som mangler. Dere får en konkret anbefaling om hva dere bør beholde, si opp og bygge.'],
+  ['Når lønner det seg å bygge egen programvare?', 'Det kan lønne seg når vanlige programmer ikke passer oppgaven, eller når dere må jobbe i flere systemer samtidig. Hvis et ferdig program dekker behovet, anbefaler vi det.'],
+  ['Hva ser dere etter i programmene vi bruker?', 'Vi ser på hva dere betaler for, hva de ansatte bruker, og hva dere mangler. Så anbefaler vi hva dere bør beholde, si opp eller få laget.'],
   ['Hvem eier løsningen?', 'Dere. Løsningen bygges for dere og rundt måten dere jobber på.'],
-  ['Hvordan driftes løsningen etterpå?', 'Det avtaler vi fra start. Vi kan drifte og følge opp løsningen, eller sette den opp slik at dere kan gjøre det selv.'],
+  ['Hvem følger opp løsningen etterpå?', 'Det avtaler vi fra start. Vi kan sørge for at løsningen fungerer og holdes oppdatert, eller hjelpe dere å gjøre det selv.'],
 ];
 ---
 <Base title="AI-verktøy og skreddersydd programvare | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'Verktøy og programvare', description, path: '/verktoy-og-programvare/' })]}>
   <PageHero crumbs={crumbs} eyebrow="Verktøy og programvare" title="Bruk verktøyene dere betaler for. Bygg det som mangler."
-    lead="Vi går gjennom verktøyene og lisensene dere har, ser hva som faktisk brukes, og bygger egen programvare der ingen hyllevare passer."
+    lead="Vi ser på programmene dere betaler for: Hva bruker dere, og hva kan dere si opp? Hvis dere mangler noe, finner vi et passende program eller bygger det for dere."
     primary={{ label: 'Ta en prat', href: '/kontakt/' }} secondary={{ label: 'Kjøpe eller bygge?', href: '#kjop-eller-bygg' }} />
 
   <Band tone="sand">
     <div class="paper-card audit">
-      <h3>Verktøygjennomgang</h3>
+      <h3>Hvilke programmer trenger dere?</h3>
       <table>
-        <thead><tr><th scope="col">Verktøy</th><th scope="col">Lisenser</th><th scope="col">I bruk</th><th scope="col">Anbefaling</th></tr></thead>
+        <thead><tr><th scope="col">Verktøy</th><th scope="col">Betalte brukere</th><th scope="col">I bruk</th><th scope="col">Anbefaling</th></tr></thead>
         <tbody>{audit.map(([tool, lic, used, rec]) => <tr><th scope="row">{tool}</th><td>{lic || '·'}</td><td>{used || '·'}</td><td>{rec}</td></tr>)}</tbody>
       </table>
-      <p class="illustration-note">Eksempel fra en bedrift med 40 ansatte. Tallene er illustrasjoner.</p>
+      <p class="illustration-note">Eksempel fra en bedrift med 40 ansatte. Tallene er laget for å vise et eksempel.</p>
     </div>
   </Band>
 
@@ -69,7 +69,7 @@ const faq: [string, string][] = [
   </section>
 
   <Examples eyebrow="Eksempler" title="Programvare vi har bygget." items={examples} />
-  <Steps dark eyebrow="Slik jobber vi" title="Fra arbeidsdag til ferdig verktøy." steps={steps} />
+  <Steps dark eyebrow="Slik jobber vi" title="Slik finner vi løsningen som passer." steps={steps} />
   <FaqList faq={faq} title="Om verktøy og programvare." />
   <MoreServices current="programvare" />
   <CtaPanel />

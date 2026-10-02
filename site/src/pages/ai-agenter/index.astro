@@ -11,34 +11,34 @@ import CtaPanel from '../../components/CtaPanel.astro';
 import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
 
 const crumbs = [{ label: 'AI-agenter', href: '/ai-agenter/' }];
-const description = 'Wabi bygger AI-agenter som tar en fast oppgave fra start til slutt, i Slack, e-post eller systemene dere bruker. Med tydelige grenser, logg og menneskelig godkjenning.';
+const description = 'Wabi bygger digitale hjelpere som lager rapporter, skriver svar og følger opp oppgaver i systemene dere bruker. Dere bestemmer hva som må godkjennes.';
 
 const examples = [
-  { title: 'Ukesrapport for salg', text: 'Henter aktiviteter fra CRM og omsetning fra regnskap, skriver rapporten i fast mal og markerer avtaler uten kontakt på 14 dager.', tools: ['HubSpot', 'Excel', 'Slack'] },
-  { title: 'Førstelinje kundeservice', text: 'Svarer på vanlige spørsmål fra egne dokumenter og sender resten videre til riktig person, med hele historikken.', tools: ['Gmail', 'Notion', 'Microsoft Teams'] },
+  { title: 'Ukesrapport for salg', text: 'Samler salgstall og skriver ukesrapporten. Viser hvilke kunder som ikke har blitt fulgt opp på 14 dager.', tools: ['HubSpot', 'Excel', 'Slack'] },
+  { title: 'Svar på kundespørsmål', text: 'Bruker bedriftens egne dokumenter til å svare på vanlige spørsmål. Sender resten til riktig person, sammen med den tidligere samtalen.', tools: ['Gmail', 'Notion', 'Microsoft Teams'] },
   { title: 'Tilbud fra forespørsel', text: 'Leser forespørselen og kundehistorikken, henter priser og avtalte rabatter, og legger et utkast klart til gjennomlesning.', tools: ['Outlook', 'Salesforce'] },
-  { title: 'Research på nye leads', text: 'Finner informasjon om nye leads, legger dem inn i CRM og foreslår neste steg for selgeren.', tools: ['HubSpot', 'Google Sheets'] },
-  { title: 'Kontroll av fakturaer', text: 'Sjekker fakturaer mot bestillingen og stopper avvik til noen har godkjent dem.', tools: ['Gmail', 'Excel'] },
+  { title: 'Forberedelser til nye kundemøter', text: 'Finner informasjon om mulige kunder. Legger den i kundesystemet og foreslår hvordan selgeren kan følge opp.', tools: ['HubSpot', 'Google Sheets'] },
+  { title: 'Kontroll av fakturaer', text: 'Sjekker at fakturaen stemmer med bestillingen. Ber om godkjenning hvis noe er feil.', tools: ['Gmail', 'Excel'] },
 ];
 
 const steps: [string, string][] = [
-  ['Oppgaven', 'En jobb, beskrevet så presist at en ny medarbeider kunne gjort den. Hva er input, hva er ferdig, og hva er utenfor.'],
-  ['Tilgangen', 'Egen innlogging til systemene jobben krever, og ikke mer. Leser i CRM, skriver i regnskap, sender e-post.'],
-  ['Løkken', 'Agenten leser, planlegger, gjør et steg og sjekker resultatet. Den gjentar til oppgaven er løst.'],
-  ['Mennesket', 'Dere godkjenner det som er over grensene dere har satt. Alt agenten gjør, blir logget.'],
+  ['Oppgaven', 'Vi beskriver oppgaven sammen: Hva skal gjøres, hvilken informasjon trengs, og når er jobben ferdig?'],
+  ['Tilgangen', 'Den digitale hjelperen får egen innlogging og bare tilgang til det den trenger for å gjøre jobben.'],
+  ['Arbeidet', 'Den leser informasjonen, gjør oppgaven steg for steg og sjekker resultatet.'],
+  ['Mennesket', 'Dere bestemmer hva som må godkjennes. Dere kan se hva den digitale hjelperen har gjort.'],
 ];
 
 const faq: [string, string][] = [
   ['Hva er forskjellen på en AI-agent og en chatbot?', 'En chatbot svarer på det du skriver. En agent får en oppgave og løser den: den henter data, gjør flere steg etter hverandre og leverer et ferdig resultat, for eksempel en rapport eller et svarutkast.'],
-  ['Hvilke systemer kan en agent jobbe i?', 'De fleste systemer med et API eller en integrasjon: e-post, Slack, Teams, CRM som HubSpot og Salesforce, regneark og dokumentlagring. Vi ser på systemene dere har før vi foreslår noe.'],
-  ['Hva skjer hvis agenten gjør en feil?', 'Agenten har faste grenser for hva den kan gjøre alene. Alt over grensene går til godkjenning, og hvert steg blir logget, så dere ser hva som skjedde og hvorfor.'],
-  ['Hvilken AI-modell bruker dere?', 'Vi velger modell etter oppgaven. Ofte er det Claude, GPT eller Gemini. Det viktigste er ikke modellen, men hvor presist oppgaven er beskrevet.'],
-  ['Hvordan starter en agent?', 'En person kan skrive til den, den kan gå på et fast tidspunkt, for eksempel hver mandag 07:00, eller den kan starte når noe skjer i et system: en ny e-post, et nytt lead eller en signert avtale.'],
+  ['Hvilke systemer kan en agent jobbe i?', 'Den kan jobbe med e-post, regneark, dokumenter og kundesystemer som HubSpot og Salesforce. Vi undersøker først hvilke av systemene deres som kan kobles sammen.'],
+  ['Hva skjer hvis agenten gjør en feil?', 'Dere bestemmer hva den får gjøre på egen hånd. Andre oppgaver må godkjennes av dere. Hvert steg blir lagret, så dere kan undersøke hva som har skjedd.'],
+  ['Hvilken AI bruker dere?', 'Vi velger den AI-en som passer oppgaven, for eksempel Claude, GPT eller Gemini. Vi hjelper dere å velge og sette den opp.'],
+  ['Hvordan starter en agent?', 'En person kan skrive til den, den kan gå på et fast tidspunkt, for eksempel hver mandag 07:00, eller den kan starte når noe skjer i et system: en ny e-post, en ny kundehenvendelse eller en signert avtale.'],
 ];
 ---
 <Base title="AI-agenter for bedrifter | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-agenter', description, path: '/ai-agenter/' })]}>
-  <PageHero crumbs={crumbs} eyebrow="AI-agenter" title="En agent tar en oppgave fra start til slutt."
-    lead="Den henter det jobben trenger, gjør arbeidet og sjekker resultatet. Når noe er utenfor grensene dere har satt, stopper den og spør."
+  <PageHero crumbs={crumbs} eyebrow="AI-agenter" title="Få hjelp med oppgavene som tar tid."
+    lead="En AI-agent er en digital hjelper. Den kan lage rapporter, skrive svar til kunder og følge opp oppgaver. Dere bestemmer hva den får gjøre, og hva dere vil godkjenne først."
     primary={{ label: 'Ta en prat', href: '/kontakt/' }} secondary={{ label: 'Se eksempler', href: '#eksempler' }} />
 
   <Band tone="fjord"><Console theme="light" only={['rapport', 'kundeservice', 'tilbud']} /></Band>
@@ -46,15 +46,15 @@ const faq: [string, string][] = [
   <section class="section container split" aria-labelledby="hva-title">
     <div class="split-head" data-reveal><span class="eyebrow">Kort forklart</span><h2 id="hva-title" class="display-md">Hva er en AI-agent?</h2></div>
     <div data-reveal>
-      <p class="answer">En AI-agent er et program som får en oppgave, bestemmer selv hvilke steg som trengs, og bruker verktøyene den har tilgang til for å løse den.</p>
-      <p class="answer muted">Forskjellen fra en chatbot er at agenten handler. Den henter tall, skriver utkast, oppdaterer CRM og sier fra når noe ikke stemmer.</p>
+      <p class="answer">En AI-agent er et program som kan gjøre flere steg i en oppgave. Den kan for eksempel hente salgstall, sammenligne dem og skrive en rapport.</p>
+      <p class="answer muted">En chatbot svarer på spørsmål. En agent kan også gjøre arbeid i systemene dere bruker, som å oppdatere kundeopplysninger eller lage et svarutkast.</p>
     </div>
   </section>
 
   <section class="section container rule-top spec" aria-labelledby="spec-title">
     <div class="split-head" data-reveal>
       <span class="eyebrow">Det som avgjør kvaliteten</span>
-      <h2 id="spec-title" class="display-md">En agent er aldri bedre enn oppgavebeskrivelsen.</h2>
+      <h2 id="spec-title" class="display-md">En tydelig oppgave gir et bedre resultat.</h2>
     </div>
     <div class="spec-grid">
       <div class="spec-card vague" data-reveal>
@@ -66,10 +66,10 @@ const faq: [string, string][] = [
         <span class="mono">Presis oppgave</span>
         <dl>
           <dt>Rolle</dt><dd>Du lager ukesrapporten for salgsteamet.</dd>
-          <dt>Input</dt><dd>Aktiviteter fra CRM og omsetning fra regnskap, forrige uke.</dd>
+          <dt>Informasjon</dt><dd>Salgsaktiviteter fra kundesystemet og omsetning fra regnskapet for forrige uke.</dd>
           <dt>Steg</dt><dd>Grupper per selger. Tre punkter per selger. Marker avtaler uten kontakt på 14 dager.</dd>
           <dt>Ferdig når</dt><dd>Rapporten ligger i delt mappe i fast mal.</dd>
-          <dt>Stopp og spør</dt><dd>Hvis tall i CRM og regnskap avviker med mer enn 5 000 kr.</dd>
+          <dt>Stopp og spør</dt><dd>Hvis tallene i kundesystemet og regnskapet skiller seg med mer enn 5 000 kr.</dd>
         </dl>
       </div>
     </div>

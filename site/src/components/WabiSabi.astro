@@ -1,8 +1,8 @@
 ---
 // The idea behind the name: wabi-sabi as a way of working.
 const items = [
-  ['Fremdrift fremfor perfeksjon', 'Vi setter i gang tidlig, tester i praksis og forbedrer underveis. Løsninger blir bedre av å bli brukt, ikke av å bli planlagt lenger.'],
-  ['Enkelhet', 'Systemer, strategier og presentasjoner skal være så enkle som mulig. Det som ikke tilfører verdi, fjerner vi.'],
+  ['Kom i gang og lær underveis', 'Vi setter i gang tidlig, tester i praksis og forbedrer underveis. Løsninger blir bedre av å bli brukt, ikke av å bli planlagt lenger.'],
+  ['Enkelhet', 'Det vi lager, skal være lett å forstå og bruke. Det som ikke hjelper dere, tar vi bort.'],
   ['Menneskelig ledelse', 'Folk er mennesker, ikke ressurser. Det skal være rom for å prøve, feile og lære, uten at alt må sitte på første forsøk.'],
   ['Forbedring underveis', 'Vi bygger løsninger som kan justeres etter hvert som vi lærer mer. Det uferdige er ikke en svakhet. Det gir rom for å bli bedre.'],
 ];
@@ -12,7 +12,7 @@ const items = [
     <div class="wabisabi-intro" data-reveal>
       <span class="eyebrow">Hvorfor Wabi</span>
       <h2 id="wabisabi-title" class="display-md">Navnet kommer fra wabi-sabi.</h2>
-      <p class="lead">Wabi-sabi er en japansk filosofi om å finne verdi i det uperfekte og uferdige. For oss betyr det å prioritere fremdrift og læring, i stedet for å vente på at alt skal bli perfekt.</p>
+      <p class="lead">Wabi-sabi er en japansk filosofi om å finne verdi i det uperfekte og uferdige. For oss betyr det å komme i gang, prøve og lære underveis.</p>
     </div>
     <ol class="wabisabi-list">
       {items.map(([t, text], i) => <li data-reveal style={`--d:${i * 90}ms`}><span class="wabisabi-num">{i + 1}</span><h3>{t}</h3><p>{text}</p></li>)}

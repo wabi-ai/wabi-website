@@ -12,7 +12,7 @@ const fmt = (d: Date) => d.toLocaleDateString('nb-NO', { day: 'numeric', month: 
 const listLd = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Innsikt fra Wabi', url: SITE.url + '/innsikt/', hasPart: posts.map(p => ({ '@type': 'Article', headline: p.data.title, url: `${SITE.url}/innsikt/${p.id}/` })) };
 ---
 <Base title="Innsikt: guider om AI i norske bedrifter | Wabi" description="Praktiske guider om AI i norske bedrifter: ChatGPT, AI-kurs, AI i salg og verktøy for småbedrifter. Skrevet fra prosjektene vi står i." jsonLd={[breadcrumbLd(crumbs), listLd]}>
-  <PageHero crumbs={crumbs} eyebrow="Innsikt" title="Det vi lærer, deler vi." lead="Praktiske guider om AI i norske bedrifter, skrevet fra prosjektene vi står i." />
+  <PageHero crumbs={crumbs} eyebrow="Innsikt" title="Lær mer om AI på jobb." lead="Enkle forklaringer og eksempler som hjelper dere å bruke AI i arbeidsdagen." />
   <section class="container list-wrap">
     <ul class="posts">
       {posts.map((p, i) => <li data-reveal style={`--d:${i * 50}ms`}><a href={`/innsikt/${p.id}/`}>

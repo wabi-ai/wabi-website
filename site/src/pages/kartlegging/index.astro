@@ -13,33 +13,33 @@ const description = 'En AI-kartlegging fra Wabi viser hvilke oppgaver i bedrifte
 
 const outcomes = [
   ['En oversikt over hvor tiden går', 'Oppgavene som tar tid, gjentar seg eller stopper opp, beskrevet slik de faktisk gjøres.'],
-  ['Tre til fem muligheter, prioritert', 'Vurdert etter hvor mye de gir, og hvor enkelt det er å komme i gang.'],
-  ['Et konkret første prosjekt', 'Hva som skal bygges, hvilke systemer det berører, og hvordan vi måler effekten.'],
+  ['Tre til fem oppgaver å starte med', 'Vi anbefaler hva dere bør gjøre først, ut fra nytten og arbeidet som kreves.'],
+  ['Et konkret første prosjekt', 'En beskrivelse av den første løsningen, hvilke systemer den skal bruke, og hvordan vi sjekker om den hjelper.'],
 ];
 
 const steps: [string, string][] = [
-  ['Samtale med ledelsen', 'Hva dere vil oppnå, hvilke systemer dere bruker, og hvor det skaver i dag.'],
+  ['Samtale med ledelsen', 'Hva dere vil oppnå, hvilke systemer dere bruker, og hva som er vanskelig i dag.'],
   ['Med dem som gjør jobben', 'Vi ser på oppgavene sammen med de ansatte. Det er der de beste mulighetene finnes.'],
-  ['Prioritering', 'Hver mulighet vurderes etter verdi og innsats. Vi anbefaler hvor dere bør starte.'],
+  ['Hva bør gjøres først?', 'Vi vurderer hvor mye tid hver løsning kan spare, og hvor mye arbeid den krever.'],
   ['Plan', 'Dere får en plan for det første prosjektet, og bestemmer selv hvordan dere vil gå videre.'],
 ];
 
 const faq: [string, string][] = [
-  ['Hva er en AI-kartlegging?', 'En gjennomgang av arbeidsoppgavene i bedriften for å finne ut hvor AI gir mest verdi. Resultatet er en prioritert liste med muligheter og en plan for hvor dere bør starte.'],
+  ['Hva er en AI-kartlegging?', 'Vi går gjennom oppgavene deres og ser hvor AI kan hjelpe. Dere får en liste over hva som er verdt å prøve, og en plan for å komme i gang.'],
   ['Hvem bør være med?', 'Noen fra ledelsen og noen av dem som gjør oppgavene hver dag. De vet best hvor tiden går.'],
   ['Må vi forberede noe?', 'Nei. Det holder at dere vet hvilke systemer dere bruker. Resten finner vi ut sammen.'],
   ['Hva skjer etter kartleggingen?', 'Dere bestemmer. Vi kan bygge det første prosjektet sammen med dere, eller dere kan ta planen videre på egen hånd.'],
 ];
 ---
 <Base title="AI-kartlegging for bedrifter | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-kartlegging', description, path: '/kartlegging/' })]}>
-  <PageHero crumbs={crumbs} eyebrow="AI-kartlegging" title="Finn oppgavene der AI faktisk lønner seg."
-    lead="Vi går gjennom arbeidsdagen sammen med dere og peker ut de tre til fem oppgavene der AI gir mest. Så starter vi med en."
+  <PageHero crumbs={crumbs} eyebrow="AI-kartlegging" title="Finn ut hvor AI kan hjelpe dere."
+    lead="Vi snakker med dere om oppgavene som tar tid. Sammen finner vi ut hva AI kan hjelpe med, og hva dere bør prøve først."
     primary={{ label: 'Bestill en kartlegging', href: '/kontakt/' }} secondary={{ label: 'Ta selvtesten', href: '#selvtest' }} />
 
   <div id="selvtest"><Band tone="forest"><SelfCheck /></Band></div>
 
   <section class="section container split" aria-labelledby="fa-title">
-    <div class="split-head sticky-head" data-reveal><span class="eyebrow">Det dere får</span><h2 id="fa-title" class="display-md">En plan dere kan handle på.</h2></div>
+    <div class="split-head sticky-head" data-reveal><span class="eyebrow">Det dere får</span><h2 id="fa-title" class="display-md">Dette får dere med videre.</h2></div>
     <ol class="outcomes">{outcomes.map(([t, s], i) => <li data-reveal style={`--d:${i * 80}ms`}><span class="mono">{i + 1}</span><div><h3>{t}</h3><p>{s}</p></div></li>)}</ol>
   </section>
 

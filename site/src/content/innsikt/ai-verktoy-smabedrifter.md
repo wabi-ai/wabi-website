@@ -1,6 +1,6 @@
 ---
 title: "Hvilket AI-verktøy bør småbedriften velge?"
-description: "ChatGPT, Claude, Copilot eller Gemini? Slik velger en norsk småbedrift AI-verktøy ut fra systemene den allerede bruker, og dette bør dere sjekke før dere kjøper."
+description: "ChatGPT, Claude, Copilot eller Gemini? Se hva som passer programmene dere bruker, og hva dere bør sjekke før dere kjøper."
 keywords:
   - AI verktøy småbedrift
   - ChatGPT eller Claude
@@ -9,7 +9,7 @@ keywords:
   - velge AI verktøy
 author: Eljar
 date: 2026-02-16
-updated: 2026-09-30
+updated: 2026-10-02
 category: Guide
 ---
 
@@ -45,7 +45,7 @@ Da er ChatGPT eller Claude gode valg. Begge fungerer godt på norsk, begge har b
 Begge er sterke generelle verktøy, og forskjellene er mindre enn mange tror. Noen tommelfingerregler:
 
 - **ChatGPT** er det flest allerede kjenner. Det er sterkt på bredde: tekst, bilder, dataanalyse og tale i samme verktøy.
-- **Claude** er sterkt på lange dokumenter, grundig analyse og skriving. For team som bygger, følger kodeagenten Claude Code med i de betalte planene.
+- **Claude** er sterkt på lange dokumenter, grundig analyse og skriving. For dem som lager programvare, følger kodeagenten Claude Code med i de betalte planene.
 
 Begge har prosjekter, der dere samler filer, instruksjoner og samtaler for en bestemt type arbeid. Begge kan huske ting mellom samtaler, og begge holder minnet i et prosjekt adskilt fra resten.
 
@@ -65,7 +65,7 @@ Utover det generelle verktøyet er det tre områder der småbedrifter ofte får 
 
 1. **Bedriftsversjon.** Både OpenAI og Anthropic lover at innhold fra bedriftsversjonene ikke brukes til å trene modellene, med mindre dere selv velger det. Private kontoer har andre regler.
 2. **Administrasjon.** Kan dere legge til og fjerne brukere sentralt? Det blir viktig den dagen noen slutter.
-3. **Tilkoblinger.** Kan verktøyet lese fra systemene dere bruker, som e-post, dokumentlagring og CRM?
+3. **Tilkoblinger.** Kan verktøyet lese fra systemene dere bruker, som e-post, dokumenter og kundesystemer?
 4. **Hva som allerede er inkludert.** Mange betaler for AI-funksjoner de ikke vet at de har.
 5. **Hvem som skal eie det.** Noen i bedriften bør ha ansvar for oppsett, retningslinjer og oppfølging.
 

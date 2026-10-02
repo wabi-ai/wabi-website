@@ -10,6 +10,6 @@ export const SCENARIOS = [
     steps: [['Hentet vedlegg fra innboksen', '18 bilag'], ['Lest beløp, dato og leverandør', 'PDF og bilde'], ['Sjekket mot fjorårets kontering', 'Samme leverandør'], ['Foreslått kontering', '18 forslag']],
     result: ['18 bilag klare til godkjenning', 'Du tar den siste vurderingen'], action: 'Godkjenn' },
   { id: 'tilbud', label: 'Tilbud', ending: 'i salgsarbeidet.', prompt: 'Skriv tilbud basert på notatene fra kundemøtet', tools: ['Notion', 'HubSpot', 'Gmail'],
-    steps: [['Lest møtenotatene', 'Notion'], ['Hentet priser og vilkår', 'Prisliste 2026'], ['Fylt ut tilbudsmalen', '4 sider'], ['Lagt tilbudet på kunden i CRM', 'HubSpot']],
+    steps: [['Lest møtenotatene', 'Notion'], ['Hentet priser og vilkår', 'Prisliste 2026'], ['Fylt ut tilbudsmalen', '4 sider'], ['Lagret tilbudet i kundesystemet', 'HubSpot']],
     result: ['Tilbud klart til gjennomlesning', 'Sendes når du har sett over'], action: 'Åpne' },
 ];

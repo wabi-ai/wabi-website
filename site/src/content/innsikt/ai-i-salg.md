@@ -1,6 +1,6 @@
 ---
 title: "AI i salg: en praktisk guide for norske salgsteam"
-description: "Møteforberedelse, oppfølging, tilbud og CRM. Slik bruker salgsteam AI til forarbeidet, med ferdige prompts, uten å miste det som gjør gode selgere gode."
+description: "Bruk AI til å forberede kundemøter, skrive oppfølging og lage tilbud. Her får dere ferdige eksempler dere kan prøve selv."
 keywords:
   - AI i salg
   - AI for selgere
@@ -9,13 +9,13 @@ keywords:
   - AI CRM
 author: Eljar
 date: 2026-02-16
-updated: 2026-09-30
+updated: 2026-10-02
 category: Guide
 ---
 
 Gode selgere er ofte skeptiske til AI, og det med god grunn. Salg handler om relasjoner, timing og å forstå hva kunden egentlig trenger. Det skal ikke automatiseres bort.
 
-Men en stor del av en selgers uke går til alt rundt: forberede møter, skrive oppfølging, lage tilbud og holde CRM oppdatert. Det er her AI hjelper mest. Målet er ikke færre samtaler med kunder, men mer tid til dem.
+Men en stor del av en selgers uke går til alt rundt: forberede møter, skrive oppfølging, lage tilbud og holde kundesystemet oppdatert. Det er her AI hjelper mest. Målet er ikke færre samtaler med kunder, men mer tid til dem.
 
 ## Før dere starter: riktig konto og tydelige regler
 
@@ -36,13 +36,13 @@ Legg inn:
 
 Da slipper hver selger å forklare bakgrunnen på nytt, og alle får svar i samme stil.
 
-## Fem oppgaver med ferdige prompts
+## Fem oppgaver med ferdige instruksjoner til AI
 
 Klammene er det du bytter ut.
 
 ### 1. Møteforberedelse
 
-> Jeg skal i møte med [firma] om [tema]. Her er det vi vet: [notater fra CRM, nettsiden deres, tidligere e-poster]. Lag en forberedelse på en side: hva de sannsynligvis er opptatt av, tre spørsmål jeg bør stille, og mulige innvendinger med et forslag til svar. Skill tydelig mellom det du vet fra materialet, og det du antar.
+> Jeg skal i møte med [firma] om [tema]. Her er det vi vet: [notater fra kundesystemet, nettsiden deres, tidligere e-poster]. Lag en forberedelse på en side: hva de sannsynligvis er opptatt av, tre spørsmål jeg bør stille, og mulige innvendinger med et forslag til svar. Skill tydelig mellom det du vet fra materialet, og det du antar.
 
 Den siste setningen er viktig. AI er flink til å høres sikker ut, også når den gjetter.
 
@@ -58,11 +58,11 @@ Skriv tre eller fire stikkord rett etter møtet, mens du husker det.
 
 Det gir et første utkast på minutter. Selgeren bruker tiden på det som krever skjønn: pris, vinkling og hva som faktisk vil overbevise akkurat denne kunden.
 
-### 4. CRM-oppdatering
+### 4. Oppdater kundeopplysningene
 
-Mange selgere hater å oppdatere CRM. Dikter eller skriv stikkord etter samtalen, og la AI gjøre resten.
+Mange selgere bruker mye tid på å oppdatere kundesystemet. Dikter eller skriv stikkord etter samtalen, og la AI gjøre resten.
 
-> Gjør notatene under om til en CRM-oppdatering med disse feltene: status, neste steg, dato for neste kontakt, beslutningstaker og viktige detaljer. Ikke legg til noe som ikke står i notatene.
+> Gjør notatene under om til en oppdatering i kundesystemet med disse feltene: status, neste steg, dato for neste kontakt, beslutningstaker og viktige detaljer. Ikke legg til noe som ikke står i notatene.
 
 ### 5. Håndtering av innvendinger
 
@@ -70,13 +70,13 @@ Mange selgere hater å oppdatere CRM. Dikter eller skriv stikkord etter samtalen
 
 Dette fungerer godt som felles øvelse i teamet. La AI lage utkastet, og diskuter svarene sammen.
 
-## Fra hjelpemiddel til agent
+## La AI følge opp faste oppgaver
 
 Når teamet bruker AI jevnlig, er neste steg ofte å la det skje automatisk. Eksempler på det vi bygger for salgsteam:
 
-- **En agent som oppdaterer CRM** fra e-poster og møtenotater, og ber selgeren godkjenne før noe lagres.
-- **En ukesrapport** som hentes fra CRM hver mandag, med avtaler som ikke har hatt kontakt på lenge.
-- **Research på nye leads** som legges inn i CRM med forslag til neste steg.
+- **En agent som oppdaterer kundesystemet** fra e-poster og møtenotater, og ber selgeren godkjenne før noe lagres.
+- **En ukesrapport** som hentes fra kundesystemet hver mandag, med avtaler som ikke har hatt kontakt på lenge.
+- **Informasjon om mulige kunder** som legges i kundesystemet med forslag til oppfølging.
 
 Felles for dem er at mennesket tar beslutningene. AI gjør forarbeidet.
 
@@ -90,6 +90,6 @@ Felles for dem er at mennesket tar beslutningene. AI gjør forarbeidet.
 
 1. Lag et salgsprosjekt med prisliste, vilkår og gode eksempler.
 2. Velg en oppgave, gjerne oppfølging etter møter, og bruk AI på den i to uker.
-3. Del promptene som fungerer med resten av teamet.
+3. Del instruksjonene som fungerer med resten av teamet.
 
 Vil dere at salgsteamet skal lære dette med egne kunder og egne maler, er det det våre [AI-kurs](/kurs/) handler om. Vil dere heller at forarbeidet skal gå av seg selv, se [AI-agenter](/ai-agenter/).

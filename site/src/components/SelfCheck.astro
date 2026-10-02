@@ -12,14 +12,14 @@ const data = {
     { o: 'Vi skriver det samme inn i flere systemer', r: 'Dobbeltføring er noe av det enkleste å automatisere. Ofte er det første vi tar tak i.' },
     { o: 'Vi venter på at noen sender det videre', r: 'Da er det overleveringen som stopper, ikke jobben. Den kan ofte gå av seg selv.' },
     { o: 'Alle gjør det litt forskjellig', r: 'Da må vi bli enige om en måte før vi bygger noe. Det er en god start.' },
-    { o: 'Tallene stemmer ikke før noen har rettet dem', r: 'Raskere rapporter hjelper lite før tallene er til å stole på. Vi starter med datagrunnlaget.' },
+    { o: 'Tallene stemmer ikke før noen har rettet dem', r: 'Raskere rapporter hjelper lite før tallene er til å stole på. Vi starter med å sjekke hvor tallene kommer fra.' },
   ],
   ai: [{ o: 'Ikke i bruk ennå', l: 0 }, { o: 'Noen bruker det på egen hånd', l: 1 }, { o: 'Et team eller to prøver ut ting', l: 1 }, { o: 'Noen team bruker det hver uke', l: 2 }, { o: 'Det er en del av hvordan vi jobber', l: 3 }],
   levels: [
     ['Tidlig', 'AI er ikke tatt i bruk ennå. Det er en fordel: dere kan starte ryddig, med en oppgave som betyr noe.'],
     ['I gang', 'Folk prøver på egen hånd. Neste steg er å gjøre det som fungerer til noe hele teamet bruker.'],
-    ['Etablert', 'Noen team bruker det jevnlig. Verdien ligger nå i å koble det til systemene og arbeidsflyten.'],
-    ['Langt fremme', 'AI er en del av driften. Da handler det om agenter og automatisering som tar hele oppgaver.'],
+    ['Etablert', 'Noen bruker AI hver uke. Neste steg kan være å koble AI til programmene dere bruker på jobb.'],
+    ['Langt fremme', 'AI er en del av arbeidsdagen. Neste steg kan være å la flere faste oppgaver gå av seg selv.'],
   ],
   services: Object.fromEntries([...SERVICES, COURSE].map(s => [s.id, { title: s.navTitle || s.title, href: s.href, short: s.short }])),
 };
