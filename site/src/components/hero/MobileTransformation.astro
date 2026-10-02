@@ -1,33 +1,54 @@
 ---
 import ToolLogo from '../ToolLogo.astro';
+const examples = [
+  { label: 'UKESRAPPORT', title: 'Ferdig. Du har kontroll.', approval: 'Klar til din godkjenning', caption: 'Fra manuelt arbeid til ferdig rapport.', sources: ['Salgstall', 'E-poster'], tools: ['HubSpot', 'Gmail'], kind: 'chart', lines: [] },
+  { label: 'KUNDESERVICE', title: 'Raskere svar til kundene.', approval: 'Du godkjenner før det sendes', caption: 'Fra kundespørsmål til et klart svar.', sources: ['Spørsmål', 'Kunnskap'], tools: ['Gmail', 'Notion'], kind: 'reply', lines: ['Hei! Her er hjelpen du trenger.', 'Svaret er klart til å sendes.'] },
+  { label: 'TILBUD', title: 'Tilbudet er klart.', approval: 'Du sjekker pris og innhold', caption: 'Fra kundeønske til ferdig tilbud.', sources: ['Kundeønske', 'Prisliste'], tools: ['HubSpot', 'Excel'], kind: 'quote', lines: ['Riktig innhold', 'Riktig pris'] },
+  { label: 'MØTEOPPFØLGING', title: 'Alle vet hva de skal gjøre.', approval: 'Klart for deg og teamet', caption: 'Fra møte til oppgaver og neste steg.', sources: ['Møtenotater', 'Oppgaver'], tools: ['Google Meet', 'Notion'], kind: 'tasks', lines: ['Oppsummering klar', 'Neste steg fordelt'] },
+];
 ---
-<figure class="mobile-story" data-mobile-story aria-label="Eksempel: Salgstall og kundehenvendelser samles i en ukesrapport som du godkjenner.">
-  <div class="story-scene" aria-hidden="true">
+<figure class="mobile-story" data-mobile-story aria-label="Eksempler på løsninger vi kan bygge">
+  <div class="story-scene">
     <img class="story-blob" src="/assets/blob/wabi-blob.webp" alt="" width="440" height="440" />
-    <div class="source source-sales">
-      <span class="source-icon"><ToolLogo name="HubSpot" size={19} /></span>
-      <span>Salgstall<span class="source-lines"><i></i><i></i></span></span>
-    </div>
-    <div class="source source-mail">
-      <span class="source-icon"><ToolLogo name="Gmail" size={19} /></span>
-      <span>E-poster<span class="source-lines"><i></i><i></i></span></span>
-    </div>
-    <div class="story-spark"><img src="/assets/logo/wabi-mark-white.svg" alt="" width="26" height="22" /></div>
-    <div class="report-sheet report-back"></div>
-    <div class="report-sheet report-front">
-      <div class="report-top"><span>UKESRAPPORT</span><span class="report-tick">✓</span></div>
-      <strong>Ferdig. Du har kontroll.</strong>
-      <div class="report-content">
-        <div class="report-chart"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="report-lines"><i></i><i></i><i></i></div>
+    {['source-sales', 'source-mail'].map((position, sourceIndex) => (
+      <div class:list={['source', position]} aria-hidden="true">
+        {examples.map((example, index) => (
+          <span class="source-example" data-source-example={index} hidden={index !== 0}>
+            <span class="source-icon"><ToolLogo name={example.tools[sourceIndex]} size={19} /></span>
+            <span>{example.sources[sourceIndex]}<span class="source-lines"><i></i><i></i></span></span>
+          </span>
+        ))}
       </div>
-      <div class="report-approval"><span></span>Klar til din godkjenning</div>
-    </div>
+    ))}
+    <div class="story-spark" aria-hidden="true"><img src="/assets/logo/wabi-mark-white.svg" alt="" width="26" height="22" /></div>
+    <div class="report-sheet report-back" aria-hidden="true"></div>
+    <button class="report-sheet report-front" type="button" aria-label="Vis neste eksempel. Nå vises ukesrapport.">
+      {examples.map((example, index) => (
+        <span class="report-example" data-example={index} data-label={example.label.toLowerCase()} hidden={index !== 0}>
+          <span class="report-top"><span>{example.label}</span><span class="report-tick" aria-hidden="true">✓</span></span>
+          <strong>{example.title}</strong>
+          {example.kind === 'chart' ? (
+            <span class="report-content" aria-hidden="true">
+              <span class="report-chart"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+              <span class="report-lines"><i></i><i></i><i></i></span>
+            </span>
+          ) : (
+            <span class:list={['report-detail', `report-${example.kind}`]}>
+              {example.lines.map(line => <span>{example.kind !== 'reply' && <span class="detail-check" aria-hidden="true">✓</span>}{line}</span>)}
+            </span>
+          )}
+          <span class="report-approval"><span aria-hidden="true"></span>{example.approval}</span>
+        </span>
+      ))}
+      <span class="report-next" aria-hidden="true">Se neste eksempel <span>↗</span></span>
+    </button>
   </div>
-  <figcaption>Fra manuelt arbeid til ferdig rapport.</figcaption>
-  <button class="story-replay" type="button" aria-label="Spill rapportanimasjonen på nytt" hidden>
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6" /></svg>
-  </button>
+  <figcaption>
+    <span class="story-caption" aria-live="polite" aria-atomic="true">
+      {examples.map((example, index) => <span data-caption={index} hidden={index !== 0}>{example.caption}<span class="sr-only"> Eksempel {index + 1} av {examples.length}.</span></span>)}
+    </span>
+    <span class="story-pagination" aria-hidden="true">{examples.map((_, index) => <i class:list={{ 'is-current': index === 0 }}></i>)}</span>
+  </figcaption>
 </figure>
 
 <script>
@@ -35,27 +56,50 @@ import ToolLogo from '../ToolLogo.astro';
   if (story) {
     const mobile = matchMedia('(max-width: 600px)');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    const replay = story.querySelector<HTMLButtonElement>('.story-replay')!;
-    let played = false, frame = 0;
-    const play = () => {
-      if (!mobile.matches || reduced.matches) return;
-      played = true;
+    const card = story.querySelector<HTMLButtonElement>('.report-front')!;
+    const examples = [...story.querySelectorAll<HTMLElement>('[data-example]')];
+    const sources = [...story.querySelectorAll<HTMLElement>('[data-source-example]')];
+    const captions = [...story.querySelectorAll<HTMLElement>('[data-caption]')];
+    const dots = [...story.querySelectorAll<HTMLElement>('.story-pagination i')];
+    let played = false, visible = false, frame = 0, current = 0;
+    let cardAnimation: Animation | undefined;
+    const finishIntro = () => {
       cancelAnimationFrame(frame);
       story.classList.remove('is-playing');
-      frame = requestAnimationFrame(() => { frame = requestAnimationFrame(() => story.classList.add('is-playing')); });
+    };
+    const play = () => {
+      if (!mobile.matches || reduced.matches || played || !visible) return;
+      played = true;
+      frame = requestAnimationFrame(() => story.classList.add('is-playing'));
     };
     const sync = () => {
-      replay.hidden = reduced.matches;
-      if (!mobile.matches || reduced.matches) { cancelAnimationFrame(frame); story.classList.remove('is-playing'); }
-      else if (!played) play();
+      if (!mobile.matches || reduced.matches) { finishIntro(); cardAnimation?.cancel(); }
+      else play();
     };
     new IntersectionObserver(entries => {
-      if (entries.some(e => e.isIntersecting) && !played) play();
+      visible = entries.some(e => e.isIntersecting);
+      if (visible) play();
     }, { threshold: .35 }).observe(story);
-    replay.addEventListener('click', play);
+    card.addEventListener('focus', () => { played = true; finishIntro(); });
+    card.addEventListener('click', () => {
+      played = true;
+      finishIntro();
+      cardAnimation?.cancel();
+      current = (current + 1) % examples.length;
+      examples.forEach((example, index) => { example.hidden = index !== current; });
+      sources.forEach(source => { source.hidden = Number(source.dataset.sourceExample) !== current; });
+      captions.forEach((caption, index) => { caption.hidden = index !== current; });
+      dots.forEach((dot, index) => dot.classList.toggle('is-current', index === current));
+      card.setAttribute('aria-label', `Vis neste eksempel. Nå vises ${examples[current].dataset.label}.`);
+      if (!reduced.matches) {
+        cardAnimation = card.animate([
+          { opacity: .35, transform: 'translate(-50%, 8px) rotate(-1deg) scale(.97)' },
+          { opacity: 1, transform: 'translateX(-50%) rotate(2deg) scale(1)' },
+        ], { duration: 280, easing: 'cubic-bezier(.22,1,.36,1)' });
+      }
+    });
     mobile.addEventListener('change', sync);
     reduced.addEventListener('change', sync);
-    replay.hidden = reduced.matches;
   }
 </script>
 
@@ -63,32 +107,44 @@ import ToolLogo from '../ToolLogo.astro';
   .mobile-story { display: none; }
   @media (max-width: 600px) {
     .mobile-story { display: block; position: relative; isolation: isolate; width: 100%; margin: -4px 0 0; }
-    .story-scene { position: relative; height: 244px; }
+    .story-scene { position: relative; height: 288px; }
     .story-blob { position: absolute; width: 370px; max-width: none; height: 340px; object-fit: contain; left: 50%; top: -44px; transform: translateX(-50%) rotate(10deg); z-index: -1; }
     .source { position: absolute; top: 15px; display: flex; gap: 9px; align-items: center; padding: 12px; width: 128px; border: 1px solid rgba(20,61,36,.1); border-radius: 13px; background: #fdf9f1; box-shadow: 0 8px 24px #143d2414; font-size: 12px; font-weight: 600; }
     .source-sales { left: 0; transform: rotate(-10deg); }
     .source-mail { right: 0; top: 24px; transform: rotate(10deg); }
+    .source-example { display: flex; gap: 9px; align-items: center; }
+    .source-example[hidden], .report-example[hidden], [data-caption][hidden] { display: none; }
     .source-icon { display: grid; place-items: center; width: 30px; height: 32px; border-radius: 8px; background: #fff; }
     .source-lines { display: grid; gap: 4px; margin-top: 6px; }
     .source-lines i { display: block; height: 3px; width: 43px; background: #d7ddd3; border-radius: 3px; }
     .source-lines i:last-child { width: 28px; }
     .story-spark { position: absolute; left: 50%; top: 69px; z-index: 2; width: 46px; height: 46px; display: grid; place-items: center; background: var(--wabi-forest); border-radius: 14px; transform: translateX(-50%); opacity: 0; }
-    .report-sheet { position: absolute; width: 224px; left: 50%; top: 92px; border-radius: 16px; border: 1px solid #143d241a; }
-    .report-back { height: 133px; background: #dce7c8; transform: translateX(-50%) rotate(-5deg); }
-    .report-front { padding: 14px 16px 12px; background: #fdf9f1; transform: translateX(-50%) rotate(2deg); box-shadow: 0 18px 36px #143d2426; }
+    .report-sheet { position: absolute; width: 244px; left: 50%; top: 92px; border-radius: 16px; border: 1px solid #143d241a; }
+    .report-back { height: 174px; background: #dce7c8; transform: translateX(-50%) rotate(-5deg); }
+    .report-front { padding: 14px 16px 12px; background: #fdf9f1; transform: translateX(-50%) rotate(2deg); box-shadow: 0 18px 36px #143d2426; font-family: inherit; line-height: 1.3; color: var(--wabi-forest); text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .report-front:focus-visible { outline: 2px solid var(--wabi-moss); outline-offset: 5px; }
+    .report-example { display: block; }
     .report-top { display: flex; justify-content: space-between; align-items: center; color: var(--wabi-moss); font-size: 9px; font-weight: 700; letter-spacing: .09em; }
     .report-tick { display: grid; place-items: center; width: 19px; height: 19px; border-radius: 50%; background: var(--wabi-moss); color: var(--wabi-oat); font-size: 11px; }
-    .report-front strong { display: block; margin: 4px 0 10px; font-size: 14px; font-weight: 600; letter-spacing: -.02em; }
+    .report-front strong { display: block; min-height: 36px; margin: 4px 0 6px; font-size: 14px; font-weight: 600; letter-spacing: -.02em; }
     .report-content { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center; }
     .report-chart { height: 32px; display: flex; align-items: end; gap: 4px; }
     .report-chart i { flex: 1; height: 45%; border-radius: 3px 3px 0 0; background: #8fac70; transform-origin: bottom; }
     .report-chart i:nth-child(2) { height: 70%; }.report-chart i:nth-child(3) { height: 55%; }.report-chart i:nth-child(4) { height: 90%; }.report-chart i:nth-child(5) { height: 75%; }.report-chart i:nth-child(6) { height: 100%; background: var(--wabi-moss); }
     .report-lines { display: grid; gap: 5px; }.report-lines i { height: 3px; background: #d5dbd1; border-radius: 3px; }.report-lines i:last-child { width: 65%; }
+    .report-detail { display: grid; align-content: center; gap: 4px; height: 32px; color: var(--wabi-muted); font-size: 10px; }
+    .report-detail > span { display: flex; align-items: center; gap: 6px; }
+    .detail-check { color: var(--wabi-moss); }
+    .report-reply { padding-left: 8px; border-left: 2px solid #8fac70; }
     .report-approval { display: flex; gap: 5px; align-items: center; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--wabi-outline); color: var(--wabi-moss); font-size: 10px; }
     .report-approval span { width: 5px; height: 5px; border-radius: 50%; background: var(--wabi-moss); }
-    figcaption { padding: 4px 34px 4px 0; font-size: 12px; color: var(--wabi-muted); text-align: center; }
-    .story-replay { position: absolute; right: -4px; bottom: -6px; width: 44px; height: 44px; display: grid; place-items: center; border: none; background: transparent; color: var(--wabi-moss); cursor: pointer; }
-    .story-replay[hidden] { display: none; }
+    .report-next { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 10px; font-weight: 600; color: var(--wabi-moss); }
+    .report-next > span { font-size: 15px; }
+    figcaption { padding: 10px 0 0; font-size: 12px; color: var(--wabi-muted); text-align: center; }
+    .story-caption { display: block; min-height: 20px; }
+    .story-pagination { display: flex; justify-content: center; gap: 6px; margin-top: 10px; }
+    .story-pagination i { height: 5px; width: 5px; border-radius: 5px; background: #143d242e; transition: width 200ms ease, background 200ms ease; }
+    .story-pagination i.is-current { width: 18px; background: var(--wabi-moss); }
     .is-playing .source-sales { animation: gather-left 3.8s var(--ease-out) both; }
     .is-playing .source-mail { animation: gather-right 3.8s var(--ease-out) both; }
     .is-playing .story-blob { animation: bloom 3.8s var(--ease-out) both; }
@@ -104,5 +160,5 @@ import ToolLogo from '../ToolLogo.astro';
     @keyframes back-arrive { 0%, 48% { opacity: 0; transform: translate(-50%, 25px) rotate(0) scale(.8); } 76%, 100% { opacity: 1; transform: translateX(-50%) rotate(-5deg); } }
     @keyframes chart-grow { 0%, 64% { transform: scaleY(.1); } 90%, 100% { transform: scaleY(1); } }
   }
-  @media (prefers-reduced-motion: reduce) { .mobile-story :global(*) { animation: none !important; } }
+  @media (prefers-reduced-motion: reduce) { .mobile-story :global(*) { animation: none !important; transition: none !important; } }
 </style>

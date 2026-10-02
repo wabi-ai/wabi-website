@@ -131,7 +131,7 @@ const projects = [
     header.classList.toggle('is-compact', y > 24);
     header.classList.toggle('is-over-hero', !!(overHero && hero && hero.hasAttribute('data-dark') && y < hero.offsetHeight - 80));
     const interacting = header.querySelector('[aria-expanded="true"], :focus-visible');
-    if (y <= 96 || interacting) {
+    if (y <= 180 || interacting) {
       showHeader();
       direction = 0;
       travel = 0;
@@ -141,7 +141,8 @@ const projects = [
     const nextDirection = Math.sign(delta);
     travel = nextDirection === direction ? travel + Math.abs(delta) : Math.abs(delta);
     direction = nextDirection;
-    if (travel >= 8) {
+    // Wait for a deliberate downward scroll; reveal promptly when scrolling back.
+    if (travel >= (direction > 0 ? 64 : 8)) {
       header.classList.toggle('is-hidden', direction > 0);
       travel = 0;
     }

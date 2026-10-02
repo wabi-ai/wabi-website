@@ -1,7 +1,7 @@
 /* The header occupies its original space while its inner bar floats on scroll. */
 .site-header { --nav-button-radius: 16px; --nav-text: #143D24; --nav-muted: #536255; --nav-surface: #F4F1E7; position: relative; z-index: 30; height: 96px; }
-.header-inner { --nav-ink: var(--nav-text); position: fixed; top: 12px; left: 50%; transform: translateX(-50%); width: min(1160px, calc(100% - 40px)); height: 72px; padding: 0 24px; display: flex; align-items: center; gap: 40px; border-radius: 36px; background: transparent; color: var(--nav-ink); transition: transform 240ms cubic-bezier(.22,1,.36,1), width 480ms cubic-bezier(.22,1,.36,1), height 480ms cubic-bezier(.22,1,.36,1), top 480ms cubic-bezier(.22,1,.36,1), padding 480ms cubic-bezier(.22,1,.36,1), border-radius 480ms cubic-bezier(.22,1,.36,1); }
-.site-header.is-hidden .header-inner { transform: translate(-50%, calc(-100% - 40px)); pointer-events: none; }
+.header-inner { --nav-ink: var(--nav-text); position: fixed; top: 12px; left: 50%; transform: translateX(-50%); width: min(1160px, calc(100% - 40px)); height: 72px; padding: 0 24px; display: flex; align-items: center; gap: 40px; border-radius: 36px; background: transparent; color: var(--nav-ink); opacity: 1; transition: transform 320ms cubic-bezier(.22,1,.36,1), opacity 320ms ease, width 480ms cubic-bezier(.22,1,.36,1), height 480ms cubic-bezier(.22,1,.36,1), top 480ms cubic-bezier(.22,1,.36,1), padding 480ms cubic-bezier(.22,1,.36,1), border-radius 480ms cubic-bezier(.22,1,.36,1); }
+.site-header.is-hidden .header-inner { transform: translate(-50%, calc(-100% - 40px)); opacity: 0; pointer-events: none; transition-duration: 650ms; transition-timing-function: cubic-bezier(.4,0,.2,1); }
 .site-header:has(:focus-visible) .header-inner { transition: none; }
 .site-header.is-compact .header-inner { --nav-ink: var(--nav-text); width: min(1000px, calc(100% - 40px)); top: 16px; height: 64px; padding-inline: 26px 10px; border-radius: 100px; background: transparent; }
 /* Keep the bar's blur on its own layer so dropdowns can blur the page independently. */
@@ -112,7 +112,7 @@
   .nav-project-copy { margin-top: 34px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .header-inner, .header-inner::before, .nav-preview, .nav-project-card > img { transition: none; }
+  .header-inner, .site-header.is-hidden .header-inner, .header-inner::before, .nav-preview, .nav-project-card > img { transition: none; }
   .nav-panel, .site-nav.is-open { animation: none; }
 }
 
