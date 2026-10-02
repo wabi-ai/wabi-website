@@ -3,11 +3,11 @@
 // Emits a `console:scenario` event (detail: { id, ending }) so a headline can follow along.
 import ToolLogo from '../ToolLogo.astro';
 import { SCENARIOS } from '../../data/scenarios.js';
-interface Props { theme?: 'dark' | 'light'; only?: string[]; }
-const { theme = 'dark', only } = Astro.props;
+interface Props { theme?: 'dark' | 'light'; only?: string[]; pace?: number; startDelay?: number; }
+const { theme = 'dark', only, pace = 1, startDelay = 1100 } = Astro.props;
 const scenarios = only ? SCENARIOS.filter(s => only.includes(s.id)) : SCENARIOS;
 ---
-<div class:list={['console', 'console-' + theme]} data-console data-scenarios={JSON.stringify(scenarios)}>
+<div class:list={['console', 'console-' + theme]} data-console data-pace={pace} data-start-delay={startDelay} data-scenarios={JSON.stringify(scenarios)}>
   <div class="console-chips" role="tablist" aria-label="Velg en oppgave">
     {scenarios.map((s, i) => <button type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-scenario={s.id}>{s.label}</button>)}
   </div>
@@ -32,8 +32,9 @@ const scenarios = only ? SCENARIOS.filter(s => only.includes(s.id)) : SCENARIOS;
     const typed = $('[data-typed]'), stepsEl = $('[data-steps]'), result = $('[data-result]'), status = $('[data-status]');
     const chips = [...root.querySelectorAll<HTMLElement>('[data-scenario]')];
     const logos: Record<string, string> = Object.fromEntries([...(root.querySelector('[data-logos]') as HTMLTemplateElement).content.querySelectorAll<HTMLElement>('[data-logo]')].map(el => [el.dataset.logo!, el.innerHTML]));
-    let run = 0, auto = true;
-    const wait = (ms: number) => new Promise(r => setTimeout(r, reduced ? 0 : ms));
+    const pace = Number(root.dataset.pace || 1);
+    let run = 0, auto = !reduced;
+    const wait = (ms: number) => new Promise(r => setTimeout(r, reduced ? 0 : ms * pace));
 
     async function play(i: number) {
       const id = ++run, s = scenarios[i];
@@ -66,8 +67,8 @@ const scenarios = only ? SCENARIOS.filter(s => only.includes(s.id)) : SCENARIOS;
       await wait(4200);
       if (id === run && auto) play((i + 1) % scenarios.length);
     }
-    chips.forEach((c, i) => c.addEventListener('click', () => { auto = false; play(i); }));
-    setTimeout(() => play(0), reduced ? 0 : 1100);
+    const initialTimer = window.setTimeout(() => play(0), reduced ? 0 : Number(root.dataset.startDelay || 1100));
+    chips.forEach((c, i) => c.addEventListener('click', () => { clearTimeout(initialTimer); auto = false; play(i); }));
   });
 </script>
 

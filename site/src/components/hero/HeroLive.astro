@@ -14,18 +14,18 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
       <h1 class="hl-title">
         <span class="hero-kicker">AI-rådgivning for norske bedrifter</span>
         <span class="hl-display">
-          <span class="hl-line">AI som faktisk</span>
-          <span class="hl-rotator" aria-hidden="true" data-rotator><span class="is-active">blir tatt i bruk.</span></span>
-          <span class="sr-only">blir tatt i bruk.</span>
+          <span class="hl-line">Vi gjør AI nyttig</span>
+          <span class="hl-rotator" aria-hidden="true" data-rotator><span class="is-active">for bedriften din.</span></span>
+          <span class="sr-only">for bedriften din.</span>
         </span>
       </h1>
-      <p>Vi finner hvor AI gir verdi i bedriften din, bygger løsningene og sørger for at de blir brukt. Velg en oppgave og se hvordan det ser ut.</p>
+      <p>Vi er ikke her for å vise hvor imponerende AI er. Vi finner ut hvor den faktisk gir verdi, og bygger det slik at hele bedriften kan bruke det, ikke bare de mest ivrige.</p>
       <div class="hl-actions">
         <a href="/kontakt/" class="button button-primary">Ta en prat</a>
         <a href="#resultater" class="button button-secondary">Se hva vi bygger</a>
       </div>
     </div>
-    <Console theme="light" />
+    <Console theme="light" pace={0.75} startDelay={2600} />
   </div>
   <div class="container"><div class="hl-clients">
     <h2 class="hl-clients-label">Bedrifter vi har jobbet med</h2>
@@ -61,7 +61,7 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
         current?.classList.replace('is-active', 'is-leaving');
         next.classList.add('is-active');
       }));
-      setTimeout(() => current?.remove(), reduced ? 0 : 800);
+      setTimeout(() => current?.remove(), reduced ? 0 : 450);
     });
   }
   const follow = hero?.querySelector<HTMLElement>('[data-follow]');
@@ -101,13 +101,13 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
   .hl-title { display: flex; flex-direction: column; gap: 24px; font-weight: 400; }
   .hl-title .hero-kicker { color: var(--wabi-moss); }
   .hl-display { display: flex; flex-direction: column; font-size: clamp(44px, 5.6vw, 88px); line-height: 1; letter-spacing: -.055em; color: var(--wabi-forest); }
-  .hl-line { animation: rise 1100ms var(--ease-out) both; }
+  .hl-line { animation: rise 650ms var(--ease-out) both; }
   .hl-rotator { position: relative; display: block; height: 1.22em; margin-bottom: -.12em; overflow: hidden; color: var(--wabi-moss); }
-  .hl-rotator :global(span) { position: absolute; left: 0; top: 0; white-space: nowrap; opacity: 0; transform: translateY(90%); transition: transform 700ms var(--ease-out), opacity 500ms var(--ease-out); }
+  .hl-rotator :global(span) { position: absolute; left: 0; top: 0; white-space: nowrap; opacity: 0; transform: translateY(90%); transition: transform 400ms var(--ease-out), opacity 300ms var(--ease-out); }
   .hl-rotator :global(span.is-active) { opacity: 1; transform: none; }
   .hl-rotator :global(span.is-leaving) { opacity: 0; transform: translateY(-90%); }
-  .hl-copy > p { max-width: 440px; font-size: 18px; line-height: 1.6; color: #2E4636; animation: rise 1100ms 150ms var(--ease-out) both; }
-  .hl-actions { display: flex; flex-wrap: wrap; gap: 12px; animation: rise 1100ms 250ms var(--ease-out) both; }
+  .hl-copy > p { max-width: 440px; font-size: 18px; line-height: 1.6; color: #2E4636; animation: rise 650ms 100ms var(--ease-out) both; }
+  .hl-actions { display: flex; flex-wrap: wrap; gap: 12px; animation: rise 650ms 150ms var(--ease-out) both; }
   @media (max-width: 1000px) {
     .hl { margin-top: -88px; padding: 130px 0 32px; }
     .hl-clients { gap: 14px; margin-top: 48px; }
@@ -115,5 +115,6 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
     .hl-display { font-size: clamp(40px, 10vw, 64px); }
     .hl-follow { width: 150vw; right: -60%; top: -6%; }
   }
+  @media (max-width: 420px) { .hl-display { font-size: clamp(34px, 9.5vw, 40px); } }
   @media (prefers-reduced-motion: reduce) { .logo-track.is-marquee { overflow-x: auto; } .logo-track.is-marquee .logo-row { animation: none; } .logo-track.is-marquee .logo-clone { display: none; } .hl-clients, .hl-line, .hl-copy > p, .hl-actions, .hl-follow img { animation: none; } .hl-rotator :global(span) { transition: none; } }
 </style>
