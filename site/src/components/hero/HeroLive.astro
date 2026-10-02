@@ -17,7 +17,7 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
           <span class="hl-line">AI-løsninger bygget for hvordan dere <em>faktisk jobber.</em></span>
         </span>
       </h1>
-      <p>Alle har hørt om AI, men jobben gjøres fortsatt som før. Vi bygger AI-agenter og programvare inn i systemene dere bruker, med en strategi som gjør det trygt for hele teamet.</p>
+      <p>Alle har hørt om AI, men jobben gjøres fortsatt som før. Vi bygger <strong>AI-agenter og programvare</strong> inn i systemene dere bruker, med en strategi som gjør det <strong>trygt for hele teamet</strong>.</p>
       <MobileTransformation />
       <div class="hl-actions">
         <a href="/kontakt/" class="button button-primary">Ta en prat</a>
@@ -91,6 +91,7 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
   .hl-line em { font-style: normal; color: var(--wabi-moss); }
   .hl-line { animation: rise 650ms var(--ease-out) both; }
   .hl-copy > p { max-width: 500px; font-size: 18px; line-height: 1.6; color: #2E4636; animation: rise 650ms 100ms var(--ease-out) both; }
+  .hl-copy > p strong { font-weight: 700; color: var(--wabi-forest); }
   .hl-actions { display: flex; flex-wrap: wrap; gap: 12px; animation: rise 650ms 150ms var(--ease-out) both; }
   .hl-scroll-link { display: none; }
   @media (max-width: 1000px) {
