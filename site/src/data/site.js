@@ -1,7 +1,9 @@
 export const SITE = {
   name: 'Wabi',
   url: 'https://wabi.no',
-  description: 'Wabi hjelper norske bedrifter å få nytte av AI. Vi finner oppgavene som tar tid, lager løsninger og lærer de ansatte å bruke dem.',
+  description: 'Vi kartlegger hvordan dere jobber, bygger AI inn der den gjør en forskjell og hjelper hele teamet å bruke den trygt.',
+  socialImage: '/assets/wabi-social-2026-10.jpg',
+  socialImageAlt: 'Wabi. Praktisk AI, bygget for hvordan dere faktisk jobber.',
   email: 'ulrik@wabi.no', // fallback only, if the form fails
   linkedin: 'https://www.linkedin.com/company/wabino/',
   // Web3Forms access key for the contact form. Submissions go to the address the key was created for (admin@wabi.no).

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 70" role="img" aria-label="Havora">
+ <g fill="none" stroke="#193E4B" stroke-width="4.5" stroke-linecap="round">
+  <path d="M7 22C16 10 26 10 35 22S54 34 63 22"/>
+  <path d="M7 35C16 23 26 23 35 35S54 47 63 35"/>
+  <path d="M7 48C16 36 26 36 35 48S54 60 63 48"/>
+ </g>
+ <text x="80" y="48" font-family="Arial,Helvetica,sans-serif" font-size="44" font-weight="600" letter-spacing="-1.5" fill="#193E4B">Havora</text>
+</svg>

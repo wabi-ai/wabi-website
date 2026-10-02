@@ -1,34 +1,33 @@
-// Aquaculture operations: dashboard, KPIs and a funding draft, in PhycoNor's colours. Fictional sites and numbers.
+// Anonymized aquaculture case. Company identity, species, facilities and figures are fictional.
 import React, { useEffect, useRef, useState } from 'react';
 
-const C = { ink: '#1F3329', mute: '#5C6F66', line: '#DCE9E1', soft: '#EDFCF4', mint: '#B5E2CB', green: '#3F6652', navy: '#0B3A6E', red: '#C81E1E', amber: '#A9661A', font: '"Inter", system-ui, sans-serif' };
+const C = { ink: '#193E4B', mute: '#607580', line: '#DCE7ED', soft: '#EFF5F8', mint: '#B8D7E3', green: '#28667A', navy: '#24516A', red: '#B34242', amber: '#A9661A', font: '"Inter", system-ui, sans-serif' };
 
 const SITES = [
-  { id: 'a', name: 'Tanglinje A', kind: 'Tang', temp: 29.4, sal: 31, oxy: 6.8, trend: [6.6, 6.7, 6.9, 6.8, 6.7, 6.9, 6.8] },
-  { id: 'b', name: 'Tanglinje B', kind: 'Tang', temp: 30.1, sal: 30, oxy: 6.5, trend: [6.4, 6.6, 6.5, 6.3, 6.5, 6.6, 6.5] },
-  { id: 'c', name: 'Krabbedam 2', kind: 'Krabber', temp: 30.8, sal: 27, oxy: 4.6, trend: [6.1, 5.9, 5.6, 5.3, 5.1, 4.8, 4.6], alert: 'Oksygenet har falt i seks dager. Sjekk luftingen i dag.' },
-  { id: 'd', name: 'Sjøpølse, felt 1', kind: 'Sjøpølse', temp: 29.0, sal: 32, oxy: 6.9, trend: [6.8, 6.9, 7.0, 6.9, 6.8, 7.0, 6.9] },
-  { id: 'e', name: 'Rekedam 1', kind: 'Reker', temp: 31.2, sal: 25, oxy: 5.4, trend: [5.9, 5.8, 5.7, 5.6, 5.5, 5.5, 5.4], watch: 'Svakt fallende oksygen og høy temperatur. Følg med neste tre dager.' },
+  { id: 'a', name: 'Skjellfelt A', kind: 'Blåskjell', temp: 10.8, sal: 30, oxy: 8.4, trend: [8.2, 8.3, 8.5, 8.4, 8.3, 8.5, 8.4] },
+  { id: 'b', name: 'Skjellfelt B', kind: 'Blåskjell', temp: 11.6, sal: 29, oxy: 8.1, trend: [8.0, 8.2, 8.1, 8.0, 8.2, 8.1, 8.1] },
+  { id: 'c', name: 'Fiskeanlegg C', kind: 'Ørret', temp: 14.2, sal: 31, oxy: 5.8, trend: [7.2, 7.0, 6.7, 6.5, 6.3, 6.0, 5.8], alert: 'Oksygenet har falt gjennom uken. Driftsansvarlig bør undersøke avviket.' },
+  { id: 'd', name: 'Fiskeanlegg D', kind: 'Ørret', temp: 13.7, sal: 30, oxy: 7.1, trend: [7.5, 7.4, 7.3, 7.3, 7.2, 7.2, 7.1], watch: 'Svak nedgang i oksygen. Følg utviklingen i neste målerunde.' },
 ];
 
 const KPIS = [
-  { label: 'Høstet i september', value: 4820, goal: 5000, unit: 'kg', note: 'Tanglinje B høstet en uke senere enn planlagt. Resten følger planen.' },
-  { label: 'Overlevelse, krabber', value: 86, goal: 85, unit: '%', note: 'Over målet, men Krabbedam 2 trekker ned. Henger sammen med oksygenfallet.' },
-  { label: 'Vekst, tang', value: 4.1, goal: 4.5, unit: '% per dag', note: 'Lavere vekst på linje B etter tre uker med høy vanntemperatur.' },
-  { label: 'Leveranser i tide', value: 97, goal: 95, unit: '%', note: 'To forsinkede leveranser i måneden, begge på grunn av transport.' },
+  { label: 'Høstet i september', value: 12600, goal: 12000, unit: 'kg', note: 'Skjellfelt A ble høstet som planlagt. Målet for måneden er nådd.' },
+  { label: 'Overlevelse, ørret', value: 97, goal: 98, unit: '%', note: 'Litt under målet. Fiskeanlegg C følges opp av driftsansvarlig.' },
+  { label: 'Planlagte kontroller', value: 24, goal: 24, unit: 'stk.', note: 'Alle planlagte kontroller er registrert og dokumentert.' },
+  { label: 'Leveranser i tide', value: 94, goal: 96, unit: '%', note: 'Forsinket transport ga avvik. Leveringsplanen bør gjennomgås.' },
 ];
 
 const PROGRAMMES = ['Støtte til bærekraftig havbruk', 'Grønt innovasjonsprogram'];
 const STEPS = [
   ['Leste utlysningen', 'Krav, kriterier og frist'],
-  ['Hentet KPI-er fra de siste tolv månedene', 'Høsting, overlevelse og vekst'],
+  ['Hentet KPI-er fra de siste tolv månedene', 'Høsting, overlevelse og leveranser'],
   ['Hentet målinger og bærekraftsdata', 'Vannkvalitet og arealbruk'],
   ['Skrev utkast til tre deler', 'Klart for gjennomgang'],
 ];
 const DRAFT = [
-  ['Prosjektbeskrivelse', 'PhycoNor driver regenerativt havbruk med tang, krabber, sjøpølser og reker. Prosjektet skal øke produksjonen per anlegg uten å øke belastningen på det lokale økosystemet.', 'Kilde: selskapsprofil'],
-  ['Resultater så langt', 'Siste tolv måneder er det høstet 52 tonn, overlevelsen for krabber er 86 prosent, og 97 prosent av leveransene har gått i tide.', 'Kilde: KPI-er'],
-  ['Effekt på miljøet', 'Tanglinjene tar opp næringsstoffer fra vannet rundt krabbe- og rekedammene. Vannkvaliteten måles daglig på alle fem anlegg.', 'Kilde: målinger'],
+  ['Prosjektbeskrivelse', 'I dette fiktive eksempelet produserer Havora ørret og blåskjell. Prosjektet skal gi bedre oversikt over produksjon, vannkvalitet og leveranser på tvers av fire anlegg.', 'Kilde: eksempelprofil'],
+  ['Resultater så langt', 'Eksempeltallene viser 12,6 tonn høstet i september, 97 prosent overlevelse for ørret og 94 prosent av leveransene i tide.', 'Kilde: eksempeldata'],
+  ['Miljø og dokumentasjon', 'Målinger av vannkvalitet og ressursbruk samles per anlegg. Utkastet kobler prosjektmålene til dokumentasjonen som finnes. Teamet kontrollerer grunnlaget før videre bruk.', 'Kilde: eksempelmålinger'],
 ];
 
 const fmt = n => n.toLocaleString('nb-NO');
@@ -76,7 +75,7 @@ function Ops() {
       <p style={{ margin: '12px 0 0', fontSize: 12, color: C.mute }}>Klikk på et anlegg for å se oksygen siste sju dager.</p>
     </div>
     <div style={{ padding: 18, background: C.soft, display: 'flex', flexDirection: 'column', gap: 14, minWidth: 0 }}>
-      <AiCard title="Dagens oppsummering">Fire av fem anlegg er normale. <b>Krabbedam 2</b> trenger tilsyn i dag, og Rekedam 1 bør følges med på. Høstingen på Tanglinje A kan starte torsdag.</AiCard>
+      <AiCard title="Dagens oppsummering">To av fire anlegg har stabile målinger. <b>Fiskeanlegg C</b> trenger oppfølging, og Fiskeanlegg D bør følges med på. Høstingen på Skjellfelt A er registrert.</AiCard>
       <div style={{ padding: 16, borderRadius: 12, background: '#fff', border: `1px solid ${C.line}` }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 10 }}>
           <b style={{ fontSize: 14 }}>{site.name}</b><span style={{ fontSize: 12, color: C.mute }}>Oksygen, 7 dager</span>
@@ -99,7 +98,7 @@ function Kpis() {
         <p style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.5, color: C.mute }}>{k.note}</p>
       </div>; })}
     </div>
-    <AiCard title="Hva AI ser denne måneden">Tre av fire mål er nådd. Avvikene på tang og krabber har samme årsak: <b>høy vanntemperatur</b> i midten av måneden. Forslag: flytt høstingen på linje B fram, og øk luftingen i krabbedammene når temperaturen passerer 30 °C.</AiCard>
+    <AiCard title="Hva AI ser denne måneden">To av fire mål er nådd. <b>Overlevelse og leveringstid</b> ligger under målene. Forslag: undersøk målingene ved Fiskeanlegg C og gå gjennom transportplanen. Driftsansvarlig vurderer tiltakene.</AiCard>
   </div>;
 }
 
@@ -152,8 +151,8 @@ export function AquaApp() {
   return <div style={{ fontFamily: C.font, color: C.ink, background: '#fff', border: `1px solid ${C.line}`, borderRadius: 18, overflow: 'hidden', boxShadow: '0 40px 100px -40px rgba(0,0,0,0.45)' }}>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, padding: '14px 18px', borderBottom: `1px solid ${C.line}`, flexWrap: 'wrap' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <span style={{ fontWeight: 800, fontSize: 18, letterSpacing: '-.02em' }}><span style={{ color: C.navy }}>Phyco</span><span style={{ color: C.red }}>Nor</span></span>
-        <span style={{ fontSize: 13, color: C.mute }}>5 anlegg · eksempeldata</span>
+        <img src="/assets/clients/havora-dark.svg" alt="Havora, fiktivt navn" width="140" height="35" />
+        <span style={{ fontSize: 13, color: C.mute }}>4 anlegg · fiktive eksempeldata</span>
       </div>
       <div role="tablist" aria-label="Visning" style={{ display: 'flex', gap: 4, padding: 4, borderRadius: 12, background: C.soft }}>
         {TABS.map(([id, label]) => <button key={id} role="tab" aria-selected={tab === id} onClick={() => setTab(id)} style={{ padding: '8px 14px', borderRadius: 9, border: 'none', background: tab === id ? C.ink : 'transparent', color: tab === id ? '#fff' : C.ink, fontFamily: 'inherit', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>{label}</button>)}
