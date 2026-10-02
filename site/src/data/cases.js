@@ -13,7 +13,6 @@ export const CASES = [
     lead: 'Kundene får rapporten sin. Byrået får timene tilbake. Rapportene lager seg selv nå.',
     challenge: 'Hver uke hentet byrået tall manuelt fra fire plattformer for hver kunde, satte dem sammen i regneark og sendte rapporten som vedlegg. Det tok tid fra det kundene faktisk betaler for, nemlig å gjøre kampanjene bedre. Og rapporten var utdatert i det øyeblikket den ble sendt.',
     home: { metric: '4', unit: 'datakilder i en oversikt per kunde', title: 'Alle rapportene på ett sted.', text: 'Meta, Google Ads, Analytics og Search Console samlet, med en AI som forklarer på norsk hva som har endret seg.' },
-    demo: 'report', demoNote: 'Klikk mellom kanalene og nøkkeltallene. Tallene er eksempeldata, siden kundenes egne tall er konfidensielle.',
     sourceLogos: [
       ['Meta', null],
       ['Snapchat', '/assets/tools/snapchat.png'],
@@ -44,7 +43,6 @@ export const CASES = [
     lead: 'M Biler hadde lager, kunder, prøvekjøringer, kontrakter og økonomi på hvert sitt sted. Vi bygde et system som samler alt, og som nå også er i bruk hos andre forhandlere.',
     challenge: 'Lager, henvendelser, prøvekjøringer, kontrakter og økonomi lå på hvert sitt sted. De samme opplysningene om hver bil måtte skrives inn flere ganger, og det var vanskelig å se hvilke biler som sto for lenge og hvor mye penger som var bundet opp i dem.',
     home: { metric: '1', unit: 'system for lager, kunder, kontrakter og økonomi', title: 'Hele bilsalget i ett system.', text: 'Laget sammen med M Biler, og nå i bruk hos flere forhandlere. Bilkortet fyller seg selv fra registreringsnummeret.' },
-    demo: 'dealer', demoNote: 'Prøv en forenklet versjon: trykk «Ta imot ny bil» og lag et bilkort, eller bytt mellom lager og kontrakter. Bilene her er fiktive.',
     facts: [['Kunde', 'M Biler AS'], ['Bygget', 'Komplett salgssystem'], ['Status', 'I bruk hos flere forhandlere'], ['Oppsett', 'Egne maler og logo per butikk']],
     flow: [['Reg.nr inn', 'Data hentes, og bilkortet opprettes.'], ['Lager', 'Status, pris og bilder på ett sted.'], ['Kunder', 'Henvendelser og prøvekjøringer samlet per bil.'], ['Kontrakt', 'Riktig mal, ferdig utfylt, klar for signering.'], ['Økonomi', 'Bruttofortjeneste per bil og per måned.']],
     built: [

@@ -6,8 +6,6 @@ import CtaPanel from '../../components/CtaPanel.astro';
 import ToolLogo from '../../components/ToolLogo.astro';
 import { breadcrumbLd } from '../../lib/seo.js';
 import { CASES } from '../../data/cases.js';
-import { Dashboard, AdsAndAudience } from '../../react/ReportUI.jsx';
-import { DealerApp } from '../../react/DealerUI.jsx';
 import { ClinicApp } from '../../react/ClinicUI.jsx';
 import { WebsiteApp } from '../../react/WebsiteUI.jsx';
 import { AquaApp } from '../../react/AquaUI.jsx';
@@ -26,7 +24,7 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
     {c.note && <p class="note mono">{c.note}</p>}
   </PageHero>
 
-  {c.demo ? <>
+  {c.demo || c.shots ? <>
     <section class="container facts-row" aria-label="Fakta om prosjektet">
       <dl>{c.facts.map(([k, v]) => <div><dt>{k}</dt><dd>
         {k === 'Kilder' && c.sourceLogos ? <span class="source-logos">
@@ -47,18 +45,16 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
         </figure>)}
       </div>
     </section>}
-    <section aria-label="Slik ser det ut">
+    {c.demo && <section aria-label="Slik ser det ut">
       <Band tone={c.tone}>
         <div class="demo-wrap">
           <p class="demo-note">{c.demoNote}</p>
-          {c.demo === 'report' && <><Dashboard client:visible /><AdsAndAudience client:visible /></>}
-          {c.demo === 'dealer' && <DealerApp client:visible />}
           {c.demo === 'clinic' && <ClinicApp client:visible />}
           {c.demo === 'website' && <WebsiteApp client:visible />}
           {c.demo === 'aqua' && <AquaApp client:visible />}
         </div>
       </Band>
-    </section>
+    </section>}
   </> : <Band tone={c.tone}>
     <div class="paper-card facts">
       <dl>{c.facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
