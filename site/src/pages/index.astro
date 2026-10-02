@@ -38,8 +38,8 @@ const faq = [
 
 const jsonLd = [
   { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
-  { '@context': 'https://schema.org', '@type': 'Person', name: 'Ulrik Rosmæl', jobTitle: 'Medgründer', worksFor: { '@id': SITE.url + '/#org' }, homeLocation: 'Trondheim' },
-  { '@context': 'https://schema.org', '@type': 'Person', name: 'Eljar Skjørholm', jobTitle: 'Medgründer', worksFor: { '@id': SITE.url + '/#org' }, homeLocation: 'Singapore' },
+  { '@context': 'https://schema.org', '@type': 'Person', name: 'Ulrik Rosmæl', jobTitle: 'Daglig leder og AI-konsulent', email: 'ulrik@wabi.no', worksFor: { '@id': SITE.url + '/#org' }, homeLocation: 'Trondheim' },
+  { '@context': 'https://schema.org', '@type': 'Person', name: 'Eljar Skjørholm', jobTitle: 'Chief AI Officer', email: 'admin@wabi.no', worksFor: { '@id': SITE.url + '/#org' }, homeLocation: 'Singapore' },
 ];
 ---
 <Base title="Wabi | AI-rådgivning og AI-strategi for norske bedrifter" jsonLd={jsonLd}>
@@ -149,8 +149,8 @@ const jsonLd = [
   <!-- TEAM -->
   <section class="section container team" id="om-oss" aria-labelledby="team-title">
     <div class="team-portraits" data-reveal>
-      <figure><img src="/assets/portraits/ulrik-rosmael-bue-blob-hoyre.webp" alt="Ulrik Rosmæl" width="320" height="320" loading="lazy" /><figcaption>Ulrik Rosmæl</figcaption></figure>
-      <figure><img src="/assets/portraits/eljar-skjorholm-bue-blob-venstre.webp" alt="Eljar Skjørholm" width="320" height="320" loading="lazy" /><figcaption>Eljar Skjørholm</figcaption></figure>
+      <figure><img src="/assets/portraits/ulrik-rosmael-bue-blob-hoyre.webp" alt="Ulrik Rosmæl" width="320" height="320" loading="lazy" /><figcaption>Ulrik Rosmæl<span>Daglig leder og AI-konsulent</span><a href="mailto:ulrik@wabi.no">ulrik@wabi.no</a></figcaption></figure>
+      <figure><img src="/assets/portraits/eljar-skjorholm-bue-blob-venstre.webp" alt="Eljar Skjørholm" width="320" height="320" loading="lazy" /><figcaption>Eljar Skjørholm<span>Chief AI Officer</span><a href="mailto:admin@wabi.no">admin@wabi.no</a></figcaption></figure>
     </div>
     <div class="team-copy" data-reveal>
       <span class="eyebrow">Om oss</span>
@@ -279,7 +279,9 @@ const jsonLd = [
   .team-portraits figure { margin: 0; }
   .team-portraits img { width: 100%; height: auto; }
   .team-portraits figcaption { display: flex; flex-direction: column; margin-top: 14px; font-weight: 700; font-size: 15px; }
-  .team-portraits figcaption span { font-weight: 400; font-size: 13px; color: var(--wabi-muted); }
+  .team-portraits figcaption span { margin-top: 2px; font-weight: 400; font-size: 14px; color: var(--wabi-muted); }
+  .team-portraits figcaption a { margin-top: 6px; font-weight: 600; font-size: 14px; color: var(--wabi-moss); text-decoration: none; overflow-wrap: anywhere; }
+  .team-portraits figcaption a:hover { text-decoration: underline; }
   .team-copy { display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
   .team-copy .lead { color: #3B4A40; }
 

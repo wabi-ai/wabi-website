@@ -8,8 +8,8 @@ import { SITE } from '../../data/site.js';
 
 const crumbs = [{ label: 'Om oss', href: '/om-oss/' }];
 const people = [
-  { name: 'Ulrik Rosmæl', img: '/assets/portraits/ulrik-rosmael-bue-blob-hoyre.webp', email: 'ulrik@wabi.no' },
-  { name: 'Eljar Skjørholm', img: '/assets/portraits/eljar-skjorholm-bue-blob-venstre.webp' },
+  { name: 'Ulrik Rosmæl', role: 'Daglig leder og AI-konsulent', img: '/assets/portraits/ulrik-rosmael-bue-blob-hoyre.webp', email: 'ulrik@wabi.no' },
+  { name: 'Eljar Skjørholm', role: 'Chief AI Officer', img: '/assets/portraits/eljar-skjorholm-bue-blob-venstre.webp', email: 'admin@wabi.no' },
 ];
 const aboutLd = { '@context': 'https://schema.org', '@type': 'AboutPage', name: 'Om Wabi', url: SITE.url + '/om-oss/', about: { '@id': SITE.url + '/#org' } };
 ---
@@ -21,7 +21,7 @@ const aboutLd = { '@context': 'https://schema.org', '@type': 'AboutPage', name: 
   <section class="container people" aria-label="Ulrik og Eljar">
     {people.map((p, i) => <figure data-reveal style={`--d:${i * 100}ms`}>
       <img src={p.img} alt={p.name} width="420" height="420" />
-      <figcaption><strong>{p.name}</strong>{p.email && <a href={'mailto:' + p.email}>{p.email}</a>}</figcaption>
+      <figcaption><strong>{p.name}</strong><span class="role">{p.role}</span>{p.email && <a href={'mailto:' + p.email}>{p.email}</a>}</figcaption>
     </figure>)}
   </section>
 
@@ -35,7 +35,8 @@ const aboutLd = { '@context': 'https://schema.org', '@type': 'AboutPage', name: 
   img { width: 100%; height: auto; }
   figcaption { display: flex; flex-direction: column; gap: 4px; margin-top: 16px; }
   strong { font-size: 18px; }
-  figcaption a { font-size: 14px; font-weight: 700; color: var(--wabi-moss); }
+  figcaption a { font-size: 14px; font-weight: 700; color: var(--wabi-moss); overflow-wrap: anywhere; }
+  .role { font-size: 14px; color: var(--wabi-muted); }
   .rule { border-top: 1px solid var(--wabi-outline); padding-top: var(--section-space); }
   @media (max-width: 600px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
