@@ -13,7 +13,6 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
   <div class="container hl-inner">
     <div class="hl-copy">
       <h1 class="hl-title">
-        <span class="hero-kicker">AI-rådgivning for norske bedrifter</span>
         <span class="hl-display">
           <span class="hl-line">AI-løsninger bygget for hvordan dere <em>faktisk jobber.</em></span>
         </span>
@@ -88,7 +87,6 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
   .hl-inner > * { min-width: 0; }
   .hl-copy { display: flex; flex-direction: column; gap: 28px; }
   .hl-title { display: flex; flex-direction: column; gap: 24px; font-weight: 400; }
-  .hl-title .hero-kicker { color: var(--wabi-moss); }
   .hl-display { display: flex; flex-direction: column; font-size: clamp(44px, 4.8vw, 76px); line-height: 1.02; letter-spacing: -.05em; color: var(--wabi-forest); text-wrap: balance; }
   .hl-line em { font-style: normal; color: var(--wabi-moss); }
   .hl-line { animation: rise 650ms var(--ease-out) both; }
@@ -108,7 +106,7 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
     .hl-inner { gap: 26px; margin-block: 0; }
     .hl-copy { display: contents; }
     .hl-title { order: 0; }
-    .hl-title .hero-kicker, .hl-blob-2 { display: none; }
+    .hl-blob-2 { display: none; }
     .hl-display { font-size: clamp(34px, 9.5vw, 48px); line-height: 1.08; }
       .hl-copy > p { order: 1; font-size: 16px; line-height: 1.6; max-width: 34ch; }
     .hl-inner :global(.mobile-story) { order: 2; margin-block: 6px; }
