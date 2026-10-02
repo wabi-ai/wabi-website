@@ -59,8 +59,10 @@ const projects = [
   const mobile = matchMedia('(max-width: 860px)');
   const desktop = () => matchMedia('(min-width: 861px) and (hover: hover)').matches;
   let leaveTimer: number | undefined;
+  const showHeader = () => header.classList.remove('is-hidden');
 
   const setOpen = (target: HTMLElement | null) => {
+    if (target) showHeader();
     disclosures.forEach(d => {
       const open = d === target;
       d.querySelector('button')!.setAttribute('aria-expanded', String(open));
@@ -82,6 +84,7 @@ const projects = [
     item.addEventListener('focus', show);
   });
   const setMobileOpen = (open: boolean) => {
+    if (open) showHeader();
     toggle.setAttribute('aria-expanded', String(open));
     nav.classList.toggle('is-open', open);
     header.classList.toggle('is-menu-open', open);
@@ -114,15 +117,37 @@ const projects = [
     if (e.relatedTarget && !header.contains(e.relatedTarget as Node)) setMobileOpen(false);
   });
   mobile.addEventListener('change', () => setMobileOpen(false));
+  header.addEventListener('focusin', showHeader);
 
-  // Compact floating bar after scrolling; light text only while it sits over the dark hero.
+  // Follow scroll direction, ignoring tiny movements and elastic overscroll on phones.
   const hero = document.querySelector<HTMLElement>('[data-hero]');
   const overHero = header.hasAttribute('data-over-hero');
+  const scrollPosition = () => Math.max(0, Math.min(scrollY, Math.max(0, document.documentElement.scrollHeight - innerHeight)));
+  let lastY = scrollPosition(), direction = 0, travel = 0, scrollFrame = 0;
   const update = () => {
-    const y = scrollY;
+    const y = scrollPosition();
+    const delta = y - lastY;
+    lastY = y;
     header.classList.toggle('is-compact', y > 24);
     header.classList.toggle('is-over-hero', !!(overHero && hero && hero.hasAttribute('data-dark') && y < hero.offsetHeight - 80));
+    const interacting = header.querySelector('[aria-expanded="true"], :focus-visible');
+    if (y <= 96 || interacting) {
+      showHeader();
+      direction = 0;
+      travel = 0;
+      return;
+    }
+    if (!delta) return;
+    const nextDirection = Math.sign(delta);
+    travel = nextDirection === direction ? travel + Math.abs(delta) : Math.abs(delta);
+    direction = nextDirection;
+    if (travel >= 8) {
+      header.classList.toggle('is-hidden', direction > 0);
+      travel = 0;
+    }
   };
   update();
-  addEventListener('scroll', update, { passive: true });
+  addEventListener('scroll', () => {
+    if (!scrollFrame) scrollFrame = requestAnimationFrame(() => { scrollFrame = 0; update(); });
+  }, { passive: true });
 </script>
