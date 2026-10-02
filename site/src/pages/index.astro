@@ -8,6 +8,7 @@ import Icon from '../components/Icon.astro';
 import HeroLive from '../components/hero/HeroLive.astro';
 import { SERVICES, SITE } from '../data/site.js';
 import CaseRail from '../components/CaseRail.astro';
+import WhyStalls from '../components/WhyStalls.astro';
 
 
 
@@ -45,12 +46,14 @@ const jsonLd = [
 
   <HeroLive />
 
+  <WhyStalls />
+
   <!-- SERVICES -->
   <section class="section container" id="tjenester" aria-labelledby="services-title">
     <div class="section-head" data-reveal>
       <span class="eyebrow">Hva vi gjør</span>
-      <h2 id="services-title" class="display-lg">Praktisk AI, bygget for hvordan dere faktisk jobber.</h2>
-      <p class="lead">Alle har AI nå, men det meste av jobben gjøres fortsatt som før. Vi kartlegger arbeidsflytene, bygger AI inn der den gjør en forskjell, og lager retningslinjer så hele teamet kan bruke den trygt.</p>
+      <h2 id="services-title" class="display-lg">Fra én oppgave til hele bedriften.</h2>
+      <p class="lead">Vi bygger AI-agenter, automatiserer faste oppgaver og lager verktøyene som mangler. Alt i systemene dere allerede bruker.</p>
     </div>
     <div class="service-panels">
       {SERVICES.map((s, i) => <div data-reveal style={`--d:${i * 90}ms`}><BlobPanel href={s.href} tone={s.tone} preset={s.preset} protect="46%" minHeight={620}>

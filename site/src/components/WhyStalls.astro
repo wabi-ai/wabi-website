@@ -1,0 +1,148 @@
+---
+// "Why AI stalls": four common ways companies start with AI, each with a small illustration of where it gets stuck.
+import Icon from './Icon.astro';
+import ToolLogo from './ToolLogo.astro';
+
+const cards = [
+  { id: 'tools', tag: 'Verktøy først', title: 'Lisens til alle', text: 'Alle jobber litt raskere. Overleveringene hoper seg opp.', stall: 'mellom menneskene.' },
+  { id: 'plan', tag: 'Plan først', title: 'Bestill en strategi', text: 'Et halvt år senere er det fortsatt en presentasjon.', stall: 'ingenting blir bygget.' },
+  { id: 'demo', tag: 'Demo først', title: 'Kjør en pilot', text: 'Demoen fungerer, men den blir aldri koblet til noe.', stall: 'i systemene dere faktisk bruker.' },
+  { id: 'owner', tag: 'Ingen eier det', title: 'Alle prøver litt', text: 'Hver avdeling har sitt verktøy. Ingen ser helheten.', stall: 'ingen har ansvaret.' },
+];
+---
+<section class="section container stalls" aria-labelledby="stalls-title">
+  <div class="stalls-head" data-reveal>
+    <span class="eyebrow">Hvorfor AI stopper opp</span>
+    <h2 id="stalls-title" class="display-lg">Fire vanlige måter <span>å starte med AI på.</span></h2>
+  </div>
+
+  <ul class="stalls-list">
+    {cards.map((c, i) => <li class:list={['stall', 'stall-' + c.id]} data-reveal style={`--d:${i * 90}ms`}>
+      <div class="art" aria-hidden="true">
+        {c.id === 'tools' && <div class="team">
+          {[0, 1, 2].map(n => <>
+            {n > 0 && <span class="pile"><i></i><i></i><i></i></span>}
+            <span class="person"><Icon name="menneske" size={26} /><b><Icon name="ai" size={14} /></b></span>
+          </>)}
+        </div>}
+
+        {c.id === 'plan' && <div class="plan">
+          <div class="doc">
+            <span class="doc-label">AI-strategi</span>
+            <div class="doc-flow"><i></i><i></i><i></i></div>
+            <div class="doc-lines"><i></i><i></i></div>
+            <span class="doc-page">1 / 24</span>
+          </div>
+          <div class="cal"><span></span><b>JUN</b></div>
+        </div>}
+
+        {c.id === 'demo' && <div class="demo">
+          <div class="win">
+            <span class="win-pill">Demo</span>
+            <div class="win-flow"><i></i><i></i><i class="ok"></i></div>
+          </div>
+          <span class="plug"><svg viewBox="0 0 64 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M0 10c10 0 12-7 20-7s9 14 18 14c5 0 8-7 12-7" /><rect x="50" y="5" width="9" height="10" rx="2" /><path d="M59 7.5h4M59 12.5h4" /></svg></span>
+          <div class="systems">{['data', 'dokument', 'epost'].map(n => <span><Icon name={n} size={20} /></span>)}</div>
+        </div>}
+
+        {c.id === 'owner' && <div class="owner">
+          <span class="hub">?</span>
+          {['ChatGPT', 'Microsoft Copilot', 'Gemini', 'Claude'].map((t, n) => <span class={'tool t' + n}><ToolLogo name={t} size={20} /></span>)}
+        </div>}
+      </div>
+      <div class="body">
+        <span class="tag">{c.tag}</span>
+        <h3>{c.title}</h3>
+        <p>{c.text}</p>
+        <p class="where"><b>Der det stopper:</b> {c.stall}</p>
+      </div>
+    </li>)}
+  </ul>
+
+  <p class="stalls-close" data-reveal>Vi starter med hvordan dere jobber, bygger i systemene dere faktisk bruker, og sørger for at noen eier det. <a href="/kartlegging/" class="text-link">Se hvordan vi starter <span aria-hidden="true">→</span></a></p>
+</section>
+
+<style>
+  .stalls { padding-top: clamp(64px, 8vw, 112px); }
+  .stalls-head { display: flex; flex-direction: column; gap: 20px; margin-bottom: 56px; }
+  .stalls-head h2 span { color: var(--wabi-moss); opacity: .62; }
+
+  .stalls-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .stall { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--wabi-outline); border-radius: 14px; background: var(--wabi-raised); }
+  .stall-tools { --tint: #E4EAF1; }
+  .stall-plan { --tint: #EFEBD9; }
+  .stall-demo { --tint: #E6EEE7; }
+  .stall-owner { --tint: #F1E5DE; }
+
+  .art { position: relative; display: grid; place-items: center; height: 220px; padding: 20px; background: var(--tint); border-bottom: 1px solid var(--wabi-outline); color: var(--wabi-forest); }
+  .body { display: flex; flex-direction: column; gap: 12px; padding: 24px 24px 26px; flex: 1; }
+  .tag { align-self: flex-start; padding: 4px 11px; border: 1px solid var(--wabi-outline-tint); border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--wabi-moss); }
+  .body h3 { margin-top: 6px; font-size: clamp(22px, 1.9vw, 27px); font-weight: 400; line-height: 1.15; letter-spacing: -.03em; }
+  .body p { font-size: 15px; line-height: 1.55; color: #3B4A40; }
+  .body .where { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--wabi-outline); color: var(--wabi-forest); }
+
+  /* Shared illustration parts: paper cards with fine forest lines */
+  .art :is(.doc, .cal, .win, .systems span, .tool, .hub, .pile i) { background: var(--wabi-raised); border: 1px solid rgba(20, 61, 36, .22); }
+
+  /* 1. Everyone has a licence, the handoffs pile up between people */
+  .team { display: flex; align-items: center; }
+  .person { position: relative; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--wabi-raised); border: 1px solid rgba(20, 61, 36, .22); }
+  .person b { position: absolute; top: -5px; right: -5px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--wabi-sage); }
+  .pile { position: relative; width: 34px; height: 40px; }
+  .pile::before { content: ''; position: absolute; left: -4px; right: -4px; top: 50%; border-top: 1px dashed rgba(20, 61, 36, .35); }
+  .pile i { position: absolute; left: 50%; width: 24px; height: 17px; margin-left: -12px; border-radius: 3px; }
+  .pile i:nth-child(1) { top: 16px; transform: rotate(-6deg); }
+  .pile i:nth-child(2) { top: 10px; transform: rotate(5deg); }
+  .pile i:nth-child(3) { top: 4px; transform: rotate(-2deg); background: #F7E9C8; }
+
+  /* 2. The strategy stays a document */
+  .plan { display: flex; align-items: flex-end; gap: 12px; }
+  .doc { position: relative; display: flex; flex-direction: column; gap: 16px; width: 150px; padding: 12px 14px 26px; border-radius: 8px; }
+  .doc-label { padding-bottom: 8px; border-bottom: 1px solid var(--wabi-outline); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .doc-flow { display: flex; align-items: center; justify-content: space-between; }
+  .doc-flow i { width: 24px; height: 24px; border: 1px dashed rgba(20, 61, 36, .5); border-radius: 50%; }
+  .doc-flow { background: linear-gradient(rgba(20, 61, 36, .3), rgba(20, 61, 36, .3)) center / 100% 1px no-repeat; }
+  .doc-flow i { background: var(--wabi-raised); }
+  .doc-lines { display: flex; flex-direction: column; gap: 5px; }
+  .doc-lines i { height: 4px; border-radius: 4px; background: var(--wabi-outline); }
+  .doc-lines i:last-child { width: 60%; }
+  .doc-page { position: absolute; right: 10px; bottom: 7px; font-family: var(--font-mono); font-size: 8px; color: var(--wabi-muted); }
+  .cal { display: flex; flex-direction: column; width: 58px; border-radius: 8px; overflow: hidden; }
+  .cal span { height: 14px; background: #F7E9C8; border-bottom: 1px solid rgba(20, 61, 36, .22); }
+  .cal b { padding: 12px 0; text-align: center; font-size: 15px; font-weight: 600; letter-spacing: .02em; }
+
+  /* 3. The demo works but never plugs in */
+  .demo { display: flex; align-items: center; gap: 6px; }
+  .win { display: flex; flex-direction: column; gap: 18px; width: 118px; padding: 10px 12px 18px; border-radius: 8px; }
+  .win-pill { align-self: flex-start; padding: 2px 7px; border-radius: 100px; background: var(--wabi-sage); font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .win-flow { display: flex; justify-content: space-between; background: linear-gradient(rgba(20, 61, 36, .45), rgba(20, 61, 36, .45)) center / 100% 1px no-repeat; }
+  .win-flow i { position: relative; width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(20, 61, 36, .45); background: var(--wabi-raised); }
+  .win-flow i.ok { background: var(--wabi-moss); border-color: var(--wabi-moss); }
+  .win-flow i.ok::after { content: ''; position: absolute; left: 6px; top: 4px; width: 5px; height: 8px; border: solid var(--wabi-oat); border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); }
+  .plug { width: 52px; color: rgba(20, 61, 36, .6); }
+  .plug svg { width: 100%; height: auto; overflow: visible; }
+  .systems { display: flex; flex-direction: column; gap: 6px; margin-left: 8px; padding: 6px; border: 1px dashed rgba(20, 61, 36, .35); border-radius: 10px; }
+  .systems span { display: grid; place-items: center; width: 36px; height: 34px; border-radius: 7px; }
+
+  /* 4. Every team has its own tool, nobody owns the whole */
+  .owner { position: relative; width: 190px; height: 160px; }
+  .hub { position: absolute; left: 50%; top: 50%; display: grid; place-items: center; width: 48px; height: 48px; margin: -24px 0 0 -24px; border-radius: 50%; border-style: dashed !important; font-size: 18px; color: var(--wabi-muted); }
+  .tool { position: absolute; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; }
+  .tool::after { content: ''; position: absolute; width: 22px; border-top: 1px dashed rgba(20, 61, 36, .35); }
+  .t0 { left: 6px; top: 4px; } .t0::after { left: 44px; top: 46px; transform: rotate(40deg); }
+  .t1 { right: 6px; top: 4px; } .t1::after { right: 44px; top: 46px; transform: rotate(-40deg); }
+  .t2 { left: 6px; bottom: 4px; } .t2::after { left: 44px; bottom: 46px; transform: rotate(-40deg); }
+  .t3 { right: 6px; bottom: 4px; } .t3::after { right: 44px; bottom: 46px; transform: rotate(40deg); }
+
+  .stalls-close { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px; margin-top: 40px; max-width: 760px; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55; }
+
+  @media (max-width: 1100px) {
+    .stalls-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .stalls-head { margin-bottom: 36px; }
+    .stalls-list { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .art { height: 190px; }
+    .body { padding: 20px 20px 22px; }
+  }
+</style>
