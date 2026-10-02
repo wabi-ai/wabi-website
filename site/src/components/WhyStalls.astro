@@ -4,10 +4,10 @@ import Icon from './Icon.astro';
 import ToolLogo from './ToolLogo.astro';
 
 const cards = [
-  { id: 'tools', blob: 'wabi-blob-fjord.webp', tag: 'Verktøy først', title: 'Lisens til alle', text: 'Alle jobber litt raskere. Overleveringene hoper seg opp.', stall: 'mellom menneskene.' },
-  { id: 'plan', blob: 'wabi-blob-sand.webp', tag: 'Plan først', title: 'Bestill en strategi', text: 'Et halvt år senere er det fortsatt en presentasjon.', stall: 'ingenting blir bygget.' },
-  { id: 'demo', blob: 'wabi-blob.webp', tag: 'Demo først', title: 'Kjør en pilot', text: 'Demoen fungerer, men den blir aldri koblet til noe.', stall: 'i systemene dere faktisk bruker.' },
-  { id: 'owner', blob: 'wabi-blob-ember.webp', tag: 'Ingen eier det', title: 'Alle prøver litt', text: 'Hver avdeling har sitt verktøy. Ingen ser helheten.', stall: 'ingen har ansvaret.' },
+  { id: 'tools', blob: 'wabi-blob-fjord.webp', tag: 'Verktøy først', title: 'Lisens til alle', text: 'Alle jobber litt raskere. Overleveringene hoper seg opp.' },
+  { id: 'plan', blob: 'wabi-blob-sand.webp', tag: 'Plan først', title: 'Bestill en strategi', text: 'Et halvt år senere er det fortsatt en presentasjon.' },
+  { id: 'demo', blob: 'wabi-blob.webp', tag: 'Demo først', title: 'Kjør en pilot', text: 'Demoen fungerer, men den blir aldri koblet til noe.' },
+  { id: 'owner', blob: 'wabi-blob-ember.webp', tag: 'Ingen eier det', title: 'Alle prøver litt', text: 'Hver avdeling har sitt verktøy. Ingen ser helheten.' },
 ];
 ---
 <section class="section container stalls" aria-labelledby="stalls-title">
@@ -55,7 +55,6 @@ const cards = [
         <span class="tag">{c.tag}</span>
         <h3>{c.title}</h3>
         <p>{c.text}</p>
-        <p class="where"><b>Der det stopper:</b> {c.stall}</p>
       </div>
     </li>)}
   </ul>
@@ -85,7 +84,6 @@ const cards = [
   .tag { align-self: flex-start; padding: 4px 11px; border: 1px solid var(--wabi-outline-tint); border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--wabi-moss); }
   .body h3 { margin-top: 6px; font-size: clamp(22px, 1.9vw, 27px); font-weight: 400; line-height: 1.15; letter-spacing: -.03em; }
   .body p { font-size: 15px; line-height: 1.55; color: #3B4A40; }
-  .body .where { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--wabi-outline); color: var(--wabi-forest); }
 
   /* Shared illustration parts: paper cards with fine forest lines */
   .art :is(.doc, .cal, .win, .systems span, .tool, .hub, .pile i, .person) { background: var(--wabi-raised); border: 1px solid rgba(20, 61, 36, .16); box-shadow: 0 10px 28px rgba(11, 36, 21, .14); }
