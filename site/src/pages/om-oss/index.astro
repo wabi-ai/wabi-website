@@ -1,7 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
-import WabiSabi from '../../components/WabiSabi.astro';
+import FaqList from '../../components/FaqList.astro';
+import { deliveryFaq } from '../../data/delivery.js';
 import CtaPanel from '../../components/CtaPanel.astro';
 import { breadcrumbLd } from '../../lib/seo.js';
 import { SITE } from '../../data/site.js';
@@ -25,7 +26,15 @@ const aboutLd = { '@context': 'https://schema.org', '@type': 'AboutPage', name: 
     </figure>)}
   </section>
 
-  <div class="rule"><WabiSabi /></div>
+  <section class="container experience" aria-labelledby="experience-title">
+    <div class="split-head" data-reveal><span class="eyebrow">Relevant arbeid</span><h2 id="experience-title" class="display-md">Fra behov til noe folk bruker.</h2><p class="lead">Vi jobber med både enkeltoppgaver og systemene som holder bedriften i gang. Her er to av løsningene vi har bygget sammen med kundene.</p></div>
+    <div class="work-grid">
+      <a href="/prosjekter/rapportering/" data-reveal><span class="eyebrow">Nuet · Markedsføring</span><h3>Rapportering samlet på ett sted.</h3><p>Vi bygget et verktøy som henter tall fra flere plattformer, forklarer endringene med AI og gir hver kunde en egen rapportlenke.</p><span class="text-link">Se prosjektet <span aria-hidden="true">→</span></span></a>
+      <a href="/prosjekter/bruktbil/" data-reveal><span class="eyebrow">M Biler · Bruktbilhandel</span><h3>Et system for hele salgsdagen.</h3><p>Lager, kunder, prøvekjøringer, kontrakter og økonomi samlet. Bygget sammen med M Biler og tatt i bruk av flere forhandlere.</p><span class="text-link">Se prosjektet <span aria-hidden="true">→</span></span></a>
+    </div>
+  </section>
+  <FaqList faq={deliveryFaq} title="Trygge rammer for samarbeidet." />
+  <section class="container approach" data-reveal><span class="eyebrow">Slik tenker vi</span><h2 class="display-md">Praktisk AI. Personlig samarbeid.</h2><p>Vi blir kjent med arbeidet før vi bygger, forklarer valgene underveis og forbedrer løsningen sammen med dem som bruker den.</p></section>
   <CtaPanel eyebrow="Kontakt" title="Ta en prat med oss." text="Fortell hva dere bruker mye tid på, så ser vi sammen på om AI kan gjøre arbeidsdagen enklere." primary={{ label: 'Kontakt oss', href: '/kontakt/' }} secondary={null} />
 </Base>
 
@@ -37,6 +46,16 @@ const aboutLd = { '@context': 'https://schema.org', '@type': 'AboutPage', name: 
   strong { font-size: 18px; }
   figcaption a { font-size: 14px; font-weight: 700; color: var(--wabi-moss); overflow-wrap: anywhere; }
   .role { font-size: 14px; color: var(--wabi-muted); }
-  .rule { border-top: 1px solid var(--wabi-outline); padding-top: var(--section-space); }
+  .experience, .approach { padding-bottom: var(--section-space); }
+  .experience .split-head { max-width: 740px; margin-bottom: 32px; }
+  .experience .lead { color: #3B4A40; }
+  .work-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .work-grid > a { display: flex; flex-direction: column; gap: 20px; padding: clamp(24px, 3vw, 40px); border: 1px solid var(--wabi-outline); border-radius: 14px; background: var(--wabi-raised); text-decoration: none; }
+  .work-grid h3 { font-size: 28px; font-weight: 400; line-height: 1.2; letter-spacing: -.03em; }
+  .work-grid p, .approach p { color: #3B4A40; }
+  .work-grid .text-link { margin-top: auto; }
+  .approach h2 { margin-block: 20px; }
+  .approach p { max-width: 680px; }
+  @media (max-width: 760px) { .work-grid { grid-template-columns: minmax(0, 1fr); } }
   @media (max-width: 600px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>

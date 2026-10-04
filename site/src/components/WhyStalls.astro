@@ -1,19 +1,18 @@
 ---
-// "Why AI stalls": four common ways companies start with AI, each with a small illustration of where it gets stuck.
+// Recognizable business problems, with links to the relevant ways we help.
 import Icon from './Icon.astro';
 import ToolLogo from './ToolLogo.astro';
 
 const cards = [
-  { id: 'tools', blob: 'wabi-blob-fjord.webp', tag: 'Verktøy først', title: 'Lisens til alle', text: 'Alle jobber litt raskere. Overleveringene hoper seg opp.' },
-  { id: 'plan', blob: 'wabi-blob-sand.webp', tag: 'Plan først', title: 'Bestill en strategi', text: 'Et halvt år senere er det fortsatt en presentasjon.' },
-  { id: 'demo', blob: 'wabi-blob.webp', tag: 'Demo først', title: 'Kjør en pilot', text: 'Demoen fungerer, men den blir aldri koblet til noe.' },
-  { id: 'owner', blob: 'wabi-blob-ember.webp', tag: 'Ingen eier det', title: 'Alle prøver litt', text: 'Hver avdeling har sitt verktøy. Ingen ser helheten.' },
+  { id: 'demo', blob: 'wabi-blob-fjord.webp', tag: 'Systemer', title: 'Oversikten må settes sammen for hånd.', text: 'Informasjon ligger i flere systemer. Vi kobler den sammen og bygger oversikten dere trenger.', href: '/verktoy-og-programvare/', link: 'Se verktøyene vi bygger' },
+  { id: 'tools', blob: 'wabi-blob-sand.webp', tag: 'Arbeidsflyt', title: 'Jobben stopper mellom folk og avdelinger.', text: 'Dobbeltarbeid og venting tar tid. Vi går gjennom hele arbeidsflyten og bygger sammenheng mellom stegene.', href: '/automatisering/', link: 'Se hvordan vi kobler arbeidet sammen' },
+  { id: 'owner', blob: 'wabi-blob-ember.webp', tag: 'Strategi og opplæring', title: 'Alle prøver AI. Ingen ser helheten.', text: 'Dere trenger en felles retning. Vi lager en plan, velger verktøy og hjelper teamet å bruke dem trygt.', href: '/kartlegging/', link: 'Se hvordan vi finner en retning' },
 ];
 ---
-<section class="section container stalls" aria-labelledby="stalls-title">
+<section id="tjenester" class="section container stalls" aria-labelledby="stalls-title">
   <div class="stalls-head" data-reveal>
-    <span class="eyebrow">Hvorfor AI stopper opp</span>
-    <h2 id="stalls-title" class="display-lg">Fire vanlige måter <span>å starte med AI på.</span></h2>
+    <span class="eyebrow">Kjenner dere igjen dette?</span>
+    <h2 id="stalls-title" class="display-lg">Når arbeidet trenger <span>bedre sammenheng.</span></h2>
   </div>
 
   <ul class="stalls-list">
@@ -55,6 +54,7 @@ const cards = [
         <span class="tag">{c.tag}</span>
         <h3>{c.title}</h3>
         <p>{c.text}</p>
+        <a class="text-link" href={c.href}>{c.link} <span aria-hidden="true">→</span></a>
       </div>
     </li>)}
   </ul>
@@ -70,7 +70,7 @@ const cards = [
   .stalls-head { display: flex; flex-direction: column; gap: 20px; margin-bottom: 56px; }
   .stalls-head h2 span { color: var(--wabi-moss); opacity: .62; }
 
-  .stalls-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .stalls-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .stall { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--wabi-outline); border-radius: 14px; background: var(--wabi-raised); }
   .stall-tools { --tint: #DCE4EE; --blob-t: rotate(-68deg); --blob-x: -38%; --blob-y: -62%; }
   .stall-plan { --tint: #E9E5CF; --blob-t: scaleX(-1) rotate(24deg); --blob-x: -12%; --blob-y: -40%; }
@@ -84,6 +84,8 @@ const cards = [
   .tag { align-self: flex-start; padding: 4px 11px; border: 1px solid var(--wabi-outline-tint); border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--wabi-moss); }
   .body h3 { margin-top: 6px; font-size: clamp(22px, 1.9vw, 27px); font-weight: 400; line-height: 1.15; letter-spacing: -.03em; }
   .body p { font-size: 15px; line-height: 1.55; color: #3B4A40; }
+
+  .body .text-link { margin-top: auto; padding-top: 12px; font-size: 14px; }
 
   /* Shared illustration parts: paper cards with fine forest lines */
   .art :is(.doc, .cal, .win, .systems span, .tool, .hub, .pile i, .person) { background: var(--wabi-raised); border: 1px solid rgba(20, 61, 36, .16); box-shadow: 0 10px 28px rgba(11, 36, 21, .14); }
@@ -143,8 +145,8 @@ const cards = [
   .stalls-close p { font-size: clamp(17px, 1.45vw, 19px); line-height: 1.5; letter-spacing: -.01em; text-wrap: balance; }
   .stalls-close .text-link { flex: none; }
 
-  @media (max-width: 1100px) {
-    .stalls-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (max-width: 900px) {
+    .stalls-list { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 860px) {
     .stalls-close { flex-direction: column; align-items: flex-start; }

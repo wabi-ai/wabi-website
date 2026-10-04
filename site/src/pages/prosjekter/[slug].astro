@@ -24,6 +24,14 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
     {c.note && <p class="note mono">{c.note}</p>}
   </PageHero>
 
+  {c.before && <section class="section-tight container rule-top ba" aria-labelledby="ba-title">
+    <div class="split-head" data-reveal><span class="eyebrow">Før og etter</span><h2 id="ba-title" class="display-md">Hva som endret seg.</h2></div>
+    <div class="ba-grid">
+      <div data-reveal><h3>Før</h3><ul>{c.before.map(b => <li>{b}</li>)}</ul></div>
+      <div data-reveal style="--d:100ms"><h3>Etter</h3><ul>{c.after.map(b => <li>{b}</li>)}</ul></div>
+    </div>
+  </section>}
+
   {c.demo || c.shots ? <>
     <section class="container facts-row" aria-label="Fakta om prosjektet">
       <dl>{c.facts.map(([k, v]) => <div><dt>{k}</dt><dd>
@@ -77,13 +85,7 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
     <dl class="spec-list" data-reveal>{c.spec.map(([k, v]) => <><dt>{k}</dt><dd>{v}</dd></>)}</dl>
   </section>}
 
-  {c.before && <section class="section-tight container rule-top ba" aria-labelledby="ba-title">
-    <div class="split-head" data-reveal><span class="eyebrow">Før og etter</span><h2 id="ba-title" class="display-md">Hva som endret seg.</h2></div>
-    <div class="ba-grid">
-      <div data-reveal><h3>Før</h3><ul>{c.before.map(b => <li>{b}</li>)}</ul></div>
-      <div data-reveal style="--d:100ms"><h3>Etter</h3><ul>{c.after.map(b => <li>{b}</li>)}</ul></div>
-    </div>
-  </section>}
+
 
   <section class="section-tight container rule-top" aria-labelledby="more-title">
     <h2 id="more-title" class="eyebrow">Flere prosjekter</h2>

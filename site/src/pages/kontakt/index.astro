@@ -9,8 +9,8 @@ const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', na
 const live = Boolean(SITE.contactFormKey);
 ---
 <Base title="Kontakt Wabi | AI-rådgivning" description="Ta kontakt med Wabi. Fortell hva dere bruker mye tid på, så ser vi sammen på om AI kan gjøre arbeidsdagen enklere." jsonLd={[breadcrumbLd(crumbs), contactLd]}>
-  <PageHero crumbs={crumbs} eyebrow="Kontakt" title="Hva bruker dere mye tid på?"
-    lead="Fortell oss om en oppgave dere vil gjøre enklere. Du trenger ikke kunne noe om AI eller ha en ferdig plan." />
+  <PageHero crumbs={crumbs} eyebrow="Kontakt" title="La oss se på mulighetene sammen."
+    lead="Du trenger ikke en ferdig plan. Vi tar en prat om hvordan dere jobber, hva dere vil forbedre og hvor det er verdt å starte." />
 
   <section class="container contact">
     <aside class="people" data-reveal>
@@ -27,19 +27,14 @@ const live = Boolean(SITE.contactFormKey);
     <form class="composer" data-composer data-key={SITE.contactFormKey} data-reveal novalidate>
       <div class="row">
         <label><span>Navn</span><input name="name" autocomplete="name" required /></label>
-        <label><span>E-post</span><input name="email" type="email" autocomplete="email" required /></label>
+        <label><span>E-post på jobb</span><input name="email" type="email" autocomplete="email" required /></label>
       </div>
-      <div class="row">
-        <label><span>Bedrift</span><input name="company" autocomplete="organization" /></label>
-        <label><span>Telefon <em>(valgfritt)</em></span><input name="phone" type="tel" autocomplete="tel" /></label>
-      </div>
-      <label><span>Hva vil dere få til?</span><textarea name="goal" rows="4" placeholder="For eksempel: raskere tilbud, færre e-poster i innboksen, bedre rapporter"></textarea></label>
-      <label><span>Hva tar mest tid i dag?</span><textarea name="time" rows="4" placeholder="Beskriv en oppgave slik den gjøres i dag"></textarea></label>
+      <label><span>Hva ønsker dere hjelp med? <em>(valgfritt)</em></span><textarea name="message" rows="4" placeholder="Fortell gjerne litt om bedriften og hva dere ønsker å forbedre."></textarea></label>
       <!-- Spam trap: humans never see or fill this. -->
       <input type="checkbox" name="botcheck" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <div class="send">
         <button type="submit" class="button button-primary" data-submit>{live ? 'Send henvendelsen' : 'Åpne e-postutkast'}</button>
-        <p>{live ? 'En av oss leser henvendelsen og svarer deg.' : 'Utkastet åpnes i e-postappen din, og du sender det selv.'}</p>
+        <p>{live ? 'Dette er en forespørsel om en samtale. Du bestiller ikke et prosjekt.' : 'Utkastet åpnes i e-postappen din, og du sender det selv.'}</p>
       </div>
       <p class="status" data-status role="status" aria-live="polite"></p>
       <details class="fallback" data-fallback hidden={live}>
@@ -68,12 +63,12 @@ const live = Boolean(SITE.contactFormKey);
     const fallback = form.querySelector<HTMLDetailsElement>('[data-fallback]')!;
     const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
     const v = (k: string) => String(new FormData(form).get(k) || '').trim();
-    const compose = () => `Hei,\n\nDette vil vi få til:\n${v('goal') || '(ikke fylt ut)'}\n\nDette tar mest tid i dag:\n${v('time') || '(ikke fylt ut)'}\n\nHilsen\n${[v('name'), v('company'), v('email'), v('phone')].filter(Boolean).join('\n')}`;
+    const compose = () => `Hei,\n\n${v('message') || 'Jeg ønsker en samtale om hvordan Wabi kan hjelpe oss.'}\n\nHilsen\n${[v('name'), v('email')].filter(Boolean).join('\n')}`;
     const preview = form.querySelector<HTMLElement>('[data-preview]')!;
     const refresh = () => { preview.textContent = compose(); };
     // Prefill from the self check on /kartlegging/ (?tekst=...).
     const prefill = new URLSearchParams(location.search).get('tekst');
-    if (prefill) (form.querySelector<HTMLTextAreaElement>('textarea[name="goal"]')!).value = prefill;
+    if (prefill) (form.querySelector<HTMLTextAreaElement>('textarea[name="message"]')!).value = prefill;
     form.addEventListener('input', refresh);
     refresh();
 
@@ -89,10 +84,9 @@ const live = Boolean(SITE.contactFormKey);
         (v('name') ? emailField : form.querySelector<HTMLInputElement>('input[name="name"]')!).focus();
         return;
       }
-      if (!v('goal') && !v('time')) { showError('Fortell kort hva dere vil få til, eller hva som tar tid i dag.'); return; }
 
       if (!key) {
-        const subject = 'Henvendelse fra wabi.no' + (v('company') ? ', ' + v('company') : '');
+        const subject = 'Henvendelse fra wabi.no';
         location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(compose())}`;
         return;
       }
@@ -103,17 +97,17 @@ const live = Boolean(SITE.contactFormKey);
         const payload = new FormData();
         const fields: Record<string, string> = {
           access_key: key,
-          subject: 'Henvendelse fra wabi.no' + (v('company') ? `, ${v('company')}` : ''),
+          subject: 'Henvendelse fra wabi.no',
           from_name: 'wabi.no',
           replyto: v('email'),
-          name: v('name'), email: v('email'), company: v('company'), phone: v('phone'),
-          Behov: v('goal'), 'Tidsbruk i dag': v('time'),
+          name: v('name'), email: v('email'),
+          message: v('message') || 'Ønsker en samtale om hvordan Wabi kan hjelpe oss.',
         };
         Object.entries(fields).forEach(([k, val]) => payload.append(k, val));
         if ((form.querySelector<HTMLInputElement>('input[name="botcheck"]')!).checked) payload.append('botcheck', 'true');
         const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: payload });
         const data = await res.json().catch(() => ({}));
-        if (!res.ok || data.success === false) throw new Error(data.message || 'Feil');
+        if (!res.ok || data.success !== true) throw new Error(data.message || 'Feil');
         form.hidden = true;
         const thanks = document.querySelector<HTMLElement>('[data-thanks]')!;
         thanks.hidden = false;
@@ -137,7 +131,7 @@ const live = Boolean(SITE.contactFormKey);
 <style>
   .contact { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: clamp(32px, 6vw, 96px); align-items: start; padding-bottom: var(--section-space); }
   .people { position: sticky; top: 120px; display: flex; flex-direction: column; gap: 20px; }
-  .faces { display: flex; gap: 12px; }
+  .faces { display: flex; gap: 12px; flex-shrink: 0; }
   .faces img { width: min(150px, 46%); height: auto; }
   .people > div:last-child { display: flex; flex-direction: column; gap: 4px; }
   .people strong { font-size: 20px; }
@@ -165,5 +159,6 @@ const live = Boolean(SITE.contactFormKey);
   .copied { margin-left: 12px; font-size: 13px; color: var(--wabi-moss); }
   .thanks p { color: #3B4A40; }
   .thanks a { color: var(--wabi-moss); font-weight: 700; }
-  @media (max-width: 860px) { .contact { grid-template-columns: minmax(0, 1fr); } .people { position: static; flex-direction: row; align-items: center; } .faces img { width: 84px; } .row { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 860px) { .contact { grid-template-columns: minmax(0, 1fr); } .people { position: static; flex-direction: row; align-items: center; } .faces img { width: 64px; } .row { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 480px) { .people { flex-direction: column; align-items: flex-start; gap: 14px; } }
 </style>

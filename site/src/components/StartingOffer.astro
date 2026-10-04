@@ -1,0 +1,38 @@
+---
+interface Props { detail?: boolean; }
+const { detail = false } = Astro.props;
+---
+<section class="container starting-offer" id="slik-starter-vi" aria-labelledby="start-title">
+  <div class="offer" data-reveal>
+    <div class="intro">
+      <span class="eyebrow">Slik starter vi</span>
+      <h2 id="start-title" class="display-md">Start med en samtale.<br />Få klarhet i neste steg.</h2>
+      <p>Fortell hvordan dere jobber og hva dere ønsker å forbedre. Sammen ser vi om en kartlegging er riktig neste steg.</p>
+      <a class="button button-primary" href="/kontakt/">Ta en prat om mulighetene <span aria-hidden="true">→</span></a>
+      <p class="note">Du sender en forespørsel om en samtale. Du bestiller ikke en kartlegging.</p>
+    </div>
+    <ol>
+      <li><span class="number">01</span><div><h3>Vi blir kjent med behovet</h3><p>Ta med en utfordring, en avdeling eller spørsmål om veien videre. Du trenger ingen ferdig plan.</p></div></li>
+      <li><span class="number">02</span><div><h3>Vi avklarer rammene</h3><p>Før en kartlegging avtaler vi omfang, pris, tidsbruk og hvem som bør delta.</p></div></li>
+      <li><span class="number">03</span><div><h3>Dere velger veien videre</h3><p>Kartleggingen gir prioriterte muligheter og et forslag til første prosjekt. Dere bestemmer om dere vil gå videre.</p></div></li>
+    </ol>
+    {!detail && <a class="text-link details-link" href="/kartlegging/">Dette får dere i en kartlegging <span aria-hidden="true">→</span></a>}
+  </div>
+</section>
+<style>
+  .starting-offer { padding-block: var(--section-space); }
+  .offer { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px clamp(32px, 5vw, 80px); padding: clamp(24px, 4.5vw, 64px); border: 1px solid var(--wabi-outline-tint); border-radius: 14px; background: var(--wabi-tint); }
+  .intro { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+  h2 { font-size: clamp(30px, 3.5vw, 48px); }
+  p { color: #3B4A40; line-height: 1.6; }
+  .note { font-size: 13px; }
+  ol { list-style: none; margin: 0; padding: 0; }
+  li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 16px; padding: 24px 0; border-top: 1px solid var(--wabi-outline-tint); }
+  li:first-child { padding-top: 0; border-top: 0; }
+  li:last-child { padding-bottom: 0; }
+  .number { font: 12px/2 var(--font-mono); color: var(--wabi-moss); }
+  h3 { margin-bottom: 8px; font-size: 20px; line-height: 1.3; font-weight: 700; letter-spacing: -.02em; }
+  li p { font-size: 15px; }
+  .details-link { grid-column: 2; font-size: 14px; }
+  @media (max-width: 860px) { .offer { grid-template-columns: minmax(0, 1fr); gap: 32px; } .details-link { grid-column: auto; } }
+</style>

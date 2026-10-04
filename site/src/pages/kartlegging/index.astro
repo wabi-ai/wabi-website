@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import Band from '../../components/Band.astro';
+import StartingOffer from '../../components/StartingOffer.astro';
 import SelfCheck from '../../components/SelfCheck.astro';
 import Steps from '../../components/Steps.astro';
 import FaqList from '../../components/FaqList.astro';
@@ -27,6 +28,8 @@ const steps: [string, string][] = [
 const faq: [string, string][] = [
   ['Hva er en AI-kartlegging?', 'Vi går gjennom oppgavene deres og ser hvor AI kan hjelpe. Dere får en liste over hva som er verdt å prøve, og en plan for å komme i gang.'],
   ['Hvem bør være med?', 'Noen fra ledelsen og noen av dem som gjør oppgavene hver dag. De vet best hvor tiden går.'],
+  ['Hva koster det, og hvor lang tid tar det?', 'Det avhenger av hvor mye vi skal gå gjennom. Vi avklarer pris, tidsbruk og deltakere sammen med dere før kartleggingen starter.'],
+  ['Bestiller vi noe ved å ta kontakt?', 'Nei. Skjemaet er en forespørsel om en samtale. En eventuell kartlegging avtales etterpå.'],
   ['Må vi forberede noe?', 'Nei. Det holder at dere vet hvilke systemer dere bruker. Resten finner vi ut sammen.'],
   ['Hva skjer etter kartleggingen?', 'Dere bestemmer. Vi kan bygge det første prosjektet sammen med dere, eller dere kan ta planen videre på egen hånd.'],
 ];
@@ -34,9 +37,9 @@ const faq: [string, string][] = [
 <Base title="AI-kartlegging for bedrifter | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-kartlegging', description, path: '/kartlegging/' })]}>
   <PageHero crumbs={crumbs} eyebrow="AI-kartlegging" title="Finn ut hvor AI kan hjelpe dere."
     lead="Vi snakker med dere om oppgavene som tar tid. Sammen finner vi ut hva AI kan hjelpe med, og hva dere bør prøve først."
-    primary={{ label: 'Bestill en kartlegging', href: '/kontakt/' }} secondary={{ label: 'Ta selvtesten', href: '#selvtest' }} />
+    primary={{ label: 'Ta en prat om kartlegging', href: '/kontakt/' }} secondary={{ label: 'Ta selvtesten', href: '#selvtest' }} />
 
-  <div id="selvtest"><Band tone="forest"><SelfCheck /></Band></div>
+  <StartingOffer detail />
 
   <section class="section container split" aria-labelledby="fa-title">
     <div class="split-head sticky-head" data-reveal><span class="eyebrow">Det dere får</span><h2 id="fa-title" class="display-md">Dette får dere med videre.</h2></div>
@@ -44,8 +47,9 @@ const faq: [string, string][] = [
   </section>
 
   <Steps dark eyebrow="Slik foregår det" title="Fra samtale til plan." steps={steps} />
+  <div id="selvtest"><Band tone="forest"><SelfCheck /></Band></div>
   <FaqList faq={faq} title="Om AI-kartlegging." />
-  <CtaPanel eyebrow="Neste steg" title="Bestill en kartlegging." text="Vi tar en prat om bedriften deres, og avtaler hvordan kartleggingen skal gjøres." secondary={null} />
+  <CtaPanel eyebrow="Neste steg" title="Ta en prat om kartlegging." text="Vi starter med behovet deres og avklarer hva en kartlegging vil innebære før dere bestemmer dere." secondary={null} />
 </Base>
 
 <style>
