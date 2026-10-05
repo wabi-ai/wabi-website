@@ -2,7 +2,7 @@ export const SITE = {
   name: 'Wabi',
   url: 'https://wabi.no',
   description: 'Vi kartlegger hvordan dere jobber, bygger AI inn der den gjør en forskjell og hjelper hele teamet å bruke den trygt.',
-  socialImage: '/assets/wabi-social-2026-10.jpg',
+  socialImage: '/assets/wabi-social-2026-10-v2.jpg',
   socialImageAlt: 'Wabi. Praktisk AI, bygget for hvordan dere faktisk jobber.',
   email: 'ulrik@wabi.no', // fallback only, if the form fails
   linkedin: 'https://www.linkedin.com/company/wabino/',

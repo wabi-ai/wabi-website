@@ -1,14 +1,21 @@
 # Wabi social preview
 
-Generated with the built-in imagegen tool on 2026-10-02. Exported as a 1200 × 630 JPEG at `site/public/assets/wabi-social-2026-10.jpg`.
+Updated 2026-10-05 using the existing website artwork, replacing the earlier generated preview.
 
-## Prompt
+- Published image: `site/public/assets/wabi-social-2026-10-v2.jpg` (1200 × 630, JPEG).
+- Editable composition: `site/design/wabi-social-preview.svg`.
+- Logo: exact paths from `site/public/assets/logo/wabi-mark-black.svg`, kept black and scaled proportionally.
+- Artwork: `site/public/assets/blob/wabi-blob.webp`, embedded as a lossless PNG, cropped and faded into the background.
+- Type: Manrope at weights 600 and 500, converted to paths for consistent rendering.
+- Font source: `https://github.com/google/fonts/blob/main/ofl/manrope/Manrope%5Bwght%5D.ttf`.
+- Colors: Wabi oat `#F4F1E7` and forest `#143D24`.
 
-Use case: ads-marketing.
-Asset type: Open Graph social sharing preview for the Norwegian consultancy Wabi, a finished flat rectangular 1200 by 630 image (1.905:1), no mockup or outer frame.
-Create a premium, restrained Scandinavian brand card that matches a warm off-white website with dark forest-green type and soft organic green/teal forms. Background warm oat #F4F1E7. At upper left, the brand name "Wabi" in a clean bold modern sans serif wordmark. Below it, a large beautifully typeset dark forest green #143D24 headline on three lines, exactly:
-"Praktisk AI,
-bygget for hvordan
-dere faktisk jobber."
-Small "wabi.no" at lower left. Only these words, no other copy.
-Keep all text crisp, correctly spelled, left aligned, generous space, and at least 70px away from image edges. Use a Manrope-like clean modern sans serif. Text occupies left two thirds. On the right, a flowing soft-focus organic folded shape with fine tactile grain, deep teal #214F57, moss green #1E5631 and restrained lime #87C346 highlights. The form fades naturally into the oat background, can crop off right edge, never overlaps the text. Calm, confident, approachable, designed for business leaders. No mountains, stock photography, robots, icons, gradients behind text, made-up symbols, or extra logos.
+The SVG is self-contained and can be rendered to JPEG at 1200 × 630 without installing the font. The new filename updates both Open Graph and Twitter image references through `SITE.socialImage`.
+
+Copy is unchanged:
+
+> Praktisk AI,
+> bygget for hvordan
+> dere faktisk jobber.
+
+Footer: `wabi.no`.
