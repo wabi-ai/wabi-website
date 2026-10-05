@@ -6,33 +6,49 @@ const { detail = false } = Astro.props;
   <div class="offer" data-reveal>
     <div class="intro">
       <span class="eyebrow">Slik starter vi</span>
-      <h2 id="start-title" class="display-md">Start med en samtale.<br />Få klarhet i neste steg.</h2>
-      <p>Fortell hvordan dere jobber og hva dere ønsker å forbedre. Sammen ser vi om en kartlegging er riktig neste steg.</p>
-      <a class="button button-primary" href="/kontakt/">Ta en prat om mulighetene <span aria-hidden="true">→</span></a>
-      <p class="note">Du sender en forespørsel om en samtale. Du bestiller ikke en kartlegging.</p>
+      <h2 id="start-title">Start med en samtale.</h2>
+      <p>Fortell hvordan dere jobber og hva dere vil forbedre. Sammen finner vi neste steg.</p>
     </div>
     <ol>
-      <li><span class="number">01</span><div><h3>Vi blir kjent med behovet</h3><p>Ta med en utfordring, en avdeling eller spørsmål om veien videre. Du trenger ingen ferdig plan.</p></div></li>
-      <li><span class="number">02</span><div><h3>Vi avklarer rammene</h3><p>Før en kartlegging avtaler vi omfang, pris, tidsbruk og hvem som bør delta.</p></div></li>
-      <li><span class="number">03</span><div><h3>Dere velger veien videre</h3><p>Kartleggingen gir prioriterte muligheter og et forslag til første prosjekt. Dere bestemmer om dere vil gå videre.</p></div></li>
+      <li><span class="number" aria-hidden="true">1</span><h3>Vi blir kjent med behovet</h3><p>Ta med en utfordring eller et spørsmål. Du trenger ingen ferdig plan.</p></li>
+      <li><span class="number" aria-hidden="true">2</span><h3>Vi avklarer rammene</h3><p>Før en kartlegging avtaler vi omfang, pris, tidsbruk og hvem som bør delta.</p></li>
+      <li><span class="number" aria-hidden="true">3</span><h3>Dere velger veien videre</h3><p>Dere får prioriterte muligheter og et forslag til første prosjekt. Dere bestemmer om dere vil gå videre.</p></li>
     </ol>
-    {!detail && <a class="text-link details-link" href="/kartlegging/">Dette får dere i en kartlegging <span aria-hidden="true">→</span></a>}
+    <div class="offer-footer">
+      <div class="actions">
+        <a class="button button-primary" href="/kontakt/">Ta en prat med oss <span aria-hidden="true">→</span></a>
+        {!detail && <a class="text-link details-link" href="/kartlegging/">Se hva kartleggingen gir <span aria-hidden="true">→</span></a>}
+      </div>
+      <p class="note">Du ber om en samtale. En eventuell kartlegging avtales etterpå.</p>
+    </div>
   </div>
 </section>
 <style>
   .starting-offer { padding-block: var(--section-space); }
-  .offer { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px clamp(32px, 5vw, 80px); padding: clamp(24px, 4.5vw, 64px); border: 1px solid var(--wabi-outline-tint); border-radius: 14px; background: var(--wabi-tint); }
-  .intro { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
-  h2 { font-size: clamp(30px, 3.5vw, 48px); }
-  p { color: #3B4A40; line-height: 1.6; }
-  .note { font-size: 13px; }
-  ol { list-style: none; margin: 0; padding: 0; }
-  li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 16px; padding: 24px 0; border-top: 1px solid var(--wabi-outline-tint); }
-  li:first-child { padding-top: 0; border-top: 0; }
-  li:last-child { padding-bottom: 0; }
-  .number { font: 12px/2 var(--font-mono); color: var(--wabi-moss); }
-  h3 { margin-bottom: 8px; font-size: 20px; line-height: 1.3; font-weight: 700; letter-spacing: -.02em; }
+  .offer { padding: clamp(24px, 4.5vw, 64px); border: 1px solid var(--wabi-outline-tint); border-radius: 16px; background: var(--wabi-tint); }
+  .intro { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+  h2 { font-size: clamp(32px, 4.2vw, 56px); font-weight: 400; line-height: 1.1; letter-spacing: -.035em; text-wrap: wrap; }
+  p { color: #3B4A40; line-height: 1.6; text-wrap: wrap; }
+  .intro p { font-size: 17px; }
+  ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; list-style: none; margin: 40px 0; padding: 32px 0; border-block: 1px solid var(--wabi-outline-tint); }
+  li { min-width: 0; }
+  .number { display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: 20px; border-radius: 10px; background: var(--wabi-forest); color: var(--wabi-oat); font: 14px/1 var(--font-mono); }
+  h3 { margin-bottom: 10px; font-size: 20px; line-height: 1.3; font-weight: 700; letter-spacing: -.025em; text-wrap: wrap; }
   li p { font-size: 15px; }
-  .details-link { grid-column: 2; font-size: 14px; }
-  @media (max-width: 860px) { .offer { grid-template-columns: minmax(0, 1fr); gap: 32px; } .details-link { grid-column: auto; } }
+  .offer-footer { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+  .actions { display: flex; align-items: center; gap: 20px 32px; flex-wrap: wrap; }
+  .details-link { font-size: 15px; }
+  .note { font-size: 13px; }
+  @media (max-width: 900px) {
+    ol { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-block: 28px; padding-block: 28px; }
+    li { display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 16px; }
+    .number { grid-row: 1 / 3; margin-bottom: 0; }
+    li p { grid-column: 2; }
+    h3 { margin-bottom: 6px; }
+  }
+  @media (max-width: 480px) {
+    .actions { flex-direction: column; align-items: flex-start; }
+    .intro p { font-size: 16px; }
+    h3 { font-size: 18px; }
+  }
 </style>
