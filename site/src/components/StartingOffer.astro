@@ -47,40 +47,40 @@ const { detail = false } = Astro.props;
     </div>
 </section>
 <style>
-  .starting-offer { --line: #dce3db; --muted: #66736a; padding-block: var(--section-space); }
-  .intro { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 34px; }
+  .starting-offer { --line: var(--wabi-outline); --muted: #3B4A40; padding-block: var(--section-space); }
+  .intro { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; margin-bottom: 32px; }
   .intro > div { flex: 1; min-width: 0; }
   .intro .eyebrow { margin-bottom: 16px; }
   p { color: var(--muted); line-height: 1.7; text-wrap: wrap; }
-  .intro p { flex: 0 1 330px; max-width: 330px; font-size: 14px; }
-  ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; list-style: none; margin: 0; padding: 0; }
-  li { min-width: 0; padding: 25px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
-  .step-label { display: block; font-size: 9px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: #596d58; }
-  h3 { margin-bottom: 15px; font-size: 24px; line-height: 1.25; font-weight: 500; letter-spacing: -.035em; text-wrap: wrap; }
-  li p { font-size: 15px; }
-  .step-art { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; max-width: 300px; height: 180px; margin: 0 auto 15px; font-size: 10px; }
-  .speech, .scope-sheet, .next-sheet { border: 1px solid #dbe4d7; border-radius: 8px; box-shadow: 0 8px 18px #28492908; }
+  .intro p { font-size: 17px; }
+  ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; list-style: none; margin: 0; padding: 0; }
+  li { min-width: 0; padding: 28px; border: 1px solid var(--line); border-radius: 16px; background: var(--wabi-card); }
+  .step-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--wabi-moss); }
+  h3 { margin-bottom: 15px; font-size: 24px; line-height: 1.25; font-weight: 400; letter-spacing: -.03em; text-wrap: wrap; }
+  li p { font-size: 16px; }
+  .step-art { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; max-width: 300px; height: 160px; margin: 12px auto 20px; font-size: 10px; }
+  .speech, .scope-sheet, .next-sheet { border: 1px solid var(--wabi-outline); border-radius: 8px; box-shadow: 0 6px 16px #143D2405; }
   .speech { position: absolute; width: 180px; padding: 16px; }
-  .speech-question { top: 28px; left: 0; background: #f5f8f1; transform: rotate(-5deg); }
-  .speech-question i { display: block; height: 3px; width: 85%; margin-top: 10px; background: #dce7d6; }
+  .speech-question { top: 28px; left: 0; background: var(--wabi-oat); transform: rotate(-3deg); }
+  .speech-question i { display: block; height: 3px; width: 85%; margin-top: 10px; background: var(--wabi-outline); }
   .speech-question i:last-child { width: 60%; }
-  .speech-answer { right: 0; bottom: 20px; background: #fff; transform: rotate(3deg); }
-  .speech-answer b { display: block; color: #596d58; font-size: 22px; line-height: 1; letter-spacing: 3px; margin-top: 6px; }
-  .scope-sheet { width: 195px; padding: 17px; background: #fff; transform: rotate(-4deg); }
-  .scope-sheet > span, .next-sheet > span { display: block; margin-bottom: 10px; color: #596d58; }
-  .scope-sheet > div { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #e7ece3; }
-  .scope-sheet i { display: grid; place-items: center; width: 17px; height: 17px; background: #f5f8f1; border: 1px solid #dbe4d7; border-radius: 4px; font-style: normal; }
-  .agreed { position: absolute; right: 0; bottom: 24px; display: flex; align-items: center; gap: 20px; padding: 10px 14px; border-radius: 7px; background: #1c4b2c; color: #fff; transform: rotate(3deg); }
-  .agreed b { color: #c4eab3; }
-  .next-sheet { width: 230px; padding: 16px; background: #fff; transform: rotate(3deg); }
-  .next-sheet > div { display: flex; align-items: center; gap: 10px; padding: 10px; color: #596d58; }
-  .next-sheet .selected { background: #f5f8f1; border: 1px solid #dbe4d7; border-radius: 5px; color: var(--wabi-forest); }
+  .speech-answer { right: 0; bottom: 20px; background: var(--wabi-raised); transform: rotate(2deg); }
+  .speech-answer b { display: block; color: var(--wabi-moss); font-size: 22px; line-height: 1; letter-spacing: 3px; margin-top: 6px; }
+  .scope-sheet { width: 195px; padding: 17px; background: var(--wabi-raised); transform: rotate(-2deg); }
+  .scope-sheet > span, .next-sheet > span { display: block; margin-bottom: 10px; color: var(--wabi-moss); }
+  .scope-sheet > div { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--wabi-outline); }
+  .scope-sheet i { display: grid; place-items: center; width: 17px; height: 17px; background: var(--wabi-oat); border: 1px solid var(--wabi-outline); border-radius: 4px; font-style: normal; }
+  .agreed { position: absolute; right: 0; bottom: 24px; display: flex; align-items: center; gap: 20px; padding: 10px 14px; border-radius: 7px; background: var(--wabi-forest); color: var(--wabi-raised); transform: rotate(2deg); }
+  .agreed b { color: var(--wabi-sage); }
+  .next-sheet { width: 230px; padding: 16px; background: var(--wabi-raised); transform: rotate(2deg); }
+  .next-sheet > div { display: flex; align-items: center; gap: 10px; padding: 10px; color: var(--wabi-moss); }
+  .next-sheet .selected { background: var(--wabi-oat); border: 1px solid var(--wabi-outline); border-radius: 5px; color: var(--wabi-forest); }
   .next-sheet i { font: 10px var(--font-mono); }
   .next-sheet b { margin-left: auto; font-size: 16px; font-weight: 400; }
   .offer-footer { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; margin-top: 28px; }
   .actions { display: flex; align-items: center; gap: 20px 32px; flex-wrap: wrap; }
   .details-link { font-size: 15px; }
-  .note { font-size: 13px; }
+  .note { font-size: 14px; }
   @media (max-width: 1100px) {
     li { padding: 21px; }
     h3 { font-size: 22px; }
