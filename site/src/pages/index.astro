@@ -163,6 +163,9 @@ const jsonLd = [
   .section-head-row > div { display: flex; flex-direction: column; gap: 20px; }
   .section-head-row .lead { max-width: 380px; }
 
+  #services-title { font-size: clamp(36px, 4.5vw, 64px); text-wrap: wrap; }
+  #tjenester .section-head .lead { max-width: none; }
+
   .service-panels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .service-panels :global(.blob-panel) { padding: 40px 28px; }
   .service-panels h3 { font-size: clamp(26px, 2.8vw, 34px); font-weight: 400; letter-spacing: -.035em; }
