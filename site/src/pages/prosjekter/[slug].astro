@@ -19,6 +19,7 @@ const crumbs = [{ label: 'Prosjekter', href: '/prosjekter/' }, { label: c.catego
 const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
 ---
 <Base title={c.seoTitle || `${c.title.replace(/\.$/, '')} | ${c.category} | Wabi`} description={c.lead} jsonLd={[breadcrumbLd(crumbs)]}>
+  <div class:list={['case-page', { 'case-page-vehicle': c.slug === 'bruktbil' }]}>
   <PageHero crumbs={crumbs} eyebrow={c.client ? c.service : `${c.category} · ${c.service}`} title={c.title} lead={c.lead}>
     {c.logo && <img class="client-logo" src={c.logo} alt={c.client} height="40" />}
     {c.note && <p class="note mono">{c.note}</p>}
@@ -93,6 +94,7 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
   </section>
 
   {c.cta ? <CtaPanel tone={c.tone} eyebrow={c.category} title={c.cta[0]} text={c.cta[1]} primary={{ label: 'Ta kontakt', href: '/kontakt/' }} secondary={null} /> : <CtaPanel />}
+  </div>
 </Base>
 
 <style>
@@ -149,6 +151,23 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
   .others .mono { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--wabi-moss); }
   .others strong { font-size: clamp(20px, 2vw, 26px); font-weight: 400; letter-spacing: -.025em; }
   .others a:hover strong { color: var(--wabi-moss); }
+  /* Keep the M Biler case aligned with the site's shared type and spacing. */
+  .case-page-vehicle :global(.mono) { font-family: var(--font-sans); }
+  .case-page-vehicle :global(h2.display-md) { font-size: var(--section-title-size); font-weight: 400; line-height: 1.12; letter-spacing: -.035em; text-wrap: wrap; }
+  .case-page-vehicle :global(.page-hero .lead) { font-size: 18px; line-height: 1.6; }
+  .case-page-vehicle .answer, .case-page-vehicle .built p { font-size: 17px; line-height: 1.65; letter-spacing: normal; color: #3B4A40; }
+  .case-page-vehicle .answer { max-width: none; }
+  .case-page-vehicle .built h3, .case-page-vehicle .others strong { font-size: 24px; line-height: 1.25; font-weight: 400; letter-spacing: -.03em; }
+  .case-page-vehicle .facts-row dt { font-size: 12px; }
+  .case-page-vehicle .facts-row dd { font-size: 16px; line-height: 1.6; font-weight: 500; }
+  .case-page-vehicle .facts-row, .case-page-vehicle .shots { padding-bottom: var(--section-space); }
+  .case-page-vehicle .section-tight { padding-block: var(--section-space); }
+  .case-page-vehicle .shots .split-head { margin-bottom: 32px; }
+  .case-page-vehicle .shot-frame { border-radius: 16px; background: var(--wabi-card); box-shadow: none; }
+  @media (max-width: 600px) {
+    .case-page-vehicle .built h3, .case-page-vehicle .others strong { font-size: 22px; }
+    .case-page-vehicle .built li { grid-template-columns: 24px minmax(0, 1fr); gap: 16px; }
+  }
   @media (max-width: 860px) {
     .facts dl, .facts-row dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .flow { grid-template-columns: minmax(0, 1fr); }

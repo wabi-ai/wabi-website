@@ -44,7 +44,6 @@ export const CASES = [
     challenge: 'Lager, henvendelser, prøvekjøringer, kontrakter og økonomi lå på hvert sitt sted. De samme opplysningene om hver bil måtte skrives inn flere ganger, og det var vanskelig å se hvilke biler som sto for lenge og hvor mye penger som var bundet opp i dem.',
     home: { metric: '1', unit: 'system for lager, kunder, kontrakter og økonomi', title: 'Hele bilsalget i ett system.', text: 'Laget sammen med M Biler, og nå i bruk hos flere forhandlere. Bilkortet fyller seg selv fra registreringsnummeret.' },
     facts: [['Kunde', 'M Biler AS'], ['Bygget', 'Komplett salgssystem'], ['Status', 'I bruk hos flere forhandlere'], ['Oppsett', 'Egne maler og logo per butikk']],
-    flow: [['Reg.nr inn', 'Data hentes, og bilkortet opprettes.'], ['Lager', 'Status, pris og bilder på ett sted.'], ['Kunder', 'Henvendelser og prøvekjøringer samlet per bil.'], ['Kontrakt', 'Riktig mal, ferdig utfylt, klar for signering.'], ['Økonomi', 'Bruttofortjeneste per bil og per måned.']],
     built: [
       ['Bilkortet fyller seg selv', 'Tekniske data, vekter, EU-frist og miljøtall hentes automatisk. Forhandleren legger bare til pris og bilder.'],
       ['Kontrakter fra egne maler', 'Butikkens maler for forbrukerkjøp, næringskjøp, formidling og innkjøp, fylt ut fra bilkortet.'],
