@@ -50,7 +50,7 @@ const jsonLd = [
   <section class="section container" id="tjenester" aria-labelledby="services-title">
     <div class="section-head" data-reveal>
       <span class="eyebrow">Hva vi gjør</span>
-      <h2 id="services-title" class="display-lg">Fra en oppgave til hele bedriften.</h2>
+      <h2 id="services-title" class="section-title">Fra en oppgave til hele bedriften.</h2>
       <p class="lead">Vi bygger AI-agenter, automatiserer faste oppgaver og lager verktøyene som mangler. Alt i systemene dere allerede bruker.</p>
     </div>
     <div class="service-panels">
@@ -82,7 +82,7 @@ const jsonLd = [
     </div>
     <div class="team-copy" data-reveal>
       <span class="eyebrow">Om oss</span>
-      <h2 id="team-title" class="display-md">Teknologien er ny.<br />Samarbeidet er personlig.</h2>
+      <h2 id="team-title" class="section-title">Teknologien er ny. Samarbeidet er personlig.</h2>
       <p class="lead">Dere møter oss som gjør jobben. Vi har bygget rapportverktøyet til Nuet og salgssystemet til M Biler. Vi kartlegger, bygger, lærer opp og følger opp etter lansering.</p>
       <a href="/om-oss/" class="text-link">Møt oss <span aria-hidden="true">→</span></a>
     </div>
@@ -91,7 +91,7 @@ const jsonLd = [
   <!-- RESULTS -->
   <section class="section container" id="resultater" aria-labelledby="results-title">
     <div class="section-head section-head-row" data-reveal>
-      <div><span class="eyebrow">Prosjekter</span><h2 id="results-title" class="display-lg">Flere løsninger vi har bygget.</h2></div>
+      <div><span class="eyebrow">Prosjekter</span><h2 id="results-title" class="section-title">Flere løsninger vi har bygget.</h2></div>
       <div class="results-side">
         <p class="lead">Løsninger vi har bygget for kundene våre, med skjermbilder fra systemene og eksempler du kan prøve selv.</p>
         <a href="/prosjekter/" class="text-link">Alle prosjekter <span aria-hidden="true">→</span></a>
@@ -105,7 +105,7 @@ const jsonLd = [
     <div class="insight-head" data-reveal>
       <div>
         <span class="eyebrow">Innsikt</span>
-        <h2 id="insight-title" class="display-md">Det vi lærer, deler vi.</h2>
+        <h2 id="insight-title" class="section-title">Det vi lærer, deler vi.</h2>
       </div>
       <a href="/innsikt/" class="text-link">Alle guider <span aria-hidden="true">→</span></a>
     </div>
@@ -139,7 +139,7 @@ const jsonLd = [
   <section class="section container faq" id="faq" aria-labelledby="faq-title">
     <div class="faq-head" data-reveal>
       <span class="eyebrow">Vanlige spørsmål</span>
-      <h2 id="faq-title" class="display-md">Om AI i bedriften.</h2>
+      <h2 id="faq-title" class="section-title">Om AI i bedriften.</h2>
     </div>
     <div class="faq-list">
       {faq.map(([q, a]) => <details data-reveal><summary><h3>{q}</h3><span class="faq-icon" aria-hidden="true"></span></summary><p>{a}</p></details>)}
@@ -163,7 +163,6 @@ const jsonLd = [
   .section-head-row > div { display: flex; flex-direction: column; gap: 20px; }
   .section-head-row .lead { max-width: 380px; }
 
-  #services-title { font-size: clamp(36px, 4.5vw, 64px); text-wrap: wrap; }
   #tjenester .section-head .lead { max-width: none; }
 
   .service-panels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
@@ -175,7 +174,7 @@ const jsonLd = [
   .course-panel { margin-top: 16px; }
   .course-panel :global(.blob-panel) { padding: 48px; }
   .course-label { display: flex; align-items: center; gap: 12px; }
-  .course-panel h3 { font-size: clamp(32px, 3.6vw, 48px); font-weight: 400; letter-spacing: -.04em; line-height: 1.05; }
+  .course-panel h3 { font-size: var(--section-title-size); font-weight: 400; letter-spacing: -.035em; line-height: 1.12; }
   .course-panel p { font-size: 16px; line-height: 1.6; }
   .course-tools, .course-actions { display: flex; gap: 8px; flex-wrap: wrap; }
   .course-tools > span { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px 8px 10px; border-radius: 100px; background: #FDF9F1; border: 1px solid #E2DECF; font-size: 14px; font-weight: 700; white-space: nowrap; }
