@@ -22,6 +22,7 @@ const { items, eyebrow, title, intro } = Astro.props;
   .num { padding-top: 6px; color: var(--wabi-moss); }
   h3 { font-size: clamp(20px, 1.9vw, 24px); font-weight: 400; letter-spacing: -.025em; line-height: 1.25; }
   p { margin-top: 8px; color: #3B4A40; max-width: 520px; }
+  @media (min-width: 901px) { p { max-width: none; } }
   .tools { display: flex; padding-top: 4px; }
   .tools > span { display: grid; place-items: center; width: 32px; height: 32px; margin-left: -6px; border-radius: 50%; background: var(--wabi-raised); border: 1px solid var(--wabi-outline); }
   .tools > span:first-child { margin-left: 0; }

@@ -85,6 +85,7 @@ const faq: [string, string][] = [
   tbody tr:last-child td:last-child { color: var(--wabi-moss); font-weight: 700; }
   .kob-head { margin-bottom: 48px; }
   .kob-head p { max-width: 480px; }
+  @media (min-width: 901px) { .kob-head p { max-width: none; } }
   .kob { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .kob > div { padding: clamp(24px, 3vw, 40px); border-radius: 18px; border: 1px solid var(--wabi-outline); background: var(--wabi-card); }
   .kob > div + div { background: var(--wabi-tint); border-color: var(--wabi-outline-tint); }

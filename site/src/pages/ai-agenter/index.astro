@@ -95,5 +95,6 @@ const faq: [string, string][] = [
   dl { display: grid; grid-template-columns: 130px 1fr; gap: 14px 20px; margin: 0; }
   dt { font-weight: 700; font-size: 14px; }
   dd { margin: 0; font-size: 15px; color: #2E4636; }
+  @media (min-width: 901px) { .spec .split-head { max-width: none; } }
   @media (max-width: 900px) { .spec-grid { grid-template-columns: minmax(0, 1fr); } dl { grid-template-columns: minmax(0, 1fr); gap: 4px; } dd { margin-bottom: 12px; } }
 </style>

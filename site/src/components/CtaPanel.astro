@@ -16,5 +16,6 @@ const { eyebrow = 'AI-kartlegging', title = 'Hva kan AI hjelpe dere med?', text 
   .cta :global(.blob-panel) { padding: clamp(32px, 6vw, 72px); }
   .eyebrow { color: var(--blob-panel-sub); }
   p { color: var(--blob-panel-sub); font-size: 17px; max-width: 460px; }
+  @media (min-width: 901px) { p { max-width: none; } }
   .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
 </style>

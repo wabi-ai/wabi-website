@@ -59,6 +59,9 @@ const aboutLd = { '@context': 'https://schema.org', '@type': 'AboutPage', name: 
   .work-grid .text-link { margin-top: auto; }
   .approach h2 { margin-block: 20px; }
   .approach p { max-width: 680px; }
+  @media (min-width: 901px) {
+    .experience .split-head, .approach p { max-width: none; }
+  }
   @media (max-width: 760px) { .work-grid { grid-template-columns: minmax(0, 1fr); } }
   @media (max-width: 600px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>

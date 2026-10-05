@@ -3,51 +3,108 @@ interface Props { detail?: boolean; }
 const { detail = false } = Astro.props;
 ---
 <section class="container starting-offer" id="slik-starter-vi" aria-labelledby="start-title">
-  <div class="offer" data-reveal>
-    <div class="intro">
-      <span class="eyebrow">Slik starter vi</span>
-      <h2 id="start-title" class="section-title">Start med en samtale.</h2>
+    <div class="intro" data-reveal>
+      <div>
+        <span class="eyebrow">Slik starter vi</span>
+        <h2 id="start-title" class="section-title">Start med en samtale.</h2>
+      </div>
       <p>Fortell hvordan dere jobber og hva dere vil forbedre. Sammen finner vi neste steg.</p>
     </div>
-    <ol>
-      <li><span class="number" aria-hidden="true">1</span><h3>Vi blir kjent med behovet</h3><p>Ta med en utfordring eller et spørsmål. Du trenger ingen ferdig plan.</p></li>
-      <li><span class="number" aria-hidden="true">2</span><h3>Vi avklarer rammene</h3><p>Før en kartlegging avtaler vi omfang, pris, tidsbruk og hvem som bør delta.</p></li>
-      <li><span class="number" aria-hidden="true">3</span><h3>Dere velger veien videre</h3><p>Dere får prioriterte muligheter og et forslag til første prosjekt. Dere bestemmer om dere vil gå videre.</p></li>
+    <ol role="list" data-reveal>
+      <li>
+        <span class="step-label"><span aria-hidden="true">1 / </span>En første prat</span>
+        <div class="step-art conversation-art" aria-hidden="true">
+          <div class="speech speech-question"><span>Hva ønsker dere å forbedre?</span><i></i><i></i></div>
+          <div class="speech speech-answer"><span>La oss se på det sammen.</span><b>···</b></div>
+        </div>
+        <h3>Vi blir kjent med behovet</h3>
+        <p>Ta med en utfordring eller et spørsmål. Du trenger ingen ferdig plan.</p>
+      </li>
+      <li>
+        <span class="step-label"><span aria-hidden="true">2 / </span>Tydelige rammer</span>
+        <div class="step-art" aria-hidden="true">
+          <div class="scope-sheet"><span>Dette avtaler vi</span><div><i>✓</i>Omfang og pris</div><div><i>✓</i>Tid og deltakere</div></div>
+          <span class="agreed">Avklart <b>✓</b></span>
+        </div>
+        <h3>Vi avklarer rammene</h3>
+        <p>Før en kartlegging avtaler vi omfang, pris, tidsbruk og hvem som bør delta.</p>
+      </li>
+      <li>
+        <span class="step-label"><span aria-hidden="true">3 / </span>Deres valg</span>
+        <div class="step-art" aria-hidden="true">
+          <div class="next-sheet"><span>Mulighetene deres</span><div class="selected"><i>1</i><span>Første prosjekt</span><b>↗</b></div><div><i>2</i><span>Mulig neste steg</span></div></div>
+        </div>
+        <h3>Dere velger veien videre</h3>
+        <p>Dere får prioriterte muligheter og et forslag til første prosjekt. Dere bestemmer om dere vil gå videre.</p>
+      </li>
     </ol>
-    <div class="offer-footer">
+    <div class="offer-footer" data-reveal>
       <div class="actions">
         <a class="button button-primary" href="/kontakt/">Ta en prat med oss <span aria-hidden="true">→</span></a>
         {!detail && <a class="text-link details-link" href="/kartlegging/">Se hva kartleggingen gir <span aria-hidden="true">→</span></a>}
       </div>
       <p class="note">Du ber om en samtale. En eventuell kartlegging avtales etterpå.</p>
     </div>
-  </div>
 </section>
 <style>
-  .starting-offer { padding-block: var(--section-space); }
-  .offer { padding: clamp(24px, 4.5vw, 64px); border: 1px solid var(--wabi-outline); border-radius: 16px; background: transparent; }
-  .intro { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
-  p { color: #3B4A40; line-height: 1.6; text-wrap: wrap; }
-  .intro p { font-size: 17px; }
-  ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; list-style: none; margin: 40px 0; padding: 32px 0; border-block: 1px solid var(--wabi-outline); }
-  li { min-width: 0; }
-  .number { display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: 20px; border-radius: 10px; background: var(--wabi-forest); color: var(--wabi-oat); font: 14px/1 var(--font-mono); }
-  h3 { margin-bottom: 10px; font-size: 20px; line-height: 1.3; font-weight: 700; letter-spacing: -.025em; text-wrap: wrap; }
+  .starting-offer { --line: #dce3db; --muted: #66736a; padding-block: var(--section-space); }
+  .intro { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 34px; }
+  .intro > div { flex: 1; min-width: 0; }
+  .intro .eyebrow { margin-bottom: 16px; }
+  p { color: var(--muted); line-height: 1.7; text-wrap: wrap; }
+  .intro p { flex: 0 1 330px; max-width: 330px; font-size: 14px; }
+  ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; list-style: none; margin: 0; padding: 0; }
+  li { min-width: 0; padding: 25px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+  .step-label { display: block; font-size: 9px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: #596d58; }
+  h3 { margin-bottom: 15px; font-size: 24px; line-height: 1.25; font-weight: 500; letter-spacing: -.035em; text-wrap: wrap; }
   li p { font-size: 15px; }
-  .offer-footer { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+  .step-art { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; max-width: 300px; height: 180px; margin: 0 auto 15px; font-size: 10px; }
+  .speech, .scope-sheet, .next-sheet { border: 1px solid #dbe4d7; border-radius: 8px; box-shadow: 0 8px 18px #28492908; }
+  .speech { position: absolute; width: 180px; padding: 16px; }
+  .speech-question { top: 28px; left: 0; background: #f5f8f1; transform: rotate(-5deg); }
+  .speech-question i { display: block; height: 3px; width: 85%; margin-top: 10px; background: #dce7d6; }
+  .speech-question i:last-child { width: 60%; }
+  .speech-answer { right: 0; bottom: 20px; background: #fff; transform: rotate(3deg); }
+  .speech-answer b { display: block; color: #596d58; font-size: 22px; line-height: 1; letter-spacing: 3px; margin-top: 6px; }
+  .scope-sheet { width: 195px; padding: 17px; background: #fff; transform: rotate(-4deg); }
+  .scope-sheet > span, .next-sheet > span { display: block; margin-bottom: 10px; color: #596d58; }
+  .scope-sheet > div { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #e7ece3; }
+  .scope-sheet i { display: grid; place-items: center; width: 17px; height: 17px; background: #f5f8f1; border: 1px solid #dbe4d7; border-radius: 4px; font-style: normal; }
+  .agreed { position: absolute; right: 0; bottom: 24px; display: flex; align-items: center; gap: 20px; padding: 10px 14px; border-radius: 7px; background: #1c4b2c; color: #fff; transform: rotate(3deg); }
+  .agreed b { color: #c4eab3; }
+  .next-sheet { width: 230px; padding: 16px; background: #fff; transform: rotate(3deg); }
+  .next-sheet > div { display: flex; align-items: center; gap: 10px; padding: 10px; color: #596d58; }
+  .next-sheet .selected { background: #f5f8f1; border: 1px solid #dbe4d7; border-radius: 5px; color: var(--wabi-forest); }
+  .next-sheet i { font: 10px var(--font-mono); }
+  .next-sheet b { margin-left: auto; font-size: 16px; font-weight: 400; }
+  .offer-footer { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; margin-top: 28px; }
   .actions { display: flex; align-items: center; gap: 20px 32px; flex-wrap: wrap; }
   .details-link { font-size: 15px; }
   .note { font-size: 13px; }
-  @media (max-width: 900px) {
-    ol { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-block: 28px; padding-block: 28px; }
-    li { display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 16px; }
-    .number { grid-row: 1 / 3; margin-bottom: 0; }
-    li p { grid-column: 2; }
-    h3 { margin-bottom: 6px; }
+  @media (max-width: 1100px) {
+    li { padding: 21px; }
+    h3 { font-size: 22px; }
+  }
+  @media (max-width: 820px) {
+    .intro { flex-direction: column; align-items: flex-start; gap: 15px; }
+    .intro p { flex: auto; max-width: 100%; }
+    ol { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+    li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .7fr); column-gap: 24px; padding: 26px; align-items: start; }
+    .step-label { grid-column: 1; margin-bottom: 18px; }
+    h3, li p { grid-column: 1; }
+    h3 { font-size: 25px; }
+    .step-art { grid-column: 2; grid-row: 1 / 4; margin: auto 0; align-self: center; }
+  }
+  @media (max-width: 540px) {
+    li { display: block; padding: 24px; }
+    .step-label { margin-bottom: 0; }
+    .step-art { height: 150px; max-width: 270px; margin: 8px auto 15px; }
+    .speech-question { top: 15px; }
+    .speech-answer { bottom: 8px; }
+    .agreed { bottom: 10px; }
+    h3 { font-size: 24px; }
   }
   @media (max-width: 480px) {
     .actions { flex-direction: column; align-items: flex-start; }
-    .intro p { font-size: 16px; }
-    h3 { font-size: 18px; }
   }
 </style>
