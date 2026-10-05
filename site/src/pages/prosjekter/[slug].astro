@@ -158,6 +158,8 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
   .case-page-vehicle .answer, .case-page-vehicle .built p { font-size: 17px; line-height: 1.65; letter-spacing: normal; color: #3B4A40; }
   .case-page-vehicle .answer { max-width: none; }
   .case-page-vehicle .built h3, .case-page-vehicle .others strong { font-size: 24px; line-height: 1.25; font-weight: 400; letter-spacing: -.03em; }
+  .case-page-vehicle .built li { grid-template-columns: 64px minmax(0, 1fr); }
+  .case-page-vehicle .built .mono { display: grid; place-items: center; padding-top: 0; font-size: 40px; font-weight: 500; line-height: 1; letter-spacing: -.03em; color: var(--wabi-forest); font-variant-numeric: tabular-nums; }
   .case-page-vehicle .facts-row dt { font-size: 12px; }
   .case-page-vehicle .facts-row dd { font-size: 16px; line-height: 1.6; font-weight: 500; }
   .case-page-vehicle .facts-row, .case-page-vehicle .shots { padding-bottom: var(--section-space); }
@@ -166,7 +168,8 @@ const others = CASES.filter(x => x.slug !== c.slug).slice(0, 3);
   .case-page-vehicle .shot-frame { border-radius: 16px; background: var(--wabi-card); box-shadow: none; }
   @media (max-width: 600px) {
     .case-page-vehicle .built h3, .case-page-vehicle .others strong { font-size: 22px; }
-    .case-page-vehicle .built li { grid-template-columns: 24px minmax(0, 1fr); gap: 16px; }
+    .case-page-vehicle .built li { grid-template-columns: 44px minmax(0, 1fr); gap: 16px; }
+    .case-page-vehicle .built .mono { font-size: 32px; }
   }
   @media (max-width: 860px) {
     .facts dl, .facts-row dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
