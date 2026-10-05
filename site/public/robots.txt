@@ -1,4 +1,9 @@
+# Wabi — https://wabi.no/
+# Public pages and assets are available to crawlers.
 User-agent: *
 Allow: /
 
+# Current sitemap generated from the published website.
 Sitemap: https://wabi.no/sitemap-index.xml
+
+# Site overview for AI assistants: https://wabi.no/llms.txt

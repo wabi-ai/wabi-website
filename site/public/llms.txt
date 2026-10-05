@@ -1,13 +1,48 @@
 # Wabi
 
-> Wabi er et AI-rådgivningsselskap for norske bedrifter, med kontorer i Trondheim og Singapore. Vi finner hvor AI gir verdi, bygger AI-agenter, automatisering og programvare, holder kurs i Claude, ChatGPT og Gemini, og følger løsningene opp i drift.
+> Wabi hjelper norske bedrifter å bruke AI i det daglige arbeidet. Vi kartlegger arbeidsflyter og systemer, finner hvor AI gir verdi, bygger løsningene og lærer opp teamet til å bruke dem trygt.
+
+Nettside: https://wabi.no/. Språk: norsk bokmål. Oppdatert: 2026-10-05.
+
+Wabi jobber med AI-strategi, AI-agenter, automatisering, skreddersydd programvare og praktisk opplæring. Arbeidet starter med hvordan bedriften jobber og hva den vil forbedre. Løsningene tilpasses systemene og menneskene som skal bruke dem.
+
+Første steg er en samtale. Kontaktskjemaet er en forespørsel, ikke en bestilling av kartlegging. Omfang, pris, tidsbruk og deltakere avtales før en eventuell kartlegging. Tilgang til data, leverandører, eierskap og oppfølging avklares for hvert prosjekt.
+
+Nuet og M Biler er navngitte kundeprosjekter. Kundedata er skjult i skjermbildene. Havora er et fiktivt navn for et reelt havbruksprosjekt; logo, arter, lokasjoner og tall er endret. Demonstrasjonene på nettsiden inneholder eksempeldata og er ikke dokumenterte resultatmålinger.
+
+## Om Wabi og kontakt
+
+- [Forside](https://wabi.no/): Oversikt over hva Wabi gjør, tjenester, prosjekter og veien videre.
+- [Om oss](https://wabi.no/om-oss/): Ulrik Rosmæl, daglig leder og AI-konsulent, og Eljar Skjørholm, Chief AI Officer. Relevant arbeid og hvordan vi samarbeider med kundene.
+- [Kontakt](https://wabi.no/kontakt/): Be om en samtale om behov og muligheter. Kontaktpersoner og e-postadresser finnes på siden.
 
 ## Tjenester
-- [AI-kartlegging](https://wabi.no/kartlegging/): Prioritert oversikt over oppgavene der AI lønner seg, og hvor bedriften bør starte.
-- [AI-agenter](https://wabi.no/ai-agenter/): Agenter som tar en fast oppgave fra start til slutt, i Slack, e-post eller andre verktøy.
-- [Automatisering](https://wabi.no/automatisering/): Arbeidsflyter med AI-steg som leser, vurderer og handler.
-- [Verktøy og programvare](https://wabi.no/verktoy-og-programvare/): Gjennomgang av eksisterende verktøy og skreddersydd programvare.
-- [Kurs](https://wabi.no/kurs/): Praktiske AI-kurs bygget på bedriftens egne oppgaver.
 
-## Kontakt
-- [Kontaktside](https://wabi.no/kontakt/)
+- [AI-kartlegging og strategi](https://wabi.no/kartlegging/): Gjennomgang av arbeidsflyter, mål og systemer med ledelsen og dem som gjør jobben. Gir prioriterte muligheter og et forslag til første prosjekt.
+- [AI-agenter](https://wabi.no/ai-agenter/): Digitale hjelpere som utfører avgrensede oppgaver. Bedriften bestemmer tilgang, rammer og hva mennesker skal godkjenne.
+- [Automatisering](https://wabi.no/automatisering/): Koblinger mellom eksisterende systemer som reduserer dobbeltarbeid og manuell flytting av informasjon.
+- [Verktøy og programvare](https://wabi.no/verktoy-og-programvare/): Gjennomgang av verktøy bedriften betaler for, vurdering av kjøp eller bygging og utvikling av programvare som mangler.
+- [AI-kurs og opplæring](https://wabi.no/kurs/): Praktiske kurs i Claude, ChatGPT, Gemini eller Copilot, tilpasset teamets egne arbeidsoppgaver og trygg bruk.
+
+## Prosjekter og eksempler
+
+- [Alle prosjekter](https://wabi.no/prosjekter/): Oversikt over kundeprosjekter og demonstrasjoner.
+- [Nuet: rapportering](https://wabi.no/prosjekter/rapportering/): Rapportverktøy for et markedsføringsbyrå. Tall fra flere kanaler samles og forklares med AI, og hver kunde får sin egen rapportlenke.
+- [M Biler: hele bilsalget i ett system](https://wabi.no/prosjekter/bruktbil/): Lager, kunder, prøvekjøringer, kontrakter og økonomi samlet. Bygget sammen med M Biler og tatt i bruk av flere forhandlere.
+- [Havora: anonymisert havbruksprosjekt](https://wabi.no/prosjekter/havbruk/): Driftsoversikt, nøkkeltall og søknadsarbeid samlet. Basert på et reelt prosjekt med fiktivt navn og endrede detaljer.
+- [Legekontor: eksempel på en regnskapsagent](https://wabi.no/prosjekter/legekontor/): Demonstrasjon av dagsoppgjør, refusjoner og bokføring med godkjenning av avvik. Pasienter og beløp er fiktive.
+- [Nettsider: eksempel på bygging og vedlikehold med AI](https://wabi.no/prosjekter/nettside/): Demonstrasjon av planlegging, bygging, kontroll og publisering med menneskelig godkjenning. Bedriften i eksempelet er fiktiv.
+
+## Guider
+
+- [Innsikt](https://wabi.no/innsikt/): Praktiske guider om AI i norske bedrifter.
+- [Slik bruker dere ChatGPT i bedriften](https://wabi.no/innsikt/hvordan-bruke-chatgpt-i-bedriften/): Kontoer, oppgavebeskrivelser og konkrete eksempler til arbeidshverdagen.
+- [AI-kurs for bedrifter](https://wabi.no/innsikt/ai-kurs-for-bedrifter/): Hva et nyttig kurs bør inneholde og hvordan opplæringen følges opp.
+- [Hvorfor AI-opplæring feiler](https://wabi.no/innsikt/hvorfor-ai-opplaering-feiler/): Vanlige grunner til at bruken stopper etter kurset, og hva som hjelper.
+- [Hvilket AI-verktøy bør småbedriften velge?](https://wabi.no/innsikt/ai-verktoy-smabedrifter/): ChatGPT, Claude, Copilot og Gemini vurdert opp mot bedriftens behov og eksisterende programmer.
+- [AI i salg](https://wabi.no/innsikt/ai-i-salg/): Eksempler på forberedelse til kundemøter, oppfølging og tilbud.
+
+## Optional
+
+- [Sitemap](https://wabi.no/sitemap-index.xml): Automatisk oppdatert oversikt over sidene på nettstedet.
+- [Robots.txt](https://wabi.no/robots.txt): Regler for crawling av nettstedet.
