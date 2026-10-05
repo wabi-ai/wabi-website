@@ -17,7 +17,7 @@ export const CASES = [
       ['Meta', null],
       ['Snapchat', '/assets/tools/snapchat.png'],
       ['Google Ads', '/assets/tools/google-ads.png'],
-      ['Google Analytics', '/assets/tools/google-analytics.svg'],
+      ['Google Analytics', null],
       ['Search Console', '/assets/tools/search-console.png'],
     ],
     facts: [['Kunde', 'Nuet, markedsføringsbyrå'], ['Bygget', 'Samlet rapport med en forklaring fra AI'], ['Kilder', 'Meta, Google Ads, Analytics, Search Console'], ['Deling', 'Egen lenke til hver kunde']],
