@@ -1,0 +1,108 @@
+---
+// Consent banner (ekomloven § 3-15 / GDPR). Analytics and marketing tags load only after an explicit choice.
+// Renders nothing while no tracking IDs are configured in SITE.tracking.
+import { SITE } from '../data/site.js';
+
+const { ga4, metaPixel, linkedinPartner } = SITE.tracking;
+const analytics = Boolean(ga4);
+const marketing = Boolean(metaPixel || linkedinPartner);
+const active = analytics || marketing;
+---
+{active && <div class="consent" data-consent data-ga4={ga4} data-meta={metaPixel} data-linkedin={linkedinPartner} role="dialog" aria-modal="false" aria-labelledby="consent-title" hidden>
+  <h2 id="consent-title">Personvern på wabi.no</h2>
+  <p>Vi bruker informasjonskapsler for å forstå hvordan nettsiden brukes{marketing && ' og for å måle annonser'}. Du velger selv. Les mer i <a href="/personvern/#cookies">personvernerklæringen</a>.</p>
+  <div class="consent-options" hidden data-consent-options>
+    <label><input type="checkbox" checked disabled /> <span><strong>Nødvendige</strong> Ingen sporing. Brukes ikke til annet enn å huske valget ditt.</span></label>
+    {analytics && <label><input type="checkbox" data-consent-analytics /> <span><strong>Statistikk</strong> Google Analytics viser oss hvilke sider som leses.</span></label>}
+    {marketing && <label><input type="checkbox" data-consent-marketing /> <span><strong>Markedsføring</strong> Meta og LinkedIn måler effekten av annonsene våre.</span></label>}
+  </div>
+  <div class="consent-actions">
+    <button type="button" data-consent-reject>Kun nødvendige</button>
+    <button type="button" data-consent-customize>Tilpass</button>
+    <button type="button" data-consent-save hidden>Lagre valg</button>
+    <button type="button" data-consent-accept>Godta alle</button>
+  </div>
+</div>}
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-consent]');
+  const KEY = 'wabi-consent';
+  type Choice = { analytics: boolean; marketing: boolean };
+  const read = (): Choice | null => { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch { return null; } };
+  const write = (c: Choice) => { try { localStorage.setItem(KEY, JSON.stringify(c)); } catch { /* choice applies to this visit only */ } };
+  const loaded = new Set<string>();
+  const w = window as any;
+
+  function load(src: string) { const s = document.createElement('script'); s.async = true; s.src = src; document.head.append(s); }
+
+  function apply(c: Choice) {
+    if (!root) return;
+    const { ga4, meta, linkedin } = root.dataset;
+    if (c.analytics && ga4 && !loaded.has('ga')) {
+      loaded.add('ga');
+      w.dataLayer = w.dataLayer || [];
+      w.gtag = function () { w.dataLayer.push(arguments); };
+      w.gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted' });
+      w.gtag('js', new Date());
+      w.gtag('config', ga4, { anonymize_ip: true });
+      load('https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(ga4));
+    }
+    if (c.marketing && meta && !loaded.has('meta')) {
+      loaded.add('meta');
+      if (!w.fbq) {
+        const n: any = w.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+        if (!w._fbq) w._fbq = n; n.push = n; n.loaded = true; n.version = '2.0'; n.queue = [];
+        load('https://connect.facebook.net/en_US/fbevents.js');
+      }
+      w.fbq('init', meta); w.fbq('track', 'PageView');
+    }
+    if (c.marketing && linkedin && !loaded.has('li')) {
+      loaded.add('li');
+      w._linkedin_data_partner_ids = (w._linkedin_data_partner_ids || []).concat(linkedin);
+      w._linkedin_partner_id = linkedin;
+      load('https://snap.licdn.com/li.lux/p/insight.min.js');
+    }
+  }
+
+  if (root) {
+    const q = <T extends HTMLElement>(s: string) => root.querySelector<T>(s);
+    const options = q('[data-consent-options]')!, save = q('[data-consent-save]')!, customize = q('[data-consent-customize]')!;
+    const aBox = q<HTMLInputElement>('[data-consent-analytics]'), mBox = q<HTMLInputElement>('[data-consent-marketing]');
+    const decide = (c: Choice) => { write(c); root.hidden = true; apply(c); };
+    const open = () => {
+      const c = read();
+      if (aBox) aBox.checked = !!c?.analytics;
+      if (mBox) mBox.checked = !!c?.marketing;
+      root.hidden = false;
+    };
+    q('[data-consent-accept]')!.addEventListener('click', () => decide({ analytics: true, marketing: true }));
+    q('[data-consent-reject]')!.addEventListener('click', () => decide({ analytics: false, marketing: false }));
+    customize.addEventListener('click', () => { options.hidden = false; save.hidden = false; customize.hidden = true; });
+    save.addEventListener('click', () => decide({ analytics: !!aBox?.checked, marketing: !!mBox?.checked }));
+    document.querySelectorAll('[data-consent-open]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); open(); }));
+
+    const saved = read();
+    if (saved) apply(saved); else open();
+  }
+</script>
+
+<style>
+  .consent { position: fixed; z-index: 80; left: 20px; bottom: 20px; width: min(440px, calc(100vw - 40px)); padding: 24px; border: 1px solid var(--wabi-outline); border-radius: 18px; background: var(--wabi-raised); color: var(--wabi-forest); box-shadow: 0 24px 60px rgba(20, 61, 36, .22); font-family: var(--font-sans); }
+  .consent[hidden] { display: none; }
+  h2 { margin: 0 0 8px; font-size: 18px; font-weight: 700; }
+  p { margin: 0 0 16px; font-size: 14px; line-height: 1.6; color: #3B4A40; }
+  a { color: var(--wabi-moss); text-underline-offset: 3px; }
+  .consent-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+  .consent-options[hidden] { display: none; }
+  label { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.5; color: #3B4A40; }
+  label input { flex: none; margin-top: 3px; accent-color: var(--wabi-moss); }
+  label strong { display: block; color: var(--wabi-forest); }
+  .consent-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  button { flex: 1 1 auto; min-height: 44px; padding: 0 16px; border: 1px solid var(--wabi-moss); border-radius: 10px; background: transparent; color: var(--wabi-moss); font: 700 14px var(--font-sans); cursor: pointer; }
+  button[hidden] { display: none; }
+  button:hover { background: var(--wabi-tint); }
+  /* Accept and reject carry equal weight, so declining is as easy as accepting. */
+  [data-consent-accept], [data-consent-save] { background: var(--wabi-moss); color: var(--wabi-oat); }
+  [data-consent-accept]:hover, [data-consent-save]:hover { background: var(--wabi-forest); }
+  @media (max-width: 600px) { .consent { left: 12px; right: 12px; bottom: 12px; width: auto; } }
+</style>

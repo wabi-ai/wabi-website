@@ -6,6 +6,7 @@ import { SITE } from '../data/site.js';
 
 const home = Astro.url.pathname === '/';
 const year = new Date().getFullYear();
+const tracked = Boolean(SITE.tracking.ga4 || SITE.tracking.metaPixel || SITE.tracking.linkedinPartner);
 ---
 <footer class:list={['outro', { 'outro-home': home }]} id="site-footer">
   <div class="outro-art" aria-hidden="true">
@@ -56,7 +57,7 @@ const year = new Date().getFullYear();
     </div>
 
     <div class="bottom">
-      <span>© {year} Wabi</span><span>Trondheim · Singapore</span>
+      <span>© {year} Wabi{tracked && <> · <a href="/personvern/#cookies" data-consent-open>Cookie-innstillinger</a></>}</span><span>Trondheim · Singapore</span>
       <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Wabi på LinkedIn"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3-.02-2.96-1.8-2.96-1.8 0-2.08 1.4-2.08 2.86V21h-4z"/></svg></a>
     </div>
   </div>

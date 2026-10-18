@@ -5,10 +5,11 @@ import '../styles/nav.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ChatWidget from '../components/ChatWidget.astro';
+import Consent from '../components/Consent.astro';
 import { SITE } from '../data/site.js';
 
-interface Props { title: string; socialTitle?: string; description?: string; jsonLd?: object[]; overHero?: boolean; }
-const { title, socialTitle = title, description = SITE.description, jsonLd = [], overHero = false } = Astro.props;
+interface Props { title: string; socialTitle?: string; description?: string; jsonLd?: object[]; overHero?: boolean; noindex?: boolean; }
+const { title, socialTitle = title, description = SITE.description, jsonLd = [], overHero = false, noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const socialImage = new URL(SITE.socialImage, SITE.url).href;
 const org = {
@@ -27,6 +28,7 @@ const graph = [org, { '@context': 'https://schema.org', '@type': 'WebSite', '@id
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
   <link rel="canonical" href={canonical} />
   <link rel="describedby" href="/llms.txt" type="text/plain" />
   <meta name="theme-color" content="#0E2618" />
@@ -46,6 +48,7 @@ const graph = [org, { '@context': 'https://schema.org', '@type': 'WebSite', '@id
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={socialImage} />
   <meta name="twitter:image:alt" content={SITE.socialImageAlt} />
+  {SITE.tracking.searchConsole && <meta name="google-site-verification" content={SITE.tracking.searchConsole} />}
   <link rel="icon" href="/assets/logo/wabi-mark-black.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -57,6 +60,7 @@ const graph = [org, { '@context': 'https://schema.org', '@type': 'WebSite', '@id
   <Header overHero={overHero} />
   <main id="main" tabindex="-1"><slot /></main>
   <Footer />
+  <Consent />
   {Astro.url.pathname !== '/kontakt/' && <ChatWidget />}
   <script>
     // Reveal content once as it enters the viewport.

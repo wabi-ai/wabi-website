@@ -6,6 +6,6 @@ export default defineConfig({
   site: 'https://wabi.no',
   trailingSlash: 'always',
   build: { format: 'directory' },
-  integrations: [sitemap(), react()],
+  integrations: [sitemap({ filter: page => !page.includes('/personvern/') }), react()],
   devToolbar: { enabled: false },
 });

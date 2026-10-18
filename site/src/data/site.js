@@ -9,6 +9,13 @@ export const SITE = {
   // Web3Forms access key for the contact form. Submissions go to the address the key was created for (admin@wabi.no).
   // While empty, the form falls back to opening an e-mail draft.
   contactFormKey: '299414e8-17a7-4e12-afc9-bd94a50f3a59',
+  // Tracking IDs. Each tool loads only after the visitor consents (see Consent.astro); while all are empty, no banner is shown.
+  tracking: {
+    ga4: '', // GA4 measurement ID, e.g. G-XXXXXXXXXX
+    metaPixel: '', // Meta pixel ID
+    linkedinPartner: '', // LinkedIn Insight Tag partner ID
+    searchConsole: '', // Search Console HTML-tag verification token (no cookies, no consent needed)
+  },
 };
 
 export const SERVICES = [
