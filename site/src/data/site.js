@@ -6,6 +6,12 @@ export const SITE = {
   socialImageAlt: 'Wabi. Praktisk AI, bygget for hvordan dere faktisk jobber.',
   email: 'ulrik@wabi.no', // fallback only, if the form fails
   linkedin: 'https://www.linkedin.com/company/wabino/',
+  // Legal entity behind wabi.no. Used in structured data so search engines and AI assistants
+  // don't confuse Wabi with similarly named companies.
+  legalName: 'Wabi Marketing AS',
+  orgNumber: '932368021',
+  address: { streetAddress: 'Jonsvannsveien 68', postalCode: '7052', addressLocality: 'Trondheim', addressCountry: 'NO' },
+  logoPng: '/assets/logo/wabi-logo-square.png',
   // Web3Forms access key for the contact form. Submissions go to the address the key was created for (admin@wabi.no).
   // While empty, the form falls back to opening an e-mail draft.
   contactFormKey: '299414e8-17a7-4e12-afc9-bd94a50f3a59',

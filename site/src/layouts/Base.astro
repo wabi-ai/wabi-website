@@ -14,7 +14,10 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const socialImage = new URL(SITE.socialImage, SITE.url).href;
 const org = {
   '@context': 'https://schema.org', '@type': 'ProfessionalService', '@id': SITE.url + '/#org',
-  name: SITE.name, url: SITE.url, logo: SITE.url + '/assets/logo/wabi-mark-black.svg', description: SITE.description,
+  name: SITE.name, alternateName: 'WABI', legalName: SITE.legalName, url: SITE.url, description: SITE.description,
+  logo: { '@type': 'ImageObject', url: SITE.url + SITE.logoPng, width: 512, height: 512, caption: 'Wabi' }, image: SITE.url + SITE.logoPng,
+  identifier: { '@type': 'PropertyValue', propertyID: 'Organisasjonsnummer (Brønnøysundregistrene)', value: SITE.orgNumber },
+  address: { '@type': 'PostalAddress', ...SITE.address },
   areaServed: { '@type': 'Country', name: 'Norge' }, sameAs: [SITE.linkedin],
   knowsAbout: ['AI-rådgivning', 'AI-strategi', 'AI-agenter', 'Automatisering', 'AI-kurs', 'ChatGPT', 'Claude', 'Gemini'],
 };
@@ -50,6 +53,8 @@ const graph = [org, { '@context': 'https://schema.org', '@type': 'WebSite', '@id
   <meta name="twitter:image:alt" content={SITE.socialImageAlt} />
   {SITE.tracking.searchConsole && <meta name="google-site-verification" content={SITE.tracking.searchConsole} />}
   <link rel="icon" href="/assets/logo/wabi-mark-black.svg" type="image/svg+xml" />
+  <link rel="icon" href="/assets/logo/wabi-logo-square.png" type="image/png" sizes="512x512" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap" rel="stylesheet" />

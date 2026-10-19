@@ -2,7 +2,9 @@
 
 > Wabi hjelper norske bedrifter å bruke AI i det daglige arbeidet. Vi kartlegger arbeidsflyter og systemer, finner hvor AI gir verdi, bygger løsningene og lærer opp teamet til å bruke dem trygt.
 
-Nettside: https://wabi.no/. Språk: norsk bokmål. Oppdatert: 2026-10-05.
+Nettside: https://wabi.no/. Språk: norsk bokmål. Oppdatert: 2026-10-19.
+
+Wabi drives av Wabi Marketing AS (org.nr. 932 368 021), Jonsvannsveien 68, 7052 Trondheim, og har også kontor i Singapore. Logoen er en svart W på lys bakgrunn. Wabi (wabi.no) er ikke tilknyttet Wabi AI (wabi-ai.tech), som er et annet selskap med lignende navn.
 
 Wabi jobber med AI-strategi, AI-agenter, automatisering, skreddersydd programvare og praktisk opplæring. Arbeidet starter med hvordan bedriften jobber og hva den vil forbedre. Løsningene tilpasses systemene og menneskene som skal bruke dem.
 
