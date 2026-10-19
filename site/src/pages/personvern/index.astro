@@ -1,10 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
 import { breadcrumbLd } from '../../lib/seo.js';
 import { SITE } from '../../data/site.js';
 
 const crumbs = [{ label: 'Personvern', href: '/personvern/' }];
+const privacyEmail = 'admin@wabi.no';
 const { ga4, metaPixel, linkedinPartner, searchConsole } = SITE.tracking;
 const hasAnalytics = Boolean(ga4);
 const hasMarketing = Boolean(metaPixel || linkedinPartner);
@@ -15,185 +17,238 @@ const policyLd = { '@context': 'https://schema.org', '@type': 'WebPage', name: '
   <PageHero crumbs={crumbs} eyebrow="Personvern" title="Personvernerklæring."
     lead="Her forklarer vi hvilke personopplysninger vi samler inn på wabi.no, hvorfor, hvor lenge vi beholder dem og hvilke rettigheter du har. Sist oppdatert 18. oktober 2026." />
 
-  <article class="container policy">
-    <nav class="toc" aria-label="Innhold">
-      <strong>Innhold</strong>
-      <a href="#ansvarlig">1. Behandlingsansvarlig</a>
-      <a href="#oversikt">2. Kort oppsummert</a>
-      <a href="#henvendelser">3. Kontaktskjema og chat</a>
-      <a href="#nyhetsbrev">4. Nyhetsbrevet AI-input</a>
-      <a href="#teknisk">5. Tekniske data og nettsidens drift</a>
-      <a href="#cookies">6. Informasjonskapsler</a>
-      <a href="#mottakere">7. Hvem får tilgang</a>
-      <a href="#utlandet">8. Overføring utenfor EØS</a>
-      <a href="#lagring">9. Hvor lenge vi lagrer</a>
-      <a href="#rettigheter">10. Dine rettigheter</a>
-      <a href="#sikkerhet">11. Sikkerhet</a>
-      <a href="#endringer">12. Endringer</a>
-    </nav>
-
-    <section id="ansvarlig">
-      <h2>1. Behandlingsansvarlig</h2>
-      <p><strong>Wabi Marketing AS</strong> (org.nr. 932 368 021), Jonsvannsveien 68, 7052 Trondheim, er behandlingsansvarlig for personopplysningene som behandles gjennom wabi.no, i henhold til personvernforordningen (GDPR) og personopplysningsloven. I denne erklæringen kaller vi oss Wabi.</p>
-      <p>Spørsmål om personvern kan sendes til <a href={'mailto:' + SITE.email}>{SITE.email}</a>. Vi svarer så raskt vi kan, og senest innen 30 dager.</p>
-      <p><strong>Hva erklæringen gjelder:</strong> Den gjelder besøkende og personer som kontakter oss gjennom wabi.no. Når vi bygger eller drifter løsninger for kunder, behandler vi eventuelle personopplysninger på vegne av kunden og etter instruks fra dem. Det reguleres av en egen databehandleravtale med den enkelte kunde, ikke av denne erklæringen.</p>
-    </section>
-
-    <section id="oversikt">
-      <h2>2. Kort oppsummert</h2>
-      <ul>
-        {hasConsent ? <>
-          <li>{hasAnalytics && 'Statistikk (Google Analytics)'}{hasAnalytics && hasMarketing && ' og '}{hasMarketing && 'annonsemåling (' + [metaPixel && 'Meta', linkedinPartner && 'LinkedIn'].filter(Boolean).join(' og ') + ')'} lastes <strong>bare hvis du samtykker</strong>. Du kan si nei og bruke hele nettsiden som vanlig.</li>
-          <li>Du kan endre eller trekke tilbake valget når som helst via «Cookie-innstillinger» nederst på siden.</li>
-        </> : <>
-          <li>Vi bruker <strong>ingen analyseverktøy, sporingsverktøy eller markedsføringspiksler</strong> på wabi.no.</li>
-          <li>Vi setter <strong>ingen informasjonskapsler</strong> og lagrer ikke data i nettleseren din.</li>
-        </>}
-        <li>{hasConsent ? 'Resten av' : 'Alle'} opplysningene vi behandler er de du selv gir oss, for eksempel når du sender en henvendelse eller melder deg på nyhetsbrevet.</li>
-        <li>Vi selger aldri personopplysninger og bruker dem ikke til automatiserte avgjørelser eller profilering.</li>
-      </ul>
-    </section>
-
-    <section id="henvendelser">
-      <h2>3. Kontaktskjema og chat</h2>
-      <p>Når du sender en henvendelse gjennom kontaktskjemaet eller chatten «Spør oss om AI», behandler vi opplysningene du oppgir.</p>
-      <table>
-        <tbody>
-          <tr><th scope="row">Opplysninger</th><td>Navn, e-postadresse og meldingen din. Via chatten oppgir du også hva du ønsker hjelp med og omtrent hvor mye tid dere bruker på oppgaven i dag. Vi registrerer i tillegg hvilken side på wabi.no du sendte henvendelsen fra.</td></tr>
-          <tr><th scope="row">Formål</th><td>Å besvare henvendelsen din og følge opp en mulig samtale om samarbeid.</td></tr>
-          <tr><th scope="row">Behandlingsgrunnlag</th><td>Berettiget interesse i å svare på henvendelser (GDPR art. 6 nr. 1 bokstav f). Når henvendelsen gjelder en avtale du ønsker å inngå, behandler vi opplysningene for å gjøre forberedelser til avtalen (art. 6 nr. 1 bokstav b).</td></tr>
-          <tr><th scope="row">Mottakere</th><td>Skjemaet og chatten sendes via tjenesten Web3Forms, som videresender henvendelsen til Wabis e-post. Se punkt 7.</td></tr>
-        </tbody>
-      </table>
-      <p>Du bestemmer selv hva du skriver i meldingen. Vi ber deg la være å sende sensitive personopplysninger, som helseopplysninger, eller opplysninger om andre enn deg selv, med mindre det er nødvendig.</p>
-      <p>Velger du å sende e-post direkte til oss, behandler vi e-postadressen og innholdet i meldingen på samme grunnlag og til samme formål.</p>
-    </section>
-
-    <section id="nyhetsbrev">
-      <h2>4. Nyhetsbrevet AI-input</h2>
-      <p>Du kan melde deg på nyhetsbrevet AI-input nederst på nettsiden. Påmeldingen åpnes hos tjenesten Kit, og opplysningene du oppgir der, fornavn og e-postadresse, lagres hos Kit for å sende deg nyhetsbrevet.</p>
-      <table>
-        <tbody>
-          <tr><th scope="row">Formål</th><td>Å sende deg nyhetsbrevet AI-input med nyheter og utvikling innen AI.</td></tr>
-          <tr><th scope="row">Behandlingsgrunnlag</th><td>Samtykket ditt (GDPR art. 6 nr. 1 bokstav a). Du kan trekke samtykket tilbake når som helst.</td></tr>
-          <tr><th scope="row">Avmelding</th><td>Alle utsendelser har en avmeldingslenke. Når du melder deg av, slutter vi å sende deg nyhetsbrevet og fjerner deg fra listen.</td></tr>
-          <tr><th scope="row">Måling i nyhetsbrevet</th><td>Kit registrerer om og når du åpner nyhetsbrevet og hvilke lenker du klikker på, slik at vi kan se hva som er nyttig og rydde i listen. Åpningsmåling skjer med et lite usynlig bilde i e-posten. Du kan unngå det ved å blokkere eksterne bilder i e-postprogrammet ditt.</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section id="teknisk">
-      <h2>5. Tekniske data og nettsidens drift</h2>
-      <p>Når du besøker wabi.no, overføres tekniske opplysninger som IP-adresse, nettleser, enhet og tidspunkt for forespørselen til tjenestene som leverer siden. Dette er nødvendig for at siden skal vises og være trygg å bruke.</p>
-      <ul>
-        <li><strong>Hosting:</strong> Nettsiden leveres av GitHub Pages (GitHub, Inc., et selskap i Microsoft-konsernet). GitHub kan logge IP-adresser og forespørsler i sine egne driftslogger. Vi har ikke tilgang til besøksstatistikk eller loggene derfra.</li>
-        {searchConsole && <li><strong>Google Search Console:</strong> Vi bruker Search Console til å se hvordan nettsiden vises i Google-søk. Tjenesten gir oss samlet statistikk om søk og sidevisninger fra Google, ikke opplysninger om enkeltbesøkende, og plasserer ingen informasjonskapsler hos deg.</li>}
-        <li><strong>Skrifttyper:</strong> Skrifttypen Manrope lastes fra Google Fonts. Da sendes IP-adressen din og informasjon om nettleseren til Google.</li>
-      </ul>
-      <p>Behandlingsgrunnlaget er vår berettigede interesse i å levere en fungerende og sikker nettside (GDPR art. 6 nr. 1 bokstav f). Vi bruker ikke disse opplysningene til å identifisere eller spore deg.</p>
-      <p>Nettsiden inneholder lenker til andre nettsteder, blant annet LinkedIn og aiinput.no. Disse har egne personvernerklæringer, og vi er ikke ansvarlige for hvordan de behandler opplysninger.</p>
-    </section>
-
-    <section id="cookies">
-      <h2>6. Informasjonskapsler og sporing</h2>
+  <section class="container summary" id="oversikt" aria-labelledby="oversikt-title">
+    <h2 id="oversikt-title" class="eyebrow">Kort oppsummert</h2>
+    <ul class="summary-grid">
       {hasConsent ? <>
-      <p>Når du første gang besøker wabi.no, spør vi om samtykke til statistikk og markedsføring. Ingen av verktøyene under lastes før du har sagt ja. Å avvise er like enkelt som å godta, og siden fungerer likt uansett valg. Valget lagres i nettleseren din (nøkkelen «wabi-consent» i lokal lagring) slik at vi ikke spør deg på nytt ved hvert besøk.</p>
-      <table>
-        <thead><tr><th>Kategori og verktøy</th><th>Hva og hvorfor</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Nødvendig</strong><br />Lagring av samtykkevalget</td><td>Husker valget ditt. Ingen sporing.</td></tr>
-          {hasAnalytics && <tr><td><strong>Statistikk</strong><br />Google Analytics 4 (Google)</td><td>Måler sidevisninger, hvordan du kom til siden og hva som leses, ved hjelp av informasjonskapsler og identifikatorer. Vi bruker det til å forbedre innholdet. IP-adressen anonymiseres.</td></tr>}
-          {metaPixel && <tr><td><strong>Markedsføring</strong><br />Meta-piksel (Meta)</td><td>Gjør at vi kan måle effekten av annonser på Facebook og Instagram og vise annonser til personer som har besøkt siden. Meta mottar blant annet IP-adresse, nettleserinformasjon og hvilke sider du ser på.</td></tr>}
-          {linkedinPartner && <tr><td><strong>Markedsføring</strong><br />LinkedIn Insight Tag (LinkedIn)</td><td>Gjør at vi kan måle effekten av annonser på LinkedIn og få anonymisert statistikk om besøkende. LinkedIn mottar blant annet IP-adresse og hvilke sider du ser på.</td></tr>}
-        </tbody>
-      </table>
-      <p><strong>Behandlingsgrunnlag:</strong> Samtykket ditt (GDPR art. 6 nr. 1 bokstav a, og ekomloven § 3-15 for lagring av og tilgang til opplysninger i enheten din). Du kan trekke samtykket tilbake når som helst via «Cookie-innstillinger» nederst på siden. Å trekke tilbake er like enkelt som å gi samtykke. Du kan også slette informasjonskapslene i nettleseren din.</p>
-      <p><strong>Felles behandlingsansvar:</strong> For Meta-piksel og LinkedIn Insight Tag er Wabi og leverandøren felles behandlingsansvarlige for innsamlingen av data via nettsiden. Leverandøren er alene ansvarlig for sin videre bruk av dataene. Vi bruker dataene bare til annonsemåling og statistikk om vår egen nettside.</p>
-      </>  : <p>wabi.no bruker ikke informasjonskapsler (cookies) og lagrer ikke data i nettleserens lokale lagring. Derfor viser vi heller ikke et samtykkebanner. Hvis vi senere tar i bruk analyse eller annen sporing, oppdaterer vi denne erklæringen og ber om samtykke før noe settes.</p>}
-      <p>Tjenester du åpner fra nettsiden, for eksempel påmeldingsskjemaet hos Kit, kan bruke egne informasjonskapsler på sine nettsteder.</p>
-    </section>
+        <li><Icon name="sikkerhet" size={32} /><strong>Bare med samtykke</strong><p>{hasAnalytics && 'Statistikk (Google Analytics)'}{hasAnalytics && hasMarketing && ' og '}{hasMarketing && 'annonsemåling (' + [metaPixel && 'Meta', linkedinPartner && 'LinkedIn'].filter(Boolean).join(' og ') + ')'} lastes bare hvis du samtykker. Du kan si nei og bruke hele nettsiden som vanlig.</p></li>
+        <li><Icon name="justering" size={32} /><strong>Du kan endre valget</strong><p>Du kan endre eller trekke tilbake valget når som helst via «Cookie-innstillinger» nederst på siden.</p></li>
+      </> : <>
+        <li><Icon name="sikkerhet" size={32} /><strong>Ingen sporing</strong><p>Vi bruker ingen analyseverktøy, sporingsverktøy eller markedsføringspiksler på wabi.no.</p></li>
+        <li><Icon name="data" size={32} /><strong>Ingen informasjonskapsler</strong><p>Vi setter ingen informasjonskapsler og lagrer ikke data i nettleseren din.</p></li>
+      </>}
+      <li><Icon name="menneske" size={32} /><strong>Bare det du gir oss</strong><p>{hasConsent ? 'Resten av' : 'Alle'} opplysningene vi behandler er de du selv gir oss, for eksempel når du sender en henvendelse eller melder deg på nyhetsbrevet.</p></li>
+      <li><Icon name="godkjent" size={32} /><strong>Vi selger aldri data</strong><p>Vi selger aldri personopplysninger og bruker dem ikke til automatiserte avgjørelser eller profilering.</p></li>
+    </ul>
+  </section>
 
-    <section id="mottakere">
-      <h2>7. Hvem får tilgang</h2>
-      <p>Opplysningene dine er tilgjengelige for de hos Wabi som trenger dem for å svare deg. Vi bruker disse databehandlerne og leverandørene:</p>
-      <table>
-        <thead><tr><th>Leverandør</th><th>Formål</th></tr></thead>
-        <tbody>
-          <tr><td>Web3Forms</td><td>Mottak og videresending av henvendelser fra kontaktskjemaet og chatten</td></tr>
-          <tr><td>Kit (ConvertKit)</td><td>Påmelding og utsendelse av nyhetsbrevet AI-input</td></tr>
-          <tr><td>GitHub (Microsoft)</td><td>Hosting av nettsiden</td></tr>
-          <tr><td>Google{hasAnalytics || searchConsole ? ' (' + ['Analytics', 'Search Console', 'Fonts'].filter(n => n === 'Fonts' || (n === 'Analytics' ? hasAnalytics : searchConsole)).join(', ') + ')' : ' Fonts'}</td><td>{[hasAnalytics && 'Statistikk (med samtykke)', searchConsole && 'søkeytelse', 'levering av skrifttype'].filter(Boolean).join(', ')}</td></tr>
-          {metaPixel && <tr><td>Meta Platforms Ireland</td><td>Annonsemåling (med samtykke)</td></tr>}
-          {linkedinPartner && <tr><td>LinkedIn Ireland Unlimited Company</td><td>Annonsemåling (med samtykke)</td></tr>}
-          <tr><td>E-posttjeneste</td><td>Mottak og lagring av henvendelser og e-post du sender oss</td></tr>
-        </tbody>
-      </table>
-      <p>Vi deler ikke personopplysninger med andre, bortsett fra når vi er rettslig forpliktet til det, for eksempel etter pålegg fra offentlige myndigheter.</p>
-    </section>
+  <div class="container policy">
+    <aside class="toc-wrap">
+      <nav class="toc" aria-label="Innhold">
+        <span class="eyebrow">Innhold</span>
+        <a href="#ansvarlig"><span class="num">1</span>Behandlingsansvarlig</a>
+        <a href="#henvendelser"><span class="num">2</span>Kontaktskjema og chat</a>
+        <a href="#nyhetsbrev"><span class="num">3</span>Nyhetsbrevet AI-input</a>
+        <a href="#teknisk"><span class="num">4</span>Tekniske data og nettsidens drift</a>
+        <a href="#cookies"><span class="num">5</span>Informasjonskapsler og sporing</a>
+        <a href="#mottakere"><span class="num">6</span>Hvem får tilgang</a>
+        <a href="#utlandet"><span class="num">7</span>Overføring utenfor EØS</a>
+        <a href="#lagring"><span class="num">8</span>Hvor lenge vi lagrer</a>
+        <a href="#rettigheter"><span class="num">9</span>Dine rettigheter</a>
+        <a href="#sikkerhet"><span class="num">10</span>Sikkerhet</a>
+        <a href="#endringer"><span class="num">11</span>Endringer</a>
+      </nav>
+    </aside>
+    <div class="policy-body">
 
-    <section id="utlandet">
-      <h2>8. Overføring utenfor EØS</h2>
-      <p>Flere av leverandørene våre har virksomhet i USA. Når personopplysninger overføres til land utenfor EØS, skjer det på et lovlig overføringsgrunnlag, som EU-kommisjonens standardkontraktsklausuler eller at mottakeren er sertifisert under EU-US Data Privacy Framework. Du kan be oss om mer informasjon om grunnlaget som brukes.</p>
-    </section>
+        <section class="policy-section" id="ansvarlig">
+        <h2><span class="num">1</span>Behandlingsansvarlig</h2>
+        <p><strong>Wabi Marketing AS</strong> (org.nr. 932 368 021), Jonsvannsveien 68, 7052 Trondheim, er behandlingsansvarlig for personopplysningene som behandles gjennom wabi.no, i henhold til personvernforordningen (GDPR) og personopplysningsloven. I denne erklæringen kaller vi oss Wabi.</p>
+        <p>Spørsmål om personvern kan sendes til <a href={'mailto:' + privacyEmail}>{privacyEmail}</a>. Vi svarer så raskt vi kan, og senest innen 30 dager.</p>
+        <p><strong>Hva erklæringen gjelder:</strong> Den gjelder besøkende og personer som kontakter oss gjennom wabi.no. Når vi bygger eller drifter løsninger for kunder, behandler vi eventuelle personopplysninger på vegne av kunden og etter instruks fra dem. Det reguleres av en egen databehandleravtale med den enkelte kunde, ikke av denne erklæringen.</p>
+      </section>
 
-    <section id="lagring">
-      <h2>9. Hvor lenge vi lagrer</h2>
-      <ul>
-        <li><strong>Henvendelser:</strong> Vi sletter henvendelsen når den er besvart og det ikke er grunnlag for videre dialog, senest 12 måneder etter siste kontakt. Blir henvendelsen til et kundeforhold, lagrer vi nødvendig informasjon så lenge kundeforholdet varer og så lenge lovkrav, for eksempel bokføringsloven, krever det.</li>
-        <li><strong>Nyhetsbrev:</strong> Til du melder deg av eller trekker samtykket tilbake.</li>
-        {hasConsent && <li><strong>Statistikk og annonsemåling:</strong> Google Analytics lagrer data i 14 måneder. Meta og LinkedIn lagrer data etter egne retningslinjer. Vi bruker dem bare så lenge du har samtykket.</li>}
-        <li><strong>Tekniske logger:</strong> Hos GitHub og Google i samsvar med deres egne retningslinjer.</li>
-      </ul>
-    </section>
+      <section class="policy-section" id="henvendelser">
+        <h2><span class="num">2</span>Kontaktskjema og chat</h2>
+        <p>Når du sender en henvendelse gjennom kontaktskjemaet eller chatten «Spør oss om AI», behandler vi opplysningene du oppgir.</p>
+        <table>
+          <tbody>
+            <tr><th scope="row">Opplysninger</th><td>Navn, e-postadresse og meldingen din. Via chatten oppgir du også hva du ønsker hjelp med og omtrent hvor mye tid dere bruker på oppgaven i dag. Vi registrerer i tillegg hvilken side på wabi.no du sendte henvendelsen fra.</td></tr>
+            <tr><th scope="row">Formål</th><td>Å besvare henvendelsen din og følge opp en mulig samtale om samarbeid.</td></tr>
+            <tr><th scope="row">Behandlingsgrunnlag</th><td>Berettiget interesse i å svare på henvendelser (GDPR art. 6 nr. 1 bokstav f). Når henvendelsen gjelder en avtale du ønsker å inngå, behandler vi opplysningene for å gjøre forberedelser til avtalen (art. 6 nr. 1 bokstav b).</td></tr>
+            <tr><th scope="row">Mottakere</th><td>Skjemaet og chatten sendes via tjenesten Web3Forms, som videresender henvendelsen til Wabis e-post. Se punkt 6.</td></tr>
+          </tbody>
+        </table>
+        <p>Du bestemmer selv hva du skriver i meldingen. Vi ber deg la være å sende sensitive personopplysninger, som helseopplysninger, eller opplysninger om andre enn deg selv, med mindre det er nødvendig.</p>
+        <p>Velger du å sende e-post direkte til oss, behandler vi e-postadressen og innholdet i meldingen på samme grunnlag og til samme formål.</p>
+      </section>
 
-    <section id="rettigheter">
-      <h2>10. Dine rettigheter</h2>
-      <p>Du har rett til å:</p>
-      <ul>
-        <li>få innsyn i hvilke personopplysninger vi har om deg, og få en kopi</li>
-        <li>få uriktige eller ufullstendige opplysninger rettet</li>
-        <li>få opplysningene dine slettet, når vi ikke har grunnlag for å beholde dem</li>
-        <li>be om at behandlingen begrenses</li>
-        <li>protestere mot behandling som bygger på berettiget interesse</li>
-        <li>få utlevert opplysninger du har gitt oss, i et strukturert og maskinlesbart format (dataportabilitet)</li>
-        <li>trekke tilbake samtykke når som helst, uten at det påvirker behandlingen som skjedde før tilbaketrekkingen</li>
-      </ul>
-      <p>Send en e-post til <a href={'mailto:' + SITE.email}>{SITE.email}</a> for å bruke rettighetene dine. Vi kan be om å få bekreftet hvem du er før vi utleverer eller sletter opplysninger.</p>
-      <p>Mener du at vi behandler personopplysninger i strid med regelverket, kan du klage til Datatilsynet. Se <a href="https://www.datatilsynet.no" target="_blank" rel="noopener noreferrer">datatilsynet.no</a>. Vi setter pris på om du tar kontakt med oss først, så vi får mulighet til å rette opp.</p>
-    </section>
+      <section class="policy-section" id="nyhetsbrev">
+        <h2><span class="num">3</span>Nyhetsbrevet AI-input</h2>
+        <p>Du kan melde deg på nyhetsbrevet AI-input nederst på nettsiden. Påmeldingen åpnes hos tjenesten Kit, og opplysningene du oppgir der, fornavn og e-postadresse, lagres hos Kit for å sende deg nyhetsbrevet.</p>
+        <table>
+          <tbody>
+            <tr><th scope="row">Formål</th><td>Å sende deg nyhetsbrevet AI-input med nyheter og utvikling innen AI.</td></tr>
+            <tr><th scope="row">Behandlingsgrunnlag</th><td>Samtykket ditt (GDPR art. 6 nr. 1 bokstav a). Du kan trekke samtykket tilbake når som helst.</td></tr>
+            <tr><th scope="row">Avmelding</th><td>Alle utsendelser har en avmeldingslenke. Når du melder deg av, slutter vi å sende deg nyhetsbrevet og fjerner deg fra listen.</td></tr>
+            <tr><th scope="row">Måling i nyhetsbrevet</th><td>Kit registrerer om og når du åpner nyhetsbrevet og hvilke lenker du klikker på, slik at vi kan se hva som er nyttig og rydde i listen. Åpningsmåling skjer med et lite usynlig bilde i e-posten. Du kan unngå det ved å blokkere eksterne bilder i e-postprogrammet ditt.</td></tr>
+          </tbody>
+        </table>
+      </section>
 
-    <section id="sikkerhet">
-      <h2>11. Sikkerhet</h2>
-      <p>Nettsiden leveres over kryptert forbindelse (HTTPS), og tilgangen til henvendelser er begrenset til dem hos Wabi som trenger den. Vi velger leverandører som har egne sikkerhetstiltak, og vurderer løpende om rutinene våre er gode nok.</p>
-    </section>
+      <section class="policy-section" id="teknisk">
+        <h2><span class="num">4</span>Tekniske data og nettsidens drift</h2>
+        <p>Når du besøker wabi.no, overføres tekniske opplysninger som IP-adresse, nettleser, enhet og tidspunkt for forespørselen til tjenestene som leverer siden. Dette er nødvendig for at siden skal vises og være trygg å bruke.</p>
+        <ul>
+          <li><strong>Hosting:</strong> Nettsiden leveres av GitHub Pages (GitHub, Inc., et selskap i Microsoft-konsernet). GitHub kan logge IP-adresser og forespørsler i sine egne driftslogger. Vi har ikke tilgang til besøksstatistikk eller loggene derfra.</li>
+          {searchConsole && <li><strong>Google Search Console:</strong> Vi bruker Search Console til å se hvordan nettsiden vises i Google-søk. Tjenesten gir oss samlet statistikk om søk og sidevisninger fra Google, ikke opplysninger om enkeltbesøkende, og plasserer ingen informasjonskapsler hos deg.</li>}
+          <li><strong>Skrifttyper:</strong> Skrifttypen Manrope lastes fra Google Fonts. Da sendes IP-adressen din og informasjon om nettleseren til Google.</li>
+        </ul>
+        <p>Behandlingsgrunnlaget er vår berettigede interesse i å levere en fungerende og sikker nettside (GDPR art. 6 nr. 1 bokstav f). Vi bruker ikke disse opplysningene til å identifisere eller spore deg.</p>
+        <p>Nettsiden inneholder lenker til andre nettsteder, blant annet LinkedIn og aiinput.no. Disse har egne personvernerklæringer, og vi er ikke ansvarlige for hvordan de behandler opplysninger.</p>
+      </section>
 
-    <section id="endringer">
-      <h2>12. Endringer</h2>
-      <p>Vi oppdaterer erklæringen når nettsiden eller måten vi behandler personopplysninger på endres. Datoen øverst på siden viser når den sist ble oppdatert. Ved vesentlige endringer varsler vi tydelig på nettsiden.</p>
-    </section>
-  </article>
+      <section class="policy-section" id="cookies">
+        <h2><span class="num">5</span>Informasjonskapsler og sporing</h2>
+        {hasConsent ? <>
+        <p>Når du første gang besøker wabi.no, spør vi om samtykke til statistikk og markedsføring. Ingen av verktøyene under lastes før du har sagt ja. Å avvise er like enkelt som å godta, og siden fungerer likt uansett valg. Valget lagres i nettleseren din (nøkkelen «wabi-consent» i lokal lagring) slik at vi ikke spør deg på nytt ved hvert besøk.</p>
+        <table>
+          <thead><tr><th>Kategori og verktøy</th><th>Hva og hvorfor</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Nødvendig</strong><br />Lagring av samtykkevalget</td><td>Husker valget ditt. Ingen sporing.</td></tr>
+            {hasAnalytics && <tr><td><strong>Statistikk</strong><br />Google Analytics 4 (Google)</td><td>Måler sidevisninger, hvordan du kom til siden og hva som leses, ved hjelp av informasjonskapsler og identifikatorer. Vi bruker det til å forbedre innholdet. IP-adressen anonymiseres.</td></tr>}
+            {metaPixel && <tr><td><strong>Markedsføring</strong><br />Meta-piksel (Meta)</td><td>Gjør at vi kan måle effekten av annonser på Facebook og Instagram og vise annonser til personer som har besøkt siden. Meta mottar blant annet IP-adresse, nettleserinformasjon og hvilke sider du ser på.</td></tr>}
+            {linkedinPartner && <tr><td><strong>Markedsføring</strong><br />LinkedIn Insight Tag (LinkedIn)</td><td>Gjør at vi kan måle effekten av annonser på LinkedIn og få anonymisert statistikk om besøkende. LinkedIn mottar blant annet IP-adresse og hvilke sider du ser på.</td></tr>}
+          </tbody>
+        </table>
+        <p><strong>Behandlingsgrunnlag:</strong> Samtykket ditt (GDPR art. 6 nr. 1 bokstav a, og ekomloven § 3-15 for lagring av og tilgang til opplysninger i enheten din). Du kan trekke samtykket tilbake når som helst via «Cookie-innstillinger» nederst på siden. Å trekke tilbake er like enkelt som å gi samtykke. Du kan også slette informasjonskapslene i nettleseren din.</p>
+        <p><strong>Felles behandlingsansvar:</strong> For Meta-piksel og LinkedIn Insight Tag er Wabi og leverandøren felles behandlingsansvarlige for innsamlingen av data via nettsiden. Leverandøren er alene ansvarlig for sin videre bruk av dataene. Vi bruker dataene bare til annonsemåling og statistikk om vår egen nettside.</p>
+        </>  : <p>wabi.no bruker ikke informasjonskapsler (cookies) og lagrer ikke data i nettleserens lokale lagring. Derfor viser vi heller ikke et samtykkebanner. Hvis vi senere tar i bruk analyse eller annen sporing, oppdaterer vi denne erklæringen og ber om samtykke før noe settes.</p>}
+        <p>Tjenester du åpner fra nettsiden, for eksempel påmeldingsskjemaet hos Kit, kan bruke egne informasjonskapsler på sine nettsteder.</p>
+      </section>
+
+      <section class="policy-section" id="mottakere">
+        <h2><span class="num">6</span>Hvem får tilgang</h2>
+        <p>Opplysningene dine er tilgjengelige for de hos Wabi som trenger dem for å svare deg. Vi bruker disse databehandlerne og leverandørene:</p>
+        <table>
+          <thead><tr><th>Leverandør</th><th>Formål</th></tr></thead>
+          <tbody>
+            <tr><td>Web3Forms</td><td>Mottak og videresending av henvendelser fra kontaktskjemaet og chatten</td></tr>
+            <tr><td>Kit (ConvertKit)</td><td>Påmelding og utsendelse av nyhetsbrevet AI-input</td></tr>
+            <tr><td>GitHub (Microsoft)</td><td>Hosting av nettsiden</td></tr>
+            <tr><td>Google{hasAnalytics || searchConsole ? ' (' + ['Analytics', 'Search Console', 'Fonts'].filter(n => n === 'Fonts' || (n === 'Analytics' ? hasAnalytics : searchConsole)).join(', ') + ')' : ' Fonts'}</td><td>{[hasAnalytics && 'Statistikk (med samtykke)', searchConsole && 'søkeytelse', 'levering av skrifttype'].filter(Boolean).join(', ')}</td></tr>
+            {metaPixel && <tr><td>Meta Platforms Ireland</td><td>Annonsemåling (med samtykke)</td></tr>}
+            {linkedinPartner && <tr><td>LinkedIn Ireland Unlimited Company</td><td>Annonsemåling (med samtykke)</td></tr>}
+            <tr><td>E-posttjeneste</td><td>Mottak og lagring av henvendelser og e-post du sender oss</td></tr>
+          </tbody>
+        </table>
+        <p>Vi deler ikke personopplysninger med andre, bortsett fra når vi er rettslig forpliktet til det, for eksempel etter pålegg fra offentlige myndigheter.</p>
+      </section>
+
+      <section class="policy-section" id="utlandet">
+        <h2><span class="num">7</span>Overføring utenfor EØS</h2>
+        <p>Flere av leverandørene våre har virksomhet i USA. Når personopplysninger overføres til land utenfor EØS, skjer det på et lovlig overføringsgrunnlag, som EU-kommisjonens standardkontraktsklausuler eller at mottakeren er sertifisert under EU-US Data Privacy Framework. Du kan be oss om mer informasjon om grunnlaget som brukes.</p>
+      </section>
+
+      <section class="policy-section" id="lagring">
+        <h2><span class="num">8</span>Hvor lenge vi lagrer</h2>
+        <ul>
+          <li><strong>Henvendelser:</strong> Vi sletter henvendelsen når den er besvart og det ikke er grunnlag for videre dialog, senest 12 måneder etter siste kontakt. Blir henvendelsen til et kundeforhold, lagrer vi nødvendig informasjon så lenge kundeforholdet varer og så lenge lovkrav, for eksempel bokføringsloven, krever det.</li>
+          <li><strong>Nyhetsbrev:</strong> Til du melder deg av eller trekker samtykket tilbake.</li>
+          {hasConsent && <li><strong>Statistikk og annonsemåling:</strong> Google Analytics lagrer data i 14 måneder. Meta og LinkedIn lagrer data etter egne retningslinjer. Vi bruker dem bare så lenge du har samtykket.</li>}
+          <li><strong>Tekniske logger:</strong> Hos GitHub og Google i samsvar med deres egne retningslinjer.</li>
+        </ul>
+      </section>
+
+      <section class="policy-section" id="rettigheter">
+        <h2><span class="num">9</span>Dine rettigheter</h2>
+        <p>Du har rett til å:</p>
+        <ul>
+          <li>få innsyn i hvilke personopplysninger vi har om deg, og få en kopi</li>
+          <li>få uriktige eller ufullstendige opplysninger rettet</li>
+          <li>få opplysningene dine slettet, når vi ikke har grunnlag for å beholde dem</li>
+          <li>be om at behandlingen begrenses</li>
+          <li>protestere mot behandling som bygger på berettiget interesse</li>
+          <li>få utlevert opplysninger du har gitt oss, i et strukturert og maskinlesbart format (dataportabilitet)</li>
+          <li>trekke tilbake samtykke når som helst, uten at det påvirker behandlingen som skjedde før tilbaketrekkingen</li>
+        </ul>
+        <p>Send en e-post til <a href={'mailto:' + privacyEmail}>{privacyEmail}</a> for å bruke rettighetene dine. Vi kan be om å få bekreftet hvem du er før vi utleverer eller sletter opplysninger.</p>
+        <p>Mener du at vi behandler personopplysninger i strid med regelverket, kan du klage til Datatilsynet. Se <a href="https://www.datatilsynet.no" target="_blank" rel="noopener noreferrer">datatilsynet.no</a>. Vi setter pris på om du tar kontakt med oss først, så vi får mulighet til å rette opp.</p>
+      </section>
+
+      <section class="policy-section" id="sikkerhet">
+        <h2><span class="num">10</span>Sikkerhet</h2>
+        <p>Nettsiden leveres over kryptert forbindelse (HTTPS), og tilgangen til henvendelser er begrenset til dem hos Wabi som trenger den. Vi velger leverandører som har egne sikkerhetstiltak, og vurderer løpende om rutinene våre er gode nok.</p>
+      </section>
+
+      <section class="policy-section" id="endringer">
+        <h2><span class="num">11</span>Endringer</h2>
+        <p>Vi oppdaterer erklæringen når nettsiden eller måten vi behandler personopplysninger på endres. Datoen øverst på siden viser når den sist ble oppdatert. Ved vesentlige endringer varsler vi tydelig på nettsiden.</p>
+      </section>
+      <aside class="policy-contact">
+        <div><strong>Spørsmål om personvern?</strong><p>Send oss en e-post, så svarer vi senest innen 30 dager.</p></div>
+        <a class="button button-primary" href={'mailto:' + privacyEmail}>{privacyEmail}</a>
+      </aside>
+    </div>
+  </div>
+
+<script>
+  // Highlight the section currently in view in the table of contents.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc a')];
+  const byId = new Map(links.map(a => [a.hash.slice(1), a]));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { links.forEach(a => a.classList.remove('is-active')); byId.get(e.target.id)?.classList.add('is-active'); } });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.policy-section').forEach(s => observer.observe(s));
+</script>
 </Base>
 
 <style>
-  .policy { max-width: 780px; padding-bottom: var(--section-space); }
-  .toc { display: flex; flex-direction: column; gap: 6px; margin-bottom: 48px; padding: 24px 28px; border: 1px solid var(--wabi-outline); border-radius: 14px; background: var(--wabi-raised); }
-  .toc strong { margin-bottom: 6px; font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--wabi-muted); }
-  .toc a { width: fit-content; font-size: 15px; color: var(--wabi-moss); }
-  section { margin-bottom: 44px; scroll-margin-top: 112px; }
-  h2 { margin-bottom: 16px; font-size: 26px; font-weight: 400; line-height: 1.2; letter-spacing: -.03em; }
-  p, li { font-size: 16px; line-height: 1.7; color: #3B4A40; }
-  p { margin-bottom: 14px; }
-  ul { margin: 0 0 14px; padding-left: 22px; }
-  li { margin-bottom: 8px; }
-  a { color: var(--wabi-moss); text-underline-offset: 3px; }
-  table { width: 100%; margin-bottom: 18px; border-collapse: collapse; font-size: 15px; line-height: 1.6; color: #3B4A40; }
-  th, td { padding: 12px 14px; border-bottom: 1px solid var(--wabi-outline); text-align: left; vertical-align: top; }
-  tbody th { width: 28%; font-weight: 700; color: var(--wabi-forest); }
-  thead th { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--wabi-muted); }
+  .summary { padding-bottom: clamp(40px, 5vw, 64px); }
+  .summary .eyebrow { display: block; margin-bottom: 20px; }
+  .summary-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .summary-grid li { display: flex; flex-direction: column; gap: 10px; padding: 24px; border-radius: 16px; background: var(--wabi-tint); border: 1px solid var(--wabi-outline-tint); color: var(--wabi-forest); }
+  .summary-grid li :global(svg) { stroke: var(--wabi-moss); margin-bottom: 6px; }
+  .summary-grid strong { font-size: 19px; font-weight: 500; letter-spacing: -.02em; line-height: 1.25; }
+  .summary-grid p { font-size: 15px; line-height: 1.55; color: #3B4A40; }
+
+  .policy { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: clamp(40px, 6vw, 96px); align-items: start; padding-top: clamp(40px, 5vw, 64px); padding-bottom: var(--section-space); border-top: 1px solid var(--wabi-outline); }
+  .toc-wrap { position: sticky; top: 112px; }
+  .toc { display: flex; flex-direction: column; gap: 2px; }
+  .toc .eyebrow { margin-bottom: 14px; }
+  .toc a { display: flex; gap: 12px; padding: 7px 12px; margin-left: -12px; border-radius: 8px; font-size: 14px; line-height: 1.4; color: #3B4A40; text-decoration: none; transition: background 200ms var(--ease-out), color 200ms; }
+  .toc a .num { min-width: 18px; color: var(--wabi-muted); font-variant-numeric: tabular-nums; }
+  .toc a:hover { background: var(--wabi-card); color: var(--wabi-forest); }
+  .toc a.is-active { background: var(--wabi-tint); color: var(--wabi-forest); font-weight: 700; }
+  .toc a.is-active .num { color: var(--wabi-moss); }
+
+  .policy-body { max-width: 760px; }
+  .policy-section { padding-bottom: 40px; margin-bottom: 40px; border-bottom: 1px solid var(--wabi-outline); scroll-margin-top: 112px; }
+  .policy-section h2 { display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px; font-size: clamp(26px, 2.6vw, 34px); font-weight: 400; line-height: 1.15; letter-spacing: -.035em; }
+  .policy-section h2 .num { font-size: .8em; font-weight: 300; color: var(--wabi-moss); }
+  .policy-body p, .policy-body li { font-size: 16px; line-height: 1.7; color: #3B4A40; }
+  .policy-body p { margin-bottom: 14px; }
+  .policy-body p strong, .policy-body li strong { color: var(--wabi-forest); }
+  .policy-body ul { margin: 0 0 14px; padding-left: 22px; }
+  .policy-body li { margin-bottom: 8px; }
+  .policy-body li::marker { color: var(--wabi-moss); }
+  .policy-body a:not(.button) { color: var(--wabi-moss); font-weight: 600; text-underline-offset: 3px; }
+  .policy-body table { width: 100%; margin: 6px 0 20px; border-collapse: separate; border-spacing: 0; border: 1px solid var(--wabi-outline); border-radius: 14px; overflow: hidden; background: var(--wabi-raised); font-size: 15px; line-height: 1.6; color: #3B4A40; }
+  .policy-body th, .policy-body td { padding: 14px 18px; border-bottom: 1px solid var(--wabi-outline); text-align: left; vertical-align: top; }
+  .policy-body tbody tr:last-child > * { border-bottom: 0; }
+  .policy-body tbody th { width: 30%; font-weight: 700; color: var(--wabi-forest); background: var(--wabi-card); }
+  .policy-body thead th { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--wabi-moss); background: var(--wabi-tint); }
+  .policy-body td strong { color: var(--wabi-forest); }
+
+  .policy-contact { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 28px 32px; border-radius: 18px; background: var(--wabi-forest); color: var(--wabi-oat); }
+  .policy-contact strong { font-size: 22px; font-weight: 400; letter-spacing: -.025em; }
+  .policy-body .policy-contact p { margin: 4px 0 0; color: rgba(244, 241, 231, .75); font-size: 15px; }
+  .policy-contact .button { background: var(--wabi-oat); color: var(--wabi-forest); }
+
+  @media (max-width: 1100px) { .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 900px) {
+    .policy { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+    .toc-wrap { position: static; padding: 20px; border: 1px solid var(--wabi-outline); border-radius: 14px; background: var(--wabi-raised); }
+  }
   @media (max-width: 600px) {
-    .toc { padding: 20px; }
-    tbody th, tbody td { display: block; width: auto; }
-    tbody th { padding-bottom: 0; border-bottom: 0; }
-    table:has(thead) tbody td { display: table-cell; }
+    .summary-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+    .summary-grid li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 4px 14px; padding: 18px; }
+    .summary-grid li :global(svg) { width: 26px; height: 26px; margin: 0; }
+    .summary-grid strong { font-size: 17px; align-self: center; }
+    .summary-grid p { grid-column: 2; font-size: 14px; }
+    .policy-body tbody th, .policy-body tbody td { display: block; width: auto; }
+    .policy-body tbody th { padding-bottom: 4px; border-bottom: 0; }
+    .policy-body table:has(thead) tbody td { display: table-cell; }
+    .policy-contact { padding: 24px; }
   }
 </style>
