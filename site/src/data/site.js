@@ -24,6 +24,8 @@ export const SERVICES = [
   { id: 'programvare', href: '/verktoy-og-programvare/', tone: 'sand', preset: 't3', title: 'Verktøy', navTitle: 'Verktøy og programvare', short: 'Vi går gjennom verktøyene dere betaler for, og bygger det som mangler.', nav: ['Verktøy som passer måten dere jobber på.', 'Vi bygger det dere mangler, og rydder i det dere har.'] },
 ];
 
+export const STRATEGY = { id: 'strategi', href: '/ai-strategi/', tone: 'dusk', title: 'AI-strategi', short: 'En felles plan for hva dere bruker AI til, med verktøy, regler og opplæring.', nav: ['En plan dere faktisk kan følge.', 'Mål, verktøy og regler for trygg bruk, samlet for hele bedriften.'] };
+
 export const COURSE = { id: 'kurs', href: '/kurs/', tone: 'forest', title: 'Kurs', short: 'Kurs i Claude, ChatGPT, Gemini og Copilot, bygget på oppgavene dere faktisk har.', nav: ['Lær AI med egne oppgaver.', 'Praktiske kurs som gjør det enklere å komme i gang.'] };
 
 export const CLIENTS = [

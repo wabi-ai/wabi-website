@@ -1,0 +1,143 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Band from '../../components/Band.astro';
+import Steps from '../../components/Steps.astro';
+import FaqList from '../../components/FaqList.astro';
+import Services from '../../components/Services.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
+
+const crumbs = [{ label: 'AI-strategi', href: '/ai-strategi/' }];
+const description = 'Wabi hjelper norske bedrifter med AI-strategi: hva dere skal bruke AI til, hvilke verktøy som passer, hvilke regler som trengs og en plan dere kan følge.';
+
+const parts = [
+  ['Mål og prioriteringer', 'Hva vil dere oppnå, og hvilke oppgaver bør gå først? Vi velger få ting og gjør dem godt, i stedet for å teste alt på en gang.'],
+  ['Verktøy og systemer', 'Hvilke verktøy passer til arbeidet og systemene dere allerede har? Vi vurderer Claude, ChatGPT, Gemini og Copilot opp mot behovet, ikke motsatt.'],
+  ['Regler for trygg bruk', 'Hvilke opplysninger kan legges inn i AI, og hvilke ikke? Hvem godkjenner hva? Enkle regler som alle forstår, tilpasset personvern og eventuelle krav i bransjen.'],
+  ['Kompetanse og opplæring', 'Hvem trenger hva? Ledelsen, de som bruker AI daglig og de som bare skal forstå rammene trenger ulik opplæring.'],
+  ['Plan og oppfølging', 'En plan for de første månedene, med eier for hvert tiltak og en enkel måte å sjekke om det hjelper.'],
+];
+
+const steps: [string, string][] = [
+  ['Nåsituasjonen', 'Hva bruker dere AI til i dag, hva gjør de ansatte på egen hånd, og hvor stopper det opp?'],
+  ['Retningen', 'Sammen med ledelsen bestemmer vi hva AI skal hjelpe dere med, og hva den ikke skal røre.'],
+  ['Rammene', 'Vi lager reglene for data, verktøy og godkjenning, slik at teamet vet hva som er greit.'],
+  ['Planen', 'Dere får en plan for første prosjekt og for opplæring. Dere velger selv om vi bygger eller dere tar den videre.'],
+];
+
+const faq: [string, string][] = [
+  ['Hva er en AI-strategi?', 'En AI-strategi er en felles plan for hva bedriften skal bruke AI til, med hvilke verktøy, regler og opplæring som trengs. Den gjør at AI-bruken blir styrt, og ikke bare et resultat av hva hver enkelt ansatt tilfeldigvis prøver.'],
+  ['Trenger en liten bedrift en AI-strategi?', 'Ja, men den kan være kort. For en bedrift med 10 til 50 ansatte holder det ofte med en til to sider: hva dere vil oppnå, hvilke verktøy dere bruker, hvilke opplysninger som ikke skal legges inn, og hvem som eier hva.'],
+  ['Hva er forskjellen på AI-strategi og AI-kartlegging?', 'Kartleggingen finner hvilke oppgaver der AI kan hjelpe. Strategien setter retningen rundt dem: mål, verktøy, regler, opplæring og plan. Mange starter med en kartlegging og får strategien som resultat.'],
+  ['Hvor lang tid tar det å lage en AI-strategi?', 'Det avhenger av størrelsen på bedriften og hvor mye som skal gjennomgås. Vi avklarer omfang, tidsbruk og deltakere sammen med dere før vi starter.'],
+  ['Hva koster en AI-strategi?', 'Prisen avhenger av omfanget. Vi avtaler den med dere før arbeidet starter. Kontaktskjemaet er en forespørsel om en samtale, ikke en bestilling.'],
+  ['Hvem bør delta?', 'Noen fra ledelsen som kan bestemme retning, og noen av dem som gjør oppgavene hver dag. Uten begge blir strategien enten for teoretisk eller for smal.'],
+  ['Hva med personvern og GDPR?', 'Det er en egen del av strategien. Vi går gjennom hvilke opplysninger som brukes, hvilke avtaler dere har med leverandørene, og skriver enkle regler for hva de ansatte kan legge inn. Dere bør ta endelige juridiske vurderinger sammen med egen rådgiver.'],
+  ['Kan dere også gjennomføre planen?', 'Ja. Vi kan bygge det første prosjektet, sette opp automatisering og AI-agenter og holde kurs. Dere kan også ta planen videre selv.'],
+];
+---
+<Base title="AI-strategi for bedrifter | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-strategi', description, path: '/ai-strategi/' })]}>
+  <PageHero crumbs={crumbs} eyebrow="AI-strategi" title="En plan for AI som dere faktisk kan følge."
+    lead="Mange i bedriften bruker AI, men hver på sin måte. Vi hjelper dere å bestemme hva AI skal brukes til, hvilke verktøy som passer og hvilke regler som gjelder."
+    primary={{ label: 'Ta en prat om AI-strategi', href: '/kontakt/' }} secondary={{ label: 'Se hva en strategi inneholder', href: '#innhold' }} />
+
+  <Band tone="dusk">
+    <article class="doc" aria-label="Eksempel på en AI-strategi på en side">
+      <header class="doc-head">
+        <div><span class="mono">AI-strategi · versjon 1</span><h2>Regnskapsbyrå, 18 ansatte</h2></div>
+        <span class="doc-tag">Eksempel</span>
+      </header>
+      <dl>
+        <dt>Mål</dt><dd>Mindre tid på kundespørsmål og månedsrapporter, uten at kvaliteten går ned.</dd>
+        <dt>Først</dt><dd><ol class="chips"><li><b>1</b>Svarutkast til kunder</li><li><b>2</b>Månedsrapport</li><li><b>3</b>Bilagsmottak</li></ol></dd>
+        <dt>Verktøy</dt><dd><ul class="chips"><li>Copilot for alle</li><li>Claude for rapporter</li></ul></dd>
+        <dt>Regler</dt><dd><ul class="rules"><li class="yes">Bruk bedriftens kontoer, ikke private</li><li class="no">Ikke legg inn lønn eller personnummer</li><li class="yes">Et menneske godkjenner alt som sendes kunder</li></ul></dd>
+        <dt>Opplæring</dt><dd>Grunnkurs for alle. Oppfølging for rapportteamet.</dd>
+        <dt>Oppfølging</dt><dd>Eier: daglig leder. Ny gjennomgang etter 90 dager.</dd>
+      </dl>
+      <p class="doc-foot mono">Bedriften er fiktiv. En ekte strategi bygges på deres oppgaver.</p>
+    </article>
+  </Band>
+
+  <section class="section container split" aria-labelledby="hva-title">
+    <div class="split-head" data-reveal><span class="eyebrow">Kort forklart</span><h2 id="hva-title" class="display-md">Hva er en AI-strategi?</h2></div>
+    <div data-reveal>
+      <p class="answer">En AI-strategi er en felles plan for hva bedriften skal bruke AI til. Den sier hva dere vil oppnå, hvilke verktøy dere bruker, hvilke regler som gjelder og hvordan teamet lærer det.</p>
+      <p class="answer muted">Uten strategi ender mange bedrifter med flere abonnementer, ulik bruk og usikkerhet om hva som er trygt. Med en strategi vet alle hva som gjelder, og dere vet hva dere skal prøve først.</p>
+    </div>
+  </section>
+
+  <section class="section container rule-top parts" id="innhold" aria-labelledby="innhold-title">
+    <div class="parts-head" data-reveal><span class="eyebrow">Innholdet</span><h2 id="innhold-title" class="display-md">Fem deler en AI-strategi bør ha.</h2></div>
+    <ol class="outcomes">{parts.map(([t, s], i) => <li data-reveal style={`--d:${i * 70}ms`}><span class="num">{i + 1}</span><h3>{t}</h3><p>{s}</p></li>)}</ol>
+  </section>
+
+  <Steps dark eyebrow="Slik jobber vi" title="Fra nåsituasjon til plan." steps={steps} />
+
+  <section class="section container start" aria-labelledby="start-title">
+    <div class="parts-head" data-reveal><span class="eyebrow">Hvor bør dere starte?</span><h2 id="start-title" class="display-md">To veier inn, samme mål.</h2></div>
+    <div class="paths">
+      <a class="path" href="/kartlegging/" data-reveal>
+        <span class="mono">Usikre på hvor AI passer?</span>
+        <h3>Start med en kartlegging.</h3>
+        <p>Vi går gjennom arbeidsdagen sammen med dem som gjør jobben, og finner oppgavene der AI hjelper mest.</p>
+        <span class="text-link">Les om kartleggingen <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="path path-strong" href="/kontakt/" data-reveal style="--d:100ms">
+        <span class="mono">Bruker dere AI allerede, men uten felles regler?</span>
+        <h3>Start med strategien.</h3>
+        <p>Vi setter retning, velger verktøy og lager reglene, slik at bruken som allerede skjer blir trygg og samlet.</p>
+        <span class="text-link">Ta en prat om strategi <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+    <p class="start-note" data-reveal>Vil dere lære mer først? Les <a href="/innsikt/">guidene våre</a> eller se på <a href="/kurs/">kursene</a>.</p>
+  </section>
+
+  <FaqList faq={faq} title="Om AI-strategi." />
+  <Services eyebrow="Etter strategien" title="Fra plan til noe som virker." lead="Når retningen er satt, kan vi bygge det første prosjektet og lære opp teamet. Alt i systemene dere allerede bruker." />
+  <CtaPanel eyebrow="AI-strategi" title="Ta en prat om AI-strategi." text="Fortell hvordan dere bruker AI i dag og hva dere vil oppnå. Vi avklarer omfang og pris før dere bestemmer dere." />
+</Base>
+
+<style>
+  .parts-head { max-width: 760px; margin-bottom: clamp(32px, 4vw, 56px); }
+  .outcomes { list-style: none; margin: 0; padding: 0; }
+  .outcomes li { display: grid; grid-template-columns: 72px minmax(0, .9fr) minmax(0, 1.3fr); gap: 8px 32px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--wabi-outline); }
+  .outcomes li:first-child { border-top: 1px solid var(--wabi-outline); }
+  .outcomes .num { font-size: clamp(32px, 3vw, 44px); font-weight: 300; line-height: 1; letter-spacing: -.03em; color: var(--wabi-moss); }
+  .outcomes h3 { font-size: clamp(22px, 2.2vw, 30px); font-weight: 400; letter-spacing: -.03em; line-height: 1.15; }
+  .outcomes p { margin: 0; color: #3B4A40; max-width: 52ch; }
+  @media (max-width: 900px) {
+    .outcomes li { grid-template-columns: 48px minmax(0, 1fr); padding: 22px 0; }
+    .outcomes p { grid-column: 2; }
+  }
+  .doc { background: var(--wabi-raised, #FBF9F3); color: var(--wabi-forest); border-radius: 16px; padding: clamp(22px, 3.5vw, 40px); box-shadow: 0 30px 60px -30px rgba(0,0,0,.45); }
+  .doc-head { display: flex; justify-content: space-between; align-items: start; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--wabi-outline); }
+  .doc-head .mono { color: var(--wabi-muted); text-transform: uppercase; letter-spacing: .1em; font-size: 11px; }
+  .doc-head h2 { margin-top: 6px; font-size: clamp(22px, 2.4vw, 28px); font-weight: 400; letter-spacing: -.03em; line-height: 1.15; }
+  .doc-tag { flex: none; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: var(--wabi-tint); color: var(--wabi-moss); }
+  .doc dl { display: grid; grid-template-columns: 120px minmax(0, 1fr); margin: 0; }
+  .doc dt, .doc dd { padding: 16px 0; border-bottom: 1px solid var(--wabi-outline); }
+  .doc dt { font-size: 13px; font-weight: 700; color: var(--wabi-moss); }
+  .doc dd { margin: 0; font-size: 15px; line-height: 1.5; }
+  .chips, .rules { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips li { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--wabi-outline); background: var(--wabi-card); }
+  .chips b { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--wabi-forest); color: #fff; font-size: 11px; }
+  .rules { flex-direction: column; gap: 6px; }
+  .rules li { padding-left: 26px; position: relative; }
+  .rules li::before { position: absolute; left: 0; top: 1px; width: 18px; height: 18px; display: grid; place-items: center; border-radius: 50%; font-size: 11px; font-weight: 700; }
+  .rules .yes::before { content: '✓'; background: var(--wabi-tint); color: var(--wabi-moss); }
+  .rules .no::before { content: '✕'; background: #F6E3DF; color: #8A2A1C; }
+  .doc-foot { margin-top: 18px; color: var(--wabi-muted); font-size: 11px; }
+  .paths { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .path { display: flex; flex-direction: column; gap: 14px; padding: clamp(24px, 3vw, 40px); border-radius: 18px; border: 1px solid var(--wabi-outline); background: var(--wabi-card); text-decoration: none; color: inherit; transition: transform 200ms var(--ease-out), border-color 200ms; }
+  .path:hover { transform: translateY(-3px); border-color: var(--wabi-moss); }
+  .path .mono { text-transform: uppercase; letter-spacing: .1em; font-size: 11px; color: var(--wabi-muted); }
+  .path h3 { font-size: clamp(24px, 2.4vw, 32px); font-weight: 400; letter-spacing: -.03em; line-height: 1.15; }
+  .path p { color: #3B4A40; flex: 1; }
+  .path-strong { background: var(--wabi-tint); border-color: var(--wabi-outline-tint); }
+  .start-note { margin-top: 24px; color: var(--wabi-muted); }
+  .start-note a { color: var(--wabi-moss); font-weight: 700; }
+  @media (max-width: 900px) { .paths { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 560px) { .doc dl { grid-template-columns: minmax(0, 1fr); } .doc dt { padding-bottom: 0; border-bottom: 0; } .doc dd { padding-top: 6px; } }
+</style>

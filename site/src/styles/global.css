@@ -44,6 +44,7 @@ main:focus { outline: none; }
 .text-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; text-decoration: none; color: var(--wabi-moss); }
 .text-link span { transition: transform 200ms var(--ease-out); }
 .text-link:hover span { transform: translateX(4px); }
+.answer .text-link { display: inline; font-size: inherit; }
 :focus-visible { outline: 2px solid var(--wabi-moss); outline-offset: 3px; }
 
 /* Scroll reveal: content fades up once as it enters. Without JS or with reduced motion it is simply visible. */

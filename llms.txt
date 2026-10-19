@@ -19,6 +19,7 @@ Nuet og M Biler er navngitte kundeprosjekter. Kundedata er skjult i skjermbilden
 ## Tjenester
 
 - [AI-kartlegging og strategi](https://wabi.no/kartlegging/): Gjennomgang av arbeidsflyter, mål og systemer med ledelsen og dem som gjør jobben. Gir prioriterte muligheter og et forslag til første prosjekt.
+- [AI-strategi](https://wabi.no/ai-strategi/): Felles plan for hva bedriften bruker AI til: mål, verktøy, regler for trygg bruk, opplæring og en plan for de første månedene.
 - [AI-agenter](https://wabi.no/ai-agenter/): Digitale hjelpere som utfører avgrensede oppgaver. Bedriften bestemmer tilgang, rammer og hva mennesker skal godkjenne.
 - [Automatisering](https://wabi.no/automatisering/): Koblinger mellom eksisterende systemer som reduserer dobbeltarbeid og manuell flytting av informasjon.
 - [Verktøy og programvare](https://wabi.no/verktoy-og-programvare/): Gjennomgang av verktøy bedriften betaler for, vurdering av kjøp eller bygging og utvikling av programvare som mangler.

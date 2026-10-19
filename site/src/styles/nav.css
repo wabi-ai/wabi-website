@@ -36,6 +36,7 @@
 .nav-art-ember { --nav-ground: #6E1D14; }
 .nav-art-sand { --nav-ground: #4F5530; }
 .nav-art-forest { --nav-ground: #143D24; }
+.nav-art-dusk { --nav-ground: #3B2A5C; }
 .nav-preview { position: absolute; inset: 0; overflow: hidden; isolation: isolate; background: var(--nav-ground); opacity: 0; transition: opacity 200ms ease; }
 .nav-preview.is-active { opacity: 1; z-index: 1; }
 .nav-preview > img, .nav-project-card > img { position: absolute; z-index: -2; width: 155%; max-width: none; height: auto; right: -54%; top: -45%; transform: rotate(-15deg); pointer-events: none; }
