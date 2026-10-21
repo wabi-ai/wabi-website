@@ -6,10 +6,13 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ChatWidget from '../components/ChatWidget.astro';
 import Consent from '../components/Consent.astro';
-import { SITE } from '../data/site.js';
+import { SITE, PEOPLE } from '../data/site.js';
+import { areaServed, personLd } from '../lib/seo.js';
 
-interface Props { title: string; socialTitle?: string; description?: string; jsonLd?: object[]; overHero?: boolean; noindex?: boolean; }
-const { title, socialTitle = title, description = SITE.description, jsonLd = [], overHero = false, noindex = false } = Astro.props;
+// notFound: the 404 page has no URL of its own, so it gets noindex and no canonical.
+// article: guides are marked og:type=article with their publish and update dates.
+interface Props { title: string; socialTitle?: string; description?: string; jsonLd?: object[]; overHero?: boolean; noindex?: boolean; notFound?: boolean; article?: { published: string; modified: string }; }
+const { title, socialTitle = title, description = SITE.description, jsonLd = [], overHero = false, notFound = false, noindex = notFound, article } = Astro.props;
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const socialImage = new URL(SITE.socialImage, SITE.url).href;
 const org = {
@@ -17,9 +20,11 @@ const org = {
   name: SITE.name, alternateName: 'WABI', legalName: SITE.legalName, url: SITE.url, description: SITE.description,
   logo: { '@type': 'ImageObject', url: SITE.url + SITE.logoPng, width: 512, height: 512, caption: 'Wabi' }, image: SITE.url + SITE.logoPng,
   identifier: { '@type': 'PropertyValue', propertyID: 'Organisasjonsnummer (Brønnøysundregistrene)', value: SITE.orgNumber },
+  taxID: SITE.orgNumber, vatID: SITE.vatID, email: SITE.email,
   address: { '@type': 'PostalAddress', ...SITE.address },
-  areaServed: { '@type': 'Country', name: 'Norge' }, sameAs: [SITE.linkedin],
-  knowsAbout: ['AI-rådgivning', 'AI-strategi', 'AI-agenter', 'Automatisering', 'AI-kurs', 'ChatGPT', 'Claude', 'Gemini'],
+  founder: PEOPLE.map(p => { const { '@context': _, ...person } = personLd(p.id); return person; }),
+  areaServed, sameAs: [SITE.linkedin, ...SITE.registryLinks],
+  knowsAbout: ['AI-rådgivning', 'AI-strategi', 'AI-agenter', 'Automatisering', 'AI-kurs', 'KI-kurs', 'ChatGPT', 'Claude', 'Gemini', 'Microsoft Copilot'],
 };
 const graph = [org, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE.url + '/#website', url: SITE.url, name: SITE.name, inLanguage: 'nb-NO', publisher: { '@id': SITE.url + '/#org' } }, ...jsonLd];
 ---
@@ -32,15 +37,17 @@ const graph = [org, { '@context': 'https://schema.org', '@type': 'WebSite', '@id
   <title>{title}</title>
   <meta name="description" content={description} />
   {noindex && <meta name="robots" content="noindex, nofollow" />}
-  <link rel="canonical" href={canonical} />
+  {!notFound && <link rel="canonical" href={canonical} />}
   <link rel="describedby" href="/llms.txt" type="text/plain" />
   <meta name="theme-color" content="#0E2618" />
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content={article ? 'article' : 'website'} />
+  {article && <meta property="article:published_time" content={article.published} />}
+  {article && <meta property="article:modified_time" content={article.modified} />}
   <meta property="og:locale" content="nb_NO" />
   <meta property="og:site_name" content="Wabi" />
   <meta property="og:title" content={socialTitle} />
   <meta property="og:description" content={description} />
-  <meta property="og:url" content={canonical} />
+  {!notFound && <meta property="og:url" content={canonical} />}
   <meta property="og:image" content={socialImage} />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />

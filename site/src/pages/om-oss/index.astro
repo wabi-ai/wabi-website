@@ -5,7 +5,7 @@ import FaqList from '../../components/FaqList.astro';
 import ServiceOverview from '../../components/ServiceOverview.astro';
 import { deliveryFaq } from '../../data/delivery.js';
 import CtaPanel from '../../components/CtaPanel.astro';
-import { breadcrumbLd } from '../../lib/seo.js';
+import { breadcrumbLd, personLd } from '../../lib/seo.js';
 import { SITE } from '../../data/site.js';
 
 const crumbs = [{ label: 'Om oss', href: '/om-oss/' }];
@@ -15,7 +15,7 @@ const people = [
 ];
 const aboutLd = { '@context': 'https://schema.org', '@type': 'AboutPage', name: 'Om Wabi', url: SITE.url + '/om-oss/', about: { '@id': SITE.url + '/#org' } };
 ---
-<Base title="Om oss | Wabi" description="Vi er Wabi. Vi setter oss ned i bedriften din, bygger AI-løsninger sammen med dere og følger dem videre." jsonLd={[breadcrumbLd(crumbs), aboutLd]}>
+<Base title="Om oss | Wabi" description="Vi er Wabi. Vi setter oss ned i bedriften din, bygger AI-løsninger sammen med dere og følger dem videre." jsonLd={[breadcrumbLd(crumbs), aboutLd, personLd('ulrik'), personLd('eljar')]}>
   <PageHero crumbs={crumbs} eyebrow="Om oss" title="Vi hjelper dere å ta AI i bruk."
     lead="Vi er Wabi. Vi blir kjent med hvordan dere jobber, finner oppgaver AI kan hjelpe med og lager løsningene sammen med dere. Vi forklarer underveis og følger opp etterpå."
     primary={{ label: 'Ta en prat med oss', href: '/kontakt/' }} />
