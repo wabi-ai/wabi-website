@@ -13,6 +13,7 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
   <div class="container hl-inner">
     <div class="hl-copy">
       <h1 class="hl-title">
+        <span class="eyebrow hl-eyebrow">AI-byrå i Trondheim</span>
         <span class="hl-display">
           <span class="hl-line"><em>AI-løsninger</em> bygget for hvordan dere <em>faktisk jobber.</em></span>
         </span>
@@ -87,6 +88,7 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
   .hl-copy { display: flex; flex-direction: column; gap: 28px; }
   .hl-title { display: flex; flex-direction: column; gap: 24px; font-weight: 400; }
   .hl-display { display: flex; flex-direction: column; font-size: clamp(40px, 3.9vw, 62px); line-height: 1.02; letter-spacing: -.05em; color: var(--wabi-forest); text-wrap: balance; }
+  .hl-eyebrow { margin-bottom: -6px; animation: rise 650ms var(--ease-out) both; }
   .hl-line em { font-style: normal; color: var(--wabi-moss); }
   .hl-line { animation: rise 650ms var(--ease-out) both; }
   .hl-copy > p { max-width: 500px; font-size: 18px; line-height: 1.6; color: #2E4636; animation: rise 650ms 100ms var(--ease-out) both; }
@@ -115,8 +117,8 @@ const logos = CLIENTS.map(([file, name]) => ({ src: `/assets/logos/${file}.png`,
     .hl-clients { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--wabi-outline); gap: 20px; }
     .hl-clients-label { font-size: 12px; color: var(--wabi-muted); }
     .logo-row img { height: 28px; filter: grayscale(1) brightness(.45); opacity: .85; }
-    .hl-clients, .hl-line, .hl-copy > p, .hl-actions, .hl-follow img { animation: none; }
+    .hl-clients, .hl-eyebrow, .hl-line, .hl-copy > p, .hl-actions, .hl-follow img { animation: none; }
   }
   @media (max-width: 360px) { .hl-actions .button { padding-inline: 16px; font-size: 14px; } }
-  @media (prefers-reduced-motion: reduce) { .logo-track.is-marquee { overflow-x: auto; } .logo-track.is-marquee .logo-row { animation: none; } .logo-track.is-marquee .logo-clone { display: none; } .hl-clients, .hl-line, .hl-copy > p, .hl-actions, .hl-follow img { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .logo-track.is-marquee { overflow-x: auto; } .logo-track.is-marquee .logo-row { animation: none; } .logo-track.is-marquee .logo-clone { display: none; } .hl-clients, .hl-eyebrow, .hl-line, .hl-copy > p, .hl-actions, .hl-follow img { animation: none; } }
 </style>
