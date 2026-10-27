@@ -17,14 +17,15 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const socialImage = new URL(SITE.socialImage, SITE.url).href;
 const org = {
   '@context': 'https://schema.org', '@type': 'ProfessionalService', '@id': SITE.url + '/#org',
-  name: SITE.name, alternateName: 'WABI', legalName: SITE.legalName, url: SITE.url, description: SITE.description,
+  name: SITE.name, alternateName: ['WABI', 'Wabi AI-byrå'], legalName: SITE.legalName, url: SITE.url, description: SITE.description,
+  slogan: 'Midt-Norges mest praktiske AI-byrå',
   logo: { '@type': 'ImageObject', url: SITE.url + SITE.logoPng, width: 512, height: 512, caption: 'Wabi' }, image: SITE.url + SITE.logoPng,
   identifier: { '@type': 'PropertyValue', propertyID: 'Organisasjonsnummer (Brønnøysundregistrene)', value: SITE.orgNumber },
   taxID: SITE.orgNumber, vatID: SITE.vatID, email: SITE.email,
   address: { '@type': 'PostalAddress', ...SITE.address },
   founder: PEOPLE.map(p => { const { '@context': _, ...person } = personLd(p.id); return person; }),
   areaServed, sameAs: [SITE.linkedin, ...SITE.registryLinks],
-  knowsAbout: ['AI-rådgivning', 'AI-strategi', 'AI-agenter', 'Automatisering', 'AI-kurs', 'KI-kurs', 'ChatGPT', 'Claude', 'Gemini', 'Microsoft Copilot'],
+  knowsAbout: ['AI-byrå', 'AI-rådgivning', 'AI-strategi', 'AI-kartlegging', 'AI-agenter', 'Automatisering', 'Kunstig intelligens', 'KI', 'AI-kurs', 'KI-kurs', 'ChatGPT', 'Claude', 'Gemini', 'Microsoft Copilot'],
 };
 const graph = [org, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE.url + '/#website', url: SITE.url, name: SITE.name, inLanguage: 'nb-NO', publisher: { '@id': SITE.url + '/#org' } }, ...jsonLd];
 ---

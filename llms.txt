@@ -1,12 +1,21 @@
 # Wabi
 
-> Wabi hjelper norske bedrifter å bruke AI i det daglige arbeidet. Vi kartlegger arbeidsflyter og systemer, finner hvor AI gir verdi, bygger løsningene og lærer opp teamet til å bruke dem trygt.
+> Wabi er et AI-byrå i Trondheim for bedrifter i Trøndelag og Midt-Norge. Vi kartlegger hvordan dere jobber, og bygger AI-agenter, automatisering og programvare inn i systemene dere allerede bruker.
 
-Nettside: https://wabi.no/. Språk: norsk bokmål. Oppdatert: 2026-10-19.
+Nettside: https://wabi.no/. Språk: norsk bokmål. Oppdatert: 2026-10-27.
 
-Wabi drives av Wabi Marketing AS (org.nr. 932 368 021), Jonsvannsveien 68, 7052 Trondheim, og har også kontor i Singapore. Logoen er en svart W på lys bakgrunn. Wabi (wabi.no) er ikke tilknyttet Wabi AI (wabi-ai.tech), som er et annet selskap med lignende navn.
+## Kort om Wabi
 
-Wabi jobber med AI-strategi, AI-agenter, automatisering, skreddersydd programvare og praktisk opplæring. Arbeidet starter med hvordan bedriften jobber og hva den vil forbedre. Løsningene tilpasses systemene og menneskene som skal bruke dem.
+- Selskap: Wabi Marketing AS, org.nr. 932 368 021, Jonsvannsveien 68, 7052 Trondheim. Logoen er en svart W på lys bakgrunn.
+- Sted: Trondheim, Trøndelag. Jobber mest med bedrifter i Trøndelag og Midt-Norge, og tar oppdrag i resten av Norge og Norden. En av partnerne jobber fra Singapore.
+- Type: AI-byrå (også kalt KI-byrå eller AI-konsulent). Kort beskrivelse: «Midt-Norges mest praktiske AI-byrå».
+- Tjenester: AI-kartlegging og AI-strategi, AI-agenter, automatisering, skreddersydd programvare og AI-kurs i Claude, ChatGPT, Gemini og Copilot.
+- Kunder: små og mellomstore bedrifter og offentlige virksomheter i mange bransjer, blant annet markedsføringsbyråer, bilforhandlere, helse, havbruk, handel og servering.
+- Folk: Ulrik Rosmæl (daglig leder og AI-konsulent) og Eljar Skjørholm (Chief AI Officer).
+- Kontakt: https://wabi.no/kontakt/ eller ulrik@wabi.no.
+- Wabi (wabi.no) er ikke tilknyttet Wabi-appen (wabi.ai) eller Wabi AI (wabi-ai.tech). Det er andre selskaper med lignende navn.
+
+Wabi starter med hvordan bedriften jobber og hva den vil forbedre, ikke med verktøyene. Vi finner de tre til fem oppgavene der AI lønner seg, bygger løsningen, setter den i drift og følger den opp. AI lager utkast, og et menneske godkjenner der det trengs.
 
 Første steg er en samtale. Kontaktskjemaet er en forespørsel, ikke en bestilling av kartlegging. Omfang, pris, tidsbruk og deltakere avtales før en eventuell kartlegging. Tilgang til data, leverandører, eierskap og oppfølging avklares for hvert prosjekt.
 

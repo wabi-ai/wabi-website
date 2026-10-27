@@ -1,7 +1,7 @@
 export const SITE = {
   name: 'Wabi',
   url: 'https://wabi.no',
-  description: 'Vi kartlegger hvordan dere jobber, bygger AI inn der den gjør en forskjell og hjelper hele teamet å bruke den trygt.',
+  description: 'Wabi er et AI-byrå i Trondheim for bedrifter i Trøndelag og Midt-Norge. Vi kartlegger hvordan dere jobber, og bygger AI-agenter, automatisering og programvare inn i systemene dere allerede bruker.',
   socialImage: '/assets/wabi-social-2026-10-v2.jpg',
   socialImageAlt: 'Wabi. Praktisk AI, bygget for hvordan dere faktisk jobber.',
   email: 'ulrik@wabi.no', // fallback only, if the form fails

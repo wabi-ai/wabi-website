@@ -1,7 +1,10 @@
 import { SITE, PEOPLE, personId } from '../data/site.js';
 
-// Wabi is based in Trondheim and works across Norway.
-export const areaServed = [{ '@type': 'Country', name: 'Norge' }, { '@type': 'City', name: 'Trondheim' }];
+// Wabi is based in Trondheim, works mostly in Trøndelag and Midt-Norge, and takes work across Norway.
+export const areaServed = [
+  { '@type': 'City', name: 'Trondheim' }, { '@type': 'AdministrativeArea', name: 'Trøndelag' },
+  { '@type': 'Place', name: 'Midt-Norge' }, { '@type': 'Country', name: 'Norge' },
+];
 
 export const personLd = id => {
   const p = PEOPLE.find(person => person.id === id);
