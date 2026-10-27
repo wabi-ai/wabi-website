@@ -1,0 +1,94 @@
+---
+// Regional landing page for "AI-byrå Trøndelag". Angle: the whole county, the industries we have built for, we travel to you.
+// Keep the copy distinct from /ai-byra-trondheim/ and /ai-byra-midt-norge/ (no doorway pages).
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Steps from '../../components/Steps.astro';
+import FaqList from '../../components/FaqList.astro';
+import Services from '../../components/Services.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
+
+const path = '/ai-byra-trondelag/';
+const crumbs = [{ label: 'AI-byrå i Trøndelag', href: path }];
+const description = 'AI-byrå i Trøndelag for bedrifter i hele fylket. Wabi kommer til dere, kartlegger oppgavene og bygger AI-løsninger som passer bransjen og systemene deres.';
+const area = { '@type': 'AdministrativeArea', name: 'Trøndelag', containedInPlace: { '@type': 'Country', name: 'Norge' } };
+
+// Only industries with a project page behind them. Do not tie any client to a town.
+const industries = [
+  { name: 'Havbruk', href: '/prosjekter/havbruk/', link: 'Se Havora, et anonymisert kundecase', text: 'Målinger fra anleggene, høsting og salg samlet i én driftsoversikt. AI følger nøkkeltallene og skriver utkast til søknader om støtte fra tallene som allerede finnes.' },
+  { name: 'Bilforhandlere', href: '/prosjekter/bruktbil/', link: 'Se systemet til M Biler', text: 'Lager, kunder, prøvekjøringer, kontrakter og økonomi i ett system. Bilkortet fyller seg selv fra registreringsnummeret. Laget sammen med M Biler og i bruk hos flere forhandlere.' },
+  { name: 'Helse', href: '/prosjekter/legekontor/', link: 'Se eksempelet fra legekontoret', text: 'En agent tar dagsoppgjøret på et legekontor: Helfo-refusjon, egenandeler og bokføring i Tripletex eller Fiken. Den får ikke tilgang til pasientjournaler, og kontoret godkjenner avvikene.' },
+  { name: 'Markedsføringsbyråer', href: '/prosjekter/rapportering/', link: 'Se rapportverktøyet til Nuet', text: 'Rapporter som før ble satt sammen i regneark hver uke, oppdateres nå av seg selv. Kundene til byrået får en egen lenke med en kort forklaring av hva som har endret seg.' },
+];
+
+const steps: [string, string][] = [
+  ['Vi møtes hos dere', 'Kartleggingen gjør vi der dere jobber, sammen med ledelsen og dem som gjør oppgavene.'],
+  ['Dere velger én oppgave', 'Av tre til fem muligheter velger dere den som gir mest, ut fra nytten og arbeidet den krever.'],
+  ['Vi bygger i systemene deres', 'Regnskap, e-post, kundesystem eller fagsystem. Vi bruker det dere har, og innfører ikke nye plattformer uten grunn.'],
+  ['Vi følger opp', 'De ansatte lærer å bruke løsningen, og vi forbedrer den sammen med dem etter hvert som den blir brukt.'],
+];
+
+const faq: [string, string][] = [
+  ['Tar dere oppdrag utenfor Trondheim?', 'Ja. Vi jobber med bedrifter i hele Trøndelag og tar også oppdrag i resten av Norge og Norden. Vi kommer gjerne til dere når vi kartlegger.'],
+  ['Må vi være en stor bedrift for å ha nytte av AI?', 'Nei. Vi jobber med små og mellomstore bedrifter. Det som avgjør, er om dere har oppgaver som tar tid, gjentar seg og følger et mønster.'],
+  ['Hvilke bransjer har dere erfaring fra?', 'Blant annet markedsføringsbyråer, bilforhandlere, helse, havbruk, handel, servering og offentlig sektor. Oppgavene ligner ofte mer enn bransjene: rapporter, tilbud, kundesvar og bokføring.'],
+  ['Kan løsningen kobles til systemene vi allerede har?', 'Vi bygger i systemene dere bruker, for eksempel Tripletex, Fiken, Microsoft 365 eller Google Workspace. Før vi starter, undersøker vi hvilke av dem som kan kobles sammen.'],
+  ['Hvem bestemmer omfanget og prisen?', 'Det gjør vi sammen med dere. Etter en første samtale foreslår vi hva som bør gjøres, og pris, tidsbruk og deltakere avtales før en eventuell kartlegging starter.'],
+];
+---
+<Base title="AI-byrå i Trøndelag: AI for bedrifter i hele fylket | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-byrå i Trøndelag', description, path, area })]}>
+  <PageHero crumbs={crumbs} eyebrow="Trøndelag" title="AI-byrå i Trøndelag, for bedrifter i hele fylket."
+    lead="Vi har base i Trondheim og jobber med bedrifter over hele Trøndelag. Vi kommer til dere, ser hvordan dere jobber og bygger løsninger som passer bransjen og systemene deres."
+    primary={{ label: 'AI-prat?', href: '/kontakt/' }} secondary={{ label: 'Se bransjene', href: '#bransjer' }} />
+
+  <section class="section container split rule-top" aria-labelledby="fylket-title">
+    <div class="split-head" data-reveal><span class="eyebrow">AI for bedrifter i Trøndelag</span><h2 id="fylket-title" class="display-md">Samme hjelp, uansett hvor i fylket dere er.</h2></div>
+    <div data-reveal>
+      <p class="answer">Det trengs ikke et stort IT-miljø for å ha nytte av AI. Oppgavene som tar tid, er ofte de samme på Stjørdal, i Steinkjer og i Trondheim: tilbud som skrives fra bunnen, tall som flyttes mellom systemer, og rapporter som settes sammen for hånd.</p>
+      <p class="answer muted">Vi kartlegger hos dere, bygger løsningen i det dere allerede bruker og følger opp etterpå. Mye av arbeidet mellom møtene kan gjøres på nett, så avstanden blir ikke et hinder.</p>
+    </div>
+  </section>
+
+  <section class="section container rule-top" id="bransjer" aria-labelledby="bransjer-title">
+    <div class="ind-head" data-reveal>
+      <span class="eyebrow">Bransjer</span>
+      <h2 id="bransjer-title" class="display-md">Bransjer vi har bygget løsninger for.</h2>
+      <p>Havbruk er en stor næring langs kysten i Trøndelag, og helse, handel og service finnes i hver kommune. Her er fire bransjer der vi har laget noe som er i bruk eller vist fram som eksempel.</p>
+    </div>
+    <div class="ind-grid">
+      {industries.map((it, i) => <a href={it.href} class="ind" data-reveal style={`--d:${i * 70}ms`}>
+        <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+        <h3>{it.name}</h3>
+        <p>{it.text}</p>
+        <span class="text-link">{it.link} <span aria-hidden="true">→</span></span>
+      </a>)}
+    </div>
+    <p class="note" data-reveal>Vi har også jobbet med handel, servering og offentlige virksomheter. Se <a href="/prosjekter/">alle prosjektene</a>.</p>
+  </section>
+
+  <Steps eyebrow="Når dere ikke er i byen" title="Vi kommer til dere når det betyr noe." steps={steps} />
+
+  <Services eyebrow="Tjenester" title="Det vi kan gjøre for dere i Trøndelag." lead="Vi starter gjerne med en kartlegging. Etterpå kan vi bygge AI-agenter, automatisere faste oppgaver, lage verktøyene som mangler og holde kurs for de ansatte." />
+  <p class="container note start" data-reveal>Vil dere først vite hvor AI passer? Les om <a href="/kartlegging/">AI-kartlegging</a>. Trenger dere felles regler og en plan for hele bedriften? Se <a href="/ai-strategi/">AI-strategi</a>.</p>
+
+  <FaqList faq={faq} title="Spørsmål fra bedrifter i Trøndelag." />
+  <p class="container also" data-reveal>Er dere i Trondheim? Les om <a href="/ai-byra-trondheim/">AI-byrå i Trondheim</a>. Holder dere til i Møre og Romsdal? Se <a href="/ai-byra-midt-norge/">AI-byrå i Midt-Norge</a>.</p>
+  <CtaPanel eyebrow="Trøndelag" title="Hvor i Trøndelag er dere?" text="Fortell hvor dere holder til og hva som tar tid. Vi finner en tid å komme til dere, og avklarer rammene før noe er bestemt." primary={{ label: 'AI-prat?', href: '/kontakt/' }} secondary={{ label: 'Se prosjektene', href: '/prosjekter/' }} />
+</Base>
+
+<style>
+  .ind-head { display: flex; flex-direction: column; gap: 18px; max-width: 820px; margin-bottom: clamp(32px, 4vw, 56px); }
+  .ind-head p { color: #3B4A40; font-size: 17px; }
+  .ind-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .ind { display: flex; flex-direction: column; gap: 14px; padding: clamp(24px, 3vw, 36px); border-radius: 18px; border: 1px solid var(--wabi-outline); background: var(--wabi-card); text-decoration: none; color: inherit; transition: transform 200ms var(--ease-out), border-color 200ms; }
+  .ind:hover { transform: translateY(-3px); border-color: var(--wabi-moss); }
+  .ind .mono { color: var(--wabi-moss); }
+  .ind h3 { font-size: clamp(24px, 2.4vw, 32px); font-weight: 400; letter-spacing: -.03em; line-height: 1.15; }
+  .ind p { color: #3B4A40; flex: 1; }
+  .note, .also { margin-top: 24px; color: var(--wabi-muted); }
+  .start { margin-top: -24px; padding-bottom: var(--section-space); }
+  .also { padding-bottom: clamp(32px, 4vw, 48px); }
+  .note a, .also a { color: var(--wabi-moss); font-weight: 700; }
+  @media (max-width: 900px) { .ind-grid { grid-template-columns: minmax(0, 1fr); } }
+</style>

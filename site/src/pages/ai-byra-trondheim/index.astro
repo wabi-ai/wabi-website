@@ -1,0 +1,119 @@
+---
+// Local landing page for "AI-byrå Trondheim". Angle: in person, face to face, local clients.
+// Keep the copy distinct from /ai-byra-trondelag/ and /ai-byra-midt-norge/ (no doorway pages).
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Steps from '../../components/Steps.astro';
+import FaqList from '../../components/FaqList.astro';
+import MoreServices from '../../components/MoreServices.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
+
+const path = '/ai-byra-trondheim/';
+const crumbs = [{ label: 'AI-byrå i Trondheim', href: path }];
+const description = 'Wabi er et AI-byrå i Trondheim. Vi setter oss ned hos dere, finner oppgavene der AI sparer tid, og bygger løsningen i systemene dere allerede bruker.';
+const area = { '@type': 'City', name: 'Trondheim', containedInPlace: { '@type': 'AdministrativeArea', name: 'Trøndelag' } };
+
+const close = [
+  ['Vi ser arbeidet der det skjer', 'Vi sitter gjerne hos dere når vi kartlegger. Det er lettere å se hvor tiden går når vi ser skjermene, regnearkene og e-postene folk faktisk jobber i.'],
+  ['Dere møter dem som bygger', 'Det er vi som kartlegger, bygger og lærer opp. Dere snakker med de samme folkene hele veien, ikke med en selger som sender oppdraget videre.'],
+  ['Lett å ta en ny runde', 'Når noe må justeres etter at løsningen er tatt i bruk, tar vi det over bordet. Vi forbedrer løsningen sammen med dem som bruker den.'],
+];
+
+const steps: [string, string][] = [
+  ['En første prat', 'Fortell hva som tar tid hos dere. Dere trenger ingen ferdig plan, og dere bestiller ingenting ved å ta kontakt.'],
+  ['Kartlegging hos dere', 'Vi snakker med ledelsen og med dem som gjør jobben, og finner tre til fem oppgaver der AI lønner seg.'],
+  ['Første løsning', 'Vi bygger løsningen for oppgaven som gir mest, gjerne på noen uker, i systemene dere allerede bruker.'],
+  ['Oppfølging', 'Vi lærer opp de ansatte, ser hvordan løsningen brukes og justerer den underveis.'],
+];
+
+const work = [
+  { href: '/prosjekter/rapportering/', label: 'Nuet · Markedsføringsbyrå', title: 'Rapportene lager seg selv.', text: 'Tall fra Meta, Google Ads, Analytics og Search Console samles i én rapport per kunde. AI forklarer på norsk hva som har endret seg, og hver kunde får sin egen lenke.' },
+  { href: '/prosjekter/legekontor/', label: 'Legekontor · AI-agent', title: 'Dagsoppgjøret er ført før kontoret stenger.', text: 'En digital hjelper samler dagens betalinger og refusjoner fra Helfo og fører dem i Tripletex eller Fiken. Kontoret sjekker bare det som ikke stemmer.' },
+];
+
+const faq: [string, string][] = [
+  ['Kommer dere til oss i Trondheim?', 'Ja. Vi sitter gjerne hos dere når vi kartlegger, og vi møtes der det passer best for dere underveis i prosjektet.'],
+  ['Hva koster det å komme i gang?', 'Den første samtalen er en forespørsel, ikke en bestilling. Vil dere gå videre med en kartlegging, avtaler vi omfang, pris, tidsbruk og hvem som bør delta før vi starter.'],
+  ['Hva er forskjellen på et AI-byrå og en AI-konsulent?', 'Hos oss er det de samme folkene. Vi gir råd om hvor AI passer, og vi bygger, setter i drift og følger opp løsningen. Dere slipper å ha én som anbefaler og en annen som lager.'],
+  ['Jobber dere med offentlige virksomheter?', 'Ja. Vi jobber med små og mellomstore bedrifter og med offentlige virksomheter. Trondheim kommune er blant dem vi har jobbet med.'],
+  ['Hvor raskt kan vi ha noe i bruk?', 'Det avhenger av oppgaven. Den første løsningen bygges gjerne på noen uker, og vi utvider når dere ser at den hjelper.'],
+  ['Trenger vi egne utviklere eller en IT-avdeling?', 'Nei. Vi bygger, lærer opp de ansatte og følger opp etterpå. Dere trenger noen som kjenner oppgaven og kan si hva som er riktig.'],
+];
+---
+<Base title="AI-byrå i Trondheim: praktisk AI, ansikt til ansikt | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-byrå i Trondheim', description, path, area })]}>
+  <PageHero crumbs={crumbs} eyebrow="Lokalt i Trondheim" title="Et AI-byrå i Trondheim som kommer til dere."
+    lead="Vi holder til i Trondheim og møter dere der dere jobber. Vi ser på oppgavene sammen med dem som gjør dem, finner ut hvor AI faktisk hjelper, og bygger løsningen inn i systemene dere har."
+    primary={{ label: 'AI-prat?', href: '/kontakt/' }} secondary={{ label: 'Slik foregår det', href: '#slik-foregar-det' }} />
+
+  <section class="section container split rule-top" aria-labelledby="hva-title">
+    <div class="split-head" data-reveal><span class="eyebrow">Kort forklart</span><h2 id="hva-title" class="display-md">Hva gjør et AI-byrå i Trondheim?</h2></div>
+    <div data-reveal>
+      <p class="answer">Som AI-byrå, eller KI-byrå om dere vil, hjelper vi bedrifter og virksomheter i Trondheim å bruke AI på oppgaver som tar tid og gjentar seg: rapporter, kundesvar, bokføring og oppfølging. Vi finner oppgavene, bygger løsningen, setter den i drift og følger den opp.</p>
+      <p class="answer muted">Det vanskelige er sjelden teknologien. Det vanskelige er å vite hvor den lønner seg. Derfor starter vi i arbeidsdagen deres, ikke i et verktøy.</p>
+    </div>
+  </section>
+
+  <section class="section container split" aria-labelledby="naer-title">
+    <div class="split-head sticky-head" data-reveal><span class="eyebrow">Ansikt til ansikt</span><h2 id="naer-title" class="display-md">AI-konsulenter i Trondheim, med kort vei til et møte.</h2><p>Når vi er i samme by, er det enkelt å møtes når det trengs.</p></div>
+    <ol class="close">{close.map(([t, s], i) => <li data-reveal style={`--d:${i * 80}ms`}><span class="mono">{i + 1}</span><div><h3>{t}</h3><p>{s}</p></div></li>)}</ol>
+  </section>
+
+  <section class="section container local rule-top" aria-labelledby="lokalt-title">
+    <div class="local-copy" data-reveal>
+      <span class="eyebrow">Her i byen</span>
+      <h2 id="lokalt-title" class="display-md">Virksomheter i Trondheim vi har jobbet med.</h2>
+      <p>Blant dem vi har jobbet med, er Trondheim kommune og Trondheim Catering. Vi jobber også med bedrifter i mange andre bransjer, fra markedsføringsbyråer og bilforhandlere til helse og havbruk.</p>
+    </div>
+    <ul class="local-logos" data-reveal style="--d:100ms">
+      <li><img src="/assets/logos/trondheim-kommune.png" alt="Trondheim kommune" width="150" height="56" loading="lazy" /></li>
+      <li><img src="/assets/logos/trondheim-catering.png" alt="Trondheim Catering" width="150" height="56" loading="lazy" /></li>
+    </ul>
+  </section>
+
+  <div id="slik-foregar-det"><Steps dark eyebrow="Slik foregår det" title="Fra første prat til noe som brukes." steps={steps} /></div>
+
+  <section class="section container" aria-labelledby="arbeid-title">
+    <div class="work-head" data-reveal><span class="eyebrow">Eksempler på det vi har bygget</span><h2 id="arbeid-title" class="display-md">To oppgaver som ikke lenger gjøres for hånd.</h2></div>
+    <div class="work-grid">
+      {work.map((w, i) => <a href={w.href} data-reveal style={`--d:${i * 100}ms`}><span class="eyebrow">{w.label}</span><h3>{w.title}</h3><p>{w.text}</p><span class="text-link">Se prosjektet <span aria-hidden="true">→</span></span></a>)}
+    </div>
+    <p class="note" data-reveal>Usikre på hvor dere bør starte? Les om <a href="/kartlegging/">AI-kartlegging</a>, eller om hvordan vi lager en <a href="/ai-strategi/">AI-strategi</a> for hele bedriften.</p>
+  </section>
+
+  <div class="all-services"><MoreServices current="" /></div>
+  <FaqList faq={faq} title="AI-byrå i Trondheim: vanlige spørsmål." />
+  <p class="container also" data-reveal>Holder dere til utenfor byen? Vi jobber også i <a href="/ai-byra-trondelag/">resten av Trøndelag</a> og i <a href="/ai-byra-midt-norge/">hele Midt-Norge</a>.</p>
+  <CtaPanel eyebrow="Trondheim" title="Ta en AI-prat i Trondheim." text="Fortell hva som tar tid i arbeidsdagen deres. Vi kan møtes hos dere, og vi avklarer rammene før dere bestemmer noe." primary={{ label: 'AI-prat?', href: '/kontakt/' }} />
+</Base>
+
+<style>
+  .close { list-style: none; margin: 0; padding: 0; }
+  .close li { display: grid; grid-template-columns: 48px 1fr; gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--wabi-outline); }
+  .close li:first-child { border-top: 1px solid var(--wabi-outline); }
+  .close .mono { padding-top: 6px; color: var(--wabi-moss); }
+  .close h3 { font-size: clamp(20px, 1.9vw, 24px); font-weight: 400; letter-spacing: -.025em; }
+  .close p { margin-top: 8px; color: #3B4A40; }
+  .local { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+  .local-copy { display: flex; flex-direction: column; gap: 18px; }
+  .local-copy p { color: #3B4A40; font-size: 17px; max-width: 60ch; }
+  .local-logos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .local-logos li { display: grid; place-items: center; padding: 28px 20px; border: 1px solid var(--wabi-outline); border-radius: 14px; background: var(--wabi-raised); }
+  .local-logos img { width: auto; max-width: 100%; height: 48px; object-fit: contain; }
+  .work-head { max-width: 760px; margin-bottom: clamp(32px, 4vw, 48px); display: flex; flex-direction: column; gap: 18px; }
+  .work-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .work-grid > a { display: flex; flex-direction: column; gap: 20px; padding: clamp(24px, 3vw, 40px); border: 1px solid var(--wabi-outline); border-radius: 14px; background: var(--wabi-raised); text-decoration: none; transition: border-color 200ms; }
+  .work-grid > a:hover { border-color: var(--wabi-moss); }
+  .work-grid h3 { font-size: clamp(24px, 2.4vw, 28px); font-weight: 400; line-height: 1.2; letter-spacing: -.03em; }
+  .work-grid p { color: #3B4A40; }
+  .work-grid .text-link { margin-top: auto; }
+  .note, .also { margin-top: 24px; color: var(--wabi-muted); }
+  .also { padding-bottom: clamp(32px, 4vw, 48px); }
+  .note a, .also a { color: var(--wabi-moss); font-weight: 700; }
+  /* MoreServices shows all four services here, so give it four columns instead of three. */
+  .all-services :global(.grid) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 1100px) { .all-services :global(.grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 900px) { .local { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 600px) { .all-services :global(.grid) { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 760px) { .work-grid { grid-template-columns: minmax(0, 1fr); } }
+</style>

@@ -36,6 +36,12 @@ Nuet og M Biler er navngitte kundeprosjekter. Kundedata er skjult i skjermbilden
 - [Verktøy og programvare](https://wabi.no/verktoy-og-programvare/): Gjennomgang av verktøy bedriften betaler for, vurdering av kjøp eller bygging og utvikling av programvare som mangler.
 - [AI-kurs og opplæring](https://wabi.no/kurs/): Praktiske kurs i Claude, ChatGPT, Gemini eller Copilot, tilpasset teamets egne arbeidsoppgaver og trygg bruk.
 
+## Områder
+
+- [AI-byrå i Trondheim](https://wabi.no/ai-byra-trondheim/): Lokalt AI-byrå i Trondheim. Vi møter bedrifter og offentlige virksomheter i byen ansikt til ansikt og kartlegger hos dem.
+- [AI-byrå i Trøndelag](https://wabi.no/ai-byra-trondelag/): AI for bedrifter i hele Trøndelag, også utenfor Trondheim. Bransjer vi har bygget løsninger for: havbruk, bilforhandlere, helse og markedsføringsbyråer.
+- [AI-byrå i Midt-Norge](https://wabi.no/ai-byra-midt-norge/): Oppdrag i Trøndelag og Møre og Romsdal. Oppstart og kartlegging hos kunden, deretter bygging og oppfølging mye på nett.
+
 ## Prosjekter og eksempler
 
 - [Alle prosjekter](https://wabi.no/prosjekter/): Oversikt over kundeprosjekter og demonstrasjoner.

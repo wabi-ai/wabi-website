@@ -24,7 +24,8 @@ export const faqLd = faq => ({
   mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
 });
 
-export const serviceLd = ({ name, description, path }) => ({
+// Location pages pass their own `area`; service pages use the full areaServed list.
+export const serviceLd = ({ name, description, path, area = areaServed }) => ({
   '@context': 'https://schema.org', '@type': 'Service', name, description, url: SITE.url + path,
-  provider: { '@id': SITE.url + '/#org' }, areaServed, inLanguage: 'nb-NO',
+  provider: { '@id': SITE.url + '/#org' }, areaServed: area, inLanguage: 'nb-NO',
 });
