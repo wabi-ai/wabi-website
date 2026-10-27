@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import CtaPanel from '../../components/CtaPanel.astro';
 import { breadcrumbLd } from '../../lib/seo.js';
+import { PEOPLE, personId } from '../../data/site.js';
 import { SITE } from '../../data/site.js';
 
 export async function getStaticPaths() {
@@ -17,15 +18,17 @@ const minutes = Math.max(1, Math.round(words / 200));
 const fmt = (d: Date) => d.toLocaleDateString('nb-NO', { day: 'numeric', month: 'long', year: 'numeric' });
 const url = `${SITE.url}/innsikt/${post.id}/`;
 const authorName = post.data.author === 'Eljar' ? 'Eljar Skjørholm' : post.data.author;
+const authorPerson = PEOPLE.find(p => p.name === authorName);
+const published = post.data.date.toISOString(), modified = (post.data.updated || post.data.date).toISOString();
 const crumbs = [{ label: 'Innsikt', href: '/innsikt/' }, { label: post.data.title, href: `/innsikt/${post.id}/` }];
 const articleLd = {
   '@context': 'https://schema.org', '@type': 'Article', headline: post.data.title, description: post.data.description,
-  datePublished: post.data.date.toISOString(), dateModified: (post.data.updated || post.data.date).toISOString(),
-  author: { '@type': 'Person', name: authorName, worksFor: { '@id': SITE.url + '/#org' } },
+  datePublished: published, dateModified: modified,
+  author: { '@type': 'Person', ...(authorPerson && { '@id': personId(authorPerson.id), url: SITE.url + '/om-oss/', sameAs: authorPerson.sameAs }), name: authorName, worksFor: { '@id': SITE.url + '/#org' } },
   publisher: { '@id': SITE.url + '/#org' }, mainEntityOfPage: url, inLanguage: 'nb-NO', keywords: post.data.keywords.join(', '),
 };
 ---
-<Base title={`${post.data.title} | Wabi`} description={post.data.description} jsonLd={[breadcrumbLd(crumbs), articleLd]}>
+<Base title={`${post.data.title} | Wabi`} description={post.data.description} article={{ published, modified }} jsonLd={[breadcrumbLd(crumbs), articleLd]}>
   <article>
     <header class="container head">
       <nav class="crumbs mono" aria-label="Brødsmuler"><a href="/">Forside</a><span aria-hidden="true">/</span><a href="/innsikt/">Innsikt</a></nav>

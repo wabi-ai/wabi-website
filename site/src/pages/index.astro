@@ -8,6 +8,7 @@ import Icon from '../components/Icon.astro';
 import HeroLive from '../components/hero/HeroLive.astro';
 import { SERVICES, SITE } from '../data/site.js';
 import { deliveryFaq } from '../data/delivery.js';
+import { personLd } from '../lib/seo.js';
 import Services from '../components/Services.astro';
 import CaseRail from '../components/CaseRail.astro';
 import WhyStalls from '../components/WhyStalls.astro';
@@ -34,8 +35,8 @@ const faq = [
 
 const jsonLd = [
   { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
-  { '@context': 'https://schema.org', '@type': 'Person', name: 'Ulrik Rosmæl', jobTitle: 'Daglig leder og AI-konsulent', email: 'ulrik@wabi.no', worksFor: { '@id': SITE.url + '/#org' }, homeLocation: 'Trondheim' },
-  { '@context': 'https://schema.org', '@type': 'Person', name: 'Eljar Skjørholm', jobTitle: 'Chief AI Officer', email: 'admin@wabi.no', worksFor: { '@id': SITE.url + '/#org' }, homeLocation: 'Singapore' },
+  personLd('ulrik'),
+  personLd('eljar'),
 ];
 ---
 <Base title="Wabi | AI-rådgivning og AI-strategi for norske bedrifter" socialTitle="Wabi | Praktisk AI for bedriften din" jsonLd={jsonLd}>

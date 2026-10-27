@@ -10,8 +10,11 @@ export const SITE = {
   // don't confuse Wabi with similarly named companies.
   legalName: 'Wabi Marketing AS',
   orgNumber: '932368021',
+  vatID: 'NO932368021MVA',
   address: { streetAddress: 'Jonsvannsveien 68', postalCode: '7052', addressLocality: 'Trondheim', addressCountry: 'NO' },
   logoPng: '/assets/logo/wabi-logo-square.png',
+  // Public registry listings that confirm the legal entity. Only add profiles that are verified to belong to Wabi.
+  registryLinks: ['https://virksomhet.brreg.no/nb/oppslag/enheter/932368021', 'https://www.proff.no/selskap/wabi-marketing-as/932368021'],
   // Web3Forms access key for the contact form. Submissions go to the address the key was created for (admin@wabi.no).
   // While empty, the form falls back to opening an e-mail draft.
   contactFormKey: '299414e8-17a7-4e12-afc9-bd94a50f3a59',
@@ -23,6 +26,14 @@ export const SITE = {
     searchConsole: '', // Search Console HTML-tag verification token (no cookies, no consent needed)
   },
 };
+
+// The founders, as shown on the homepage and /om-oss/. Each has a stable @id so every page refers to the same person.
+// sameAs: only verified personal profiles. Ulrik's LinkedIn is not added until the URL is confirmed.
+export const PEOPLE = [
+  { id: 'ulrik', name: 'Ulrik Rosmæl', jobTitle: 'Daglig leder og AI-konsulent', email: 'ulrik@wabi.no', homeLocation: 'Trondheim', sameAs: [] },
+  { id: 'eljar', name: 'Eljar Skjørholm', jobTitle: 'Chief AI Officer', email: 'admin@wabi.no', homeLocation: 'Singapore', sameAs: ['https://www.linkedin.com/in/eljarskjorholm'] },
+];
+export const personId = id => `${SITE.url}/om-oss/#${id}`;
 
 export const SERVICES = [
   { id: 'agenter', href: '/ai-agenter/', tone: 'fjord', preset: 't1', title: 'AI-agenter', short: 'En digital hjelper som kan lage rapporter, skrive svar og følge opp oppgaver.', nav: ['En ekstra hånd i arbeidsdagen.', 'Få hjelp med rapporter, kundesvar og andre faste oppgaver.'] },
