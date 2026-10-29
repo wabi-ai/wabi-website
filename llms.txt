@@ -2,7 +2,7 @@
 
 > Wabi er et AI-byrå i Trondheim for bedrifter i Trøndelag og Midt-Norge. Vi kartlegger hvordan dere jobber, og bygger AI-agenter, automatisering og programvare inn i systemene dere allerede bruker.
 
-Nettside: https://wabi.no/. Språk: norsk bokmål. Oppdatert: 2026-10-27.
+Nettside: https://wabi.no/. Språk: norsk bokmål. Oppdatert: 2026-10-29.
 
 ## Kort om Wabi
 
@@ -38,6 +38,7 @@ Nuet og M Biler er navngitte kundeprosjekter. Kundedata er skjult i skjermbilden
 
 ## Områder
 
+- [AI-byrå i Norge](https://wabi.no/ai-byra-norge/): Hva et AI-byrå gjør, seks spørsmål å stille når dere velger AI-byrå, kunder og prosjekter. Wabi tar oppdrag i hele Norge og Norden.
 - [AI-byrå i Trondheim](https://wabi.no/ai-byra-trondheim/): Lokalt AI-byrå i Trondheim. Vi møter bedrifter og offentlige virksomheter i byen ansikt til ansikt og kartlegger hos dem.
 - [AI-byrå i Trøndelag](https://wabi.no/ai-byra-trondelag/): AI for bedrifter i hele Trøndelag, også utenfor Trondheim. Bransjer vi har bygget løsninger for: havbruk, bilforhandlere, helse og markedsføringsbyråer.
 - [AI-byrå i Midt-Norge](https://wabi.no/ai-byra-midt-norge/): Oppdrag i Trøndelag og Møre og Romsdal. Oppstart og kartlegging hos kunden, deretter bygging og oppfølging mye på nett.

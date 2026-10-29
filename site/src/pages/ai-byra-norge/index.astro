@@ -1,0 +1,130 @@
+---
+// National landing page for "AI-byrå Norge". Angle: what an AI agency does, and the questions to ask when choosing one.
+// Keep the copy distinct from the Trondheim, Trøndelag and Midt-Norge pages (no doorway pages).
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import FaqList from '../../components/FaqList.astro';
+import MoreServices from '../../components/MoreServices.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { CLIENTS } from '../../data/site.js';
+import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
+
+const path = '/ai-byra-norge/';
+const crumbs = [{ label: 'AI-byrå i Norge', href: path }];
+const description = 'Wabi er et praktisk AI-byrå for norske bedrifter. Vi finner oppgavene der AI lønner seg, bygger løsningen i systemene dere har og følger den opp etterpå.';
+const area = { '@type': 'Country', name: 'Norge' };
+
+// [question to ask, why it matters, how Wabi answers it]
+const questions: [string, string, string][] = [
+  ['Starter dere med oppgavene eller med verktøyet?', 'Et byrå som selger én plattform, finner som regel bruk for akkurat den plattformen.', 'Vi ser på oppgavene først og velger verktøy etterpå. Noen ganger holder det å bruke det dere allerede betaler for, på en bedre måte.'],
+  ['Bygger dere i systemene vi allerede har?', 'Et nytt system betyr ny opplæring, nye innlogginger og en leverandør til å følge opp.', 'Vi bygger i det dere bruker, for eksempel Tripletex, Fiken, Microsoft 365 eller Google Workspace, og innfører ikke nye plattformer uten grunn.'],
+  ['Hvor blir dataene behandlet, og av hvem?', 'Kundedata og personopplysninger skal ikke havne hos leverandører dere ikke vet om.', 'Før vi bygger, går vi gjennom hvilke data løsningen trenger, hvilke leverandører som behandler dem og hvem som får tilgang. Kravene deres styrer valgene.'],
+  ['Hvem eier løsningen når den er ferdig?', 'Dere bør vite hvem som eier kode, kontoer og data, og hva som skjer om samarbeidet slutter.', 'Eierskap til kode og kontoer avtales før vi starter, sammen med hva drift og support skal koste.'],
+  ['Hvem kontrollerer det AI lager?', 'AI gjør feil. Det må være tydelig hva som går av seg selv, og hva et menneske sjekker.', 'AI lager utkast og gjør grovarbeidet. Dere bestemmer hva som må godkjennes før noe sendes.'],
+  ['Hva skjer etter lansering?', 'Mange AI-prosjekter stopper opp når konsulenten går, fordi ingen følger med på bruken.', 'Vi lærer opp de ansatte, ser hvordan løsningen brukes og forbedrer den sammen med dem underveis.'],
+];
+
+const work = [
+  { href: '/prosjekter/rapportering/', label: 'Nuet · Markedsføringsbyrå', title: 'Én rapportlenke per kunde.', text: 'Tall fra Meta, Google Ads, Analytics og Search Console hentes inn automatisk. AI skriver en kort forklaring på norsk av hva som har endret seg.' },
+  { href: '/prosjekter/bruktbil/', label: 'M Biler · Bilforhandler', title: 'Hele bilsalget i ett system.', text: 'Lager, kunder, prøvekjøringer, kontrakter og økonomi samlet på ett sted. Laget sammen med M Biler og i bruk hos flere forhandlere.' },
+  { href: '/prosjekter/havbruk/', label: 'Havora · Havbruk (anonymisert)', title: 'Drift og søknader på de samme tallene.', text: 'Målinger, høsting og salg samlet i én driftsoversikt. AI følger nøkkeltallene og skriver utkast til søknader om støtte.' },
+  { href: '/prosjekter/legekontor/', label: 'Eksempel · Legekontor', title: 'Dagsoppgjøret ført før kontoret stenger.', text: 'En demonstrasjon av en agent som samler betalinger og Helfo-refusjoner og fører dem i Tripletex eller Fiken. Kontoret godkjenner avvikene.' },
+];
+
+const faq: [string, string][] = [
+  ['Hva er et AI-byrå?', 'Et AI-byrå hjelper bedrifter å ta i bruk kunstig intelligens i arbeidet. Hos Wabi betyr det at vi finner oppgavene der AI lønner seg, bygger løsningen, setter den i drift og følger den opp. Vi gir råd og bygger selv, så dere slipper å ha én som anbefaler og en annen som lager.'],
+  ['Heter det AI-byrå eller KI-byrå?', 'Det betyr det samme. KI står for kunstig intelligens, og AI er den engelske forkortelsen. Vi bruker oftest AI fordi de fleste søker på det, men tjenestene er de samme uansett hva dere kaller det.'],
+  ['Hva koster det å bruke et AI-byrå?', 'Det avhenger av oppgaven. Prisen styres mest av hvor mange systemer som skal kobles sammen, hvor ryddige dataene er og hvor mye et menneske må kontrollere. Den første samtalen er en forespørsel, ikke en bestilling. Vi avtaler omfang, pris, tidsbruk og deltakere før en kartlegging starter.'],
+  ['Tar dere oppdrag i hele Norge?', 'Ja. Vi har base i Trondheim og jobber mest i Trøndelag og Midt-Norge, men tar oppdrag i resten av Norge og Norden. Oppstarten kan skje hos dere eller på video, og mye av arbeidet etterpå går på nett.'],
+  ['Hvilke AI-verktøy bruker dere?', 'Vi velger etter oppgaven og kravene deres, ikke etter én leverandør. Vi bygger blant annet med Claude, ChatGPT og Gemini, og holder kurs i Claude, ChatGPT, Gemini og Copilot. Hvilken leverandør som får se dataene, avklares før vi bygger.'],
+  ['Trenger vi egne utviklere eller en IT-avdeling?', 'Nei. Vi bygger, lærer opp de ansatte og følger opp etterpå. Dere trenger noen som kjenner oppgaven godt og kan si hva som er riktig.'],
+];
+---
+<Base title="AI-byrå i Norge: praktisk AI for norske bedrifter | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-byrå i Norge', description, path, area })]}>
+  <PageHero crumbs={crumbs} eyebrow="AI-byrå i Norge" title="Et praktisk AI-byrå for norske bedrifter."
+    lead="Wabi hjelper bedrifter og offentlige virksomheter å bruke AI på oppgaver som tar tid og gjentar seg. Vi finner ut hvor AI lønner seg, bygger løsningen i systemene dere allerede bruker, og følger den opp etterpå."
+    primary={{ label: 'AI-prat?', href: '/kontakt/' }} secondary={{ label: 'Slik velger dere byrå', href: '#velge-byra' }} />
+
+  <section class="section container split rule-top" aria-labelledby="hva-title">
+    <div class="split-head" data-reveal><span class="eyebrow">Kort forklart</span><h2 id="hva-title" class="display-md">Hva gjør et AI-byrå?</h2></div>
+    <div data-reveal>
+      <p class="answer">Et AI-byrå, eller KI-byrå, hjelper bedrifter å ta i bruk kunstig intelligens der det gir en gevinst. Hos oss handler det om fire ting: vi finner oppgavene der AI lønner seg, bygger løsningen, setter den i drift og følger den opp.</p>
+      <p class="answer muted">Vi starter ikke med et verktøy. Vi starter med arbeidsdagen deres: hvilke oppgaver som tar tid, hvem som gjør dem og hvilke systemer de jobber i. Det vanskelige er sjelden teknologien. Det vanskelige er å vite hvor den skaper verdi.</p>
+    </div>
+  </section>
+
+  <section id="velge-byra" class="section container" aria-labelledby="velge-title">
+    <div class="q-head" data-reveal>
+      <span class="eyebrow">Slik velger dere AI-byrå</span>
+      <h2 id="velge-title" class="display-md">Seks spørsmål å stille et AI-byrå.</h2>
+      <p>AI-byråene i Norge tilbyr svært forskjellige ting, fra markedsføring og nettsider til agenter og kurs. Disse spørsmålene gjør det lettere å sammenligne. Under hvert spørsmål står det hvordan vi svarer selv.</p>
+    </div>
+    <ol class="questions">
+      {questions.map(([q, why, ours], i) => <li data-reveal style={`--d:${(i % 2) * 80}ms`}><span class="mono">{String(i + 1).padStart(2, '0')}</span><h3>{q}</h3><p class="why">{why}</p><p class="ours"><strong>Hos Wabi:</strong> {ours}</p></li>)}
+    </ol>
+  </section>
+
+  <section class="section container clients rule-top" aria-labelledby="kunder-title">
+    <div class="clients-copy" data-reveal>
+      <span class="eyebrow">Kunder</span>
+      <h2 id="kunder-title" class="display-md">Noen av dem vi har jobbet med.</h2>
+      <p>Vi jobber med små og mellomstore bedrifter og offentlige virksomheter i mange bransjer: markedsføringsbyråer, bilforhandlere, helse, havbruk, handel og servering. Oppgavene ligner ofte mer enn bransjene: rapporter, tilbud, kundesvar og bokføring.</p>
+    </div>
+    <ul class="logos" data-reveal style="--d:100ms">
+      {CLIENTS.map(([file, name]) => <li><img src={`/assets/logos/${file}.png`} alt={name} width="150" height="56" loading="lazy" /></li>)}
+    </ul>
+  </section>
+
+  <section class="section container" aria-labelledby="arbeid-title">
+    <div class="work-head" data-reveal><span class="eyebrow">Eksempler på det vi har bygget</span><h2 id="arbeid-title" class="display-md">Fire oppgaver som ikke lenger gjøres for hånd.</h2></div>
+    <div class="work-grid">
+      {work.map((w, i) => <a href={w.href} data-reveal style={`--d:${(i % 2) * 100}ms`}><span class="eyebrow">{w.label}</span><h3>{w.title}</h3><p>{w.text}</p><span class="text-link">Se prosjektet <span aria-hidden="true">→</span></span></a>)}
+    </div>
+  </section>
+
+  <section class="section container split rule-top" aria-labelledby="norge-title">
+    <div class="split-head" data-reveal><span class="eyebrow">Hele landet</span><h2 id="norge-title" class="display-md">Fra Trondheim til resten av Norge.</h2></div>
+    <div data-reveal>
+      <p class="answer">Vi har base i Trondheim og jobber mest i Trøndelag og Midt-Norge, men tar oppdrag i hele Norge og Norden. Ulrik Rosmæl, daglig leder og AI-konsulent, jobber fra Trondheim. Eljar Skjørholm, Chief AI Officer, jobber fra Singapore.</p>
+      <p class="answer muted">Oppstarten og kartleggingen kan skje hos dere eller på video. Bygging, testing og oppfølging går mye på nett, og dere snakker med de samme folkene hele veien. <a class="text-link" href="/om-oss/">Les mer om oss</a></p>
+    </div>
+  </section>
+
+  <div class="all-services"><MoreServices current="" /></div>
+  <FaqList faq={faq} title="Om AI-byråer og om å jobbe med oss." />
+  <p class="container also" data-reveal>Holder dere til i Midt-Norge? Se <a href="/ai-byra-trondheim/">AI-byrå i Trondheim</a>, <a href="/ai-byra-trondelag/">AI-byrå i Trøndelag</a> og <a href="/ai-byra-midt-norge/">AI-byrå i Midt-Norge</a>.</p>
+  <CtaPanel eyebrow="AI-prat" title="Fortell oss hva som tar tid." text="Ta kontakt for en første prat. Vi foreslår hvor dere kan starte, og avklarer rammene før dere bestemmer noe." primary={{ label: 'AI-prat?', href: '/kontakt/' }} />
+</Base>
+
+<style>
+  .q-head { max-width: 760px; display: flex; flex-direction: column; gap: 18px; margin-bottom: clamp(32px, 4vw, 48px); }
+  .q-head p { color: #3B4A40; font-size: 17px; }
+  .questions { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .questions li { display: flex; flex-direction: column; gap: 12px; padding: clamp(24px, 3vw, 32px); border: 1px solid var(--wabi-outline); border-radius: 14px; background: var(--wabi-raised); }
+  .questions .mono { color: var(--wabi-moss); }
+  .questions h3 { font-size: clamp(20px, 1.9vw, 24px); font-weight: 400; letter-spacing: -.025em; }
+  .questions .why { color: var(--wabi-muted); font-size: 15px; }
+  .questions .ours { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--wabi-outline); color: #3B4A40; font-size: 15px; }
+  .questions .ours strong { color: var(--wabi-moss); }
+  .clients { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+  .clients-copy { display: flex; flex-direction: column; gap: 18px; }
+  .clients-copy p { color: #3B4A40; font-size: 17px; max-width: 60ch; }
+  .logos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .logos li { display: grid; place-items: center; padding: 20px 16px; border: 1px solid var(--wabi-outline); border-radius: 14px; background: var(--wabi-raised); }
+  .logos img { width: auto; max-width: 100%; height: 40px; object-fit: contain; }
+  .work-head { max-width: 760px; margin-bottom: clamp(32px, 4vw, 48px); display: flex; flex-direction: column; gap: 18px; }
+  .work-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .work-grid > a { display: flex; flex-direction: column; gap: 20px; padding: clamp(24px, 3vw, 40px); border: 1px solid var(--wabi-outline); border-radius: 14px; background: var(--wabi-raised); text-decoration: none; transition: border-color 200ms; }
+  .work-grid > a:hover { border-color: var(--wabi-moss); }
+  .work-grid h3 { font-size: clamp(24px, 2.4vw, 28px); font-weight: 400; line-height: 1.2; letter-spacing: -.03em; }
+  .work-grid p { color: #3B4A40; }
+  .work-grid .text-link { margin-top: auto; }
+  .also { margin-top: 24px; padding-bottom: clamp(32px, 4vw, 48px); color: var(--wabi-muted); }
+  .also a { color: var(--wabi-moss); font-weight: 700; }
+  /* MoreServices shows all four services here, so give it four columns instead of three. */
+  .all-services :global(.grid) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 1100px) { .all-services :global(.grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 900px) { .clients { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 760px) { .questions, .work-grid { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 480px) { .logos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
