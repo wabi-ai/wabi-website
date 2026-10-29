@@ -34,6 +34,7 @@ Nuet og M Biler er navngitte kundeprosjekter. Kundedata er skjult i skjermbilden
 - [AI-agenter](https://wabi.no/ai-agenter/): Digitale hjelpere som utfører avgrensede oppgaver. Bedriften bestemmer tilgang, rammer og hva mennesker skal godkjenne.
 - [Automatisering](https://wabi.no/automatisering/): Koblinger mellom eksisterende systemer som reduserer dobbeltarbeid og manuell flytting av informasjon.
 - [Verktøy og programvare](https://wabi.no/verktoy-og-programvare/): Gjennomgang av verktøy bedriften betaler for, vurdering av kjøp eller bygging og utvikling av programvare som mangler.
+- [AI-konsulent](https://wabi.no/ai-konsulent/): Hva en AI-konsulent gjør, når det passer, og konsulent sammenlignet med ferdig verktøy eller egen ansatt. Hos Wabi gir de samme folkene råd og bygger løsningen.
 - [AI-kurs og opplæring](https://wabi.no/kurs/): Praktiske kurs i Claude, ChatGPT, Gemini eller Copilot, tilpasset teamets egne arbeidsoppgaver og trygg bruk.
 
 ## Områder

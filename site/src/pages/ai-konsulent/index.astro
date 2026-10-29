@@ -1,0 +1,139 @@
+---
+// Landing page for "AI-konsulent (Norge)". Angle: the people, when a consultant is the right choice, and that the
+// same consultants advise and build. Keep the copy distinct from /ai-byra-norge/ (agency choice, clients, projects).
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import FaqList from '../../components/FaqList.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { breadcrumbLd, faqLd, serviceLd, personLd } from '../../lib/seo.js';
+
+const path = '/ai-konsulent/';
+const crumbs = [{ label: 'AI-konsulent', href: path }];
+const description = 'AI-konsulenter for norske bedrifter. Wabi finner oppgavene der AI lønner seg, lager en plan og bygger løsningen selv, i systemene dere allerede bruker.';
+const area = { '@type': 'Country', name: 'Norge' };
+
+const signs = [
+  'De ansatte har fått ChatGPT eller Copilot, men lite har endret seg i arbeidsdagen.',
+  'Noen oppgaver tar mye tid hver uke og gjøres nesten likt hver gang.',
+  'Ledelsen vil bruke AI, men vet ikke hvor dere bør starte eller hva som er trygt.',
+  'Dere er usikre på hvilke data som kan brukes, og hvilke leverandører som bør få se dem.',
+];
+
+const ways = [
+  { title: 'Finne hvor AI lønner seg', href: '/kartlegging/', link: 'Om AI-kartlegging', text: 'Vi snakker med ledelsen og med dem som gjør jobben, og finner tre til fem oppgaver der AI sparer tid. Dere får et forslag til hvor dere bør starte.' },
+  { title: 'Lage en plan for hele bedriften', href: '/ai-strategi/', link: 'Om AI-strategi', text: 'Mål, verktøy, regler for trygg bruk og opplæring, samlet i en plan for de første månedene som ledelsen kan stå for.' },
+  { title: 'Bygge den første løsningen', href: '/ai-agenter/', link: 'Om AI-agenter', text: 'Vi bygger løsningen selv, i systemene dere har: en AI-agent, en automatisering eller et verktøy som mangler. Et menneske godkjenner der det trengs.' },
+  { title: 'Lære opp de ansatte', href: '/kurs/', link: 'Om kursene', text: 'Ett kurs, ett verktøy: Claude, ChatGPT, Gemini eller Copilot, bygget på oppgavene avdelingen faktisk har.' },
+];
+
+// [option, fits when, keep in mind]
+const options: [string, string, string][] = [
+  ['AI-konsulent', 'Dere vil i gang, men mangler tid eller erfaring til å finne de riktige oppgavene og bygge løsningen selv.', 'Avtal på forhånd hvem som eier løsningen og hvordan den følges opp når oppdraget er ferdig.'],
+  ['Ferdig AI-verktøy', 'Et verktøy på markedet dekker oppgaven godt, og passer med systemene dere allerede bruker.', 'Mange verktøy gjør litt av det samme. Se hva dere betaler for før dere kjøper noe nytt.'],
+  ['Egen AI-ansatt', 'Dere har mange AI-oppgaver over flere år, og noen i ledelsen som kan følge opp arbeidet.', 'Det tar tid å rekruttere, og én person blir fort sårbar alene. Mange starter med en konsulent og ansetter senere.'],
+];
+
+const people = [
+  { name: 'Ulrik Rosmæl', role: 'Daglig leder og AI-konsulent', place: 'Trondheim', img: '/assets/portraits/ulrik-rosmael-bue-blob-hoyre.webp', email: 'ulrik@wabi.no' },
+  { name: 'Eljar Skjørholm', role: 'Chief AI Officer', place: 'Singapore', img: '/assets/portraits/eljar-skjorholm-bue-blob-venstre.webp', email: 'admin@wabi.no' },
+];
+
+const faq: [string, string][] = [
+  ['Hva gjør en AI-konsulent?', 'En AI-konsulent hjelper bedriften å finne ut hvor AI er verdt å bruke, og å ta det i bruk på en trygg måte. Hos Wabi gir vi råd, lager planen og bygger løsningen selv. Etterpå lærer vi opp de ansatte og følger opp.'],
+  ['Er dere bundet til én AI-leverandør?', 'Nei. Vi velger verktøy etter oppgaven og kravene deres, og bygger blant annet med Claude, ChatGPT og Gemini. Ofte er det beste å bruke det dere allerede har på en bedre måte.'],
+  ['Hva koster en AI-konsulent?', 'Det avhenger av oppdraget. Etter en første samtale foreslår vi hva som bør gjøres. Omfang, pris, tidsbruk og deltakere avtales før arbeidet starter, så dere vet hva dere sier ja til.'],
+  ['Hjelper dere med personvern og regler for AI-bruk?', 'Vi lager regler for trygg bruk som en del av AI-strategien, og avklarer data, leverandører og tilganger i hvert prosjekt. Juridiske vurderinger bør gjøres sammen med deres egen juridiske rådgiver eller personvernombud.'],
+  ['Kan dere jobbe sammen med IT-leverandøren vår?', 'Ja. Vi bygger i systemene dere har, og avklarer tilganger og ansvar med dem som drifter systemene før vi starter.'],
+  ['Tar dere oppdrag utenfor Trondheim?', 'Ja. Vi har base i Trondheim og tar oppdrag i hele Norge og Norden. Oppstarten kan skje hos dere eller på video, og mye av arbeidet etterpå går på nett.'],
+];
+---
+<Base title="AI-konsulent i Norge: råd og bygging fra samme folk | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-konsulent', description, path, area }), personLd('ulrik'), personLd('eljar')]}>
+  <PageHero crumbs={crumbs} eyebrow="AI-konsulent" title="AI-konsulenter som også bygger løsningen."
+    lead="Vi hjelper norske bedrifter å finne ut hvor AI lønner seg, og bygger løsningen selv. Dere slipper å ha én som gir råd og en annen som lager, og dere snakker med de samme folkene hele veien."
+    primary={{ label: 'AI-prat?', href: '/kontakt/' }} secondary={{ label: 'Møt konsulentene', href: '#konsulentene' }} />
+
+  <section class="section container split rule-top" aria-labelledby="hva-title">
+    <div class="split-head" data-reveal><span class="eyebrow">Kort forklart</span><h2 id="hva-title" class="display-md">Hva gjør en AI-konsulent?</h2></div>
+    <div data-reveal>
+      <p class="answer">En AI-konsulent hjelper bedriften å bruke kunstig intelligens der det gir en gevinst. Hos oss betyr det å finne de riktige oppgavene, lage en plan, bygge løsningen, lære opp de ansatte og følge opp etterpå.</p>
+      <p class="answer muted">Mange råd om AI stopper i en rapport. Fordi vi bygger selv, må rådene våre holde når de skal tas i bruk. Vi foreslår ikke noe vi ikke kan lage og følge opp.</p>
+    </div>
+  </section>
+
+  <section class="section container split" aria-labelledby="tegn-title">
+    <div class="split-head sticky-head" data-reveal><span class="eyebrow">Når passer det</span><h2 id="tegn-title" class="display-md">Fire tegn på at dere trenger en AI-konsulent.</h2><p>Kjenner dere igjen ett eller flere av disse, er det verdt en prat.</p></div>
+    <ol class="signs">{signs.map((s, i) => <li data-reveal style={`--d:${i * 80}ms`}><span class="mono">{i + 1}</span><p>{s}</p></li>)}</ol>
+  </section>
+
+  <section class="section container rule-top" aria-labelledby="mater-title">
+    <div class="ways-head" data-reveal><span class="eyebrow">Slik kan dere bruke oss</span><h2 id="mater-title" class="display-md">Fire måter å bruke en AI-konsulent på.</h2><p>Noen starter med kartleggingen. Andre vet hvilken oppgave de vil løse, eller trenger mest opplæring. Vi starter der dere er.</p></div>
+    <ul class="ways">{ways.map((w, i) => <li data-reveal style={`--d:${(i % 2) * 80}ms`}><span class="mono">{String(i + 1).padStart(2, '0')}</span><h3>{w.title}</h3><p>{w.text}</p><a class="text-link" href={w.href}>{w.link} <span aria-hidden="true">→</span></a></li>)}</ul>
+  </section>
+
+  <section class="section container rule-top" aria-labelledby="valg-title">
+    <div class="ways-head" data-reveal><span class="eyebrow">Konsulent, verktøy eller ansatt</span><h2 id="valg-title" class="display-md">Trenger dere egentlig en konsulent?</h2><p>Ikke alltid. Slik ser vi på de tre vanligste valgene.</p></div>
+    <div class="options" role="table" aria-label="Sammenligning av AI-konsulent, ferdig verktøy og egen ansatt" data-reveal>
+      <div class="row head" role="row"><span role="columnheader">Valg</span><span role="columnheader">Passer når</span><span role="columnheader">Husk</span></div>
+      {options.map(([o, fit, mind]) => <div class="row" role="row"><strong role="rowheader">{o}</strong><span role="cell">{fit}</span><span role="cell" class="muted">{mind}</span></div>)}
+    </div>
+  </section>
+
+  <section id="konsulentene" class="section container people-section rule-top" aria-labelledby="folk-title">
+    <div class="people-copy" data-reveal>
+      <span class="eyebrow">Konsulentene</span>
+      <h2 id="folk-title" class="display-md">Dere møter dem som gjør jobben.</h2>
+      <p>Hos Wabi er det de samme folkene som kartlegger, bygger, lærer opp og følger opp. Ulrik jobber fra Trondheim, og Eljar fra Singapore. Vi er vant til å samarbeide over avstand, og tar oppdrag i hele Norge og Norden.</p>
+      <p><a class="text-link" href="/om-oss/">Les mer om oss <span aria-hidden="true">→</span></a></p>
+    </div>
+    <div class="people">
+      {people.map((p, i) => <figure data-reveal style={`--d:${i * 100}ms`}>
+        <img src={p.img} alt={p.name} width="420" height="420" loading="lazy" />
+        <figcaption><strong>{p.name}</strong><span class="role">{p.role} · {p.place}</span><a href={'mailto:' + p.email}>{p.email}</a></figcaption>
+      </figure>)}
+    </div>
+  </section>
+
+  <FaqList faq={faq} title="Om å leie inn en AI-konsulent." />
+  <p class="container also" data-reveal>Ser dere etter et helt byrå? Les om <a href="/ai-byra-norge/">AI-byrå i Norge</a>, og se <a href="/prosjekter/">prosjektene vi har bygget</a>.</p>
+  <CtaPanel eyebrow="AI-prat" title="Fortell hva som tar tid." text="Beskriv oppgaven, så foreslår vi hvor dere kan starte. Dere bestiller ingenting ved å ta kontakt." primary={{ label: 'AI-prat?', href: '/kontakt/' }} />
+</Base>
+
+<style>
+  .signs { list-style: none; margin: 0; padding: 0; }
+  .signs li { display: grid; grid-template-columns: 48px 1fr; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--wabi-outline); }
+  .signs li:first-child { border-top: 1px solid var(--wabi-outline); }
+  .signs .mono { padding-top: 4px; color: var(--wabi-moss); }
+  .signs p { font-size: clamp(18px, 1.6vw, 21px); letter-spacing: -.015em; }
+  .ways-head { max-width: 760px; display: flex; flex-direction: column; gap: 18px; margin-bottom: clamp(32px, 4vw, 48px); }
+  .ways-head p { color: #3B4A40; font-size: 17px; }
+  .ways { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .ways li { display: flex; flex-direction: column; gap: 12px; padding: clamp(24px, 3vw, 32px); border: 1px solid var(--wabi-outline); border-radius: 14px; background: var(--wabi-raised); }
+  .ways .mono { color: var(--wabi-moss); }
+  .ways h3 { font-size: clamp(20px, 1.9vw, 24px); font-weight: 400; letter-spacing: -.025em; }
+  .ways p { color: #3B4A40; font-size: 15px; }
+  .ways .text-link { margin-top: auto; padding-top: 8px; }
+  .options { border-top: 1px solid var(--wabi-outline); }
+  .options .row { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr) minmax(0, 1.3fr); gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--wabi-outline); }
+  .options .head { padding: 12px 0; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--wabi-muted); }
+  .options strong { font-size: 18px; font-weight: 600; }
+  .options span { color: #3B4A40; font-size: 15px; }
+  .options .muted { color: var(--wabi-muted); }
+  .people-section { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+  .people-copy { display: flex; flex-direction: column; gap: 18px; }
+  .people-copy p { color: #3B4A40; font-size: 17px; max-width: 60ch; }
+  .people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 3vw, 32px); }
+  figure { margin: 0; }
+  figure img { width: 100%; height: auto; }
+  figcaption { display: flex; flex-direction: column; gap: 4px; margin-top: 14px; }
+  figcaption strong { font-size: 18px; }
+  figcaption .role { font-size: 14px; color: var(--wabi-muted); }
+  figcaption a { font-size: 14px; font-weight: 700; color: var(--wabi-moss); overflow-wrap: anywhere; }
+  .also { margin-top: 24px; padding-bottom: clamp(32px, 4vw, 48px); color: var(--wabi-muted); }
+  .also a { color: var(--wabi-moss); font-weight: 700; }
+  @media (max-width: 900px) { .people-section { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 760px) {
+    .ways { grid-template-columns: minmax(0, 1fr); }
+    .options .head { display: none; }
+    .options .row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  }
+</style>
