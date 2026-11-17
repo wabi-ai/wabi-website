@@ -9,7 +9,7 @@ keywords:
   - AI CRM
 author: Eljar
 date: 2026-02-16
-updated: 2026-10-02
+updated: 2026-11-10
 category: Guide
 ---
 

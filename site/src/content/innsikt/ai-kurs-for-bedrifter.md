@@ -9,7 +9,7 @@ keywords:
   - Copilot kurs
 author: Eljar
 date: 2026-02-16
-updated: 2026-10-02
+updated: 2026-10-29
 category: Kurs
 ---
 

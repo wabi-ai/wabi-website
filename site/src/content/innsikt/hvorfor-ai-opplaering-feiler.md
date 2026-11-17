@@ -9,7 +9,7 @@ keywords:
   - endringsledelse AI
 author: Eljar
 date: 2026-02-16
-updated: 2026-10-02
+updated: 2026-10-06
 category: Analyse
 ---
 
