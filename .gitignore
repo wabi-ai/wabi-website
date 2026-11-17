@@ -8,3 +8,7 @@ node_modules/
 # Astro site
 site/dist/
 site/.astro/
+
+# Cloudflare Workers
+.wrangler/
+.dev.vars

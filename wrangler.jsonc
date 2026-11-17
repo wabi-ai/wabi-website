@@ -1,0 +1,42 @@
+// Cloudflare Workers config for wabi.no. Build the site first: npm run build:cloudflare
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "wabi-website",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-11-01",
+  // The site lives only on wabi.no. No second copy on *.workers.dev or preview URLs for search engines to find.
+  "workers_dev": false,
+  "preview_urls": false,
+  "assets": {
+    "directory": "./site/dist",
+    "binding": "ASSETS",
+    // Astro builds /side/index.html; the site's canonical URLs end with a slash.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    // Pages run through the Worker for the 301 redirects and /api/*. Scripts, styles and images
+    // are served directly, so they never count as Worker requests.
+    "run_worker_first": ["/*", "!/_astro/*", "!/assets/*"]
+  },
+  // wabi.no and www.wabi.no point straight at this Worker; the Worker sends www to wabi.no.
+  "routes": [
+    { "pattern": "wabi.no", "custom_domain": true },
+    { "pattern": "www.wabi.no", "custom_domain": true }
+  ],
+  "vars": {
+    // Where contact form and chat messages go, and the sender they come from.
+    "CONTACT_TO": "admin@wabi.no",
+    "CONTACT_FROM": "skjema@wabi.no"
+  },
+  // Secrets (set with npx wrangler secret put NAME, never in this file):
+  //   TURNSTILE_SECRET  Cloudflare Turnstile widget "wabi.no kontaktskjema"
+  //   RESEND_API_KEY    Resend key with sending access to wabi.no only
+  "ratelimits": [
+    {
+      "name": "CONTACT_LIMIT",
+      "namespace_id": "1001",
+      // At most 5 messages per minute from one IP address.
+      "simple": { "limit": 5, "period": 60 }
+    }
+  ],
+  "observability": { "enabled": true }
+}

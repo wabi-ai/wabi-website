@@ -5,6 +5,7 @@ import '../styles/nav.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ChatWidget from '../components/ChatWidget.astro';
+import Turnstile from '../components/Turnstile.astro';
 import Consent from '../components/Consent.astro';
 import { SITE, PEOPLE } from '../data/site.js';
 import { areaServed, personLd } from '../lib/seo.js';
@@ -75,6 +76,7 @@ const graph = [org, { '@context': 'https://schema.org', '@type': 'WebSite', '@id
   <Footer />
   <Consent />
   {Astro.url.pathname !== '/kontakt/' && <ChatWidget />}
+  <Turnstile />
   <script>
     // Reveal content once as it enters the viewport.
     const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });

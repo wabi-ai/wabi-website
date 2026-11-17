@@ -1,0 +1,50 @@
+---
+// Spam check (Cloudflare Turnstile) shared by the contact form and the chat. Cloudflare's script is
+// fetched only when a visitor starts writing, so normal page views and crawlers never load it.
+// In "interaction-only" mode the check is invisible unless Cloudflare needs the visitor to click.
+//   wabiTurnstile.load()           start loading early (on first focus)
+//   wabiTurnstile.token(container) resolves with a fresh one-time token for a submission
+import { SITE } from '../data/site.js';
+---
+<script is:inline define:vars={{ siteKey: SITE.turnstileSiteKey }}>
+  window.wabiTurnstile = (() => {
+    let loading = null;
+    const widgets = new WeakMap();
+    const load = () => loading || (loading = new Promise((resolve, reject) => {
+      if (window.turnstile) return resolve(window.turnstile);
+      window.__wabiTurnstileReady = () => resolve(window.turnstile);
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=__wabiTurnstileReady';
+      script.async = true;
+      script.onerror = () => { loading = null; reject(new Error('Turnstile did not load')); };
+      document.head.append(script);
+    }));
+    const token = async container => {
+      const turnstile = await load();
+      let widget = widgets.get(container);
+      if (widget) turnstile.reset(widget.id);
+      else {
+        widget = {};
+        widget.id = turnstile.render(container, {
+          sitekey: siteKey,
+          appearance: 'interaction-only',
+          execution: 'execute',
+          // Always Norwegian and light, whatever the visitor's browser language or dark mode setting.
+          language: 'nb',
+          theme: 'light',
+          callback: value => widget.done && widget.done(value),
+          'error-callback': () => { widget.fail && widget.fail(new Error('Turnstile error')); },
+        });
+        widgets.set(container, widget);
+      }
+      return new Promise((resolve, reject) => {
+        // A visible challenge may need the visitor to click, so allow a minute.
+        const timer = setTimeout(() => reject(new Error('Turnstile timed out')), 60000);
+        widget.done = value => { clearTimeout(timer); resolve(value); };
+        widget.fail = error => { clearTimeout(timer); reject(error); };
+        turnstile.execute(container);
+      });
+    };
+    return { load, token };
+  })();
+</script>

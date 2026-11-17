@@ -15,9 +15,11 @@ export const SITE = {
   logoPng: '/assets/logo/wabi-logo-square.png',
   // Public registry listings that confirm the legal entity. Only add profiles that are verified to belong to Wabi.
   registryLinks: ['https://virksomhet.brreg.no/nb/oppslag/enheter/932368021', 'https://www.proff.no/selskap/wabi-marketing-as/932368021'],
-  // Web3Forms access key for the contact form. Submissions go to the address the key was created for (admin@wabi.no).
-  // While empty, the form falls back to opening an e-mail draft.
-  contactFormKey: '299414e8-17a7-4e12-afc9-bd94a50f3a59',
+  // The contact form and the chat post to /api/kontakt (worker/index.js), which e-mails admin@wabi.no.
+  // Public Cloudflare Turnstile site key for the spam check (widget "wabi.no kontaktskjema", allowed on
+  // wabi.no, www.wabi.no and wabi-website.wabi-no.workers.dev). The secret is the Worker secret TURNSTILE_SECRET.
+  // For local testing (wrangler dev), Cloudflare's test key 1x00000000000000000000AA always passes.
+  turnstileSiteKey: '0x4AAAAAAF06HIZbCnb78KOd',
   // Tracking IDs. Each tool loads only after the visitor consents (see Consent.astro); while all are empty, no banner is shown.
   tracking: {
     ga4: '', // GA4 measurement ID, e.g. G-XXXXXXXXXX

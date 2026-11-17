@@ -6,7 +6,6 @@ import { SITE } from '../../data/site.js';
 
 const crumbs = [{ label: 'Kontakt', href: '/kontakt/' }];
 const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', name: 'Kontakt Wabi', url: SITE.url + '/kontakt/', about: { '@id': SITE.url + '/#org' } };
-const live = Boolean(SITE.contactFormKey);
 ---
 <Base title="Kontakt Wabi | AI-byrå i Trondheim" description="Ta kontakt med Wabi, AI-byrå i Trondheim. Fortell hva dere bruker mye tid på, så ser vi sammen på om AI kan gjøre arbeidsdagen enklere." jsonLd={[breadcrumbLd(crumbs), contactLd]}>
   <PageHero crumbs={crumbs} eyebrow="Kontakt" title="La oss se på mulighetene sammen."
@@ -24,7 +23,7 @@ const live = Boolean(SITE.contactFormKey);
       </div>
     </aside>
 
-    <form class="composer" data-composer data-key={SITE.contactFormKey} data-reveal novalidate>
+    <form class="composer" data-composer data-reveal novalidate>
       <div class="row">
         <label><span>Navn</span><input name="name" autocomplete="name" required /></label>
         <label><span>E-post på jobb</span><input name="email" type="email" autocomplete="email" required /></label>
@@ -32,12 +31,14 @@ const live = Boolean(SITE.contactFormKey);
       <label><span>Hva ønsker dere hjelp med? <em>(valgfritt)</em></span><textarea name="message" rows="4" placeholder="Fortell gjerne litt om bedriften og hva dere ønsker å forbedre."></textarea></label>
       <!-- Spam trap: humans never see or fill this. -->
       <input type="checkbox" name="botcheck" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <!-- Cloudflare's spam check. Invisible unless a visitor has to confirm they are human. -->
+      <div class="turnstile" data-turnstile></div>
       <div class="send">
-        <button type="submit" class="button button-primary" data-submit>{live ? 'Send henvendelsen' : 'Åpne e-postutkast'}</button>
-        <p>{live ? 'Dette er en forespørsel om en samtale. Du bestiller ikke et prosjekt.' : 'Utkastet åpnes i e-postappen din, og du sender det selv.'}</p>
+        <button type="submit" class="button button-primary" data-submit>Send henvendelsen</button>
+        <p>Dette er en forespørsel om en samtale. Du bestiller ikke et prosjekt.</p>
       </div>
       <p class="status" data-status role="status" aria-live="polite"></p>
-      <details class="fallback" data-fallback hidden={live}>
+      <details class="fallback" data-fallback hidden>
         <summary>Fikk du ikke sendt?</summary>
         <p>Kopier meldingen og send den til <a href={'mailto:' + SITE.email}>{SITE.email}</a>.</p>
         <pre data-preview></pre>
@@ -57,8 +58,6 @@ const live = Boolean(SITE.contactFormKey);
 <script>
   const form = document.querySelector<HTMLFormElement>('[data-composer]');
   if (form) {
-    const email = 'ulrik@wabi.no';
-    const key = form.dataset.key || '';
     const status = form.querySelector<HTMLElement>('[data-status]')!;
     const fallback = form.querySelector<HTMLDetailsElement>('[data-fallback]')!;
     const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
@@ -71,6 +70,8 @@ const live = Boolean(SITE.contactFormKey);
     if (prefill) (form.querySelector<HTMLTextAreaElement>('textarea[name="message"]')!).value = prefill;
     form.addEventListener('input', refresh);
     refresh();
+    // Start loading the spam check as soon as someone starts filling in the form.
+    form.addEventListener('focusin', () => { (window as any).wabiTurnstile?.load().catch(() => {}); }, { once: true });
 
     const showError = (msg: string) => { status.textContent = msg; status.classList.add('is-error'); };
 
@@ -85,27 +86,21 @@ const live = Boolean(SITE.contactFormKey);
         return;
       }
 
-      if (!key) {
-        const subject = 'Henvendelse fra wabi.no';
-        location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(compose())}`;
-        return;
-      }
-
       submit.disabled = true; submit.textContent = 'Sender ...';
       try {
-        // Plain form data is a "simple" cross-origin request, so the browser skips the CORS preflight.
+        // The Worker (worker/index.js) checks the spam token and e-mails the message to us.
+        const token = await (window as any).wabiTurnstile.token(form.querySelector('[data-turnstile]'));
         const payload = new FormData();
         const fields: Record<string, string> = {
-          access_key: key,
-          subject: 'Henvendelse fra wabi.no',
-          from_name: 'wabi.no',
-          replyto: v('email'),
+          kind: 'kontakt',
           name: v('name'), email: v('email'),
           message: v('message') || 'Ønsker en samtale om hvordan Wabi kan hjelpe oss.',
+          page: location.pathname,
+          'cf-turnstile-response': token,
         };
         Object.entries(fields).forEach(([k, val]) => payload.append(k, val));
         if ((form.querySelector<HTMLInputElement>('input[name="botcheck"]')!).checked) payload.append('botcheck', 'true');
-        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: payload });
+        const res = await fetch('/api/kontakt', { method: 'POST', headers: { Accept: 'application/json' }, body: payload });
         const data = await res.json().catch(() => ({}));
         if (!res.ok || data.success !== true) throw new Error(data.message || 'Feil');
         form.hidden = true;
@@ -145,6 +140,7 @@ const live = Boolean(SITE.contactFormKey);
   textarea, input { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--wabi-outline); background: var(--wabi-raised); color: var(--wabi-forest); font: 16px/1.5 var(--font-sans); resize: vertical; }
   textarea:focus, input:focus { outline: 2px solid var(--wabi-moss); outline-offset: 1px; }
   .trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .turnstile:empty { display: none; }
   .row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .send { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
   .send p { flex: 1; min-width: 220px; font-size: 13px; color: var(--wabi-muted); }
