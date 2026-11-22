@@ -10,14 +10,14 @@ import MoreServices from '../../components/MoreServices.astro';
 import CtaPanel from '../../components/CtaPanel.astro';
 import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
 
-const crumbs = [{ label: 'Kurs', href: '/kurs/' }];
-const description = 'Praktiske AI-kurs i Claude, ChatGPT, Gemini og Microsoft Copilot. Dere øver på egne oppgaver og får eksempler dere kan bruke etter kurset.';
+const crumbs = [{ label: 'AI-kurs', href: '/kurs/' }];
+const description = 'Praktiske AI-kurs for bedrifter i Claude, ChatGPT, Microsoft Copilot og Gemini, fra Wabi i Trondheim. Dere øver på egne oppgaver og bruker det dagen etter.';
 
 const tools = [
-  { name: 'Claude', text: 'Hjelp til å lese dokumenter, forstå tall og skrive tekster. For dem som lager programvare, kan <strong>Claude Code</strong> også hjelpe med kode.' },
-  { name: 'ChatGPT', text: 'Hjelp til å skrive, finne svar og jobbe med tall. For dem som lager programvare, kan <strong>Codex</strong> også hjelpe med kode.' },
-  { name: 'Gemini', text: 'AI der dere allerede jobber, for dere som bruker Google Workspace.' },
-  { name: 'Microsoft Copilot', label: 'Copilot', text: 'AI i Outlook, Teams, Word og Excel, for dere som bruker Microsoft 365.' },
+  { name: 'Claude', label: 'Claude-kurs', text: 'Lær å bruke Claude til å lese dokumenter, forstå tall og skrive tekster. For dem som lager programvare, tar vi også <strong>Claude Code</strong>.' },
+  { name: 'ChatGPT', label: 'ChatGPT-kurs', text: 'Lær å bruke ChatGPT til å skrive, finne svar og jobbe med tall. For dem som lager programvare, tar vi også <strong>Codex</strong>.' },
+  { name: 'Gemini', label: 'Gemini-kurs', text: 'For dere som bruker Google Workspace. Dere lærer å bruke Gemini i Gmail, Docs og Sheets.' },
+  { name: 'Microsoft Copilot', label: 'Copilot-kurs', text: 'For dere som bruker Microsoft 365. Dere lærer å bruke Copilot i Outlook, Teams, Word og Excel.' },
 ];
 
 const teams = [
@@ -26,6 +26,31 @@ const teams = [
   { title: 'Økonomi', text: 'Lag rapporter, sjekk at tall stemmer, og få hjelp med regneark.', tools: ['Excel', 'Microsoft Copilot'] },
   { title: 'Design', text: 'Lag bilder og prøv ulike forslag i programmene dere allerede bruker.', tools: ['ChatGPT'] },
   { title: 'Deres team', text: 'Har dere et team med egne behov, lager vi et kurs for det.' },
+];
+
+const claudeSteps: [string, string][] = [
+  ['Lær verktøyet', 'Deltakerne lærer hva Claude gjør godt, og når de må sjekke svaret. De øver på egne tilbud, e-poster og dokumenter.'],
+  ['Finn oppgavene i egen jobb', 'Vi går gjennom arbeidsdagen sammen med hver avdeling og finner oppgavene der Claude sparer tid. De ansatte vet best hvor det tar tid.'],
+  ['Oppfølging av hver enkelt', 'Etter kurset følger vi opp deltakerne én og én. Vi hjelper med oppgaven de står fast på, og viser hva de kan prøve neste gang.'],
+];
+
+const adoption: [string, string][] = [
+  ['En pådriver i hver avdeling', 'Én person som kan litt mer, svarer på spørsmål og viser kollegaene hva som virker.'],
+  ['Felles prosjekter og maler', 'Vi setter opp Claude med bedriftens egne maler, priser og tone, så alle starter fra samme sted.'],
+  ['Del det som virker', 'En fast runde på avdelingsmøtet der noen viser én oppgave de har løst med Claude.'],
+  ['Ledelsen går foran', 'Ledere som viser egne eksempler, gjør det lettere for de andre å prøve.'],
+  ['Nivå 2 når dere er klare', 'Når det grunnleggende sitter, tar vi neste kurs med større oppgaver.'],
+];
+
+const news: [string, string, string][] = [
+  ['Microsoft Ignite', '17.–20. nov.', 'Microsoft lanserte Copilot Workspaces, der kolleger jobber sammen med Copilot i felles prosjekter. Word, Excel og PowerPoint er nå tilgjengelig rett i Copilot-appen.'],
+  ['Google Gemini', '17. nov.', 'Gemini kan nå gjøre hele oppgaver for deg, med den nye modellen Gemini 4 Hydrogen. Det lanseres først i USA og fem andre land.'],
+];
+
+const quotes: [string, string][] = [
+  ['Jeg har sjelden fått så mange aha-øyeblikk på tre timer.', 'Deltaker på Claude-kurs'],
+  ['Det var nyttig å se praktiske eksempler fra vårt eget arbeid. Da skjønte vi hva vi faktisk kan bruke det til.', 'Deltaker på Claude-kurs'],
+  ['Jeg hadde brukt Claude en del fra før, men på kurset så jeg hvor mye jeg hadde lært feil. Nå jobber jeg annerledes.', 'Deltaker som brukte Claude fra før'],
 ];
 
 const steps: [string, string][] = [
@@ -39,13 +64,22 @@ const faq: [string, string][] = [
   ['Hvilket AI-verktøy bør vi velge?', 'Start med det som passer systemene dere allerede har. Bruker dere Microsoft 365, er Copilot ofte naturlig. Bruker dere Google Workspace, er det Gemini. Ellers er Claude og ChatGPT gode valg. Vi hjelper dere å velge før kurset.'],
   ['Hvorfor ikke et standardkurs?', 'Eksempler som ikke ligner arbeidsdagen blir sjelden tatt i bruk. Når kurset bygger på oppgaver deltakerne har, kan de bruke det de lærte dagen etter.'],
   ['Hva sitter deltakerne igjen med?', 'Øvelse med egne oppgaver og ferdige eksempler på hva de kan skrive til AI. Eksemplene kan brukes igjen etter kurset.'],
+  ['Hvordan får vi hele bedriften til å bruke Claude?', 'Kurset er starten. Etterpå følger vi opp deltakerne én og én, hjelper dere med en pådriver i hver avdeling, setter opp felles maler og legger til rette for at folk deler det som virker.'],
   ['Kan kurset kombineres med en kartlegging?', 'Ja. Kartleggingen viser hvilke oppgaver som gir mest, og kurset lærer folk å løse dem.'],
 ];
 ---
-<Base title="AI-kurs for bedrifter i Claude, ChatGPT og Gemini | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-kurs for bedrifter', description, path: '/kurs/' })]}>
-  <PageHero crumbs={crumbs} eyebrow="Kurs" title="Lær å bruke AI i arbeidsdagen."
-    lead="Dere øver på oppgaver dere kjenner, som å svare kunder, lage tilbud og skrive rapporter. Vi tilpasser kurset til deltakerne og programmene dere bruker."
-    primary={{ label: 'Ta en prat', href: '/kontakt/' }} secondary={{ label: 'Se hvem kursene passer for', href: '#team' }} />
+<Base title="AI-kurs for bedrifter: Claude, ChatGPT, Copilot og Gemini | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'AI-kurs for bedrifter', description, path: '/kurs/' })]}>
+  <PageHero crumbs={crumbs} eyebrow="Kurs" title="AI-kurs for bedrifter."
+    lead="Praktiske kurs i Claude, ChatGPT, Microsoft Copilot og Gemini. Dere øver på oppgaver dere kjenner, som å svare kunder, lage tilbud og skrive rapporter, og bruker det dagen etter."
+    primary={{ label: 'Ta en prat', href: '/kontakt/' }} secondary={{ label: 'Se hvem kursene passer for', href: '#team' }}>
+    <aside class="news" aria-label="Nytt i november 2026">
+      <span class="news-label"><span class="news-dot" aria-hidden="true"></span>Nytt i november 2026</span>
+      <ul>
+        {news.map(([name, date, text]) => <li><span class="news-head"><strong>{name}</strong><span class="mono">{date}</span></span><p>{text}</p></li>)}
+      </ul>
+      <p class="news-foot">Vi tar det nye med i kursene når det kommer til Norge.</p>
+    </aside>
+  </PageHero>
 
   <Band tone="deep">
     <div class="tool-grid">
@@ -53,11 +87,56 @@ const faq: [string, string][] = [
     </div>
   </Band>
 
-  <Steps eyebrow="Slik lager vi kurset" title="Kurset starter med arbeidsdagen deres." steps={steps} />
+  <section class="container media-split" aria-labelledby="claude-title">
+    <figure class="clip" data-reveal>
+      <div class="clip-frame">
+        <video src="/assets/kurs/claude-kurs-niva-1.mp4" poster="/assets/kurs/claude-kurs-niva-1-poster.jpg" width="480" height="854" muted loop playsinline preload="none" aria-label="Glimt fra en dag med Claude-kurs: deltakere ved bordet og en gjennomgang på storskjerm."></video>
+        <button type="button" class="clip-toggle" aria-label="Spill av video" data-playing="false"><span aria-hidden="true"></span></button>
+      </div>
+      <figcaption>Fra Claude-kurs nivå 1, november 2026.</figcaption>
+    </figure>
+    <div class="split-copy" data-reveal>
+      <span class="eyebrow">Claude-kurs for bedrifter</span>
+      <h2 id="claude-title" class="display-md">Claude-kurs som får hele bedriften i gang.</h2>
+      <p class="lead">Etter et kurs er det lett at bare de som allerede var interessert, fortsetter. Vi følger dere fra første Claude-kurs til Claude er en del av arbeidsdagen i alle avdelinger.</p>
+      <p class="muted">På Claude-kurs nivå 1 skrev deltakerne tilbud og e-post i egen tone, fikk lange dokumenter oppsummert og samlet fast informasjon i Claude, så de slipper å forklare alt på nytt hver gang.</p>
+      <ol class="point-list">
+        {claudeSteps.map(([t, text], i) => <li><span class="num">{i + 1}</span><div><h3>{t}</h3><p>{text}</p></div></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="container quotes" aria-labelledby="quotes-title">
+    <div class="quotes-head" data-reveal>
+      <span class="eyebrow">Fra deltakerne</span>
+      <h2 id="quotes-title" class="display-md">Det deltakerne sa etter kurset.</h2>
+      <p class="lead">Også de som brukte Claude fra før, fikk mer ut av verktøyet etter et grunnkurs.</p>
+    </div>
+    <div class="quote-grid">
+      {quotes.map(([q, who], i) => <figure class="quote" data-reveal style={`--d:${i * 90}ms`}><blockquote>«{q}»</blockquote><figcaption>{who}</figcaption></figure>)}
+    </div>
+  </section>
+
+  <section class="container media-split flip rule-top" aria-labelledby="adoption-title">
+    <div class="split-copy" data-reveal>
+      <span class="eyebrow">Fra noen få til alle</span>
+      <h2 id="adoption-title" class="display-md">Slik får dere med hele bedriften.</h2>
+      <p class="lead">Kurset gir en god start. Det er ukene etterpå som avgjør om Claude blir brukt. Vi legger opp arbeidet sammen med dere, så det sprer seg mellom avdelingene.</p>
+      <ul class="adoption-list">
+        {adoption.map(([t, text]) => <li><h3>{t}</h3><p>{text}</p></li>)}
+      </ul>
+    </div>
+    <figure class="photo" data-reveal>
+      <img src="/assets/kurs/claude-kurs-moterom.jpg" alt="Kursholder fra Wabi peker på et eksempel på storskjerm mens deltakerne følger med fra bordene under et Claude-kurs." width="880" height="1184" loading="lazy" />
+      <figcaption>Eksempel fra kurset: fra befaring til plantegning.</figcaption>
+    </figure>
+  </section>
+
+  <Steps eyebrow="Fire steg" title="Slik lager vi et AI-kurs for dere." steps={steps} />
   <div id="team" class="rule-top"><Examples eyebrow="Kurs for ulike avdelinger" title="Et kurs som passer jobben deres." items={teams} /></div>
-  <FaqList faq={faq} title="Om AI-kurs." />
+  <FaqList faq={faq} title="Spørsmål om AI-kurs." />
   <MoreServices current="kurs" />
-  <CtaPanel eyebrow="Kurs" title="Hvem hos dere vil lære å bruke AI?" text="Vi tar en prat om hvem som skal på kurset, hvilke verktøy dere bruker og hvilke oppgaver som tar mest tid." secondary={null} />
+  <CtaPanel eyebrow="AI-kurs" title="Hvem hos dere vil lære å bruke AI?" text="Vi tar en prat om hvem som skal på kurset, hvilke verktøy dere bruker og hvilke oppgaver som tar mest tid." secondary={null} />
 </Base>
 
 <style>
@@ -67,4 +146,81 @@ const faq: [string, string][] = [
   .tool p { font-size: 14px; color: #3B4A40; }
   .tool p :global(strong) { color: var(--wabi-forest); }
   @media (max-width: 700px) { .tool-grid { grid-template-columns: minmax(0, 1fr); } }
+
+  .media-split { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; padding-block: var(--section-space); }
+  .media-split.flip { grid-template-columns: minmax(0, 1fr) minmax(0, 380px); }
+  .split-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+  .split-copy .lead { color: #2E4636; }
+  .split-copy h3 { font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
+  .split-copy li p { font-size: 15px; color: #3B4A40; }
+  figure { margin: 0; min-width: 0; }
+  figcaption { margin-top: 12px; font-size: 12px; color: var(--wabi-muted); }
+
+  .clip-frame { position: relative; padding: 10px; background: #DCE4E2; border: 1px solid var(--wabi-outline-tint); border-radius: 22px; }
+  .clip video { display: block; width: 100%; height: auto; aspect-ratio: 480 / 854; object-fit: cover; border-radius: 14px; background: var(--wabi-forest); }
+  .clip-toggle { position: absolute; right: 22px; bottom: 22px; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(244, 241, 231, .92); color: var(--wabi-forest); cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, .2); }
+  .clip-toggle span { width: 0; height: 0; border-style: solid; border-width: 8px 0 8px 13px; border-color: transparent transparent transparent currentColor; margin-left: 3px; }
+  .clip-toggle[data-playing='true'] span { width: 12px; height: 14px; border: 0; margin: 0; border-left: 4px solid currentColor; border-right: 4px solid currentColor; }
+
+  .point-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 18px; border-top: 1px solid var(--wabi-outline); padding-top: 22px; }
+  .point-list li { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 12px; }
+  .point-list .num { font-size: 28px; font-weight: 300; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(20, 61, 36, .5); }
+  .point-list p, .adoption-list p { margin-top: 4px; }
+
+  .adoption-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 28px; }
+  .adoption-list li { border-top: 1px solid var(--wabi-outline-tint); padding-top: 14px; }
+  .adoption-list li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+  .news { margin-top: 28px; width: min(760px, 100%); padding: 18px 22px; background: var(--wabi-raised); border: 1px solid var(--wabi-outline); border-radius: 14px; animation: rise 900ms 260ms var(--ease-out) both; }
+  .news-label { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--wabi-moss); }
+  .news-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--wabi-blob-leaf); box-shadow: 0 0 0 4px rgba(87, 164, 71, .18); }
+  .news ul { list-style: none; margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; }
+  .news-head { display: flex; align-items: baseline; gap: 10px; font-size: 14px; }
+  .news-head .mono { font-size: 11px; color: var(--wabi-muted); }
+  .news li p { margin-top: 4px; font-size: 13.5px; line-height: 1.55; color: #3B4A40; }
+  .news-foot { margin-top: 12px; font-size: 12.5px; color: var(--wabi-muted); }
+  @media (max-width: 700px) { .news ul { grid-template-columns: minmax(0, 1fr); } }
+  @media (prefers-reduced-motion: reduce) { .news { animation: none; } }
+
+  .quotes { padding-block: var(--section-space); border-top: 1px solid var(--wabi-outline); }
+  .quotes-head { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; margin-bottom: 40px; }
+  .quotes-head .lead { color: #2E4636; }
+  .quote-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .quote { display: flex; flex-direction: column; justify-content: space-between; gap: 24px; padding: clamp(22px, 3vw, 32px); background: var(--wabi-card); border: 1px solid var(--wabi-outline); border-radius: 16px; }
+  .quote blockquote { margin: 0; font-size: clamp(19px, 1.8vw, 23px); line-height: 1.4; letter-spacing: -.015em; color: var(--wabi-forest); }
+  .quote figcaption { margin: 0; font-size: 13px; color: var(--wabi-muted); }
+  @media (max-width: 900px) { .quote-grid { grid-template-columns: minmax(0, 1fr); } }
+
+  .photo img { display: block; width: 100%; height: auto; border-radius: 16px; box-shadow: 0 24px 60px -28px #143D2499; }
+
+  @media (max-width: 900px) {
+    .media-split, .media-split.flip { grid-template-columns: minmax(0, 1fr); }
+    .clip, .photo { width: min(340px, 100%); justify-self: center; }
+    .media-split.flip .photo { order: -1; }
+  }
+  @media (max-width: 560px) { .adoption-list { grid-template-columns: minmax(0, 1fr); } }
 </style>
+
+<script>
+  // Plays the course clip only while it is on screen, and never by itself for reduced-motion users.
+  const video = document.querySelector<HTMLVideoElement>('.clip video');
+  const toggle = document.querySelector<HTMLButtonElement>('.clip-toggle');
+  if (video && toggle) {
+    let paused = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const sync = () => {
+      const playing = !video.paused;
+      toggle.dataset.playing = String(playing);
+      toggle.setAttribute('aria-label', playing ? 'Sett video på pause' : 'Spill av video');
+    };
+    video.addEventListener('play', sync);
+    video.addEventListener('pause', sync);
+    toggle.addEventListener('click', () => {
+      paused = !video.paused;
+      if (paused) video.pause(); else video.play().catch(() => {});
+    });
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !paused) video.play().catch(() => {});
+      else if (!entry.isIntersecting) video.pause();
+    }, { threshold: 0.4 }).observe(video);
+  }
+</script>
