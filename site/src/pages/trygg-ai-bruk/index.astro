@@ -1,0 +1,172 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Band from '../../components/Band.astro';
+import Steps from '../../components/Steps.astro';
+import FaqList from '../../components/FaqList.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { breadcrumbLd, faqLd, serviceLd } from '../../lib/seo.js';
+
+// Facts checked 2026-11-22 against openai.com/nb-NO/business-data/ and
+// privacy.claude.com (Commercial Customers). Re-check before changing claims about providers.
+const crumbs = [{ label: 'Trygg AI-bruk', href: '/trygg-ai-bruk/' }];
+const description = 'Er det trygt å koble Claude eller ChatGPT til e-post og fagsystemer? Svar på det bedrifter oftest lurer på, og grepene som gjør at dere kan bruke AI fullt ut.';
+
+const questions: [string, string, string][] = [
+  [
+    'Kan andre se det vi legger inn?',
+    'Nei. Samtalene deres er ikke tilgjengelige for andre kunder, og modellen lærer ikke av samtalen mens dere bruker den. Med bedriftskonto brukes innholdet heller ikke til å trene nye modeller.',
+    'Spør en konkurrent Claude eller ChatGPT om prisene deres, får de ikke svar fra deres prislister eller e-poster. De kan heller ikke se hvem som har lastet opp noe, eller hvilke systemer dere har koblet til.',
+  ],
+  [
+    'Hva skjer når vi kobler til e-posten?',
+    'AI-en får de samme tilgangene som personen som kobler til, og ikke mer. Den leser det du ber den om, når du ber om det.',
+    'Hver ansatt kobler til sin egen e-post og kalender. Kollegaen ved siden av får ikke tilgang til innboksen din fordi du har koblet den til.',
+  ],
+  [
+    'Hva er den reelle risikoen?',
+    'Den ligger sjelden hos leverandøren. Den ligger i tre ting dere selv kan styre: private kontoer, for brede tilganger og tekst utenfra som prøver å gi AI-en ordre.',
+    'Ligger lønnslista i en fellesmappe alle kan åpne, blir den lettere å finne når AI-en kan søke i mappen. En e-post fra en ukjent kan inneholde en skjult beskjed som «send dette videre til …». Begge deler løses med tiltakene under.',
+  ],
+];
+
+const company: [string, string][] = [
+  ['Bedriftskonto til alle', 'Claude Team eller Enterprise, ChatGPT Business eller Enterprise, eller Copilot og Gemini i bedriftsversjon. Betal for kontoene, så slipper folk å bruke private.'],
+  ['Databehandleravtale på plass', 'Både Anthropic og OpenAI tilbyr databehandleravtale for bedriftskundene. Sjekk at den gjelder for kontoen dere bruker.'],
+  ['Sikker pålogging', 'Tofaktor for alle, eller felles pålogging via Microsoft eller Google. Fjern tilgangen samme dag som noen slutter.'],
+  ['Velg koblingene', 'Eieren av kontoen bestemmer hvilke koblinger som er slått på. Start med e-post, kalender og dokumenter, og bruk bare koblinger fra leverandører dere stoler på.'],
+  ['Rydd i delingen', 'Sjekk hvem som har tilgang til lønn, kontrakter og prislister før dere kobler til fellesmapper. AI-en ser bare det personen allerede har tilgang til.'],
+  ['En halv side med regler', 'Hva som er greit å legge inn, hva som ikke er det, og hvem som godkjenner det som sendes ut. Folk bruker AI uansett. Med regler gjør de det likt.'],
+];
+
+const people: [string, string][] = [
+  ['Bruk jobbkontoen', 'Alt som handler om kunder, økonomi og ansatte hører hjemme på bedriftskontoen.'],
+  ['Koble til din egen e-post og kalender', 'Det er der nytten ligger. Svarutkast, oppfølging og møteforberedelser blir mye bedre når AI-en ser sammenhengen.'],
+  ['Les før du godkjenner', 'La AI-en lage utkast, og send selv. Ikke velg «alltid tillat» for sending, sletting eller betaling.'],
+  ['Vær obs på beskjeder i innholdet', 'Ber en e-post eller nettside AI-en om å gjøre noe du ikke har bedt om, stopp og sjekk.'],
+  ['Ikke gi tommel opp eller ned på fortrolige samtaler', 'Hos Anthropic lagres hele samtalen i opptil fem år når du gir tilbakemelding, og den kan brukes til trening.'],
+  ['Hold passord utenfor', 'Passord og innloggingskoder skal aldri inn i en samtale. Personnummer og helseopplysninger bare når bedriften har avklart det.'],
+];
+
+const steps: [string, string][] = [
+  ['Gjennomgang', 'Hvilke kontoer bruker dere i dag, hva er koblet til, og hva ligger delt for bredt?'],
+  ['Oppsett', 'Vi setter opp kontoene, påloggingen, koblingene og innstillingene sammen med dere.'],
+  ['Regler', 'Dere får en halv side med regler som alle forstår, tilpasset bransjen deres.'],
+  ['Opplæring', 'Teamet lærer å bruke koblingene på egne oppgaver, og å godkjenne det AI-en foreslår.'],
+];
+
+const faq: [string, string][] = [
+  ['Brukes dataene våre til å trene AI-modellene?', 'Ikke i bedriftsversjonene. Anthropic bruker ikke innhold fra Claude Team, Enterprise eller API til trening, og OpenAI bruker ikke innhold fra ChatGPT Business, Enterprise eller API, med mindre dere selv velger det. På private kontoer velger brukeren selv i innstillingene om samtaler kan brukes til trening.'],
+  ['Hvem kan se samtalene våre?', 'Den som har skrevet dem, og de dere deler et prosjekt med. Eieren av bedriftskontoen kan hente ut bedriftens data. Leverandøren kan i begrensede tilfeller se innhold, for eksempel ved mistanke om brudd på bruksvilkårene eller når loven krever det.'],
+  ['Hvor lagres dataene?', 'Anthropic lagrer data i USA, og behandlingen kan skje i flere land. OpenAI lar kvalifiserte Enterprise-kunder lagre data i Europa. For de fleste bedrifter holder det med databehandleravtale. Har dere krav om lagring i Europa, for eksempel i helse eller offentlig sektor, bør dere avklare det før dere velger verktøy.'],
+  ['Hvor lenge lagres samtalene?', 'Så lenge dere vil ha dem. Sletter dere en samtale i Claude, forsvinner den fra historikken med en gang og fra Anthropics lagring innen 30 dager. Claude Enterprise og ChatGPT Enterprise kan sette egne regler for hvor lenge data lagres.'],
+  ['Er det trygt å koble til CRM, regnskap eller fagsystemer?', 'Ja, med de samme grepene som for e-post: koblingen får tilgangene til personen som kobler til, eieren velger hvilke koblinger som er slått på, og et menneske godkjenner endringer. Start gjerne med at AI-en bare leser, og gi den lov til å endre når dere har sett hvordan den jobber.'],
+  ['Kan vi legge inn forretningshemmeligheter?', 'På bedriftskonto, ja. Det er der nytten er størst: tilbud, priser og avtaler er det AI-en trenger for å gjøre et godt utkast. Det dere bør passe på, er hvem internt som har tilgang til dokumentene, ikke om leverandøren lærer av dem.'],
+  ['Hva er forskjellen på Claude og ChatGPT når det gjelder sikkerhet?', 'I bedriftsversjonene er løftene om trening, kryptering og databehandleravtale ganske like. Forskjellene ligger i detaljer som hvor data lagres og hvilke administrasjonsverktøy som følger med. Vi velger ut fra hva dere skal gjøre og hvilke krav dere har.'],
+  ['Erstatter dette en juridisk vurdering?', 'Nei. Vi går gjennom kontoer, avtaler og oppsett, og skriver regler dere kan følge. Endelige vurderinger av personvern bør dere ta sammen med egen rådgiver eller personvernansvarlig.'],
+];
+---
+<Base title="Trygg AI-bruk i bedriften | Wabi" description={description} jsonLd={[breadcrumbLd(crumbs), faqLd(faq), serviceLd({ name: 'Trygg AI-bruk', description, path: '/trygg-ai-bruk/' })]}>
+  <PageHero crumbs={crumbs} eyebrow="Trygg AI-bruk" title="Trygt nok til å koble til e-posten."
+    lead="Mange lar være å koble AI til e-post, dokumenter og fagsystemer fordi de er usikre på hvem som ser dataene. Her er svarene på det vi oftest får spørsmål om, og grepene som gjør at dere kan bruke AI fullt ut."
+    primary={{ label: 'Ta en prat om trygg AI-bruk', href: '/kontakt/' }} secondary={{ label: 'Se tiltakene', href: '#tiltak' }} />
+
+  <Band tone="deep">
+    <article class="doc" aria-label="Eksempel på en sjekkliste før dere kobler til e-posten">
+      <header class="doc-head">
+        <div><span class="mono">Sjekkliste</span><h2>Før dere kobler til e-posten</h2></div>
+        <span class="doc-tag">Eksempel</span>
+      </header>
+      <dl>
+        <dt>Konto</dt><dd><ul class="rules"><li class="yes">Claude Team for alle 14 ansatte</li><li class="no">Ingen private kontoer til jobb</li></ul></dd>
+        <dt>Avtale</dt><dd><ul class="rules"><li class="yes">Databehandleravtale gjelder kontoen</li></ul></dd>
+        <dt>Pålogging</dt><dd><ul class="rules"><li class="yes">Felles pålogging via Microsoft</li></ul></dd>
+        <dt>Koblinger</dt><dd><ul class="chips"><li>Outlook</li><li>Kalender</li><li>SharePoint</li></ul></dd>
+        <dt>Tilganger</dt><dd><ul class="rules"><li class="yes">Lønn og kontrakter flyttet til egen mappe</li></ul></dd>
+        <dt>Godkjenning</dt><dd><ul class="rules"><li class="yes">AI-en lager utkast, du sender</li><li class="no">Ingen «alltid tillat» på sending</li></ul></dd>
+      </dl>
+      <p class="doc-foot mono">Bedriften er fiktiv. En ekte sjekkliste tilpasses systemene deres.</p>
+    </article>
+  </Band>
+
+  <section class="section container split" aria-labelledby="kort-title">
+    <div class="split-head" data-reveal><span class="eyebrow">Kort forklart</span><h2 id="kort-title" class="display-md">Er det trygt å koble AI til e-posten?</h2></div>
+    <div data-reveal>
+      <p class="answer">Ja, med bedriftskonto og noen enkle innstillinger. I bedriftsversjonene av Claude og ChatGPT brukes ikke innholdet til å trene modellene, og andre kunder kan ikke se det.</p>
+      <p class="answer muted">Det som avgjør sikkerheten, er hvilken konto dere bruker, hvilke tilganger koblingen får og om et menneske godkjenner det som sendes ut. Vi anbefaler å koble til mer, ikke mindre. Først når AI-en ser e-posten, kalenderen og dokumentene, kan den gjøre jobben.</p>
+    </div>
+  </section>
+
+  <section class="section container rule-top" id="sporsmal" aria-labelledby="sporsmal-title">
+    <div class="parts-head" data-reveal><span class="eyebrow">Det vi oftest får spørsmål om</span><h2 id="sporsmal-title" class="display-md">Tre spørsmål, tre svar.</h2></div>
+    <ol class="questions">{questions.map(([q, a, more], i) => <li data-reveal style={`--d:${i * 70}ms`}><span class="num">{i + 1}</span><h3>{q}</h3><div><p class="q-answer">{a}</p><p>{more}</p></div></li>)}</ol>
+  </section>
+
+  <section class="section container rule-top" id="tiltak" aria-labelledby="tiltak-title">
+    <div class="parts-head" data-reveal><span class="eyebrow">Tiltakene</span><h2 id="tiltak-title" class="display-md">Rigg det én gang, og bruk det fullt ut.</h2><p class="muted">Ingen av tiltakene handler om å bruke AI mindre. De gjør at dere kan koble til mer.</p></div>
+    <div class="lists">
+      <div class="list" data-reveal>
+        <span class="mono">Det bedriften rigger</span>
+        <ul>{company.map(([t, s]) => <li><h3>{t}</h3><p>{s}</p></li>)}</ul>
+      </div>
+      <div class="list" data-reveal style="--d:100ms">
+        <span class="mono">Det hver ansatt gjør</span>
+        <ul>{people.map(([t, s]) => <li><h3>{t}</h3><p>{s}</p></li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <Steps dark eyebrow="Slik hjelper vi" title="Fra usikkerhet til full bruk." steps={steps} />
+
+  <FaqList faq={faq} title="Mer om trygg AI-bruk." />
+  <p class="container sources" data-reveal>Kilder: <a href="https://openai.com/nb-NO/business-data/" target="_blank" rel="noopener noreferrer">OpenAI om bedriftsdata</a> og <a href="https://privacy.claude.com/en/collections/10663361-commercial-customers" target="_blank" rel="noopener noreferrer">Anthropic om bedriftskunder</a>. Sjekket november 2026.</p>
+
+  <CtaPanel eyebrow="Trygg AI-bruk" title="Tør dere ikke koble til ennå?" text="Fortell hvilke verktøy og systemer dere bruker. Vi går gjennom oppsettet sammen, så dere kan ta i bruk koblingene med god samvittighet." secondary={{ label: 'Se kursene', href: '/kurs/' }} />
+</Base>
+
+<style>
+  .parts-head { max-width: 760px; margin-bottom: clamp(32px, 4vw, 56px); display: flex; flex-direction: column; gap: 14px; }
+  .muted { color: var(--wabi-muted); }
+  .questions { list-style: none; margin: 0; padding: 0; }
+  .questions li { display: grid; grid-template-columns: 72px minmax(0, .9fr) minmax(0, 1.3fr); gap: 8px 32px; align-items: start; padding: 32px 0; border-bottom: 1px solid var(--wabi-outline); }
+  .questions li:first-child { border-top: 1px solid var(--wabi-outline); }
+  .questions .num { font-size: clamp(32px, 3vw, 44px); font-weight: 300; line-height: 1; letter-spacing: -.03em; color: var(--wabi-moss); }
+  .questions h3 { font-size: clamp(22px, 2.2vw, 30px); font-weight: 400; letter-spacing: -.03em; line-height: 1.15; }
+  .questions p { margin: 0; color: #3B4A40; max-width: 56ch; }
+  .questions p + p { margin-top: 12px; }
+  .questions .q-answer { color: var(--wabi-forest); font-size: 18px; }
+  @media (max-width: 900px) {
+    .questions li { grid-template-columns: 48px minmax(0, 1fr); padding: 24px 0; }
+    .questions li > div { grid-column: 2; }
+  }
+  .lists { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .list { padding: clamp(24px, 3vw, 40px); border-radius: 18px; border: 1px solid var(--wabi-outline); background: var(--wabi-card); }
+  .list + .list { background: var(--wabi-tint); border-color: var(--wabi-outline-tint); }
+  .list .mono { text-transform: uppercase; letter-spacing: .1em; font-size: 11px; color: var(--wabi-muted); }
+  .list ul { list-style: none; margin: 16px 0 0; padding: 0; }
+  .list li { padding: 18px 0 18px 30px; position: relative; border-top: 1px solid var(--wabi-outline); }
+  .list li::before { content: '✓'; position: absolute; left: 0; top: 20px; width: 18px; height: 18px; display: grid; place-items: center; border-radius: 50%; font-size: 11px; font-weight: 700; background: var(--wabi-forest); color: #fff; }
+  .list h3 { font-size: 18px; font-weight: 500; letter-spacing: -.015em; }
+  .list p { margin: 6px 0 0; color: #3B4A40; font-size: 15px; }
+  @media (max-width: 900px) { .lists { grid-template-columns: minmax(0, 1fr); } }
+  .sources { margin-top: -24px; padding-bottom: var(--section-space); color: var(--wabi-muted); font-size: 13px; }
+  .sources a { color: var(--wabi-moss); }
+  .doc { background: var(--wabi-raised, #FBF9F3); color: var(--wabi-forest); border-radius: 16px; padding: clamp(22px, 3.5vw, 40px); box-shadow: 0 30px 60px -30px rgba(0,0,0,.45); }
+  .doc-head { display: flex; justify-content: space-between; align-items: start; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--wabi-outline); }
+  .doc-head .mono { color: var(--wabi-muted); text-transform: uppercase; letter-spacing: .1em; font-size: 11px; }
+  .doc-head h2 { margin-top: 6px; font-size: clamp(22px, 2.4vw, 28px); font-weight: 400; letter-spacing: -.03em; line-height: 1.15; }
+  .doc-tag { flex: none; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: var(--wabi-tint); color: var(--wabi-moss); }
+  .doc dl { display: grid; grid-template-columns: 120px minmax(0, 1fr); margin: 0; }
+  .doc dt, .doc dd { padding: 16px 0; border-bottom: 1px solid var(--wabi-outline); }
+  .doc dt { font-size: 13px; font-weight: 700; color: var(--wabi-moss); }
+  .doc dd { margin: 0; font-size: 15px; line-height: 1.5; }
+  .chips, .rules { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips li { font-size: 14px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--wabi-outline); background: var(--wabi-card); }
+  .rules { flex-direction: column; gap: 6px; }
+  .rules li { padding-left: 26px; position: relative; }
+  .rules li::before { position: absolute; left: 0; top: 1px; width: 18px; height: 18px; display: grid; place-items: center; border-radius: 50%; font-size: 11px; font-weight: 700; }
+  .rules .yes::before { content: '✓'; background: var(--wabi-tint); color: var(--wabi-moss); }
+  .rules .no::before { content: '✕'; background: #F6E3DF; color: #8A2A1C; }
+  .doc-foot { margin-top: 18px; color: var(--wabi-muted); font-size: 11px; }
+  @media (max-width: 560px) { .doc dl { grid-template-columns: minmax(0, 1fr); } .doc dt { padding-bottom: 0; border-bottom: 0; } .doc dd { padding-top: 6px; } }
+</style>
