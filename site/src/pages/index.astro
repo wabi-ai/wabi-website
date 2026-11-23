@@ -117,6 +117,7 @@ const jsonLd = [
     <div class="faq-head" data-reveal>
       <span class="eyebrow">Vanlige spørsmål</span>
       <h2 id="faq-title" class="section-title">Om AI i bedriften.</h2>
+      <a href="/kontakt/" class="button button-primary faq-cta">AI-prat?</a>
     </div>
     <div class="faq-list">
       {faq.map(([q, a]) => <details data-reveal><summary><h3>{q}</h3><span class="faq-icon" aria-hidden="true"></span></summary><p>{a}</p></details>)}
@@ -155,13 +156,13 @@ const jsonLd = [
   .guide-feature { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; align-items: stretch; }
 
   /* Featured guide: dark card with a living illustration on top. */
-  .guide-hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; border-radius: 24px; background: var(--night); color: var(--wabi-oat); text-decoration: none; transition: transform 400ms var(--ease-out); }
+  .guide-hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; border-radius: 24px; background: var(--night); color: var(--wabi-oat); text-decoration: none; transition: transform 400ms var(--ease-out); will-change: transform; }
   .guide-hero:hover { transform: translateY(-4px); }
-  .guide-art { position: relative; height: 380px; display: grid; place-items: center; padding-top: 12px; overflow: hidden; }
+  .guide-art { position: relative; height: 380px; display: grid; place-items: center; padding-top: 12px; overflow: hidden; mask-image: linear-gradient(to bottom, #000 calc(100% - 16px), transparent); }
   .guide-art-blob { position: absolute; z-index: -1; width: 125%; max-width: none; left: -12%; top: -8%; rotate: -12deg; filter: saturate(1.35) brightness(1.45); mix-blend-mode: screen; transition: transform 900ms var(--ease-out); }
   .guide-hero:hover .guide-art-blob { transform: scale(1.06) translateY(3%); }
-  .guide-art::after { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(to bottom, transparent 55%, var(--night)); }
-  .prompt-card { width: min(330px, 82%); padding: 12px 12px 10px; border-radius: 16px; background: rgba(253, 249, 241, .94); color: var(--wabi-forest); box-shadow: 0 30px 70px rgba(0, 0, 0, .35); transform: rotate(-2deg); transition: transform 500ms var(--ease-out); }
+  .guide-art::after { content: ''; position: absolute; z-index: -1; inset: 0 0 -4px; background: linear-gradient(to bottom, transparent 55%, var(--night) 96%); }
+  .prompt-card { width: min(330px, 82%); padding: 12px 12px 10px; border-radius: 16px; background: rgba(253, 249, 241, .94); color: var(--wabi-forest); box-shadow: 0 30px 70px rgba(0, 0, 0, .35); transform: rotate(-2deg); transition: transform 500ms var(--ease-out); will-change: transform; }
   .guide-hero:hover .prompt-card { transform: rotate(0deg) translateY(-4px); }
   .prompt-top { display: flex; align-items: center; gap: 8px; padding-bottom: 10px; margin-bottom: 8px; border-bottom: 1px solid var(--wabi-outline); font-size: 12px; font-weight: 700; }
   .prompt-dot { width: 7px; height: 7px; border-radius: 50%; background: #3F9B55; }
@@ -196,8 +197,9 @@ const jsonLd = [
   }
 
   /* FAQ */
-  .faq { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; padding-top: 0; }
-  .faq-head { display: flex; flex-direction: column; gap: 20px; }
+  .faq { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; padding-top: 0; align-items: start; }
+  .faq-head { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; position: sticky; top: 120px; }
+  .faq-cta { margin-top: 12px; }
   .faq-list details { border-bottom: 1px solid var(--wabi-outline); }
   .faq-list details:first-child { border-top: 1px solid var(--wabi-outline); }
   .faq-list summary { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 26px 0; cursor: pointer; list-style: none; }
@@ -225,6 +227,7 @@ const jsonLd = [
 
   @media (max-width: 1000px) {
     .faq, .team { grid-template-columns: 1fr; gap: 40px; }
+    .faq-head { position: static; }
     .section-head-row { flex-direction: column; align-items: flex-start; }
   }
   @media (max-width: 760px) {

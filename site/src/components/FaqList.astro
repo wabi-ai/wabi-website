@@ -1,9 +1,9 @@
 ---
-interface Props { faq: [string, string][]; title?: string; eyebrow?: string; id?: string; }
-const { faq, title = 'Vanlige spørsmål', eyebrow = 'Spørsmål og svar', id = 'faq' } = Astro.props;
+interface Props { faq: [string, string][]; title?: string; eyebrow?: string; id?: string; sticky?: boolean; }
+const { faq, title = 'Vanlige spørsmål', eyebrow = 'Spørsmål og svar', id = 'faq', sticky = true } = Astro.props;
 ---
 <section class="section container split rule-top" id={id} aria-labelledby={id + '-title'}>
-  <div class="split-head" data-reveal><span class="eyebrow">{eyebrow}</span><h2 id={id + '-title'} class="display-md">{title}</h2></div>
+  <div class:list={['split-head', { 'sticky-head': sticky }]} data-reveal><span class="eyebrow">{eyebrow}</span><h2 id={id + '-title'} class="display-md">{title}</h2></div>
   <div class="faq-list">
     {faq.map(([q, a]) => <details data-reveal><summary><h3>{q}</h3><span class="faq-icon" aria-hidden="true"></span></summary><p>{a}</p></details>)}
   </div>
