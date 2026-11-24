@@ -38,7 +38,7 @@ export const PEOPLE = [
 export const personId = id => `${SITE.url}/om-oss/#${id}`;
 
 export const SERVICES = [
-  { id: 'agenter', href: '/ai-agenter/', tone: 'fjord', preset: 't1', title: 'AI-agenter', short: 'En digital hjelper som kan lage rapporter, skrive svar og følge opp oppgaver.', nav: ['En ekstra hånd i arbeidsdagen.', 'Få hjelp med rapporter, kundesvar og andre faste oppgaver.'] },
+  { id: 'agenter', href: '/ai-agenter/', tone: 'fjord', preset: 't1', title: 'AI-agenter', short: 'En digital medarbeider som lager rapporter, skriver svar og følger opp. Den gjør utkastet klart, dere godkjenner.', nav: ['En ekstra hånd i arbeidsdagen.', 'Få hjelp med rapporter, kundesvar og andre faste oppgaver.'] },
   { id: 'automatisering', href: '/automatisering/', tone: 'ember', preset: 't2', title: 'Automatisering', short: 'La faste oppgaver gå av seg selv, så dere slipper å flytte informasjon for hånd.', nav: ['La rutinen gå av seg selv.', 'Vi kobler sammen systemene dere bruker, så dere slipper dobbeltarbeid.'] },
   { id: 'programvare', href: '/verktoy-og-programvare/', tone: 'sand', preset: 't3', title: 'Verktøy', navTitle: 'Verktøy og programvare', short: 'Vi går gjennom verktøyene dere betaler for, og bygger det som mangler.', nav: ['Verktøy som passer måten dere jobber på.', 'Vi bygger det dere mangler, og rydder i det dere har.'] },
 ];

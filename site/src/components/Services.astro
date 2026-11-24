@@ -6,6 +6,7 @@ import ToolLogo from './ToolLogo.astro';
 import Icon from './Icon.astro';
 import { SERVICES } from '../data/site.js';
 interface Props { eyebrow?: string; title?: string; lead?: string; }
+const PANEL_LINK: Record<string, string> = { agenter: 'Se eksempler på agenter', automatisering: 'Se hva som kan automatiseres', programvare: 'Se verktøyene vi bygger' };
 const { eyebrow = 'Hva vi gjør', title = 'Fra en oppgave til hele bedriften.', lead = 'Vi bygger AI-agenter, automatiserer faste oppgaver og lager verktøyene som mangler. Alt i systemene dere allerede bruker.' } = Astro.props;
 ---
   <section class="section container" id="tjenester" aria-labelledby="services-title">
@@ -19,7 +20,7 @@ const { eyebrow = 'Hva vi gjør', title = 'Fra en oppgave til hele bedriften.', 
         <WabiMark width={26} />
         <h3>{s.title}</h3>
         <p>{s.short}</p>
-        <span class="panel-button">Se hvordan</span>
+        <span class="panel-button">{PANEL_LINK[s.id] ?? 'Se hvordan'}</span>
       </BlobPanel></div>)}
     </div>
     <div class="course-panel" data-reveal>
@@ -28,7 +29,7 @@ const { eyebrow = 'Hva vi gjør', title = 'Fra en oppgave til hele bedriften.', 
         <h3>Kurs i verktøyet dere bruker</h3>
         <p>Ett kurs, ett verktøy: Claude, ChatGPT, Gemini eller Copilot, alt etter hva dere bruker eller ønsker å bruke. Vi lærer først hvordan avdelingen jobber, og bygger kurset på oppgaver dere faktisk har. Ingen generiske kurs.</p>
         <div class="course-tools">{[['Claude', 'Claude'], ['ChatGPT', 'ChatGPT'], ['Gemini', 'Gemini'], ['Microsoft Copilot', 'Copilot']].map(([name, label]) => <span><ToolLogo name={name} size={22} />{label}</span>)}</div>
-        <div class="course-actions"><a href="/kurs/" class="button button-primary">Se hvordan</a><a href="/kontakt/" class="button button-secondary">Ta en prat</a></div>
+        <div class="course-actions"><a href="/kurs/" class="button button-primary">Se våre kurs</a><a href="/kontakt/" class="button button-secondary">Ta en prat</a></div>
       </BlobPanel>
     </div>
   </section>
